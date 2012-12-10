@@ -336,7 +336,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			}	
 			
 			include_once('agenda/activite/activite_fonctions.php');
-			activite_log ('avis', $id_event = null);
+			activite_log ('avis', $id_event);
 
 		}
 		

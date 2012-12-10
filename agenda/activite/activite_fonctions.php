@@ -5,7 +5,7 @@
 function getLog ($type) {
 	switch($type) {
 		case 'avis':
-			return 'a ajouté un avis';
+			return 'a ajouté un avis a';
 		case 'level':
 			return 'a changé de niveau';
 		case 'concours':

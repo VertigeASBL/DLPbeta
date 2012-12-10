@@ -325,6 +325,9 @@ if (isset($_GET['id']) AND preg_match('/[0-9]$/', $_GET['id'])  AND
 								}
 								unset($adrm, $sql, $resp);
 							}
+
+							include_once('agenda/activite/activite_fonctions.php');
+							activite_log ('concours', null, $id_conc);
 						}
 						
 						else

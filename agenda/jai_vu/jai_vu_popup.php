@@ -123,6 +123,8 @@ if (isset($_GET['id']) AND preg_match('/[0-9]$/', $_GET['id']))
 			// Mettre à jour la le nombre de votes recueillis par l'événement
 			mysql_query("UPDATE $table_evenements_agenda SET jai_vu_event = jai_vu_event+1 WHERE `id_event` = '$id_event_en_cours' LIMIT 1 ");
 			
+			include_once('agenda/activite/activite_fonctions.php');
+			activite_log ('vu');
 			
 			// Prévenir Xavier
 			/*$mail_concat = '<h1>Un visiteur a voté pour un événement</h1> <br />

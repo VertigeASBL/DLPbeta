@@ -428,7 +428,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		foreach (_request('lieu_prefere_spectateur') as $key => $value) {
 			if (!empty($value)) {
 				/* On convertit le titre en format "base de donnée DLP" */
-				$value = htmlentities($value, ENT_QUOTES);
+				$value = htmlentities($value, ENT_QUOTES | ENT_HTML401, 'ISO-8859-1');
 				
 				/* On va chercher l'ID dans la base de donnée */
 				$id_lieu_pref = sql_getfetsel('id_lieu', 'ag_lieux', 'nom_lieu = \''.$value.'\'');
@@ -565,6 +565,10 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 
 			//--- rétablir le dossier de travail courant
 			chdir($dossier_courant);
+			
+			include_once('agenda/activite/activite_fonctions.php');
+			activite_log ('profil');
+
 			return;
 		}
 		else
@@ -870,7 +874,7 @@ echo '</select>';
 							*/
 							$all_producteur = sql_allfetsel('nom_lieu', 'ag_lieux');
 							foreach ($all_producteur as $key => $value) {
-								echo '"'.addslashes(html_entity_decode($value['nom_lieu'], ENT_QUOTES)).'",';
+								echo '"'.addslashes(html_entity_decode($value['nom_lieu'], ENT_QUOTES | ENT_HTML401, 'ISO-8859-1')).'",';
 							}
 						?>
 					],
