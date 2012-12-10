@@ -335,6 +335,9 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 				unset($adrm, $sql, $resp);
 			}	
 			
+			include_once('agenda/activite/activite_fonctions.php');
+			activite_log ('avis', $id_event = null);
+
 		}
 		
 		else
