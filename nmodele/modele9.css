@@ -1,0 +1,18 @@
+/*----- CSS du modèle "voeux_2011.php" : -----*/
+P {	margin:2px 0 2px 0; padding:0; vertical-align:top; }
+A {	color:#787878; text-decoration:underline; }
+TD { font-family:Arial,sans-serif; font-size:12px; }
+IMG { border:none; }
+.image-gauche {
+	float:left;
+   	clear:both;
+	margin:5px 10px 5px 0;
+	border:0;
+}
+.image-droite {
+	float:right;
+   	clear:both;
+	margin:5px 0 5px 10px;
+	border:0;
+}
+.parag-clear { clear:both; line-height:1px; }

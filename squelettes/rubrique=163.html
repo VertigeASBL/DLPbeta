@@ -1,0 +1,68 @@
+<?php 
+session_start();
+?>
+
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	[(#PUCE|genreagmeta{})] <INCLURE{fond=inc_tur/agheader_meta}{id_rubrique}>
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/css_calendrier_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+
+
+<script language="javascript" type="text/javascript">
+/* Toggle entre 2 blocs  var targetElementLink; targetElementLink = document.getElementById(Zone_id+'Link'); */
+function toggle_zone(Zone_id,txtReplier,txtDeplier) {
+var targetElement;
+targetElement = document.getElementById(Zone_id) ;
+targetElementB = document.getElementById(Zone_id+'B');
+if (targetElement.style.display == "none") {
+	targetElement.style.display = "block" ;
+	targetElementB.style.display = "none" ;
+} else {
+	targetElement.style.display = "none" ;
+	targetElementB.style.display = "block" ;
+}
+return false;
+}
+</script>
+
+<style type="text/css">
+.cmsicmg { border:0; vertical-align:middle; }
+
+option.option_col_2, select.option_col_2 {
+	width: 180px;
+}
+
+</style>
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+
+<div id="principal">
+	<div class="colonne1">
+
+<?php 
+	include('agenda/spip/toutes_suggestions.php');
+?>
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+	
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+			
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

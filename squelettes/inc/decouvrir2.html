@@ -1,0 +1,64 @@
+<h3>A d&eacute;couvrir</h3>
+
+<BOUCLE_mots(MOTS){id_article}>
+	<? $motCle = "#TITRE"; ?>
+</BOUCLE_mots>
+
+<?php
+	require_once("admintool/fonctions.php");
+	require_once("affiche_banner2.php");
+	
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}			
+
+	//Déterminer le circuit en fonction du MOT CLE associé aux articles	
+	switch ($motCle){
+		//HOME, autres métiers, forum, contact, équipe
+		case 'Circuit Home':
+			$circuit = 'home';
+			break;
+					
+		//CASTING, news, concours, projet, inscript. comédien
+		case 'Circuit Casting':
+			$circuit = 'casting';
+			break;
+			
+		//PETITES ANNONCSE, coup proj, ressources, aide, inscr. métiers
+		case 'Circuit Petites Annonces':
+			$circuit = 'annonces';
+			break;		
+			
+		//COMEDIENS, invité, annonces spect, on en dit, inscr. cie
+		case 'Circuit Comédiens':
+			$circuit = 'comediens';
+			break;	
+			
+		//STAGES, cies, salles, liens	
+		case 'Circuit Stages':
+			$circuit = 'stages';
+			break;		
+			
+			
+		/********* Circuit de Demandez le Pgm *********/
+		case 'Circuit A la Une':
+			$circuit = 'la_une';
+			break;				
+		case 'Circuit Concerts':
+			$circuit = 'concerts';
+			break;				
+		case 'Circuit Theatre':
+			$circuit = 'theatre';
+			break;		
+							
+		default:
+			if ((int)'[(#ENV{id_rubrique}|texte_script)]' == 100)
+				$circuit = 'home';
+			else
+				$circuit = 'concerts';
+	}
+	
+	
+	banners_comedien($circuit);
+?>

@@ -1,0 +1,181 @@
+<?php
+session_start();
+?>
+
+#CACHE{0}
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script language="javascript" type="text/javascript">
+/* Toggle entre 2 blocs */
+function toggle_zone(Zone_id,txtReplier,txtDeplier) {
+	var targetElement; var targetElementLink;
+	targetElement = document.getElementById(Zone_id) ;
+	targetElementB = document.getElementById(Zone_id+'B');
+	targetElementLink = document.getElementById(Zone_id+'Link');
+	
+	if (targetElement.style.display == "none") {
+		targetElement.style.display = "block" ;
+		targetElementB.style.display = "none" ;
+	} else {
+		targetElement.style.display = "none" ;
+		targetElementB.style.display = "block" ;
+	}
+	return false;
+}
+</script>
+
+</head>
+<body>
+
+
+<?php
+// VVVVVVVVVVVVVVVVVVVVVVVVV Variables VVVVVVVVVVVVVVVVVVVVVVVVV
+// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+$date_anterieure_critique = date ('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-30, date("Y"))); // La date limite de la critique la plus ancienne qui sera affichée de façon complète
+
+$date_anterieure_archive = date ('Y-m-d', mktime(0, 0, 0, date("m")-5  , date("d"), date("Y")));  // La date limite de la critique la plus ancienne qui sera affichée dans les archives
+
+$date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m")+2 , date("d"), date("Y")));  // Afin de ne pas afficher de critique dont l'événement ne se jouera pas avant...
+
+$nb_colonnes = 3 ; // Choisir ici en combien de colonnes afficher les archives
+
+// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+?>
+
+
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+
+<div id="principal">
+	<div class="colonne1">
+		[<h2>(#TITRE|supprimer_numero)</h2>]
+		
+  <p><BOUCLE1(ARTICLES){id_rubrique}>
+	#TEXTE
+   </BOUCLE1></p>
+
+
+<?php
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+?> 
+
+
+<?php
+require 'agenda/inc_var.php';
+require 'agenda/inc_fct_base.php';
+require 'agenda/calendrier/inc_calendrier.php';
+
+
+
+// ************************** Critiques complètes **************************
+// *************************************************************************
+//echo 'Critiques complètes jusqu\'à ' . $date_anterieure_critique ;
+
+$reponse = mysql_query("SELECT * FROM $table_evenements_agenda INNER JOIN  $table_lieu L
+		 ON cotisation_lieu > CURDATE() AND lieu_event = id_lieu
+		 AND critique_event != 0
+		 WHERE (date_event_fin > '$date_anterieure_critique' AND date_event_debut < '$date_limite_debut') GROUP BY critique_event ORDER BY critique_event DESC");
+
+while ($GLOBALS['donnees'] = mysql_fetch_array($reponse))
+{
+	$GLOBALS['contexte']['la_critique_cms'] = $GLOBALS['donnees']['critique_event']; /* Créer une variable environnement pour SPIP (cfr mesfonctions.php). Cette variable est définie AVANT d'inclure {fond=inc_tur/......" !!!! */
+
+	?><INCLURE{fond=inc_tur/critique_liste}><?php
+
+}
+
+// ************************** Critiques Archivées **************************
+// *************************************************************************
+
+//echo 'Archives de ' . $date_anterieure_archive . ' au ' . $date_anterieure_critique ;
+echo '<h2>Archives des critiques : </h2>
+<br />' ;
+
+
+// Compter le nombre d'entrées pour répartire en colonnes
+$reponse = mysql_query("SELECT COUNT(DISTINCT critique_event) AS 'nb_critiques_archive' FROM $table_evenements_agenda INNER JOIN  $table_lieu L
+ON cotisation_lieu > CURDATE() AND lieu_event = id_lieu
+AND critique_event != 0
+WHERE (date_event_fin > '$date_anterieure_archive' AND date_event_fin < '$date_anterieure_critique') 
+");
+
+$GLOBALS['donnees'] = mysql_fetch_array($reponse);
+$nb_critiques_archive = $GLOBALS['donnees']['nb_critiques_archive'];
+$ceil_nb_crit = ceil($nb_critiques_archive/$nb_colonnes) ;
+//echo 'TTTTTTTTTTTTTTTT ' . $GLOBALS['donnees']['nb_critiques_archive'] . '<br />';
+
+$reponse = mysql_query("SELECT * FROM $table_evenements_agenda INNER JOIN  $table_lieu L
+ON cotisation_lieu > CURDATE() AND lieu_event = id_lieu
+AND critique_event != 0
+WHERE (date_event_fin > '$date_anterieure_archive' AND date_event_fin < '$date_anterieure_critique') 
+GROUP BY critique_event ORDER BY critique_event DESC");
+
+$k = 0 ;
+$td = 0 ;
+
+echo '<table class="breve" width="100%" border="0" cellspacing="2" cellpadding="10" bgcolor="#FFFFFF"><tr>
+<td bgcolor="#E9E9E9" width="30%" valign="top"> ' ;
+while ($GLOBALS['donnees'] = mysql_fetch_array($reponse))
+{
+	$GLOBALS['contexte']['la_critique_cms'] = $GLOBALS['donnees']['critique_event']; /* Créer une variable environnement pour SPIP (cfr mesfonctions.php). Cette variable est définie AVANT d'inclure {fond=inc_tur/......" !!!! */
+
+
+	$td++ ;
+	$k++ ;
+	// echo 'k = ' . $k . 'et td = ' . $td ;
+	?>
+	<INCLURE{fond=inc_tur/critique_liste_archive}>
+	<br />
+	<?php
+	
+	if ($td >= $nb_critiques_archive)
+	{
+		echo '' ;
+	}
+	elseif ($k >= $ceil_nb_crit)
+	{
+		echo '</td><td bgcolor="#E9E9E9" valign="top" width="30%">' ;
+		$k = 0 ;
+	}
+}
+
+?>
+
+</tr></table>
+	<div class="float_stop">
+	
+	<p>Vous pouvez &eacute;galement retrouver une critique en cherchant un &eacute;v&eacute;nement pass&eacute; dans le moteur de recherche des &eacute;v&eacute;nements. Dans la liste des r&eacute;sultats, cliquez sur &quot;en savoir plus&quot; pour afficher les avis et la critique qui &eacute;taient li&eacute;s &agrave; cet &eacute;v&eacute;nement.&quot;</p><br />
+	
+	</div>
+
+	</div>
+
+	<!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

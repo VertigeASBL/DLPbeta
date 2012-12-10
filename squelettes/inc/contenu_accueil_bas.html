@@ -1,0 +1,54 @@
+<!-- reportages -->
+<BOUCLE_event1(RUBRIQUES){id_rubrique=8}>
+<div class="event">
+	<h3>[(#TITRE|supprimer_numero)]</h3>
+	<BOUCLE_event11(ARTICLES){id_rubrique}{par date}{inverse}{0,1}>
+	<h4><a href="#URL_ARTICLE">#TITRE</a></h4>
+	[<a href="#URL_ARTICLE">(#LOGO_ARTICLE||inserer_attribut{"alt",#TITRE}|inserer_attribut{"class","onglet5"}||image_reduire{206})</a>]
+	[<p>(#CHAPO|couper{240})</p>]
+	<span class="details">[(#DATE|affdate)] | <a href="#URL_ARTICLE">suite</a></span>
+	</BOUCLE_event11>
+	<B_event12>
+	<ul>
+	<BOUCLE_event12(ARTICLES){id_rubrique}{par date}{inverse}{1,5}>
+		<li><a href="#URL_ARTICLE">[(#DATE|jour)]/[(#DATE|mois)]/[(#DATE|annee)] : #TITRE</a></li>
+	</BOUCLE_event12>
+	</ul>
+	</B_event12>
+</div>
+</BOUCLE_event1>
+<!-- Coup de projecteur -->
+<BOUCLE_event2(RUBRIQUES){id_rubrique=104}>
+<div class="event">
+	<h3>[(#TITRE|supprimer_numero)]</h3>
+	<BOUCLE_event21(ARTICLES){id_rubrique}{par date}{inverse}{0,1}>
+	<h4><a href="#URL_ARTICLE">#TITRE</a></h4>
+	[<a href="#URL_ARTICLE">(#LOGO_ARTICLE||inserer_attribut{"alt",#TITRE}|inserer_attribut{"class","onglet5"}||image_reduire{206})</a>]
+	[<p>(#CHAPO|couper{240})</p>]
+	<span class="details">[(#DATE|affdate)] | <a href="#URL_ARTICLE">suite</a></span>
+	</BOUCLE_event21>
+	<ul>
+	<BOUCLE_event22(ARTICLES){id_rubrique}{par date}{inverse}{1,5}>
+		<li><a href="#URL_ARTICLE">[(#DATE|jour)]/[(#DATE|mois)]/[(#DATE|annee)] : #TITRE</a></li>
+	</BOUCLE_event22>
+	</ul>
+</div>
+</BOUCLE_event2>
+<!-- Invité -->
+<BOUCLE_event3(RUBRIQUES){id_rubrique=105}>
+<div class="event">
+	<h3>[(#TITRE|supprimer_numero)]</h3>
+	<BOUCLE_event31(ARTICLES){id_rubrique}{par date}{inverse}{0,1}>
+	<h4><a href="#URL_ARTICLE">#TITRE</a></h4>
+	[<a href="#URL_ARTICLE">(#LOGO_ARTICLE||inserer_attribut{"alt",#TITRE}|inserer_attribut{"class","onglet5"}||image_reduire{206})</a>]
+	[<p>(#CHAPO|couper{240})</p>]
+	<span class="details">[(#DATE|affdate)] | <a href="#URL_ARTICLE">suite</a></span>
+	</BOUCLE_event31>
+	<ul>
+	<BOUCLE_event32(ARTICLES){id_rubrique}{par date}{inverse}{1,5}>
+		<li><a href="#URL_ARTICLE">[(#DATE|jour)]/[(#DATE|mois)]/[(#DATE|annee)] : #TITRE</a></li>
+	</BOUCLE_event32>
+	</ul>
+</div>
+</BOUCLE_event3>
+<div class="clear"></div>

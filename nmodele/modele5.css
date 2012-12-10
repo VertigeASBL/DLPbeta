@@ -1,0 +1,93 @@
+/*----- CSS du modèle "DLP_concours.php" : -----*/
+P {	margin:2px 0 2px 0; padding:0; vertical-align:top; }
+A {	color:#787878; text-decoration:underline; }
+TD { font-family:Arial,sans-serif; font-size:12px; }
+IMG { border:none; }
+.image-gauche {
+	float:left;
+   	clear:both;
+	margin:5px 10px 5px 0;
+	border:0;
+}
+.image-droite {
+	float:right;
+   	clear:both;
+	margin:5px 0 5px 10px;
+	border:0;
+}
+.titre {
+	vertical-align:top;
+	font-family:Georgia,"Times New Roman",Times,serif;
+	font-size:14px;
+	color:#8F0133;
+	font-weight:bold;
+	line-height:25px;
+}
+.titre A, .titre A:link, .titre A:visited, .titre A:hover { color:#8F0133; }
+.soustitre {
+	font-family:Georgia,"Times New Roman",Times,serif;
+	font-size:12px;
+	color:#009A99;
+	font-weight:bold;
+}
+.soustitre A, .soustitre A:link, .soustitre A:visited, .soustitre A:hover { color:#009A99; }
+.parag-clear { clear:both; line-height:1px; }
+a img {
+	border: none;
+	text-decoration:none;
+}
+a img:hover {
+	border: none;
+	text-decoration:none;
+}
+.cloture_non, .cloture_oui {
+	padding: 8px 12px 12px 8px;
+}
+.cloture_non {
+	background: #11BBBB;
+}
+.cloture_non a {
+	color: #0000CC;
+}
+.cloture_oui {
+	background: #BABABA ;
+}
+.liste_lots {
+	margin:0; padding:0;
+}
+.liste_lots li {
+	list-style:none;
+	font-size: 12px;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	margin:0; padding:0;
+}
+.conc_photo {
+	float:left;
+	margin:0;
+	text-align: left;
+	width: 130px;
+}
+.bloc_texte {
+	margin:0 0 0 132px;
+	text-align: left;
+	width: auto;
+}
+.titre_conc {
+	color: #FFFFFF;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: bold;
+}
+.descriptif_concours {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+.date_cloture {
+	font-size: 12px;
+	color: #000000;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+}

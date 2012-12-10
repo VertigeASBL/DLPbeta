@@ -1,0 +1,200 @@
+/* CSS Document */
+
+
+#montrer_selection_fleche, #nbre_resultats_fleche, .suggestionsBox {
+	margin: 10px 0px 0px 0px;
+	padding: 5px 10px 5px 10px;
+	background-color: #027473;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	color: #FFF;
+	width: 200px;
+	display: none;
+}
+
+#montrer_selection_fleche {
+	position: relative;
+	top: -5px;
+}
+
+#montrer_selection {
+	float:right;
+}
+
+.bouton_en_file {
+	float:left;
+	margin-left:20px;
+}
+
+#nbre_resultats_fleche {
+	width: 150px;
+	position:relative;
+	top: -7px;
+}
+#nbre_resultats_id {
+}
+
+.suggestionsBox {
+	position: relative;
+	left: 160px;
+	margin: 10px 0px 0px 0px;
+	padding: 1px 10px 5px 10px;
+	width: 300px;
+}
+
+.suggestionList {
+	margin: 0px;
+	padding: 0px;
+}
+
+.suggestionList li {
+	font-size: 11px;
+	padding: 1px;
+	list-style-image: url(agenda/moteur_2_2/pics/puce_transpa.gif);
+	list-style: none;
+	background: transparent url(puce_transpa.gif) no-repeat scroll left 2px;
+}
+
+
+
+.suggestionList li:hover {
+	color: #FFFFFF;
+}
+
+.style_debug {
+	display:none;
+	color: #00FF00;
+	font-family: "Courier New", Courier, monospace;
+	background-color: #000;
+	width: 632px;
+	font-size: 11px;
+	padding: 20px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.style_liens_pagination {
+	color: #FFF;
+	background-color: #009A99;
+	font-size: 13px;
+	text-align: center;
+	width: 650px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin: 2px;
+	margin-top: 10px;
+	margin-bottom: 4px;
+}
+.style_liens_pagination a {
+	color: #FFF;
+}
+.style_liens_pagination .encours {
+	color: #222;
+	background-color: #EEE;
+	font-size: 15px;
+	border: 1px solid #FFF;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.mes_notes {
+	color: #333;
+	font-size: 9px;
+}
+
+#event_preview_id {
+	margin: 0;
+	padding-top:2px;
+	background-color: #E9E9E9;
+	color: #000;
+	width: 672px;
+	display: none;
+}
+#event_preview_id_fleche {
+
+}
+
+.style_mes_notes {color: #0000FF}
+
+.un_event_preview {
+	font-size: 11px;
+	clear: both;
+}
+
+.image_flottante_preview img {
+	float:left;
+	margin-top: 2px;
+	margin-right: 5px;
+	margin-bottom: 2px;
+	margin-left: 5px;
+	width:30px ;
+	height:30px ;
+	padding:1px;
+	border:1px solid #000000;
+	background-color:#FFFFFF;
+}
+.image_flottante_preview a:hover img {
+	width:auto;
+	height:auto;
+	position:absolute;
+	left:-30px;
+	padding:1px;
+	border:1px solid #000000;
+	background-color:#FFFFFF;
+}
+
+INPUT.go_recherche_ajax {
+	background: #027473 url('pics/lancer_recherche_ajax.jpg') no-repeat left top;
+	font-weight:bold;
+	font-size:14px;
+	color:#FFFFFF;
+	text-align:center;
+	width:152px;
+	height:28px;
+	border:none;
+	padding:2px;
+	cursor:hand;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+INPUT.effacer_tous_champs {
+	background: #9F0037 url('pics/effacer_tout_ajax.jpg') no-repeat left top;
+	font-weight:bold;
+	font-size:14px;
+	color:#FFFFFF;
+	text-align:center;
+	width:152px;
+	height:28px;
+	border:none;
+	padding:2px;
+	cursor:hand;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+
+.style_livre_bloc {
+	width: 652px;
+	padding: 10px;
+	background-color: #E9E9E9;
+	color: #000;
+}
+.style_livre_titre_bloc {
+	color: #FFF;
+	background-color: #007979;
+	font-size: 13px;
+	text-align: center;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 1px;
+	border: 1px solid #888;
+	line-height: 2;
+	font-weight: bold;
+}

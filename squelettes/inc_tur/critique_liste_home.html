@@ -1,0 +1,69 @@
+<?php
+require 'agenda/inc_var.php';
+
+	$tab = '<a name="anc_' . $GLOBALS['donnees']['critique_event'] .'"></a><div class="cadre_actu">' ;
+	$tab.='<h2 class="titre_cadre">Critique</h2>';
+	$id_event = $GLOBALS['donnees']['id_event'] ;
+
+	// ____________________________________________
+	// VIGNETTE EVENEMENT	
+	if (isset ($GLOBALS['donnees']['pic_event_1']) AND $GLOBALS['donnees']['pic_event_1'] == 'set' )
+	{
+		$nom_event = $GLOBALS['donnees']['nom_event'] ;
+		$id_event = $GLOBALS['donnees']['id_event'] ;
+
+		$image = 'agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg';
+		$haut_img = vignette_home($image,150,'critique');
+	
+		$tab.= '<span class="actu_photo"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/vignettes_home/critique.jpg" title="' . $nom_event . '" alt="" /></a></span>';
+	}
+	
+	$tab.='<div class="texte_actu">';
+	
+	// ____________________________________________
+	// NOM EVENEMENT
+	
+	if (isset($GLOBALS['donnees']['nom_event']) AND $GLOBALS['donnees']['nom_event'] != NULL)
+	{
+		$tab.= '<h3 class="titre_actu">' . $GLOBALS['donnees']['nom_event'] . '</h3>';
+	}
+
+	// ____________________________________________
+	// LIEU
+	$id_lieu = $GLOBALS['donnees']['lieu_event'] ;
+	$reponse_2 = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = $id_lieu");
+	$donnees_2 = mysql_fetch_array($reponse_2) ;
+			
+	$tab.= '<div class="actu_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$id_lieu.'" title="Lieu où se joue le spectacle">' . $donnees_2['nom_lieu'] . '</a></div> ';
+
+	// ____________________________________________
+	// CHAPEAU DE LA CRITIQUE 
+		
+	echo $tab ;
+
+	?>
+	
+	<BOUCLE_critique_chapo(ARTICLES){id_article=#COMENV{la_critique_cms}}>
+			<?php
+				$nb_car = nb_cars($haut_img);
+				$short_descr = couper_txt('[(#CHAPO|textebrut|texte_script)]',$nb_car);			
+				echo '<div class="descriptif_actu">'.$short_descr.'</div>';
+			?>		
+	</BOUCLE_critique_chapo>
+	L'article n'a pas été trouvé
+	<//B_critique_chapo>
+	
+	
+	
+	<?php
+	
+	//echo '<p><a href="-Detail-agenda-?id_event=' . $id_event . '" title="Voir en détail">Afficher la suite &gt;&gt;</a></p>';
+	echo '<p><a href="-Critiques-" title="Voir en détail">Afficher la suite &gt;&gt;</a></p>';
+
+	echo '</div><div class="float_stop"></div>
+		
+	</div>' ;
+
+
+
+?>

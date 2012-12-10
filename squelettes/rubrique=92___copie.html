@@ -1,0 +1,113 @@
+#CACHE{0}
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	[(#PUCE|evenementmeta{#ENV{id_event}})] <INCLURE{fond=inc_tur/agheader_meta}{id_rubrique}>
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/css_calendrier_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+
+<style type="text/css">
+<!--
+table.calendar th { /* Day jours */
+	width: 15px;
+}
+
+.help_cursor {
+	cursor: help;
+}
+
+-->
+</style>
+
+
+<script language="javascript" type="text/javascript">
+/* Toggle entre 2 blocs  var targetElementLink; targetElementLink = document.getElementById(Zone_id+'Link'); */
+function toggle_zone(Zone_id,txtReplier,txtDeplier) {
+var targetElement;
+targetElement = document.getElementById(Zone_id) ;
+targetElementB = document.getElementById(Zone_id+'B');
+if (targetElement.style.display == "none") {
+	targetElement.style.display = "block" ;
+	targetElementB.style.display = "none" ;
+} else {
+	targetElement.style.display = "none" ;
+	targetElementB.style.display = "block" ;
+}
+return false;
+}
+</script>
+
+<script type="text/javascript">
+<!--
+/* juste pour popup de "J'ai vu et aimé" */
+var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
+	ma_fenetre = window.open(Adresse_de_la_page,Nom_de_la_fenetre,'height=500,width=500,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=yes,top=100px,left=250px');
+	/* Donner le focus */
+	if(ma_fenetre.window.focus){
+		ma_fenetre.window.focus();
+	}
+}
+-->
+</script>
+
+
+<script language="Javascript"> 
+/* Pour relancer la page quand le popup de vote est fermé, et ainsi afficher le nouveau nombre de votes */
+function relance_la_page() {
+	location.reload();
+}
+</script>
+
+
+
+</head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1&appId=295394043903326";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+
+<div id="principal">
+	<div class="colonne1">
+
+<?php
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+//	require('php/obtenirvar.php');
+/*	if ((int)'[(#ENV{id_rubrique}|texte_script)]' == 92)
+		include('agenda/spip/detail_event.php');
+
+	else
+		echo ' Le numéro de rubrique ne convient pas. ';*/
+?>
+	<INCLURE{fond=inc_tur/agdetail2}{id_event}>
+
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

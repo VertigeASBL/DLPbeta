@@ -1,0 +1,31 @@
+	<B_artnbr>
+		#SET{n_plus,#TOTAL_BOUCLE|>{1}|?{'[0-9]+','x'}}
+		#SET{n_seul,'[0-9]+'}
+	<BOUCLE_artnbr(ARTICLES){id_rubrique}>&nbsp;</BOUCLE_artnbr>
+		#SET{n_plus,'x'}
+		#SET{n_seul,'x'}
+	<//B_artnbr>
+	<B_articles>
+		[<h2>(#TITRE|supprimer_numero)</h2>]
+	<BOUCLE_articles(ARTICLES){id_rubrique}{id_article==#GET{n_plus}}>
+		[<h3><a href="#URL_ARTICLE?rtr=y">(#TITRE)</a></h3>]
+		[<p><em>(#CHAPO)</em></p>]
+	</BOUCLE_articles>
+		<B_artun>
+			[<h2>(#TITRE|supprimer_numero)</h2>]
+		<BOUCLE_artun(ARTICLES){id_rubrique}{id_article==#GET{n_seul}}>
+			[<h3>(#TITRE)</h3>]
+			[<p>(#SOUSTITRE)</p>]
+			[<p><em>(#CHAPO)</em></p>]
+			[<p>(#TEXTE)</p>]
+			[<div class="ps">(#PS)</div>]
+		</BOUCLE_artun>
+			[<h2>(#TITRE|supprimer_numero)</h2>]
+			[<p>(#TEXTE)</p>]
+		<//B_artun>
+	<//B_articles>
+	<!-- sites -->
+	<BOUCLE_site(SITES){id_rubrique}>
+		[<h4><a href="#URL_SITE">(#NOM_SITE)</a></h4>]
+		[<p>[(#LOGO_SITE||inserer_attribut{"alt",#NOM_SITE}|inserer_attribut{"class","spip_documents_left"})](#DESCRIPTIF)</p>]
+	</BOUCLE_site>

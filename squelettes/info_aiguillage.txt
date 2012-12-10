@@ -1,0 +1,211 @@
+
+<div id="isoireecom" style="position:absolute;top:20px;left:130px;display:block;z-index:999;">
+	<a href="#fermer" onclick="k=document.getElementById('isoireecom'); if (k) k.style.display='none'; return false;">
+		<img src="[(#CHEMIN{assets/soireecomedien.jpg})]" style="border:none;" alt="" title="fermer" />
+	</a>
+</div>
+
+<div id="isoireecom" style="position:absolute;top:20px;left:130px;display:block;z-index:999;">
+	<a href="#fermer" onclick="k=document.getElementById('isoireecom'); if (k) k.style.display='none'; return false;">
+		<img src="[(#CHEMIN{assets/soireecomedien.jpg})]" style="border:none;" alt="" title="fermer" />
+	</a>
+</div>
+
+	id_rubrique =
+	?var_mode=calcul
+	&var_mode=calcul
+	?var_mode=debug
+
+-	2: artistes.php				-Artistes-
+-	11: comediens.php +res		-Comediens-
+-	12: compagnies.php +res		-Compagnies-
+-	13: metiers.php +res		-Autres-metiers-
+/	15: stage.php				-Stages-et-formations-
+/	16: annonce.php				-Petites-annonces-
+/	17: casting.php				-Castings-
+/	21: salle.php				-Annuaire-des-salles-
+-	25: uncomedien.php			-cv-comedien-
+-	26: uncomedien.php			-cv-metier-
+-	27: unecompagnie.php		-cv-compagnie-
+-	28: unspectacle.php			-spectacle-
++	32: comedienmodif.php		-modifier-comedien-
++	34: connexion.php			-se-connecter-
++	35: metiermodif.php			-modifier-metier-
++	38: compagniemodif.php		-modifier-compagnie-
++	41: expformmodif.php		-modifier-experience-formation-
++	42: expformajout.php		-ajouter-experience-formation-
++	43: photoajout.php			-ajouter-photo-
++	44: photomodif.php			-modifier-photo-
++	45: presentcieajout.php		-ajouter-presentation-
++	46: presentciemodif.php		-modifier-presentation-
++	47: spectacleajout.php		-ajouter-spectacle-
++	48: spectaclemodif.php		-modifier-spectacle-
++	53: comedienajout.php		-ajouter-comedien-
++	54: metierajout.php			-ajouter-metier-
++	55: compagnieajout.php		-ajouter-compagnie-
+/	58: castingajout.php		-ajouter-casting-
+/	60: annonceajout.php		-ajouter-annonce-
+/	62: stageajout.php			-ajouter-stage-
+/	63: salleajout.php			-ajouter-salle-
+-	81: menuprotege.php			-menu-protege-
+	83: uncomedien.php			-Imprimer-le-CV-
+
+	Inscription à la newsletter : include(inletter.php) :
+		rubrique 109 (comedien) voir article-109.html
+			articles newsletter-COts 228, newsletter-COab 229
+		rubrique 110 (DLP) voir article-110.html
+			articles newsletter-DPts 230, newsletter-DPab 231
+
+	3: rubriques agenda				par défaut, pour tous
+
+	9:	coupProjo
+	20:	diffusion
+	14:	forum
+	5:	infos
+	10:	invite
+	51:	liens
+	8:	news			(cadres à enlever pour les dessins flash sur ie 7 : cf "insererhom")
+	19:	ressources
+	80:	stageComedien
+	23:	aide
+	24:	ceQuonEnDit
+	4:	communaute
+	18:	concours
+	50:	contact
+	52:	equipe
+	22:	projet
+	6:	site
+
+	65: agenda/index.php			-Agenda- (home) 						agenda/spip/liste_resultat.php
+	92: agenda/detail_event.php		-Detail-agenda-?id_event=.. 			inc_tur/agdetail2
+	96: agenda/spip/detail_lieu.php	-Details-lieux-culturels-?id_lieu=..	agenda/spip/detail_lieu.php
+	87: aide + liste des liens (google) Infos/Aide/Pour les visiteurs du site
+	article=140 : envoyer ami : envoyer-ami?id_rub=#ID_RUBRIQUE&amp;id_art=#ID_ARTICLE
+	
+
++ /.htaccess à la racine (com.htaccess)
++ /spip/ecrire/urls/compropre.php
++ /spip/config/mes_options.php
+dans EasyPHP1-8\apache\conf\httpd.conf - chercher mod_rewrite
+
+<script type="text/javascript">
+<!--
+<BOUCLE_rubrinag(RUBRIQUES){id_secteur=3}{id_rubrique}>//ag</BOUCLE_rubrinag>
+k = window.location; if (k.hostname.indexOf("comedien.be") != -1) k.href = "http://www.demandezleprogramme.be"+k.pathname+k.search+k.hash;
+</B_rubrinag>
+k = window.location; if (k.hostname.indexOf("demandezleprogramme.be") != -1) k.href = "http://www.comedien.be"+k.pathname+k.search+k.hash;
+<//B_rubrinag>
+//-->
+</script>
+
+		<hr />
+		<BOUCLE_fop(FORUMS){id_forum}>
+			[<b><:forumtitre:> :</b><div>(#TITRE)</div>]
+			[<b><:forumdate:> :</b><div>(#DATE|nom_jour)] [(#DATE|affdate)</div>]
+			[<b><:forumauteur:> :</b><div>(#NOM)</div>]
+			[<b>Email :</b><div><a href="mailto:(#EMAIL)">][(#EMAIL)</a></div>]
+			[<b><:forummessage:> :</b><div>(#TEXTE)</div>]
+			[<b><:forumsite:> :</b><div><a href="#URL_SITE" target="_blank">(#NOM_SITE)</a></div>]
+			<div><:forumrepondre:> :</div>
+		</BOUCLE_fop>
+		<//B_fop>
+
+		<hr />
+		<BOUCLE_suj(FORUMS){id_rubrique}>
+			<ul><li><a href="?#PARAMETRES_FORUM">#TITRE &nbsp; [(#DATE|annee)]/[(#DATE|mois)]/[(#DATE|jour)]&nbsp; #NOM</a>
+			<B_rep>
+				<ul>
+			<BOUCLE_rep(FORUMS){id_parent}{par date}{inverse}>
+					<li><a href="?#PARAMETRES_FORUM">Re: #TITRE &nbsp; [(#DATE|annee)]/[(#DATE|mois)]/[(#DATE|jour)]&nbsp; #NOM</a>
+				<BOUCLE_recur(boucle_rep)></BOUCLE_recur>
+					</li>
+			</BOUCLE_rep>
+				</ul>
+			</B_rep>
+			</li></ul>
+		</BOUCLE_suj>
+
+		<hr />
+		[(#FORMULAIRE_FORUM{#SELF})]
+		<hr />
+
+
+<br />-------------- voir rubrique=3.html + mes_fonctions.php -----------------------
+#SET{mavar,'Le forum'}
+<BOUCLE_artt1(ARTICLES){titre=#GET{mavar}}>
+	<br />******* 1 ******* #TITRE *************
+	[(#ID_ARTICLE|creercomenv{'mavar'})]
+</BOUCLE_artt1>
+
+<BOUCLE_artt2(ARTICLES){id_article=#COMENV{mavar}}>
+	<br />******* 2 ******* #TITRE *************
+</BOUCLE_artt2>
+
+[(#PUCE|obtenircomenv{'mavar'})]
+[(#PUCE|affichercontexte{})]
+<BOUCLE_artt3(ARTICLES){id_article=#COMENV{mavar}}>
+	<br />******* 3 ******* #TITRE *************
+</BOUCLE_artt3>
+	<br />******* 3 ******* pas trouvé *************
+<//B_artt3>
+<br />---------------------------------------------------------------------------------------------
+
+	<!--[if !IE]> Standard XHTML object instanciation <!-->
+	<object id="hom-news" type="application/x-shockwave-flash" data="[(#CHEMIN{assets/hom/news.swf})]">
+	<!--><![endif]-->
+	<!--[if IE]>
+	<object id="hom-news" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+	<![endif]-->
+	<param name="movie" value="[(#CHEMIN{assets/hom/news.swf})]" /><param name="quality" value="high" /><param name="wmode" value="transparent" /></object>
+
+
+			<BOUCLE_artun(ARTICLES){id_article=#COMENV{mavar25}}>
+#CACHE{2073600}
+
+[(#REM) Balise permettant aux plugins d'inserer des appels javascript ou css ]
+#INSERT_HEAD
+
+
+POIDS :
+   57869 jquery-1.1.js
+   43710 mootools-v1-11.js
+   15285 jd.gallery.js
+     473 insererhom.js
+  ---------------------
+  117 Ko total
+
++/- 50 Ko pour animation bonhomme
+
+<form action="/cgi-bin/mail.cgi" method="post">
+	<fieldset>
+	<p>Pour &ecirc;tre tenu au courant de nos activit&eacute;s, laissez-nous votre email !</p>		
+	<input  name="address" type="text" value="votre e-mail" id="address" /><label for="address" style="display:none;">votre e-mail </label><br />	  
+	<input name="action" value="subscribe" checked="checked" type="radio" class="checkbox" id="action1" /><label for="action1">S'inscrire </label><br />	
+    <input name="action" value="remove" type="radio" class="checkbox" id="action2" /><label for="action2">Se désinscrire </label><br />	
+	<input type="submit" name="Submit" value="OK" class="bouton1"/>   
+	</fieldset>
+</form>
+
+C:\richir\www\comedspip\nouveausite\php\comedienmodif.php/60: 			remplaceraddrabon($memail, $email, '../cgi-bin/');
+C:\richir\www\comedspip\nouveausite\php\compagniemodif.php/38: 			remplaceraddrabon($memail, $email, '../cgi-bin/');
+C:\richir\www\comedspip\nouveausite\php\metiermodif.php/46: 			remplaceraddrabon($memail, $email, '../cgi-bin/');
+
+C:\richir\www\comedien\admintool\comediens_modifier.php/73: 			require("abonewsletter.php");
+C:\richir\www\comedien\admintool\compagnies_modifier.php/50: 			require("abonewsletter.php");
+C:\richir\www\comedien\admintool\metiers_modifier.php/62: 			require("abonewsletter.php");
+
+SELECT ladrm,count(*) AS nnn 
+FROM cmsnletter 
+WHERE lletr='COab'
+GROUP BY ladrm ORDER BY nnn DESC
+
+DELETE FROM cmsnletter WHERE ladrm='querelle2002@yahoo.com' AND letat='4' AND lletr='COab'
+DELETE FROM cmsnletter WHERE ladrm='brigittelouveaux@hotmail.com' AND letat='4' AND lletr='COab'
+DELETE FROM cmsnletter WHERE ladrm='chantal.pirotte@skynet.be' AND letat='4' AND lletr='COab'
+
+uncomedien :
+echo '<script type="text/javascript">',"\n",'<!--',"\n",'function pagechargee() { document.title = "Comedien.be : ',$descr,'"; } var montrerpho = true;',"\n",'//-->',"\n",'</script>',"\n";
+unecompagnie :
+echo '<script type="text/javascript">',"\n",'<!--',"\n",'function pagechargee() { document.title = "Comedien.be : ',$descr,'"; }',"\n",'//-->',"\n",'</script>',"\n";
+unspectacle :
+echo '<script type="text/javascript">',"\n",'<!--',"\n",'function pagechargee() { document.title = "Comedien.be : ',$descr,'"; }',"\n",'//-->',"\n",'</script>',"\n";

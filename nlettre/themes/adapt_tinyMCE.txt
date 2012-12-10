@@ -1,0 +1,30 @@
+----------- Adaptation de tinyMCE -----------
+	chercher "richir" :
+
+	* themes/advanced/langs/en.js, fr.js : "insert_imgsave" + "link_list" + "infobulle"
+	* fichier themes/advanced/imgsave.php (zoneModif.php)
+	* fichier themes/advanced/letrimgsave.php (letrRedig.php)
+	* plugins/advimage/image.htm : réserver id
+	* utils/form_utils.js : parcourir ssi src de advimage, changer "lang_browse"
+	* plugins/advlink/jscripts/functions.js : sans external_link_list_url, avec vatimcelilink
+	* plugins/advlink/jscripts/functions.js : sélection du lien local
+	* themes/advanced/editor_template.js : bouton et commande "mceIrichirBul"
+	* tiny_mce.js : execCommand "mceSrichirBul"
+	* fichier themes/advanced/ibulle.htm
+	* fichier themes/advanced/images/ibulle.gif
+	* themes/advanced/editor_template.js, utils/form_utils.js (theme_advanced_styles) : noms de classe
+	* déplacer la classe "textebulle" de publiq.css vers pstyle.css
+	* remplacer "blank.htm" par "tiny_mce_blank.htm" (2 fichiers et dans tous les codes)
+	* garder seulement plugins : advimage,advlink,contextmenu,paste,searchreplace,style,table
+	* enlever themes/simple
+	* enlever tiny_mce_src.js
+	* enlever themes/advanced/editor_template_src.js
+	* enlever les editor_plugin_src.js
+	* enlever themes/advanced/image.htm et link.htm
+	* enlever themes/advanced/jscripts/image.js et link.js
+	* enlever les readme.txt
+	* copier partout les fichiers de langue FR
+	* enlever 2 onglets de l'aide (themes/advanced/about.htm, themes/advanced/jscripts/about.js)
+	* plugins/advlink/langs/fr.js : "(sans cadre)"
+	* themes/advanced/langs/fr.js : theme_path "chemin"
+---------------------------------------------

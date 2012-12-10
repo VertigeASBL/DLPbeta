@@ -1,0 +1,18 @@
+<script type="text/javascript">
+<!--
+k = window.location; if (k.hostname.indexOf("comedien.be") != -1) k.href = "http://www.demandezleprogramme.be"+k.pathname+k.search+k.hash;
+//-->
+</script>
+<dl id="menu">
+<BOUCLE_rubriquea(RUBRIQUES){id_parent=3}{par num titre}{id_rubrique!=93}>
+	<dd class="node[(#EXPOSER|_down)]"><a href="[(#ID_RUBRIQUE|=={91}|?{'http://www.comedien.be/spip/-Professionnels-du-spectacle-',#URL_RUBRIQUE})]" class="node[(#EXPOSER|_down)]"> [(#TITRE|supprimer_numero)]</a><B_ss_rubriquea>
+	<dl><BOUCLE_ss_rubriquea(RUBRIQUES){id_parent}{par num titre}>
+		
+	<dd class="menu_item2[(#EXPOSER|_down)]"><a href="[(#PUCE|redirect_menu_ag{#ID_RUBRIQUE, #URL_RUBRIQUE})]"> [(#TITRE|supprimer_numero)]</a></dd>
+
+		
+		
+		</BOUCLE_ss_rubriquea> 
+	</dl></B_ss_rubriquea></dd>
+</BOUCLE_rubriquea>
+</dl>

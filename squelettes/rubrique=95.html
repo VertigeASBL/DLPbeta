@@ -1,0 +1,180 @@
+<?php 
+session_start();
+?>
+
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+	
+<style type="text/css">
+<!--
+.case_hors_periode_titre, .case_periode_actuelle_titre {
+	font-size: 17px;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-indent: 20px;
+}
+.case_hors_periode_titre{
+	color: #BBB;
+	background-color: #CCC;
+}
+.case_periode_actuelle_titre {
+	color: #009A99;
+	background-color: #FFF;
+}
+
+.case_hors_periode ul {
+	color: #CCC;
+}
+.case_periode_actuelle ul {
+	color: #333333;
+}
+
+
+
+/* ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ */
+
+.conc_conteneur {
+	font-size: 11px;
+	display: block;
+	width: 670px;
+	background-color: #E9E9E9;
+	margin: 2px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+
+.cloture_non, .cloture_oui {
+	padding: 5px;
+	min-height: 120px;
+}
+
+.cloture_non {
+	background: #11BBBB url('http://www.demandezleprogramme.be/agenda/design_pics/conc_bg_gagne.jpg') repeat-x top;
+}
+.cloture_non a {
+	color: #0000CC;
+}
+
+.cloture_oui {
+	background: #BABABA ;
+}
+.cloture_non form{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	width: 300px;
+}
+
+
+.titre_conc {
+	color: #FFFFFF;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.descriptif_concours {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+
+.date_cloture {
+	font-size: 12px;
+	color: #000000;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+}
+
+.liste_lots li {
+	font-size: 12px;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.conc_photo {
+	float:left;
+	margin:0px 10px 0px 0px;
+	text-align: left;
+	width: 130px;
+}
+
+.bloc_texte {
+	float:left;
+	margin:0px 10px 0px 0px;
+	text-align: left;
+	width: 440px;
+}
+
+.grande_image_conc {
+	float:right;
+	margin:0px 20px 10px 15px;
+	text-align: right;
+}
+.titre_form {
+	color: #FFFFFF;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+-->
+</style>
+
+
+</head>
+<body>
+<div id="header">
+	<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> -->
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+	<!-- 	<br /> <br /> <br /> <br /> <br /> 
+<div class="alerte">Notre module de concours est en développement : nous effectuons actuellement les derniers tests. Il n'y a donc pour l'instant rien à gagner. Merci de revenir plus tard.</div> -->
+
+		<INCLURE{fond=inc/varticle}{id_rubrique}>
+	<?php
+		if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+
+
+		// ********************************************************************************
+		// Affichage des concours :
+		// *************************
+		
+		$public_cible = 'jou01' ; // Groupe de joueurs auquel s'adresse ce concours
+		$page_contenant_concours = '-Concours,95-' ; // Pour les liens de retour
+		$bouton_tout_savoir = 'conc_tout_savoir.gif' ;
+		$bouton_retour = 'conc_retour.gif' ;
+		include('agenda/spip/conc_public.php'); 
+		
+		// ********************************************************************************
+		?>
+
+	</div>
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<?php include('agenda/spip/deconnection_spectateur_inspip.php'); ?>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

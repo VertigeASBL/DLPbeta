@@ -1,0 +1,51 @@
+<BOUCLE_princ(ARTICLES){id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+	<style type='text/css'>
+	.forml { display:block; margin:4px 0 16px 0; }
+	.reponse_formulaire { color:#900000; margin:16px 0; font-weight:bold; }
+	.previsu { border:1px solid #C08080; padding:8px; margin:0 16px 16px 0; }
+	</style>
+</head>
+
+<body onload="pagechargee();">
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		[<h3>(#TITRE)</h3>]
+		[<h4>(#SOUSTITRE)</h4>]
+		[(#TEXTE|paragrapher)]
+
+		#SET{varloc,#ENV{id_spect}|envoiform{#ENV{pseudo}}}
+		[(#GET{varloc}|=={0}|?{"<p>Cet spectateur n'a pas été trouvé.</p>",""})]
+
+		[(#GET{varloc}|=={0}|?{""," "})
+			<h4>Destinataire : [(#COMPTEUR_BOUCLE|getcvar{'pseudo'})]</h4>
+
+			#SET{varloc,#COMPTEUR_BOUCLE|getcvar{'email'}}
+			#FORMULAIRE_ECRIRE_AUTEUR{#GET{varloc}}
+		]
+		[(#PUCE|freecvar{'pseudo','email'})]
+	</div>
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

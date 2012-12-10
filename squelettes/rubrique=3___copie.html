@@ -1,0 +1,692 @@
+#CACHE{0}
+<BOUCLE_princ(RUBRIQUES){id_rubrique=3}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/css_calendrier_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/css_home.css" rel="stylesheet" type="text/css" media="screen" />
+<link rel="stylesheet" href="[(#CHEMIN{print_tur.css})]" type="text/css" media="print" />
+
+<link href="agenda/moteur_2_3/moteur_2.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/moteur_2_3/js/css/custom-theme/jquery-ui-1.7.2.custom.css" rel="stylesheet" type="text/css" media="screen" />
+
+<!-- script src="agenda/moteur_2_3/js/js/jquery-1.3.2.min.js" type="text/javascript"></script -->
+<script type="text/javascript" src="agenda/js/jquery.ui.all.js"></script> <!-- OK pour date picker et SESSIONS -->
+
+<script type="text/javascript">
+
+//window.loadFirebugConsole();
+$(document).ready(function (){
+	var numeroajax = 0;
+
+	/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	Cette fonction est appelée par les "mouvements" du visiteur
+	Elle va chercher les variables dans tous les champs du formulaire, 
+	et les envoie au PHP qui va ensuite les tester (==0 ?)
+	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	function appel_php() {
+		//console.debug("Fonction appel_php lancée") ;
+		
+		$('#nbre_resultats_id').fadeOut(10);
+
+
+		$('#event_preview_id').fadeTo(10, 0.2);
+		$('#event_preview_id').slideUp(20);
+
+		$('#event_preview_id_fleche').fadeTo(10, 0.2);
+		$('#event_preview_id_fleche').slideUp(20);		
+		
+		
+		// ---------------------------------------------
+		// On récupère toutes les valeurs des champs
+		// ---------------------------------------------
+		
+		
+		// RAZ champ d'info
+		$("#montrer_selection").html(""); 
+		votre_selection = '';
+		
+
+
+		// TEXTE LIBRE
+		valeur_txt_libre_recup = $("#chp_txt_libre").val();
+
+		//console.debug("Txte libre : "+valeur_txt_libre_recup) ;
+		if(valeur_txt_libre_recup!='') {
+			votre_selection+= "Texte libre : "+valeur_txt_libre_recup+"<br />";
+				//alert ('QQ') ;
+		}
+		else {
+			//votre_selection+= "Aucun texte libre choisi<br />";
+		}
+		
+		
+		// ---------------------------------------------
+
+
+		// ---------------------------------------------
+		// Requête AJAX
+		// ---------------------------------------------
+		$.post("agenda/moteur_2_3/requete_utf8/requete_home.php", {
+		chaine_txt_libre: ""+valeur_txt_libre_recup+""
+		}, function(data){
+			if (numeroajax > 1)
+				{ numeroajax--; return; }
+			var response_se = eval("(" + data + ")");
+			//console.log(response_se.variable_test);
+			//console.log(response_se.nombre_resultats);
+			//console.log(response_se.preview_event);
+
+			// Nombre de résultats
+			// ---------------------------------
+			$('#nbre_resultats_fleche').fadeIn(10);
+			$('#nbre_resultats_id').fadeIn(30);
+			if(response_se.nombre_resultats>0) {
+				$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
+			}
+			else {
+				$('#nbre_resultats_id').html("Aucun résultat");
+			}
+
+
+			// Liste prévisualisation
+			// ---------------------------------
+			if(response_se.nombre_resultats>0) {
+			
+					$('#event_preview_id_fleche').fadeIn(10);
+					$('#event_preview_id').fadeTo(10, 0.1, function () {
+				
+					$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
+					$('#event_preview_id').slideDown(20);
+					$('#event_preview_id').fadeTo(10, 1);
+					$('#event_preview_id_fleche').slideDown(20);
+					$('#event_preview_id_fleche').fadeTo(10, 1);
+				});
+			}
+			
+			// Afficher liste de proposition de titres quand des valeurs de retour AJAX existent 
+			// ------------------------------------------------------------------------------------
+			if(response_se.dlp_list_events.length != 0) {
+				var response_se = eval("(" + data + ")");
+	
+				$('#autoSuggestionsList').html(response_se.dlp_list_events);
+
+				// Effets de déroulement de la liste des suggestions
+				$('#suggestions').slideDown(40);
+				$('#suggestions').fadeTo(10, 1);
+			}
+			numeroajax--;
+		},"json");
+
+
+
+	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */		
+	}
+	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+	
+	
+	
+	/* TEST CHP LIBRE
+	********************* */
+	$("#chp_txt_libre").keyup(function() {
+		chaine_txt_libre = $(this).val();
+		if (chaine_txt_libre.length < 2)
+			return;
+
+		// Effets d'effacement de la liste des suggestions
+		$('#suggestions').fadeTo(1,0.4);
+		$('#suggestions').slideUp(30);
+
+		
+		// setTimeout = retarder une action
+		setTimeout(function attendre_un_peu() {
+			appel_php() ;
+		}, 500);
+		
+		
+	});
+
+
+
+		
+	/* Champ texte libre
+	********************* */
+	$("#chp_txt_libre").keyup(function lookup(valeur_chp_txt_libre) {
+	valeur_chp_txt_libre = $(this).val();
+	//console.log("Lookup = "+valeur_chp_txt_libre);
+	if(valeur_chp_txt_libre.length == 0) {
+		// Hide the suggestion box.
+		$('#suggestions').fadeOut(10);
+	} else {
+		
+		}
+	}) // # fct lookup
+
+
+	$("#form_moteur_dlp_ajax").submit(function() {
+		var chn = $(this).attr("action");
+		chn += chn.indexOf("?") == -1 ? "?" : "&";
+		chn += "recherche="+encodeURI($("#chp_txt_libre").val());
+		$(this).attr("action", chn);
+	});
+});
+
+function fill(thisValue) {
+	$("input[name='chp_txt_libre']").val(thisValue)
+	setTimeout("$('#suggestions').hide();", 20);
+	//alert(thisValue);
+}	
+
+
+</script>
+
+
+
+
+
+<style type="text/css">
+<!--
+.spip_documents_left, .spip_documents_right { 
+	border:none; /* pour bypasser le style de styles_tur.css */
+}
+.ligne_rouge {
+	position: absolute;
+	left: 0px;
+	top: 455px;
+	border-top: #8F0133 8px solid;
+	display: block;
+	width: 100%;
+}
+
+.case_hors_periode_titre, .case_periode_actuelle_titre {
+	font-size: 17px;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-indent: 20px;
+}
+.case_hors_periode_titre{
+	color: #BBB;
+	background-color: #CCC;
+}
+.case_periode_actuelle_titre {
+	color: #009A99;
+	background-color: #FFF;
+}
+
+.case_hors_periode ul {
+	color: #CCC;
+}
+.case_periode_actuelle ul {
+	color: #333333;
+}
+
+
+.recherche_et_calendrier {
+	float: left;
+	margin-left: 30px;
+}
+.recherche_et_calendrier_bulle_cal {
+	padding: 20px;
+	padding-bottom: 5px;
+	background-color: #E9E9E9;
+}
+
+/* Styles pour Top 5 */
+.un_event_preview {
+	font-size: 11px;
+	clear: both;
+}
+
+.image_flottante_preview img {
+	float:left;
+	margin-top: 2px;
+	margin-right: 5px;
+	margin-bottom: 2px;
+	margin-left: 5px;
+	width:30px ;
+	height:30px ;
+	padding:1px;
+	border:1px solid #000000;
+	background-color:#FFFFFF;
+}
+.image_flottante_preview a:hover img {
+	width:auto;
+	height:auto;
+	position:absolute;
+	left:-30px;
+	padding:1px;
+	border:1px solid #000000;
+	background-color:#FFFFFF;
+}
+.colonne2 { /* écrase le style général de styles_tur.css */
+	min-height:200px;
+}
+
+.nombre_de_jai_vu { /* écrase le style général de styles_tur.css */
+	min-height:200px;
+	color: #900033;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.actu_photo {
+	margin:0px 10px 2px 0px; /* écrase css_home */
+}
+#sepa_home{
+	width:100%; /* écrase css_home */
+	background:url(agenda/design_pics/ligne_rouge.jpg) repeat-x;
+}
+
+/* Styles moteur AJAX */
+.suggestionsBox {
+	background-color: #027473;
+	position: relative;
+	left: 0px;
+	margin: 10px 0px 0px 0px;
+	padding: 1px 10px 5px 10px;
+	width: 180px;
+	z-index: 5000;
+}
+
+.suggestionList li:hover {
+	color: #FFFF99;
+}
+
+
+-->
+</style>
+<script language="javascript" type="text/javascript">
+/* Toggle entre 2 blocs */
+function toggle_zone(Zone_id,txtReplier,txtDeplier) {
+	var targetElement; var targetElementLink;
+	targetElement = document.getElementById(Zone_id) ;
+	targetElementB = document.getElementById(Zone_id+'B');
+	targetElementLink = document.getElementById(Zone_id+'Link');
+	
+	if (targetElement.style.display == "none") {
+		targetElement.style.display = "block" ;
+		targetElementB.style.display = "none" ;
+	} else {
+		targetElement.style.display = "none" ;
+		targetElementB.style.display = "block" ;
+	}
+	return false;
+}
+</script>
+
+<script type="text/javascript">
+<!--
+/* Pour popup de "J'ai vu et aimé" */
+var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
+	ma_fenetre = window.open(Adresse_de_la_page,Nom_de_la_fenetre,'height=500,width=500,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=yes,top=100px,left=250px');
+	/* Donner le focus */
+	if(ma_fenetre.window.focus){
+		ma_fenetre.window.focus();
+	}
+}
+
+/* Pour relancer la page quand le popup de vote est fermé, et ainsi afficher le nouveau nombre de votes */
+function relance_la_page() {
+	location.reload();
+}
+
+-->
+</script>
+
+
+<script type="text/javascript" src="squelettes/insererhom.js"></script>
+</head>
+
+<body>
+<?php
+
+require 'agenda/inc_fct_base.php';
+require 'agenda/inc_var.php';
+
+// VVVVVVVVVVVVVVVVVVVVVVVVV Variables VVVVVVVVVVVVVVVVVVVVVVVVV
+/*$date_anterieure_critique = date ('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-7, date("Y"))); // La date limite de la critique la plus ancienne qui sera affichée de façon complète*/
+
+$date_anterieure_critique = date ('Y-m-d');		//pas de délai de 1 semaine pour la home
+
+$date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, date("Y")));  // Afin de ne pas afficher de critique dont l'événement ne se jouera pas avant 15 jours
+// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+?>
+
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+
+<div id="niveau1">
+<!--<div class="ligne_rouge"></div>-->
+
+<div class="colonne1">
+<h2 style="margin-left:180px; color: #009ABB">Votre agenda culturel et interactif</h2>
+	<div id="persos_top"></div>
+	<div style="float:right;width:520px;height:170px;padding-right:10px; ">
+
+
+
+
+
+<!-- AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Champ recherche contextuelle -->
+	<div class="recherche_et_calendrier">
+	 <br />
+	 <h2>Recherche</h2>
+		
+	  <form id="form_moteur_dlp_ajax" name="form_moteur_dlp_ajax" method="post" action="-Agenda-">
+	 <div class="recherche_et_calendrier_bulle_cal">
+		  
+		  <input name="chp_txt_libre" type="text" size="20" value="" id="chp_txt_libre" />
+		  <input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" style="position: relative;	top: 0px;" type="submit" alt="Cliquez pour lancer la recherche">
+		  <br />
+		  <a href="-Agenda-"><img src="agenda/design_pics/bouton-rech-avancee.png" /></a>
+	 </div>
+
+		
+		<div class="suggestionsBox" id="suggestions" style="display: none;">
+		 <img src="agenda/moteur_2_3/pics/fleche_verte_h.gif" style="position: relative; top: -11px; left: 30px;" alt="upArrow" />
+		 <div class="suggestionList" id="autoSuggestionsList"> &nbsp; </div>
+		</div>
+		
+		<input type="hidden" name="genre_event" value="non_selct" />
+		<input type="hidden" name="lieu_event" value="non_selct" />
+		<input type="hidden" name="ville_event" value="non_selct" />
+
+		<?php
+		// Date de début et fin de la période de recherche
+		$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y"))); // 
+		$date_fin_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")+12, date("d"), date("Y"))); // 
+		echo '<input type="hidden" name="date_debut" value="' . $date_debut_pour_moteur . '" />
+		<input type="hidden" name="date_fin" value="' . $date_fin_pour_moteur . '" />' ;
+		?>
+		
+
+		<br />
+		</form> &nbsp; 
+		<br />
+	</div>
+	
+<!-- #Champ recherche contextuelle -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- #AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+
+
+<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- Calendrier événements du mois -->
+	<br />
+	<div class="recherche_et_calendrier">
+		<?php
+		include('squelettes/inc_tur/inc_mini_calendrier_home.php'); 
+		?>
+	</div>
+<!-- #Calendrier événements du mois -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++ -->
+
+
+
+   </div>
+</div>
+
+<div class="colonne2">
+	<a href="agenda/user_admin/ins/a.php" target="_blank"><img src="squelettes/assets/inscrivezlieu.jpg" style="margin:0 0 0 -6px;" /></a>
+	<INCLURE{fond=inc_tur/christian_jade_home}>
+</div>
+<div class="clear"></div>
+</div>
+<div id="niveau2_wrap"><br />
+	<div id="niveau2">
+	<div class="colonne1_h">
+	
+	<div id="cadre_persos">
+	
+	<BOUCLE_littart1(RUBRIQUES){id_rubrique=125}>
+		<BOUCLE_littart(ARTICLES){branche} {par date}{inverse}{0,1}{logo}>
+			<div id="litterature">
+				<h2 class="titre_cadre">Espace Livres</h2>
+				
+				<div class="actu_photo">
+					[<a href="#URL_ARTICLE?rtr=y" style="text-decoration:none;">(#LOGO_ARTICLE||image_reduire{120,0}||inserer_attribut{"alt",#TITRE})</a>]
+				</div>
+				
+				<!-- Player MP3 -->
+				<B_docmp3><br />
+		<BOUCLE_docmp3(DOCUMENTS){id_article}{mode=document}{extension=mp3}{par num titre}{doublons}>
+			<object width="170" height="20" type="application/x-shockwave-flash" data="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" style="vertical-align:middle;">
+				<param name="movie" value="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" /><param name="src" value="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" />
+				<param name="quality" value="high" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" />
+				<embed width="200" height="45" type="video/quicktime" src="#URL_DOCUMENT" autostart="0" autoplay="0" showcontrols="1" controller="1" loop="0" pluginspage="http://www.apple.com/quicktime/download/" style="vertical-align:middle;"></embed>
+			</object>
+			</BOUCLE_docmp3>
+		
+				
+				<div class="texte_actu">
+					<h3 class="titre_actu">#TITRE</h3>
+					[<div class="descriptif_actu">(#CHAPO|couper{150})</div>]
+					<p><a href="#URL_ARTICLE?rtr=y">Afficher la suite &gt;&gt;</a></p>
+				</div>
+				
+				<div class="float_stop"></div>	
+			</div>
+		</BOUCLE_littart>
+	</BOUCLE_littart1>
+		
+<?php
+		//Choix aléatoire d'un perso
+		$nb_persos = 6;
+		$num_perso = rand(1, $nb_persos);
+		echo '<div id="perso"><img src="agenda/design_pics/perso_0'.$num_perso.'.gif" alt=""/></div>';
+?>
+	</div>
+ 
+<!-- ++++++++++++++++++++++ Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
+	<div class="cadre_actu">
+		<h2 class="titre_cadre">Vos coups de coeur du moment</h2>
+	#SET{tablo,#VAL{5}|obtenirjaivulies}
+	#SET{urldetail,#URL_RUBRIQUE{92}}
+
+	<BOUCLE_art_jai_vu(POUR){tableau #GET{tablo}}>
+		#SET{varloc,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{jai_vu}}
+		<div class="un_event_preview">
+			<span class="image_flottante_preview">
+				<a href="#GET{varloc}">
+				[(#VALEUR|table_valeur{pic_event_1}|oui)
+					<img src="agenda/pics_events/event_[(#VALEUR|table_valeur{id_event})]_1.jpg" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
+				[(#VALEUR|table_valeur{pic_event_1}|non)
+					<img src="agenda/moteur_2_3/pics/event_sans_image.gif" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
+				</a>
+			</span>
+			<span class="nombre_de_jai_vu">[(#VALEUR|table_valeur{jai_vu})]</span>
+			<a href="#vote" onclick="popup_jai_vu('agenda/jai_vu/jai_vu_popup.php?id=[(#VALEUR|table_valeur{id_event})]','Votons');">
+				<img src="agenda/design_pics/ico_jai_vu_mini.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" />
+			</a>
+			<strong><a href="#GET{varloc}">[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]</a></strong> | 
+			du [(#VALEUR|table_valeur{date_event_debut}|affdate{'d-m-Y'})] au [(#VALEUR|table_valeur{date_event_fin}|affdate{'d-m-Y'})] |
+			<strong>[(#VALEUR|table_valeur{nom_lieu})]</strong> | [(#VALEUR|table_valeur{resume_event}|monraccourcirchaine{65})]
+		</div>
+	</BOUCLE_art_jai_vu>
+	</div>
+<!-- ++++++++++++++++++++++ #Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
+
+<?php
+
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+
+	/*** Redimensionner les photos à 100px de larg ***/
+	$larg_max = 100;
+	function vignette_home($image,$w_vi_absolue,$nom){
+		// Largeur et hauteur initiales
+		$uploaded_pic = imagecreatefromjpeg($image); // = photo uploadée 
+		$largeur_uploaded = imagesx($uploaded_pic);
+		$hauteur_uploaded = imagesy($uploaded_pic);	
+	
+		if ($largeur_uploaded<=$w_vi_absolue)
+		{	
+			$new_W_Vignette = $largeur_uploaded ;
+			$new_H_Vignette = $hauteur_uploaded ;
+		}
+		else
+		{		
+			// W > maximum
+			if ($largeur_uploaded>$w_vi_absolue)
+			{
+					$new_W_Vignette = $w_vi_absolue;
+					// On recalcule la Hauteur proportionnellement
+					$new_H_Vignette = round($hauteur_uploaded * $w_vi_absolue / $largeur_uploaded);
+			}
+		}
+				
+		$resample = imagecreatetruecolor($new_W_Vignette, $new_H_Vignette); // Création image vide
+		imagecopyresampled($resample, $uploaded_pic, 0, 0, 0, 0, $new_W_Vignette, $new_H_Vignette, $largeur_uploaded, $hauteur_uploaded);
+		$destination_vi = 'agenda/vignettes_home/'.$nom.'.jpg';
+		@unlink($destination_vi);
+		imagejpeg($resample, $destination_vi);
+		
+		//Renvoie la hauteur de la vignette		
+		return $new_H_Vignette;
+	}	
+
+	/**** Couper le texte pour que la hauteur s'adapte à la hauteur de l'image ***/
+	function nb_cars($haut_img){
+		$hors_txt = 65;		//nb px hors texte à adapter
+		$px_ligne = 15;		//nb px par ligne
+		$car_ligne = 50;	//nb car par ligne
+		
+		if ($haut_img < $hors_txt){	//1 ligne min
+			$nb_car = $car_ligne;
+		}else{
+			//Nb de lignes à afficher
+			$nb_ligne = floor(($haut_img - $hors_txt) / $px_ligne);
+			//Nb de caractères à garder
+			if ($nb_ligne < 1) 
+				$nb_car = $car_ligne;
+			else
+				$nb_car = $nb_ligne * $car_ligne;
+		}
+		
+		return $nb_car;
+	}	
+
+	function couper_txt($texte,$nb_car){
+		//Texte découpé à afficher
+		$order   = array("\r\n", "\n", "\r");
+		$texte = str_replace($order, '', $texte);
+		
+		//remplacer les <br> avec espace
+		$br   = array("<br />", "<BR />", "<BR >","<br >");
+		$texte = str_replace($br, '<-xx->', $texte);
+		
+		//texte raccourci
+		$texte = substr ($texte, 0, $nb_car);		
+		
+		$a_couper = strlen(strrchr($texte, " "));
+		$texte = substr($texte, 0, strlen($texte)-$a_couper);	//tronquer au dernier mot
+		$texte = $texte.' ...';
+			
+		//remettre les br
+		$texte = str_replace('<-xx->', '<br />', $texte);
+		$texte = str_replace("<br /><br />", "<br />'", $texte);
+		
+		return $texte; 
+	}	
+
+	/*** Dernier Concours ***/
+	$public_cible = 'jou01' ; // Groupe de joueurs auquel s'adresse ce concours
+	$page_contenant_concours = '-Concours,95-' ; // Pour les liens de retour
+	$bouton_tout_savoir = 'conc_tout_savoir.gif' ;
+	$bouton_retour = 'conc_retour.gif' ;
+	include('agenda/spip/conc_public_home.php');  	
+	
+	/*** Dernière Interview --- Se connecter à comedien.be ***/
+	$k = 0; $chn = '';
+	$fp = fsockopen('www.comedien.be', 80, $k, $chn, 10);
+	if (! $fp)
+		echo '--- Connexion impossible : ',$k,' : ',$chn,' ---';
+	else {
+		//--- Envoyer la requête
+		fputs($fp, 'GET /spip.php?page=interview4 HTTP/1.0'."\r\n");
+		fputs($fp, 'HOST: www.comedien.be'."\r\n");
+		fputs($fp, "Connection: close\r\n\r\n");
+	
+		//--- Recevoir la réponse
+		$k = false;
+		while (! feof($fp)) {
+			$chn = fgets($fp, 4096);
+			if ($k)
+				echo $chn,"\n";
+			else if (strpos($chn, '**V_COM**') !== false)
+				$k = true;
+		}
+		fclose($fp);
+	}
+	unset($fp, $chn, $k);
+
+	/*** Dernière critique ***/	
+	require_once ('agenda/inc_var.php');
+	require_once ('agenda/inc_fct_base.php');
+	require_once ('agenda/calendrier/inc_calendrier.php');	
+	
+	$reponse = mysql_query("SELECT * FROM $table_evenements_agenda INNER JOIN  $table_lieu L
+			 ON cotisation_lieu > CURDATE() AND lieu_event = id_lieu
+			 AND critique_event != 0
+			 WHERE (date_event_fin > '$date_anterieure_critique' AND date_event_debut < '$date_limite_debut')
+			 AND pic_event_1 = 'set' 
+			 ORDER BY critique_event DESC LIMIT 1");
+
+	while ($GLOBALS['donnees'] = mysql_fetch_array($reponse))
+	{
+		$GLOBALS['contexte']['la_critique_cms'] = $GLOBALS['donnees']['critique_event']; /* Créer une variable environnement pour SPIP (cfr mesfonctions.php). Cette variable est définie AVANT d'inclure {fond=inc_tur/......" !!!! */
+
+	
+?><INCLURE{fond=inc_tur/critique_liste_home}>
+<?php
+	}	
+
+	echo '<div class="clear"></div>';
+ 
+
+?>	
+	<div class="clear"></div>
+	<br /><br />
+
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+
+	</div>
+	<div class="clear"></div>
+	
+	<?php
+	echo '<div id="sepa_home"></div>';
+	
+	/**** Prochains Events ***/
+	echo '<div class="titre_home">Prochains événements</div>';
+	
+	echo'<br />';
+	//include('agenda/spip/une_agenda_home.php');
+	include('agenda/spip/home_affich_event_hasard.php');
+	?>
+	
+	
+</div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

@@ -1,0 +1,71 @@
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<INCLURE{fond=inc_tur/agrubrheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/livreshaut}>
+</div>
+<INCLURE{fond=inc_tur/livresmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		<B_littart>
+			[<h2>(#DESCRIPTIF|liens_ouvrants)</h2>]
+			[(#TEXTE|paragrapher|liens_ouvrants)]
+			[<span class="detail_event_lieu"><a href="#URL_RUBRIQUE?page=fluxlitterature" target="_blank">[<img src="(#CHEMIN{assets/rssicon24.png})" title="flux rss" alt="flux rss" style="vertical-align:middle; margin-right:10px;" />]S'abonner au flux rss / podcast de (#TITRE|supprimer_numero)</a></span>]
+		<BOUCLE_littart(ARTICLES){id_rubrique}{par date}{inverse}{id_rubrique!=125}>
+			<div class="breve" style="clear:both;">
+				[<div class="breve_titre"><a href="#URL_ARTICLE?rtr=y">(#TITRE)</a>[<span class="breve_date"> - (#DATE|affdate)</span>]</div>]
+				[<h4>(#SOUSTITRE)</h4>]
+				[<span class="breve_pic"><a href="#URL_ARTICLE?rtr=y">(#LOGO_ARTICLE||image_reduire{100,0}||inserer_attribut{"alt",#TITRE})</a></span>]
+				[<p style="font-size:13px; font-style:italic;">(#CHAPO|liens_ouvrants)</p>]
+				<div class="en_savoir_plus"><a href="#URL_ARTICLE?rtr=y"><img src="agenda/design_pics/ecouter_interview.jpg" title="écoutez l'interview" alt="" /></a></div>
+				<div class="float_stop"></div>
+			</div>
+		</BOUCLE_littart>
+			<div style="text-align:right; font-size:12px;">
+				[(#ID_RUBRIQUE|=={153}|?{'<a href="m&#97;i&#108;t&#111;&#58;jeanjauniaux&#64;gmail.com">Interviews réalisées par Jean Jauniaux</a>','<a href="m&#97;i&#108;t&#111;&#58;edmondmorrel&#64;gmail.com">Interviews réalisées par Edmond Morrel</a>'})]
+			</div>
+		</B_littart>
+
+			<BOUCLE_artun(ARTICLES){id_rubrique}{id_article!=1271}{"<hr />"}>
+			[<h3>(#TITRE)</h3>]
+			[<h4>(#SOUSTITRE)</h4>]
+			[(#TEXTE|paragrapher|liens_ouvrants)]
+			[<div class="ps">(#PS)</div>]
+			#NOTES
+			</BOUCLE_artun>
+
+			<B_rubplus>
+				<hr />
+			<BOUCLE_rubplus(RUBRIQUES){id_parent=125}{par num titre}>
+				[<h3><a href="#URL_RUBRIQUE">(#TITRE|supprimer_numero)</a></h3>]
+				[<p><em>(#CHAPO|liens_ouvrants)</em></p>]
+			</BOUCLE_rubplus>
+
+		<//B_littart>
+	</div>
+	<div class="colonne2" style="margin-top:0px;">
+		<h3>Recherche</h3>
+		<form action="#SELF" method="get">
+			<input type="hidden" name="page" value="livresrecherche" />
+			<input type="text" class="text" name="recherche" value="#ENV{recherche}" accesskey="4" style="width:130px;" />
+			<input type="submit" class="submit" value="Ok" style="width:30px;" />
+		</form>
+		<div class="ligne_bas_col_2">&nbsp;</div>
+
+		<INCLURE{fond=inc_tur/livresnewsletter}>
+		<INCLURE{fond=inc_tur/services}>
+		<a href="#URL_RUBRIQUE?page=fluxlitterature" target="_blank" style="font-size:1.3em;">[<img src="(#CHEMIN{assets/rssicon24.png})" title="flux rss" alt="flux rss" style="vertical-align:middle; margin-right:10px;" />]S'abonner au podcast</a>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

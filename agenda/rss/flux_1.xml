@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rss version="2.0" xmlns:periode="http://www.demandezleprogramme.be/agenda/rss/doc/">
+
+ 
+<channel>
+<title>Club Plasma - Actualité</title>
+<link>http://www.clubplasma.be/</link>
+<description>Club Plasma, le réseau des organisateurs et salles de concerts de la Communauté française</description>
+<language>fr</language>
+<image>
+<title>Club Plasma</title>
+<url>http://www.clubplasma.be/rss/img/logo-club-plasma.jpg</url>
+<link>http://www.clubplasma.be/</link>
+<width>88</width>
+<height>76</height>
+<description>le réseau des organisateurs et salles de concerts de la Communauté française</description>
+</image>
+
+<item>
+<title>... et Startin' Pop On Tour</title>
+<link>http://www.clubplasma.be/index.php?p=actualite#59</link>
+<description>Le collectif Startin'Pop, qui regroupe une dizaine de groupes (14  Weeks, 7evenPM, belleclose, Championship Manager, Jakob Maersk, San  Remo, Six is Down, The Vogues et Virgil) sera en tournée les 24  novembre, 1er et 8 décembre à l'Escalier ; les 13 et 14 décembre au  Botanique et le 22 décembre au Belvédère.</description>
+<periode:debut>16-12-2007</periode:debut>
+<periode:fin>17-12-2007</periode:fin>
+</item>
+<item>
+<title>Matamore en tournée...</title>
+<link>http://www.clubplasma.be/index.php?p=actualite#58</link>
+<description>Les artistes du label Matamore se rassemblent sur scène pour quelques  soirées. Ce sera l'occasion de découvrir les nouvelles signatures du  label, Dada , Moufle et Pokett. Ces soirées qui passeront par le  Botanique à Bruxelles (le 21 novembre) et l'Inside Out à Liège (le 22  novembre) feront également escale au Belvédère à Namur</description>
+<periode:debut>11-12-2007</periode:debut>
+<periode:fin>12-12-2007</periode:fin>
+</item>
+<item>
+<title>Nouveau festival : les TransArdentes</title>
+<link>http://www.clubplasma.be/index.php?p=actualite#57</link>
+<description>Le festival les Ardentes a un petit frère : les TransArdentes. La  première édition aura lieu le samedi 26 janvier et sera dédié aux  musiques électroniques au sens large tout en gardant l'esprit festif et  conviviale du festival d'été. On annonce d'ores et déjà la présence de  la crème des DJs et lives internationaux tant en electro que techno,  minimal</description>
+<periode:debut>02-12-2007</periode:debut>
+<periode:fin>03-12-2007</periode:fin>
+</item>
+<item>
+<title>Panama investit le Belvédère</title>
+<link>http://www.clubplasma.be/index.php?p=actualite#54</link>
+<description>Les organisateurs namurois ont enfin leur lieu : le Belvédère, situé à  côté du Théâtre de Verdure (ça se déroule le désormais célèbre  Verdure Rock). Pour marquer le coup, les cinq asbl qui constituent  Panama (Quasimorock, RUN, Chemical Party, SK Rock et Bear Rock)</description>
+<periode:debut>25-11-2007</periode:debut>
+<periode:fin>26-11-2007</periode:fin>
+</item>
+</channel>
+</rss>

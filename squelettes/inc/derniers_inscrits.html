@@ -1,0 +1,65 @@
+<h3>Derniers inscrits</h3>
+<script type="text/javascript">
+	$jqr(document).ready(function() {
+		$jqr("#imgac1").mouseover(function(){
+//			var id=$jqr(this).id();
+			var answer=$jqr("#nomac1");
+			answer.show();
+			return false;
+		})
+		$jqr("#imgac1").mouseout(function(){
+			var answer=$jqr("#nomac1");
+			answer.hide(); 
+		})
+		$jqr("#imgac2").mouseover(function(){
+//			var id=$jqr(this).id();
+			var answer=$jqr("#nomac2");
+			answer.show();
+			return false;
+		})
+		$jqr("#imgac2").mouseout(function(){
+			var answer=$jqr("#nomac2");
+			answer.hide(); 
+		})
+		$jqr("#imgac3").mouseover(function(){
+//			var id=$jqr(this).id();
+			var answer=$jqr("#nomac3");
+			answer.show();
+			return false;
+		})
+		$jqr("#imgac3").mouseout(function(){
+			var answer=$jqr("#nomac3");
+			answer.hide(); 
+		})
+		$jqr("#imgac4").mouseover(function(){
+//			var id=$jqr(this).id();
+			var answer=$jqr("#nomac4");
+			answer.show();
+			return false;
+		})
+		$jqr("#imgac4").mouseout(function(){
+			var answer=$jqr("#nomac4");
+			answer.hide(); 
+		})
+	});
+</script>
+<?
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+	$sql = "SELECT ID,nom,prenom,url,siteweb,redirig,fichier FROM comediens LEFT OUTER JOIN com_photo ON ID=IDcom AND com_photo.lng='F' AND com_photo.metier='0_com' AND special='=2vi1' WHERE (accord & 1)<>0 AND fichier<>'' AND ID NOT IN (1952,1954,1960) ORDER BY ID DESC LIMIT 4";
+	$req = mysql_query($sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
+
+	for ($k = 1; $data = mysql_fetch_array($req); $k++) {
+		if ($data['redirig'] & 1)
+			$chn = '<a href="'.$data['siteweb'].'" target="_blank">';
+		else
+			$chn = '<a href="'.$data['url'].'">';
+		$g = htmlspecialchars($data['prenom'].' '.$data['nom']);
+
+		echo '<dl id="imgac',$k,'" class="liste_image1">',"\n",'<dt>',$chn,'<img src="_',$data['url'],'/',$data['fichier'],'" alt="',$g,'" class="onglet3" /></a></dt>',"\n";
+		echo '<dd style="display:none;" id="nomac',$k,'">',$g,'</dd>',"\n",'</dl>',"\n";
+	}
+	echo '<br style="clear:both;" />',"\n";
+?>

@@ -1,0 +1,46 @@
+
+<!-- Pour masquer le champ d'inscription à newsletter (Renaud) -->
+<script language=javascript>
+function toggle_zone_newsletter_replier(zone_newsletter_replier_id,txtReplier,txtDeplier) {
+var targetElement; var targetElementLink;
+targetElement = document.getElementById(zone_newsletter_replier_id) ;
+targetElementB = document.getElementById(zone_newsletter_replier_id+'B');
+targetElementLink = document.getElementById(zone_newsletter_replier_id+'Link');
+if (targetElement.style.display == "none") {
+	targetElement.style.display = "" ;
+	targetElementB.style.display = "none" ;
+	targetElementLink.innerHTML = txtReplier ;
+} else {
+	targetElement.style.display = "none" ;
+	targetElementB.style.display = "" ;
+	targetElementLink.innerHTML = txtDeplier ;
+}
+}
+</script>
+
+<div id="newsletter_informer">
+	<h3>Newsletter</h3>
+	<div id="zone_newsletter_replier1" style="display:block;">Pour être tenu au courant des activités, </div>
+	
+	<div id="zone_newsletter_replier1B" style="display:none;">		
+		<form id="lfoagltr" action="newsletter-DPts" method="post">
+			<fieldset>
+				<input type="text" name="eadr" id="ladrltr" size="26" value="votre adresse e-mail" /><label for="ladrltr" style="display:none;">Adresse&nbsp;email</label><br />
+				<span class="mini">Attention, si vous possédez une adresse YAHOO ou HOTMAIL, nous attirons votre attention sur le risque que nos messages ne vous arrivent pas ou qu'ils soient classés systématiquement dans vos spams. Nous vous invitons donc à inscrire et à utiliser une autre adresse pour le site.</span>
+
+				<br style="line-height:4px;" /><label for="lnaissltr">Date de naissance</label><br />
+				<input type="text" name="datnaiss" id="lnaissltr" size="12" value="jj-mm-aaaa" /> (facultatif)<br />
+				<input type="radio" name="inscr" id="linltr1id" value="Y" class="checkbox" checked="checked" />&nbsp;<label for="linltr1id">S'inscrire</label><br />
+				<input type="radio" name="inscr" id="linltr2id" value="N" class="checkbox" />&nbsp;<label for="linltr2id">Se&nbsp;désinscrire</label><br />
+				<input name="oper" type="hidden" value="DPts" /><input type="submit" value="OK" class="bouton1" />
+			</fieldset>
+			</form>
+	</div>
+		<span style="color:#009A99" >
+		<a href="javascript:toggle_zone_newsletter_replier('zone_newsletter_replier1','Afficher la suite','');" id="zone_newsletter_replier1Link">Inscrivez-vous</a>
+	</span>
+</div>
+
+<!-- Tracer un ligne blanche -->
+<div class="ligne_bas_col_2">&nbsp;</div>
+

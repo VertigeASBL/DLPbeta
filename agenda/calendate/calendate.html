@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>Calendrier</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript">
+	<!--
+	//++++++++++ Pop up pour saisir une date +++++++++++
+
+	var moisNom = new Array("janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre");
+	var moisNbr = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+	var odat, mois, annee, cejour, cemois, ceannee, xjour, xmois, xannee, idobj="";
+
+	function initialiser() {
+		chn = location.search;
+		n = chn.indexOf("cal=");
+		if (n != -1)
+			idobj = chn.substr(n + 4);
+		n = null;
+		if (typeof(window.opener) != "undefined" && ! window.opener.closed && idobj != "") {
+			chn = window.opener.document.getElementById(idobj);
+			if (chn)
+				n = chn.value.match(/^(\d{4})\D(\d{2})\D(\d{2})$/);
+		}
+		if (n != null) {
+			n[1] = parseInt(n[1], 10);
+			n[2] = parseInt(n[2], 10);
+			n[3] = parseInt(n[3], 10);
+		}
+		if (n == null || n[1]<1900 || n[1]>2100 || n[2]<1 || n[2]>12 || n[3]<1 || n[3]>31) {
+			odat = new Date();
+			mois = odat.getMonth();
+			annee = odat.getFullYear();
+			cejour = odat.getDate();
+			cemois = mois;
+			ceannee = annee;
+			xjour = 0;
+			xmois = 0;
+			xannee = 0;
+		}
+		else {
+			odat = new Date();
+			cejour = odat.getDate();
+			cemois = odat.getMonth();
+			ceannee = odat.getFullYear();
+			n[2]--;
+			odat.setFullYear(n[1], n[2], n[3]);
+			mois = odat.getMonth();
+			annee = odat.getFullYear();
+			xjour = n[3];
+			xmois = mois;
+			xannee = annee;
+		}
+	}
+	function bisextile(an) {
+		if ((an / 4) != Math.floor(an / 4))
+			return false;
+		if ((an / 100) != Math.floor(an / 100))
+			return true;
+		if ((an / 400) != Math.floor(an / 400))
+			return false;
+		return true;
+	}
+	function changerMois() {
+		mois = document.getElementById('selmois').selectedIndex;
+		montrerCal();
+		document.getElementById('selmois').focus();
+	}
+	function changerAn() {
+		k = parseInt(document.getElementById('selannee').value, 10);
+		if (k == annee)
+			return false;
+		else
+			if (k >= 1000 && k <= 3000) {
+				annee = k;
+				montrerCal();
+				document.getElementById('selannee').focus();
+
+				return false;
+			}
+			else
+				return true;
+	}
+	function moisPrec() {
+		if (mois > 0)
+			mois--;
+		else {
+			mois = 11;
+			annee--;
+		}
+		montrerCal();
+	}
+	function moisSuiv() {
+		if (mois < 11)
+			mois++;
+		else {
+			mois = 0;
+			annee++;
+		}
+		montrerCal();
+	}
+	function montrerCal() {
+		odat.setFullYear(annee, mois, 15);
+
+   		prem = odat.getDay();
+   		if (prem)
+   			prem--;
+   		else
+   			prem = 6;
+
+		nbrj = moisNbr[mois];
+		if (mois == 1 && bisextile(annee))
+			nbrj = 29;
+
+		chn = "<table class='tableau' cellspacing='2' cellpadding='0'>";
+		chn += "<tr><td onclick='moisPrec()' class='vois1' onmouseover='this.className=\"vois2\"' onmouseout='this.className=\"vois1\"'>&lt;&lt;<\/td>";
+		chn += "<td colspan='5' class='moisan'><select id='selmois' onchange='changerMois()' class='fselect'>";
+		for (k = 0; k < 12; k++)
+			chn += "<option" + (k == mois ? " selected>" : ">") + moisNom[k] + "<\/option>";
+		chn += "<\/select> &nbsp; ";
+		chn += "<input id='selannee' type='text' value='" + annee + "' size='4' onkeyup='changerAn()' onchange='changerAn()' class='finput' /><\/td>";
+		chn += "<td onclick='moisSuiv()' class='vois1' onmouseover='this.className=\"vois2\"' onmouseout='this.className=\"vois1\"'>&gt;&gt;<\/td><\/tr>";
+		chn += "<tr><td class='sem'>lu<\/td><td class='sem'>ma<\/td><td class='sem'>me<\/td><td class='sem'>je<\/td><td class='sem'>ve<\/td><td class='sem'>sa<\/td><td class='sem'>di<\/td><\/tr>";
+
+	   	for (k = 1; k <= nbrj; ) {
+			chn += "<tr>";
+	   		for (x = 0; x < 7; x++)
+				if (x >= prem && k <= nbrj) {
+					if (k == xjour && mois == xmois && annee == xannee)
+						chn += "<td class='chx'";
+					else if (k == cejour && mois == cemois && annee == ceannee)
+						chn += "<td class='cur' onmouseover='this.className=\"chx\"' onmouseout='this.className=\"cur\"'";
+					else if (x >= 5)
+						chn += "<td class='wke' onmouseover='this.className=\"chx\"' onmouseout='this.className=\"wke\"'";
+					else
+						chn += "<td class='otr' onmouseover='this.className=\"chx\"' onmouseout='this.className=\"otr\"'";
+					chn += " onclick='cliquerDate(" + k + ")'>" + k++ + "<\/td>";
+					prem = 0;
+				}
+				else
+					chn += "<td><\/td>";
+			chn += "<\/tr>";
+		}
+		chn += "<\/table>";
+
+		document.getElementById('calendrier').innerHTML = chn;
+	}
+	function cliquerDate(jr) {
+		if (changerAn()) {
+			alert("L'année ne semble pas valide");
+			return;
+		}
+		if (typeof(window.opener) != "undefined" && ! window.opener.closed && idobj != "") {
+			chn = annee + "-";
+			if (mois < 9)
+				chn += "0";
+			chn += (mois + 1) + "-";
+			if (jr <= 9)
+				chn += "0";
+			chn += jr;
+			k = window.opener.document.getElementById(idobj);
+			if (k)
+				k.value = chn;
+			window.opener.focus();
+		}
+		window.close();
+	}
+	//-->
+	</script>
+
+	<style type="text/css">
+		body {
+			background-color:#FFFFFF;
+			color:#000000;
+			margin:4px;
+		}
+		.tableau {
+			width:100%;
+			border-width:0px;
+			text-align:center;
+			font-family:Verdana, Arial, Helvetica, sans-serif;
+			font-size:12px;
+		}
+		.tableau td {
+			height:20px;
+			padding:0px;
+			vertical-align:middle;
+		}
+		.vois1 { background-color:#D0E8F0; cursor:pointer; }
+		.vois2 { background-color:#C0D8FF; cursor:pointer; }
+		.moisan {
+			cursor:default;
+		}
+		.sem {
+			width:14%;
+			font-weight:bold;
+			cursor:default;
+		}
+		.cur { background-color:#D0E8F0; cursor:pointer; }
+		.chx { background-color:#FFFCB0; cursor:pointer; }
+		.wke { background-color:#E0E0E0; cursor:pointer; }
+		.otr { cursor:pointer; }
+		.fselect {
+			margin:0px;
+		}
+		.finput {
+			padding-left:2px;
+			padding-right:2px;
+			margin:0px;
+		}
+	</style>
+</head>
+<body onload="initialiser(); montrerCal(); window.focus(); document.getElementById('selannee').focus()">
+	<span id="calendrier"></span>
+</body>
+</html>

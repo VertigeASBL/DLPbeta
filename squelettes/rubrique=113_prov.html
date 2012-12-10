@@ -1,0 +1,199 @@
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/css_calendrier_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="agenda/css_home.css" rel="stylesheet" type="text/css" media="screen" />
+<style type="text/css">
+<!--
+.spip_documents_left, .spip_documents_right { 
+	border:none; /* pour bypasser le style de styles_tur.css */
+}
+.ligne_rouge {
+	position: absolute;
+	left: 0px;
+	top: 455px;
+	border-top: #8F0133 8px solid;
+	display: block;
+	width: 100%;
+}
+
+.case_hors_periode_titre, .case_periode_actuelle_titre {
+	font-size: 17px;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-indent: 20px;
+}
+.case_hors_periode_titre{
+	color: #BBB;
+	background-color: #CCC;
+}
+.case_periode_actuelle_titre {
+	color: #009A99;
+	background-color: #FFF;
+}
+
+.case_hors_periode ul {
+	color: #CCC;
+}
+.case_periode_actuelle ul {
+	color: #333333;
+}
+-->
+</style>
+<script language="javascript" type="text/javascript">
+/* Toggle entre 2 blocs */
+function toggle_zone(Zone_id,txtReplier,txtDeplier) {
+	var targetElement; var targetElementLink;
+	targetElement = document.getElementById(Zone_id) ;
+	targetElementB = document.getElementById(Zone_id+'B');
+	targetElementLink = document.getElementById(Zone_id+'Link');
+	
+	if (targetElement.style.display == "none") {
+		targetElement.style.display = "block" ;
+		targetElementB.style.display = "none" ;
+	} else {
+		targetElement.style.display = "none" ;
+		targetElementB.style.display = "block" ;
+	}
+	return false;
+}
+</script>
+
+<script type="text/javascript" src="squelettes/insererhom.js"></script>
+</head>
+
+<body>
+
+<?php
+// VVVVVVVVVVVVVVVVVVVVVVVVV Variables VVVVVVVVVVVVVVVVVVVVVVVVV
+$date_anterieure_critique = date ('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-7, date("Y"))); // La date limite de la critique la plus ancienne qui sera affichée de façon complète
+// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+?>
+
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+
+<div id="niveau1">
+<!--<div class="ligne_rouge"></div>-->
+
+<div class="colonne1">
+	<div id="persos_top"></div>
+	<div style="float:right;width:520px;height:220px;padding-right:10px;">
+   <BOUCLE1(ARTICLES){id_rubrique}>
+	#TEXTE
+   </BOUCLE1>
+   </div>
+</div>
+<div class="colonne2">
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+</div>
+<div class="clear"></div>
+</div>
+<div id="niveau2_wrap">
+	<div id="niveau2">
+	<div class="colonne1">
+	
+	<?php
+		//Choix aléatoire d'un perso
+		$nb_persos = 3;
+		$num_perso = rand(1, $nb_persos);
+		echo '<div id="cadre_persos"><div id="perso"><img src="agenda/design_pics/perso_0'.$num_perso.'.gif" alt=""/></div></div>';
+	?>
+	
+	<div class="titre_home">Actus</div>
+<?php 
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+
+	/*** Dernier Concours ***/
+	$public_cible = 'jou01' ; // Groupe de joueurs auquel s'adresse ce concours
+	$page_contenant_concours = '-Concours,95-' ; // Pour les liens de retour
+	$bouton_tout_savoir = 'conc_tout_savoir.gif' ;
+	$bouton_retour = 'conc_retour.gif' ;
+	include('agenda/spip/conc_public_home.php'); 	 	
+	
+	/*** Dernière Interview --- Se connecter à comedien.be ***/
+	$k = 0; $chn = '';
+	$fp = fsockopen('www.comedien.be', 80, $k, $chn, 10);
+	if (! $fp)
+		echo '--- Connexion impossible : ',$k,' : ',$chn,' ---';
+	else {
+		//--- Envoyer la requête
+		fputs($fp, 'GET /spip.php?page=interview2 HTTP/1.0'."\r\n");
+		fputs($fp, 'HOST: www.comedien.be'."\r\n");
+		fputs($fp, "Connection: close\r\n\r\n");
+	
+		//--- Recevoir la réponse
+		$k = false;
+		while (! feof($fp)) {
+			$chn = fgets($fp, 4096);
+			if ($k)
+				echo $chn,"\n";
+			else if (strpos($chn, '**V_COM**') !== false)
+				$k = true;
+		}
+		fclose($fp);
+	}
+	unset($fp, $chn, $k);
+
+	/*** Dernière critique ***/	
+	require_once ('agenda/inc_var.php');
+	require_once ('agenda/inc_fct_base.php');
+	require_once ('agenda/calendrier/inc_calendrier.php');	
+
+	$reponse = mysql_query("SELECT * FROM $table_evenements_agenda INNER JOIN  $table_lieu L
+			 ON cotisation_lieu > CURDATE() AND lieu_event = id_lieu
+			 AND critique_event != 0
+			 WHERE (date_event_fin > '$date_anterieure_critique') ORDER BY date_event_debut DESC LIMIT 1");
+	
+	while ($GLOBALS['donnees'] = mysql_fetch_array($reponse))
+	{
+		$GLOBALS['contexte']['la_critique_cms'] = $GLOBALS['donnees']['critique_event']; /* Créer une variable environnement pour SPIP (cfr mesfonctions.php). Cette variable est définie AVANT d'inclure {fond=inc_tur/......" !!!! */
+	
+		?><INCLURE{fond=inc_tur/critique_liste_home}><?php
+	
+	}	
+
+	echo '<div class="clear"></div>';
+	echo '<div id="sepa_home"></div>';
+ 
+	/**** Derniers Events ***/
+	//	require('php/obtenirvar.php');
+	echo '<div class="titre_home">Prochains événements</div>';
+	
+	if ((int)'[(#ENV{id_rubrique}|texte_script)]' == 113)
+	{
+		echo'<br />';
+		include('agenda/spip/une_agenda_home.php');
+	}
+	else
+		echo ' Le numéro de rubrique ne convient pas. ';	
+	?>	
+	
+	<div class="clear"></div>
+	<br /><br />
+
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+
+	</div>
+	<div class="clear"></div>
+</div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

@@ -1,0 +1,20 @@
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+k = window.location;
+if (k.hostname.indexOf("demandezleprogramme.be") != -1)
+	if (k.pathname == "/")
+		k.href = "http://www.demandezleprogramme.be/-Demandez-le-programme-";
+	else
+		k.href = "http://www.comedien.be"+k.pathname+k.search+k.hash;
+_uacct = "UA-2971089-2"; urchinTracker();
+//-->
+</script>
+<ul id="menu">
+<BOUCLE_rubriquea(RUBRIQUES){racine}{par num titre}{id_rubrique!=3}{id_rubrique!=7}{id_rubrique!=99}{id_rubrique!=102}>
+	<li class="node[(#EXPOSER|_down)]"><a href="[(#ID_RUBRIQUE|=={57}|?{'http://www.demandezleprogramme.be/-Demandez-le-programme-',#URL_RUBRIQUE})]" class="node[(#EXPOSER|_down)]"> [(#TITRE|supprimer_numero)]</a><B_ss_rubriquea>
+	<ul><BOUCLE_ss_rubriquea(RUBRIQUES){id_parent}{par num titre}>
+		<li class="menu_item2[(#EXPOSER|_down)]"><a href="#URL_RUBRIQUE"> [(#TITRE|supprimer_numero)]</a></li></BOUCLE_ss_rubriquea> 
+	</ul></B_ss_rubriquea></li>
+</BOUCLE_rubriquea>
+</ul>

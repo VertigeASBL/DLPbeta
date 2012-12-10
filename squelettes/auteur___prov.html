@@ -1,0 +1,42 @@
+<BOUCLE_princ(AUTEURS){id_auteur}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc/header}>
+</head>
+
+<body>
+<div id="header">
+	<h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1>
+	<INCLURE{fond=inc/banner_haut}>
+</div>
+<INCLURE{fond=inc/menu}>
+<div id="principal">
+	<div class="colonne1">
+		<h2><:auteurs:></h2>
+		[<h3>(#NOM)</h3>]
+		[<img src="IMG/(#LOGO_AUTEUR|fichier)" class="onglet1" alt="portrait de #NOM" />]
+		<p>#BIO</p>
+		[<p><:website:> : <a href="#URL_SITE">(#NOM_SITE)</a></p>]
+		<h3>Les autres auteurs du site</h3>
+		<ul>
+		<BOUCLE_auteurs(AUTEURS)>
+		<li><a href="#URL_AUTEUR">#NOM</a></li>
+		</BOUCLE_auteurs>
+		</ul>
+	</div>
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc/form_repertoire}>
+		<INCLURE{fond=inc/decouvrir}>
+		<INCLURE{fond=inc/form_newsletter}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

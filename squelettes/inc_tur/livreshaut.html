@@ -1,0 +1,15 @@
+<a href="http://www.espace-livres.be" accesskey="1"><img src="squelettes/assets/logo_header_livres.jpg" alt="Espace Livres" align="left" /></a>
+ 
+<?php	
+	require_once("admintool/fonctions.php");
+	require_once("affiche_banner2.php");
+	
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+
+	$circuit = 'la_une';
+	
+	affich_banner_horiz($circuit);
+?>

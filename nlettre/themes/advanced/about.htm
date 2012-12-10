@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{$lang_about_title}</title>
+	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<script language="javascript" type="text/javascript" src="../../utils/mctabs.js"></script>
+	<script language="javascript" type="text/javascript" src="jscripts/about.js"></script>
+	<base target="_self" />
+</head>
+<body id="about" onload="tinyMCEPopup.executeOnLoad('init();');" style="display: none">
+		<div class="tabs">
+			<ul>
+				<li id="help_tab"><span><a href="javascript:mcTabs.displayTab('help_tab','help_panel');" onmousedown="return false;">{$lang_help}</a></span></li>
+			</ul>
+		</div>
+
+		<div class="panel_wrapper">
+			<div id="help_panel" class="panel current" style="overflow: visible;">
+				<div id="iframecontainer"></div>
+			</div>
+		</div>
+
+		<div class="mceActionPanel">
+			<div style="float: right">
+				<input type="button" id="cancel" name="cancel" value="{$lang_close}" onclick="tinyMCEPopup.close();" />
+			</div>
+		</div>
+</body>
+</html>

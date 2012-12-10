@@ -1,0 +1,27 @@
+<B_artnbr>
+	#SET{n_plus,#TOTAL_BOUCLE|>{1}|?{'[0-9]+','x'}}
+	#SET{n_seul,'[0-9]+'}
+<BOUCLE_artnbr(ARTICLES){id_rubrique}>&nbsp;</BOUCLE_artnbr>
+	#SET{n_plus,'x'}
+	#SET{n_seul,'x'}
+<//B_artnbr>
+<BOUCLE_artirub(RUBRIQUES){id_rubrique}>
+	<B_artplus><!-- qart + -->
+		[<h2>(#TITRE|supprimer_numero)</h2>]
+	<BOUCLE_artplus(ARTICLES){id_rubrique}{id_article==#GET{n_plus}}{par date}>
+		[<h3><a href="#URL_ARTICLE?rtr=y">(#TITRE)</a></h3>]
+		[<p><em>(#CHAPO)</em></p>]
+	</BOUCLE_artplus>
+		<B_artun><!-- qart 1 -->
+		<BOUCLE_artun(ARTICLES){id_rubrique}{id_article==#GET{n_seul}}>
+			[<h3>(#TITRE)</h3>]
+			[<p>(#SOUSTITRE)</p>]
+			[(#TEXTE|paragrapher)]
+			[<div class="ps">(#PS)</div>]
+			#NOTES
+		</BOUCLE_artun><!-- qart 0 -->
+			[<h2>(#TITRE|supprimer_numero)</h2>]
+			[(#TEXTE|paragrapher)]
+		<//B_artun>
+	<//B_artplus>
+</BOUCLE_artirub>

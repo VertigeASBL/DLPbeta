@@ -1,0 +1,69 @@
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+
+<div id="principal">
+	<div class="colonne1" id="eventcritique">
+		[<h2>(#TITRE|supprimer_numero)</h2>]
+
+	[(#REM) ----- 103 : rub Espace critiques ----- ]
+	#SET{tablo,#VAL{103}|obtenirarticleslies{critique_event,21}}
+	#SET{urldetail,#URL_RUBRIQUE{92}}
+
+	<BOUCLE_art_critique(POUR){tableau #GET{tablo}}>
+		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{critique}}
+	<div class="event2[(#COMPTEUR_BOUCLE|alterner{'','','trois'})]">
+		<div class="surdate">
+			<h3>
+				<a href="#GET{varurl}">
+					[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+				</a>
+			</h3>
+			<h4>
+				[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+			</h4>
+			[par (#VALEUR|table_valeur{nom})]
+
+		<BOUCLE_etoiles(DOCUMENTS){id_article=#VALEUR|table_valeur{id_article}}{fichier LIKE %etoile%}{mode=image}{0,1}>
+			<br /><img src="#FICHIER" alt="" />
+		</BOUCLE_etoiles>
+
+			#SET{vimage,''}
+			[(#VALEUR|table_valeur{pic_event_1}|oui)
+				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}}
+			<br /><a href="#GET{varurl}">
+				<img src="#GET{vimage}" class="onglet6" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />
+			</a>]
+			[<p>(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{350,38}})</p>]
+		</div>
+		[<span class="details">(#VALEUR|table_valeur{date}|affdate)</span>]
+	</div>
+	</BOUCLE_art_critique>
+
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

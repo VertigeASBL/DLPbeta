@@ -1,0 +1,37 @@
+<?php
+	@header('Content-type: text/xml[; charset=(#CHARSET)]');
+	echo '<'.'?xml version="1.0" encoding="#CHARSET"?'.">\n";
+?>
+<rss version="0.91" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+	<title>Demandez le programme - Espace Livres[ : (#TITRE|supprimer_numero|texte_backend)]</title>
+	<link>[(#URL_RUBRIQUE|url_absolue)]</link>
+	<description>[(#DESCRIPTIF|texte_backend)][ - (#TEXTE|texte_backend)]</description>
+	<language>fr</language>
+
+	<image>
+		<title>Demandez le programme - Espace Livres[ : (#TITRE|supprimer_numero|texte_backend)]</title>
+		<url>[(#LOGO_SITE_SPIP||extraire_attribut{src}|url_absolue|texte_backend)]</url>
+		<link>[(#URL_RUBRIQUE|url_absolue)]</link>
+		<description>demandezleprogramme.be</description>
+	</image>
+
+	<BOUCLE_un_article(ARTICLES){branche}{par date}{inverse}{0,20}>
+		#SET{atitre,#TITRE}
+		<BOUCLE_podcast(DOCUMENTS){id_article}{mode=document}{extension=mp3}{par num titre}{doublons}>
+	<item>
+		<title>[(#GET{atitre}|supprimer_numero|texte_backend)] - #COMPTEUR_BOUCLE</title>
+		<link>[(#URL_ARTICLE|url_absolue)#mp3_#COMPTEUR_BOUCLE]</link>
+		<description>[(#TITRE|supprimer_numero)][ - (#CHAPO|liens_absolus|couper{150}|texte_backend)]</description>
+		<dc:date>[(#DATE|date_iso)]</dc:date>
+		<dc:format>audio/mpeg</dc:format>
+		<dc:language>#LANG</dc:language>
+
+		[<enclosure url="(#URL_DOCUMENT|url_absolue|unique)" length="[(#TAILLE)]" type="#MIME_TYPE" />]
+	</item>
+		</BOUCLE_podcast>
+	</BOUCLE_un_article>
+</BOUCLE_princ>
+</channel>
+</rss>

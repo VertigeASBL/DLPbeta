@@ -1,0 +1,68 @@
+/* Styles dispos pour tiny */
+
+/* TinyMCE specific rules */
+body.mceContentBody {
+	background: #FFF;
+	font-size: 13px;
+}
+/* ----------------- */
+
+h1{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:18px;
+	color:#333366;
+	margin:0px;
+}
+h2{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:15px;
+	color:#666699;
+	margin-top:0;
+}
+h3{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:13px;
+	color:#9999CC;
+}
+
+.support {
+	font-size: 90%;
+	color: #999999;
+	text-align: center;
+	border-top: 1px solid #999999;
+	margin-right: 20%;
+	margin-left: 20%;
+	padding-top: 10px;
+}
+.support a { color: #999999; }
+.support a:hover { color: #00AAFF; }
+
+
+
+.mini  {
+	font-size: 9px;
+	color: #666666;
+}
+
+
+.log_off {
+	color: #333333;
+	font-size: 11px;
+	text-align: right;
+}
+.log_off a {
+	color: #666666;
+	text-decoration: underline;
+}
+.log_off a:hover {
+	color: #FFFFFF;
+	border-top: 1px #CCCCCC solid;
+	border-left: 1px #CCCCCC solid;
+	border-right: 1px #333333 solid;
+	border-bottom: 1px #333333 solid;
+	text-decoration: none;
+	background-color: #666666;
+	padding-right: 1px;
+	padding-left: 1px;
+}
+

@@ -1,0 +1,54 @@
+<BOUCLE_princ(ARTICLES){id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="pagechargee();">
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		[<h2>(#TITRE)</h2>]
+		[<h3>(#SOUSTITRE)</h3>]
+		[(#TEXTE|paragrapher)]
+		[<div class="ps">(#PS)</div>]
+<?
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+	require('php/obtenirvar.php');
+	$lng = 'fr';
+	define('DEBUGSQL', false);
+	define('NOMDUSITE', 'demandezleprogramme.be');
+	define('ADRDUSITE', 'info@demandezleprogramme.be');
+	switch ($id_article) {
+		case 231: $prmsys['inletter'][0] = 'DPab'; break;
+		case 523: $prmsys['inletter'][0] = 'DPsp'; break;
+		case 917: $prmsys['inletter'][0] = 'DPel'; break;
+		default: $prmsys['inletter'][0] = 'DPts';
+	}
+	include('php/inletter.php');
+?>
+	</div>
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

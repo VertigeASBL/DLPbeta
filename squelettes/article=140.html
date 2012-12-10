@@ -1,0 +1,252 @@
+<BOUCLE_princ(ARTICLES){id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="pagechargee();">
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		[<h2>(#TITRE)</h2>]
+		[<h3>(#SOUSTITRE)</h3>]
+		[(#TEXTE|paragrapher)]
+		[<div class="ps">(#PS)</div>]
+<?
+$nom_destinataire = '';
+$email_destinataire = '';
+$nom_expediteur = '';
+$email_expediteur = '';
+$texte_message = '';
+
+$rec_etat = 'ini';
+if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'Envoyer')) 
+{
+	function encodeHeader($chn) {
+		preg_match_all('/(\s?\w*[\x80-\xFF]+\w*\s?)/', $chn, $tab);
+		while (list(, $s1) = each($tab[1])) {
+			$s2 = preg_replace('/([\x20\x80-\xFF])/e', '"=".strtoupper(dechex(ord("\1")))', $s1);
+			$chn = str_replace($s1, '=?ISO-8859-1?Q?'.$s2.'?=', $chn);
+		}
+		return $chn;
+	}
+	$rec_etat = '';
+	$url_page = trim('[#URL_SITE_SPIP/article(#ENV{id_art}).html][(#ENV{id_art}|?{""," "})[#URL_SITE_SPIP/rubrique(#ENV{id_rub}).html][(#ENV{id_rub}|?{""," "})#URL_SITE_SPIP/]]');
+
+	// ------------------------------------------------------------
+	// TEST NOM DESTINATAIRE
+	if (isset($_POST['nom_destinataire']) AND ($_POST['nom_destinataire'] != NULL)) 
+	{
+		$nom_destinataire = stripslashes($_POST['nom_destinataire']);
+	}
+	else
+	{
+		$rec_etat .= '- Vous devez introduire le nom du destinataire <br />';
+		$error_nom_destinataire = '<div style="color:#AA0000;">Vous devez introduire le nom du destinataire</div>';
+	}
+
+	// ------------------------------------------------------------
+	//  TEST EMAIL DESTINATAIRE
+	if ((isset($_POST['email_destinataire']) 
+	AND (preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", $_POST['email_destinataire']))))
+	{
+		$email_destinataire = $_POST['email_destinataire'];
+	}
+	else
+	{
+		$rec_etat .= '- Vous devez introduire une adresse e-mail valide pour le destinataire<br />';
+		$error_email_destinataire = '<div style="color:#AA0000;">Vous devez introduire une adresse e-mail valide pour le destinataire</div>';
+	}
+
+	// ------------------------------------------------------------
+	// TEST NOM EXPEDITEUR
+	if (isset($_POST['nom_expediteur']) AND ($_POST['nom_expediteur'] != NULL)) 
+	{
+		$nom_expediteur = stripslashes($_POST['nom_expediteur']);
+	}
+	else
+	{
+		$rec_etat .= '- Vous devez introduire votre nom<br />';
+		$error_nom_expediteur = '<div style="color:#AA0000;">Vous devez introduire votre nom</div>';
+	}
+
+	// ------------------------------------------------------------
+	//  TEST EMAIL EXPEDITEUR
+	if ((isset($_POST['email_expediteur']) 
+	AND (preg_match("!^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$!", $_POST['email_expediteur']))))
+	{
+		$email_expediteur = $_POST['email_expediteur'];
+	}
+	else
+	{
+		$rec_etat .= '- Vous devez introduire votre adresse e-mail valide<br />';
+		$error_email_expediteur = '<div style="color:#AA0000;">Vous devez introduire votre adresse e-mail valide</div>';
+	}
+
+	// -----------------------------------------
+	// TEST TEXTE MESSAGE PERSO 
+	if (!empty($_POST['champ_texte']) AND ($_POST['champ_texte'] != NULL)) 
+	{
+		$texte_message = $_POST['champ_texte'];
+		$longueur_max_message = 600 ;
+		if (strlen($texte_message)>=$longueur_max_message)
+		{
+			$texte_message = stripslashes(wordwrap($texte_message, 50, " ", 1));
+			
+			$k = strlen($texte_message) - $longueur_max_message ; // Tester longueur de la chaîne de caractères
+			$error_texte_message = '<div style="color:#AA0000;">La taille du texte dépasse la limite autorisée. Il y a ' . $k . ' caractères en trop. Veuillez le raccourcir SVP.</div>';
+			$rec_etat .= '- taille  texte trop grande';
+		}
+		else
+		{
+			$texte_message = stripslashes(wordwrap($texte_message, 50, " ", 1));
+		}
+	}
+	$message_email = '<div style="background:#039296; width:100%; margin:0 0 12px 0; padding:0;">[<a href="#URL_SITE_SPIP/"><img src="#URL_SITE_SPIP/IMG/(#LOGO_SITE_SPIP|fichier)" alt="[(#NOM_SITE_SPIP|attribut_html)]" style="display:block; margin:0 0 0 20px; border:none;" /></a>]</div>'."\n";
+	$message_email .= 'Bonjour ' . $nom_destinataire . '.<br /><br />'."\n";
+	$message_email .= $nom_expediteur . ' pense qu\'une page du site Demandez Le Programme pourrait vous intéresser.<br />'."\n";
+	$message_email .= '<a href="'.$url_page.'">'.$url_page.'</a><br /><br />'."\n";
+	$message_email .= 'Voici son message :<div style="border:1px solid #CCCCCC; padding:8px; margin:4px 0 12px 0;">'.nl2br($texte_message).'</div>'."\n";
+
+	$message_email .= '<BOUCLE_am1art(ARTICLES){id_article=#ENV{id_art}}>
+		[<img src="#URL_SITE_SPIP/IMG/(#LOGO_ARTICLE|fichier)" alt="[(#TITRE|attribut_html)]" style="float:left; margin:0 16px 4px 0; width:35%;" />]
+		[<h2><a href="'.$url_page.'" style="color:#8F0033;">(#TITRE)</a></h2>]
+		[(#INTRODUCTION|liens_absolus)]
+	</BOUCLE_am1art>
+		<BOUCLE_am1rub(RUBRIQUES){id_rubrique=#ENV{id_rub}}>
+			[<img src="#URL_SITE_SPIP/IMG/(#LOGO_RUBRIQUE|fichier)" alt="[(#TITRE|supprimer_numero|attribut_html)]" style="float:left; margin:0 16px 4px 0; width:35%;" />]
+			[<h2><a href="'.$url_page.'" style="color:#8F0033;">(#TITRE|supprimer_numero)</a></h2>]
+			[(#INTRODUCTION|liens_absolus)]
+			<B_am1liste>
+				<ul style="clear:both; margin:4px 0 0 16px; padding:0;">
+			<BOUCLE_am1liste(ARTICLES){id_rubrique=#ENV{id_rub}}{0,6}>
+				[(#COMPTEUR_BOUCLE|<{6}|?{' ',''})[<li style="list-style:disc outside;">(#TITRE)</li>]]
+			</BOUCLE_am1liste>
+				[(#TOTAL_BOUCLE|=={6}|?{'<li style="list-style:disc outside;">...</li>',''})]</ul>
+			</B_am1liste>
+		</BOUCLE_am1rub>
+	<//B_am1art>
+	<br style="clear:both;" /> <br />'."\n".'<em>L\'équipe de <a href="http://www.demandezleprogramme.be">demandezleprogramme.be</a> !</em><hr />'."\n";
+
+	if (! $rec_etat && $nom_destinataire && $email_destinataire && $nom_expediteur && $email_expediteur) {
+		$k = 'From: Demandez Le Programme <info@demandezleprogramme.be>'."\n".'Reply-To: '.$nom_expediteur.'<'.$email_expediteur.'>'."\n";
+		$k .= 'MIME-Version: 1.0'."\n".'Content-Type: text/html; charset=ISO-8859-1;'."\n".'Content-Transfer-Encoding: 8bit'."\n";
+
+		if (@mail_beta($email_destinataire, encodeHeader($nom_expediteur.' vous recommande le site Demandez Le Programme'), $message_email, $k, '-f info@demandezleprogramme.be'))
+			echo '<div style="font-weight:bold; font-size:1.4em;"><br />Un courriel reprenant l\'article que vous recommandez a bien été envoyé à ' . $nom_destinataire . ' (' . $email_destinataire . ').<br /><br />Merci pour votre participation.</div>';
+		else
+			echo '<div style="color:#AA0000; font-weight:bold; font-size:1.4em;"><br />Désolé, l\'envoi de l\'email a échoué.</div>';
+	}
+}
+if ($rec_etat) {
+	$form_concat = '<form method="post" action="?id_rub=#ENV{id_rub}&amp;id_art=#ENV{id_art}">
+	<table border="0" cellspacing="0" cellpadding="5" align="center" width="90%">
+	<tr><td colspan="2">
+	<BOUCLE_am2art(ARTICLES){id_article=#ENV{id_art}}>
+		[<img src="IMG/(#LOGO_ARTICLE|fichier)" alt="[(#TITRE|attribut_html)]" style="float:left; margin:0 16px 4px 0; width:35%;" />]
+		[<h2 style="color:#8F0033;">(#TITRE)</h2>]
+		#INTRODUCTION
+	</BOUCLE_am2art>
+		<BOUCLE_am2rub(RUBRIQUES){id_rubrique=#ENV{id_rub}}>
+			[<img src="IMG/(#LOGO_RUBRIQUE|fichier)" alt="[(#TITRE|supprimer_numero|attribut_html)]" style="float:left; margin:0 16px 4px 0; width:35%;" />]
+			[<h2 style="color:#8F0033;">(#TITRE|supprimer_numero)</h2>]
+			#INTRODUCTION
+			<B_am2liste>
+				<ul style="clear:both; margin:4px 0 8px 0; padding:0;">
+			<BOUCLE_am2liste(ARTICLES){id_rubrique=#ENV{id_rub}}{0,6}>
+				[(#COMPTEUR_BOUCLE|<{6}|?{" ",""})[<li>(#TITRE)</li>]]
+			</BOUCLE_am2liste>
+				[(#TOTAL_BOUCLE|=={6}|?{"<li>...</li>",""})]</ul>
+			</B_am2liste>
+		</BOUCLE_am2rub>
+	<//B_am2art>
+	</td></tr>'."\n";
+	echo $form_concat;
+
+	//_________ nom destinataire _________
+	$form_concat = '<tr><td align="center">
+	Prénom et nom de votre ami <span style="color:#AA0000;">*</span> :<br /> 
+	<input name="nom_destinataire" type="text" id="nom_destinataire" ';
+	if ($nom_destinataire)
+		{ $form_concat .= 'value="' . $nom_destinataire . '"'; }
+	$form_concat .= ' size="30" maxlength="30" /> <br />';
+	// Message erreur
+	if (isset ($error_nom_destinataire) AND $error_nom_destinataire != NULL)
+		{ $form_concat .= $error_nom_destinataire; }	
+	echo $form_concat;
+
+	//_________ email destinataire _________
+	$form_concat = '<br />Adresse e-mail de votre ami <span style="color:#AA0000;">*</span> : <br />
+	<input name="email_destinataire" type="text" id="email_destinataire" ';
+	if ($email_destinataire)
+	{ $form_concat .= 'value="' . $email_destinataire . '"'; }
+	$form_concat .= ' size="30" maxlength="350" />';
+	// Message erreur
+	if (isset ($error_email_destinataire) AND $error_email_destinataire != NULL)
+		{ $form_concat .= $error_email_destinataire ; }
+	$form_concat .= '</td>'."\n";
+	echo $form_concat;
+
+	//_________ nom expediteur _________
+	$form_concat = '<td align="center">
+	Votre prénom et votre nom <span style="color:#AA0000;">*</span> :<br /> 
+	<input name="nom_expediteur" type="text" id="nom_expediteur" ';
+	if ($nom_expediteur)
+		{ $form_concat .= 'value="' . $nom_expediteur . '"'; }
+	$form_concat .= ' size="30" maxlength="30" /> <br />';
+	// Message erreur
+	if (isset ($error_nom_expediteur) AND $error_nom_expediteur != NULL)
+		{ $form_concat .= $error_nom_expediteur; }	
+	echo $form_concat;
+
+	//_________ email expediteur _________
+	$form_concat = '<br />Votre adresse e-mail <span style="color:#AA0000;">*</span> : <br />
+	<input name="email_expediteur" type="text" id="email_expediteur" ';
+	if ($email_expediteur)
+		{ $form_concat .= 'value="' . $email_expediteur . '"'; }
+	$form_concat .= ' size="30" maxlength="350" />';
+	// Message erreur
+	if (isset ($error_email_expediteur) AND $error_email_expediteur != NULL)
+		{ $form_concat .= $error_email_expediteur ; }
+	$form_concat .= '</td></tr>';
+	echo $form_concat;
+
+	//_________ Message personnel _________
+	$form_concat = '<tr><td colspan="2" align="center"><br />Votre message personnel (facultatif) :<br />';
+	if (isset($error_texte_message) AND $error_texte_message != NULL) 
+		{ $form_concat .= $error_texte_message ; }
+	$form_concat .= '<textarea name="champ_texte" style="width: 450px; height: 200px">';
+	if ($texte_message)
+		{ $form_concat .= $texte_message;}
+	$form_concat .= '</textarea></td></tr>';
+	echo $form_concat;
+		  
+	$form_concat = '<tr><td colspan="2" align="center">
+	<input name="bouton_enregistrer" type="submit" id="bouton_enregistrer" value="Envoyer" />
+	</td></tr>';
+	$form_concat .= '</table></form>'."\n";
+	echo $form_concat;
+}
+?>
+	</div>
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

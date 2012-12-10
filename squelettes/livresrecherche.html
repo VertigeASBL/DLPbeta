@@ -1,0 +1,64 @@
+<BOUCLE_princ(ARTICLES){id_article=1271}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<INCLURE{fond=inc_tur/agartiheader}{id_article}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/livreshaut}>
+</div>
+<INCLURE{fond=inc_tur/livresmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		[<h2 style="color:#009A99;">(#TITRE)</h2>]
+		[<h4>(#SOUSTITRE)</h4>]
+		[<span class="detail_event_photo" style="margin-left:0;">(#LOGO_ARTICLE||image_reduire{180,0}|inserer_attribut{"alt",#TITRE}|inserer_attribut{"style","margin-bottom:8px;"})[<br /><i>(#PS)</i>]</span>]
+		[(#TEXTE|paragrapher|liens_ouvrants)]
+		<form action="#SELF" method="get">
+			<input type="hidden" name="page" value="livresrecherche" />
+			<input type="text" class="text" name="recherche" value="#ENV{recherche}" accesskey="4" style="width:130px;" />
+			<input type="submit" class="submit" value="Ok" style="width:30px;" />
+		</form>
+		<br />
+		<BOUCLE_elrech(RUBRIQUES){id_rubrique=125}>
+		<B_rechart>
+			#ANCRE_PAGINATION
+			<p class="detail_event_titre">&#171;&nbsp;#RECHERCHE&nbsp;&#187; (#GRAND_TOTAL [résultat(#GRAND_TOTAL|=={1}|?{'','s'})])</p><br />
+			<ul>
+		<BOUCLE_rechart(ARTICLES){branche}{recherche}{par points}{inverse}{pagination 30}>
+				<li style="padding-bottom:8px;">
+			<BOUCLE_rechrub(RUBRIQUES){id_rubrique}>
+					<a href="[(#URL_ARTICLE)]" class="detail_event_date">[(#_rechart:TITRE|supprimer_numero|textebrut)]</a> &nbsp; (<a href="[(#URL_RUBRIQUE)]">[(#TITRE|supprimer_numero|textebrut)]</a>)
+			</BOUCLE_rechrub>
+				</li>
+		</BOUCLE_rechart>
+			</ul>
+			#PAGINATION
+		</B_rechart>
+			<p class="soustitre">&#171;&nbsp;#RECHERCHE&nbsp;&#187; (0 résultat)</p>
+		<//B_rechart>
+		</BOUCLE_elrech>
+	</div>
+	<div class="colonne2" style="margin-top:0px;">
+		<h3>Recherche</h3>
+		<form action="#SELF" method="get">
+			<input type="hidden" name="page" value="livresrecherche" />
+			<input type="text" class="text" name="recherche" value="#ENV{recherche}" accesskey="4" style="width:130px;" />
+			<input type="submit" class="submit" value="Ok" style="width:30px;" />
+		</form>
+		<div class="ligne_bas_col_2">&nbsp;</div>
+
+		<INCLURE{fond=inc_tur/livresnewsletter}>
+		<INCLURE{fond=inc_tur/services}>
+		<a href="[(#URL_RUBRIQUE{#ID_RUBRIQUE})?page=fluxlitterature]" target="_blank" style="font-size:1.3em;">[<img src="(#CHEMIN{assets/rssicon24.png})" title="flux rss" alt="flux rss" style="vertical-align:middle; margin-right:10px;" />]S'abonner au podcast</a>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

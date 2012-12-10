@@ -1,0 +1,722 @@
+/* CSS Agenda demandezleprogramme
+Styles utilisés dans fonctions PHP inclues dans SPIP */
+
+
+a img {
+	border: none;
+	text-decoration:none;
+}
+a img:hover {
+	border: none;
+	text-decoration:none;
+}
+
+acronym {
+	border: none;
+}
+acronym:hover {
+	border: none;
+}
+
+.float_stop {
+	clear: both;
+}
+.alignRightMargin
+{
+	float:right;
+	margin:0px 0px 2px 10px;
+}
+.alignLeftMargin
+{
+	float:left;
+	margin:0px 10px 2px 0px;
+}
+
+/* ------------------------------------------- */
+/* ---------- Admin et Applications ---------- */
+
+.info {
+	color: #009900;
+	font-size: 12px;
+	background-color: #EEEEEE;
+	padding: 5px;
+	border: 1px solid #009900;
+	text-decoration: none;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.info a {
+	color: #006600;
+	font-weight: bold;
+	padding-right: 5px;
+	padding-left: 5px;
+	border-bottom : #006600 1px solid;
+}
+
+.info a:hover {
+	color: #0000FF;
+	text-decoration: underline;
+}
+
+.alerte {
+	color: #CC0000;
+	font-size: 12px;
+	background-color: #EEEEEE;
+	padding: 5px;
+	border: 1px solid #CC0000;
+	text-decoration: none;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+.alerte a {
+	color: #CC0000;
+	font-weight: bold;
+	padding-right: 5px;
+	padding-left: 5px;
+	border-bottom : #CC0000 1px solid;
+}
+.alerte a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+	background-color: #CC0000;
+}
+.alerte form {
+	font-size: 110%;
+	background-color: #EEEEEE;
+	padding: 10px;
+	border : #CCCCCC 1px solid;
+}
+
+.support {
+	font-size: 90%;
+	color: #999999;
+	text-align: center;
+	border-top: 1px solid #999999;
+	margin-right: 20%;
+	margin-left: 20%;
+	padding-top: 10px;
+}
+.support a { color: #999999; }
+.support a:hover { color: #00AAFF; }
+
+
+.data_table { /* pour les données tabulaires d'administration */
+	font-size: 12px;
+	color: #333333;
+	background-color: #EEEEEE;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.data_table a img:hover {
+	border: none;
+	text-decoration:none;
+}
+
+
+.mini {
+	font-size: 9px;
+	color: #666666;
+}
+.mini li {
+	font-size: 9px;
+	color: #666666;
+}
+
+.data_table th {
+	background-color: #666666;
+	color: #CCCCCC;
+	font-size: 120%;
+}
+
+.data_table td {
+	border: solid #FFFFFF 1px;
+}
+
+.data_table a {
+	color: #0000CC;
+	letter-spacing: 1px;
+}
+
+.data_table a:hover {
+	text-decoration:none;
+	/*background-color: #CCCCCC;*/
+}
+
+.data_table li {
+	font-size: 90%;
+	list-style-type: disc;
+	list-style-position: inside;
+	padding: 0;
+	margin: 0;
+}
+
+.tr_hover:hover {
+	background-color: #FFFFFF;
+	color: #000000;
+	border-bottom-color: #333333; /* ?? pour IE */
+
+}
+
+.champ_obligatoire {
+	color: #FF0000;
+}
+.mini_info {
+	font-size: 11px;
+	color: #666666;
+	/*background-color: #EEEEEE;*/
+}
+.mini_info a{
+	color: #999999;
+}
+
+.bouton_moteur_rech{
+	background: #999999 url('../spip/squelettes/assets/bouton_recherche_tur.jpg') no-repeat left top;
+	color:#FFFFFF;
+	width: 152px;
+	height: 28px;
+}
+
+input:focus{
+	background-color:#FFFFDD!important;
+	color:#000099!important;
+}
+
+select, option {
+	background-color:#EEEEEE;
+}
+textarea:focus{
+background-color:#FFFFDD!important;
+color:#000099!important;
+}
+
+
+.log_off {
+	color: #333333;
+	font-size: 11px;
+	text-align: right;
+}
+.log_off a {
+	color: #666666;
+	text-decoration: underline;
+}
+.log_off a:hover {
+	color: #FFFFFF;
+	border-top: 1px #CCCCCC solid;
+	border-left: 1px #CCCCCC solid;
+	border-right: 1px #333333 solid;
+	border-bottom: 1px #333333 solid;
+	text-decoration: none;
+	background-color: #666666;
+	padding-right: 1px;
+	padding-left: 1px;
+}
+
+
+.error_form {
+	color: #FF0000;
+	font-size: 10px;
+	text-align: center;
+}
+
+
+/* visiteur */
+
+.breve {
+	font-size: 12px;
+	display: block;
+	width: 650px;
+	margin: 2px;
+	margin-bottom: 10px;
+	padding: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #E9E9E9;
+/*	background:#FFFFFF url('../spip/squelettes/assets/bg_breves.jpg') repeat-x ;*/
+}
+
+.breve p {
+	font-size: 11px;
+} 
+
+.breve_pic a img {
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+	float:left;
+	margin:0px 10px 2px 0px;
+
+}
+.breve_pic a img:hover {
+	border: 1px solid #009A99;
+	background-color: #009A99;
+}
+.breve_titre {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	color:#8F0133;
+	font-weight: bold;
+	display: inline;
+	line-height: 25px;
+}
+.breve_titre a {
+	color:#8F0133;
+}
+
+.breve_lieu a{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #009A99;
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+.id_breve {
+	/*font-size: 9px;
+	color: #E9E9E9;*/
+	display:none;
+}
+
+.nombre_avis_breve {
+	font-size: 11px;
+	color: #8F0133;
+	position: absolute;
+	font-weight: bold;
+	z-index: 30;
+	left: 19px;
+	top: 5px;
+}
+
+.breve_genre {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 13px;
+	color: #000000;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: 5px;
+}
+
+.breve_date {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 13px;
+	color: #333333;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: 5px;
+}
+
+.en_savoir_plus a {
+	color: #009A99;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.en_savoir_plus a:hover {
+	color: #009A99;
+	text-decoration: underline;
+}
+
+.afficher_requete
+{
+	font-size: 11px;
+	color: #666666;
+	padding-left: 20px;
+}
+
+
+.form_recherche {
+	/*background-color: #DDDDDD; */
+	color: #000033;
+	font-size: 12px;
+	padding: 5px;
+}
+
+.form_recherche th {
+	/*background-color: #CCCCCC; */
+	color: #333333;
+	font-size: 12px;
+	line-height: 30px;
+}
+
+.souligne {
+	background-color: #FFFF00;
+	letter-spacing: 2px;
+	border: 1px solid #FFFFFF;
+}
+
+
+/* ------------ DETAIL EVENEMENT ------------ */
+.detail_event {
+	position:relative;
+	font-size: 11px;
+	display: block;
+	width: 670px;
+	background-color: #FFFFFF;
+	margin: 2px;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+
+.detail_event a{
+	color:#009A99;
+}
+
+.detail_event H3 { /* Titre de l'événement  précédemment = .detail_event_titre*/
+	position:relative;
+	font-size: 17px;
+	color:#8F0133;
+	padding: 10px 0 5px 15px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	margin:0 0 0 0;
+}
+.detail_event UL{ /* précédemment = detail_event_... */
+	display:block;
+	position:relative;
+	left:12px;
+	top:0;
+	list-style:none;
+	margin:0;
+	padding:0 0 0 0;	
+}
+.detail_event UL LI{
+	background-image:none;
+	float:left;
+	padding:0 20px 10px 0;
+	margin:0;
+	list-style:none;
+	font-size:12px;
+}
+.titre_paragr_detail_event {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: #8F0133;
+	position: absolute;
+	margin-top: 15px;
+	padding-left: 60px;
+}
+
+.nombre_avis {
+	font-size: 13px;
+	color: #8F0133;
+	position: absolute;
+	font-weight: bold;
+	margin-top: 15px;
+	padding-left: 15px;
+	z-index: 15;
+}
+
+.detail_event_bloc_1 {
+	color: #333333;
+	background-color: #E9E9E9;
+	display: block;
+	position:relative;
+}
+
+.detail_event_bloc_2 {
+	color: #333333;
+	background-color: #E9E9E9;
+	position:relative;
+}
+
+
+.head_detail_event_bloc_2 {
+	position: relative;
+	background: #E9E9E9 url('http://www.demandezleprogramme.be/agenda/design_pics/bg_cadres_det_event.jpg') repeat-x top;
+	height: 54px;
+}
+
+.detail_event_bloc_2 .top_left_bloc_critique, .detail_event_bloc_2 .top_left_bloc_avis , .detail_event_bloc_2 .top_left_bloc_calendrier, .detail_event_bloc_2 .top_left_bloc_donner_avis { 
+	height: 54px;
+	width: 48px;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.top_left_bloc_critique {
+	top: 0px;
+	left: 0px;
+	background-image: url("http://www.demandezleprogramme.be/agenda/design_pics/ico_critique.jpg");
+	z-index: 5;
+}
+
+.top_left_bloc_calendrier {
+	top: 0px;
+	left: 0px;
+	background-image: url("http://www.demandezleprogramme.be/agenda/design_pics/ico_calendrier.jpg");
+	z-index: 20;
+}
+
+.top_left_bloc_avis {
+	top: 0px;
+	left: 0px;
+	background-image: url("http://www.demandezleprogramme.be/agenda/design_pics/ico_avis.jpg");
+	z-index: 10;
+}
+.top_left_bloc_donner_avis {
+	top: 0px;
+	left: 0px;
+	background-image: url("http://www.demandezleprogramme.be/agenda/design_pics/ico_donner_avis.jpg");
+	z-index: 11;
+}
+.detail_event_bloc_avis {
+	color: #333333;
+	background-color: #E9E9E9;
+	border: 1px solid #E4E4E4;
+	display: block;
+	padding: 10px;
+}
+
+.ico_float_droite {
+	float:right;
+	font-size: 10px;
+	color: #009A99;
+	padding-top: 15px;
+	padding-left: 10px;
+	padding-right: 5px;
+	font-weight: bold;
+	position: relative;
+}
+
+.ico_float_droite_relative {
+	display:block;
+	position:absolute;
+	right:0;
+	top:0;
+	text-align:right;
+	font-size: 10px;
+	color: #009A99;
+	padding-left: 10px;
+	padding-right: 5px;
+	font-weight: bold;
+	border: 0px solid #EEEEEE;
+	font-family: Arial, sans-serif;
+}
+.ico_float_droite_relative a {
+	text-decoration: none;
+}
+
+.detail_corps_event , .detail_corps_event p { /* en général, pour tes textes descriptifs */
+	font-size: 12px;
+	color: #000000;
+	text-align: justify;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.detail_corps_event h3 {
+	font-size: 15px;
+	color: #8F0133;
+	text-transform: none;
+}
+
+.detail_corps_event li , .detail_corps_event ul { /* en général, pour tes textes descriptifs */
+	list-style-type: square;
+	list-style-image: none;
+}
+
+.detail_event_genre {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 13px;
+	color: #000000;
+	padding-left: 0px;
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+a.detail_event_date {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 13px;
+	color: #333333;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: 5px;
+	font-weight: bold;
+}
+
+.detail_event_photo {
+	float:left;
+	margin:0px 20px 10px 15px;
+	text-align: left;
+}
+.detail_event_photo img, .detail_event_photo a img, .detail_event_photo a img:hover {
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+
+
+.nom_avis {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.date_avis {
+	font-size: 11px;
+	color: #333333;
+	padding-left: 15px;
+}
+
+.resume_event {
+	color: #003366;
+	font-size: 10px;
+	border: 1px solid #DDDDEE;
+	background-color: #FFFFFF;
+	margin-top: 5px;
+	margin-right: 80px;
+	margin-bottom: 5px;
+	margin-left: 20px;
+	padding-top: 5px;
+	padding-right: 40px;
+	padding-bottom: 3px;
+	padding-left: 40px;
+	text-align: justify;
+}
+.resume_event a{
+	color: #4444AA;
+}
+
+.titre_resume_event {
+	font-size: 11px;
+	color: #666699;
+	letter-spacing: 6px;
+	font-weight: bold;
+	line-height: 25px;
+	font-style: italic;
+	border-bottom: 1px solid #9999BB;
+	display: block;
+	margin-right: 80px;
+	text-indent: 20px;
+}
+.titre_2_resume_event {
+	font-size: 10px;
+	color: #003366;
+	letter-spacing: 2px;
+	font-weight: bold;
+	font-style: italic;
+}
+.resume_event li{
+	color: #666699;
+	font-size: 10px;
+	list-style-type: square;
+	line-height: 12px;
+	letter-spacing: 1px;
+}
+.lien_retour_public{
+	display:block;
+	margin:0 0 10px 0;
+}
+.lien_retour_public a {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #009A99;
+	font-weight: bold;
+}
+.lien_retour_public a:hover {
+	color: #009A99;
+	text-decoration:underline;
+}
+.lien_retour_public a:hover {
+	color: #009A99;
+	text-decoration:underline;
+}
+.lien_retour_public IMG {
+	float:left;
+}
+.detail_rubr_inc {
+	font-size: 12px;
+	display: block;
+	/*border: 1px solid #CCCCCC;*/
+	width: 620px;
+	margin: 2px;
+	padding: 20px;
+}
+
+.head_detail_rubr_inc {
+	padding: 15px;
+}
+.detail_rubr_inc_photo a img {
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 2px;
+	float:left;
+	margin:0px 20px 10px 0px;
+}
+.detail_rubr_inc_photo a img:hover {
+	border: 2px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+
+.logo_liste_lieux_partenaires a img {
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+
+.logo_detail_lieux_partenaires a img {
+	float:left;
+	margin:0px 10px 2px 0px;
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+
+.detail_rubr_inc h2 {
+	font-size: 20px;
+	color: #009A99;
+	font-weight: bold;
+	display: inline;
+	padding-left: 50px;
+}
+
+.detail_rubr_inc h3 {
+	font-size: 16px;
+	color: #009A99;
+	font-weight: bold;
+	padding-left: 20px;
+	line-height: 20px;
+}
+
+.detail_rubr_inc h4 {
+	font-size: 12px;
+	color: #333333;
+	padding-left: 20px;
+	display: inline;
+	line-height: 17px;
+}
+
+.table_public {
+	font-size: 13px;
+	color: #333333;
+	/*margin-right: 10px;*/
+	background-color: #FFFFFF;
+}
+.table_public td {
+	background-color: #F5F5F5;
+}
+.table_public th {
+	font-size: 13px;
+	color: #666666;
+	background-color: #F5F5F5;
+}
+.table_public h2 {
+	font-size: 16px;
+	color: #009A99;
+	font-weight: bold;
+	padding-top: 10px;
+	text-align: left;
+}
+
+.table_public label {
+	font-size: 13px;
+}
+
+.table_public li, .table_public ul {
+	font-size: 12px;
+}

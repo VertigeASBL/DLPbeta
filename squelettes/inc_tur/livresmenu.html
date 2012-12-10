@@ -1,0 +1,19 @@
+<ul id="menu">
+<BOUCLE_rubriquea(RUBRIQUES){id_parent=125}{par num titre}>
+	<li class="node[(#EXPOSER|_down)]" style="margin-left:5px; font-size:1.1em;"[  title="(#DESCRIPTIF|attribut_html)"]>
+		<a href="[(#PUCE|redirect_menu_ag_2{#ID_RUBRIQUE, #URL_RUBRIQUE})]" class="node[(#EXPOSER|_down)]"> [(#TITRE|supprimer_numero)]</a>
+		<B_ss_rubriquea>
+		<ul style="width:auto;">
+		<BOUCLE_ss_rubriquea(RUBRIQUES){id_parent}{par num titre}>
+			<li class="menu_item2[(#EXPOSER|_down)]" style="white-space:nowrap;"[  title="(#DESCRIPTIF|attribut_html)"]>
+				<a href="[(#PUCE|redirect_menu_ag{#ID_RUBRIQUE, #URL_RUBRIQUE})]"> [(#TITRE|supprimer_numero)]</a>
+			</li>
+		</BOUCLE_ss_rubriquea> 
+		</ul>
+		</B_ss_rubriquea>
+	</li>
+</BOUCLE_rubriquea>
+	<li class="node" style="float:right; margin-right:10px;"  title="Retour au site Demandez le programme">
+		<a href="http://www.demandezleprogramme.be/" class="node"> Retour à DLP</a>
+	</li>
+</ul>

@@ -1,0 +1,62 @@
+<BOUCLE_princ(ARTICLES){id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div id="header">
+	<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> (enlevé par Renaud) -->
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		[<h2>(#TITRE)</h2>]
+		[<h3>(#SOUSTITRE)</h3>]
+		#TEXTE
+		[<div class="ps">(#PS)</div>]
+		[(#ENV{rtr}|?{'<p style="clear:both;text-align:center;"><a href="#retour" onclick="window.history.go(-1); return false;">Retour</a></p>',''})]
+<?php
+if (isset($id_article) && $id_article == 161) {
+	include('agenda/inc_var.php');
+
+	echo '<h3 class="spip">Classification des événements par ville :</h3>',"\n",'<ul>',"\n";
+	while (list($k, $g) = each($regions))
+		echo '<li><a href="-Agenda-?req=ext&amp;region=',$k,'&amp;date_rech=tout">',$g,'</a></li>',"\n";
+
+	echo '</ul>',"\n",'<h3 class="spip">Classification des événements par genre :</h3>',"\n",'<ul>',"\n";
+	while (list($k, $g) = each($genres))
+		echo '<li><a href="-Agenda-?req=ext&amp;genre=',$k,'&amp;date_rech=tout">',$g,'</a></li>',"\n";
+
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+	echo '</ul>',"\n",'<h3 class="spip">Classification des événements par lieu :</h3>',"\n",'<ul>',"\n";
+	$reponse = mysql_query('SELECT id_lieu,nom_lieu FROM ag_lieux 
+	WHERE (cotisation_lieu > CURDATE()) ORDER BY nom_lieu');
+	while ($data = mysql_fetch_array($reponse))
+		echo '<li><a href="-Agenda-?req=ext&amp;lieu=',$data['id_lieu'],'&amp;date_rech=tout">',$data['nom_lieu'],'</a></li>',"\n";
+	echo '</ul>',"\n";
+}
+?>
+	</div>
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

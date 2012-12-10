@@ -1,0 +1,121 @@
+
+<BOUCLE_mots(MOTS){id_article=188}>
+	<? $mots_sondage .= '#TITRE'; ?>
+</BOUCLE_mots>
+
+<?php
+	require_once("admintool/fonctions.php");
+	require_once("affiche_banner2.php");
+	
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}	
+	
+	//Déterminer le circuit en fonction de la rubrique dans laquelle on se trouve	
+	switch ((int)'[(#ENV{id_rubrique}|texte_script)]'){
+		//HOME, autres métiers, forum, contact, équipe
+		case 1:
+		case 13:
+		case 14:
+		case 50:
+		case 52: 
+			$circuit = 'home';
+			break;
+					
+		//CASTING, news, concours, projet, inscript. comédien
+		case 17:
+		case 8:
+		case 18:
+		case 22:
+		case 53:
+			$circuit = 'casting';
+			break;
+			
+		//PETITES ANNONCSE, coup proj, ressources, aide, inscr. métiers
+		case 16:
+		case 9:
+		case 19:
+		case 23:
+		case 54:
+			$circuit = 'annonces';		
+			break;		
+			
+		//COMEDIENS, invité, annonces spect, on en dit, inscr. cie
+		case 11:
+		case 10:
+		case 20:
+		case 24:
+		case 55:
+			$circuit = 'comediens';						
+			break;	
+			
+		//STAGES, cies, salles, liens	
+		case 15:		
+		case 80:
+		case 12:
+		case 21:
+		case 51:
+			$circuit = 'stages';			
+			break;									
+			
+		default:
+			$circuit = 'home';		
+	}
+	
+	//Affichage du sondage
+	switch ($circuit){
+		case 'home':
+			if (strstr($mots_sondage, 'Circuit Home')){
+?>
+
+			<BOUCLE_sondageh(ARTICLES){id_article=188}>
+				#TEXTE
+			</BOUCLE_sondageh>
+<?				
+			}
+			break;		
+		case 'casting':
+			if (strstr($mots_sondage, 'Circuit Casting')){
+?>
+
+			<BOUCLE_sondagec(ARTICLES){id_article=188}>
+				#TEXTE
+			</BOUCLE_sondagec>
+<?				
+			}
+			break;
+		case 'annonces':
+			if (strstr($mots_sondage, 'Circuit Petites Annonces')){
+?>
+			<BOUCLE_sondagea(ARTICLES){id_article=188}>
+				#TEXTE
+			</BOUCLE_sondagea>
+<?				
+			}
+			break;
+		case 'comediens':
+			if (strstr($mots_sondage, 'Circuit Comédiens')){
+?>
+			<BOUCLE_sondageco(ARTICLES){id_article=188}>
+				#TEXTE
+			</BOUCLE_sondageco>
+<?				
+			}
+			break;
+		case 'stages':
+			if (strstr($mots_sondage, 'Circuit Stages')){
+?>
+			<BOUCLE_sondages(ARTICLES){id_article=188}>
+				#TEXTE
+			</BOUCLE_sondages>
+<?				
+			}			
+			break;		
+	}//Fin sondage
+	
+	
+	echo '<h3>A d&eacute;couvrir</h3>',"\n";
+	
+	banners_comedien($circuit);
+?>

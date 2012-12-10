@@ -1,0 +1,280 @@
+BODY {
+	background-color:#CCC4B0;
+	color:#000000;
+	margin:4px;
+}
+TD {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	text-align:left;
+}
+FORM {
+	margin:0;
+	padding:0;
+}
+A:link, A:visited {
+	color:#000070;
+	text-decoration:underline;
+}
+A:hover {
+	color:#000070;
+	text-decoration:none;
+}
+A:active {
+	color:#000070;
+}
+.cmsdivtab {
+	text-align:center;
+}
+.cmstabtab {
+	margin-left:auto;
+	margin-right:auto;
+	width:800px;
+}
+.cmstabbox {
+	background-color:#FFFFFF;
+	padding:4px 8px 16px 8px;
+	border:#800000 1px solid;
+}
+.cmsentete {
+	text-align:left;
+	padding:6px;
+	border-style:solid;
+	border-color:#800000;
+	border-width:1px 1px 0 1px;
+	background:#F0E090 url(entete.gif) repeat;
+}
+.cmslogo {
+	margin-left:160px;
+	vertical-align:middle;
+}
+.cmstetitr {
+	margin-left:70px;
+	font-size:25px;
+	vertical-align:middle;
+	font-style:italic;
+	font-weight:bold;
+	color:#E08070;
+}
+a.cmsareal:link, a.cmsareal:visited {
+	font-size:10px;
+	color:#501010;
+	text-decoration:none;
+}
+a.cmsareal:hover {
+	font-size:10px;
+	color:#300101;
+	text-decoration:underline;
+}
+.tabarbo {
+	border-width:0; width:90%;
+}
+.tabarbo td {
+	padding:4px;
+}
+.tdfarbo {
+	background:url(aplus.gif) no-repeat 50% 50%; cursor:pointer;
+}
+.tdoarbo {
+	background:url(amoin.gif) no-repeat 50% 50%; cursor:pointer;
+}
+.tdxarbo {
+	background:url(arien.gif) no-repeat 50% 50%;
+}
+.tabl1modif {
+	padding:0;
+	margin:0;
+	vertical-align:middle;
+	text-align:center;
+	border-width:0;
+	background-color:#B0E0FF;
+}
+.tabl2modif {
+	padding:4px;
+	margin:4px;
+	vertical-align:middle;
+	text-align:left;
+	border:1px solid #0099CC;
+}
+.tablotarea {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#000000;
+	background-color:#FFFFFF;
+	cursor:text;
+	width:98%;
+	height:98%;
+	border:1px solid #0099CC;
+}
+.textepetit {
+	font-size:9px;
+	text-align:left;
+	margin-left:60px;
+}
+.inactif {
+	color:#808080;
+}
+.divcentre {
+	text-align:center;
+	margin:8px;
+}
+.divgauche {
+	text-align:left;
+	margin:12px 0 12px 8px;
+}
+.divindent {
+	text-align:left;
+	margin:8px;
+	padding-left:34px;
+}
+.divmenu {
+	text-align:left;
+	margin:8px 0 16px 250px;
+}
+.invisible {
+	color:#0000FF;
+}
+.saisie {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#000000;
+	background-color:#FFFFFF;
+	cursor:text;
+	padding-left:2px;
+	margin:0;
+	vertical-align:middle;
+}
+.txtarea {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#000000;
+	background-color:#FFFFFF;
+	cursor:text;
+	margin:0;	
+}
+.bouton {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#000066;
+	background-color:#C0E8FF;
+	height:20px;
+	cursor:pointer;
+	border:#000066 1px solid;
+}
+.boutvoir {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#000066;
+	background-color:#FFFFFF;
+	height:20px;
+	cursor:pointer;
+	border:#000066 1px solid;
+}
+.boutgris {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#808080;
+	background-color:#FFFFFF;
+	height:20px;
+	cursor:pointer;
+	border:#808080 1px solid;
+}
+.cocher {
+	height:14px;
+	width:14px;
+	padding:0;
+	margin:2px;
+	vertical-align:middle;
+}
+.liste {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	color:#000000;
+	background-color:#FFFFFF;
+	margin:0;
+	vertical-align:middle;
+}
+.tdroit {
+	text-align:right;
+}
+.droite {
+	float:right;
+}
+.co1bloc {
+	width:25%;
+	font-weight:bold;
+	vertical-align:top;
+	padding-top:4px;
+}
+.co2bloc {
+	vertical-align:top;
+	padding:4px 0 0 40px;
+}
+.co3bloc {
+	border-bottom:1px solid #0099CC;
+	font-size:1px;
+	line-height:1px;
+}
+.co4bloc {
+	padding-top:4px;
+}
+.co5bloc {
+	width:25%;
+	vertical-align:top;
+	padding-top:4px;
+}
+.imgcal {
+	border-width:0;
+	vertical-align:middle;
+}
+.ico {
+	border-width:0;
+	vertical-align:middle;
+	margin-left:12px;
+}
+.outi {
+	border:0;
+	margin:4px 12px 0 0;
+}
+.btouti {
+	border:1px solid #6090E0;
+	background:#E0ECF0; color:#000052;
+	margin:0; padding:0;
+	font-size:10px;
+	cursor:pointer;
+}
+.bajout {
+	border-width:0;
+	vertical-align:middle;
+	padding:0;
+	margin:0;
+}
+.newslarea {
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:10px;
+	cursor:text;
+	padding-left:2px;
+	vertical-align:middle;
+	width:90%;
+	height:400px;
+}
+.dbfotab {
+	width:90%;
+	border:0;
+}
+.dbfotab td {
+	padding:2px;
+	text-align:left;
+	vertical-align:top;
+	border-color:#0099CC;
+	border-style:solid;
+}
+.objlitab {
+	margin-left:40px;
+	border:0;
+}
+.objlitab td {
+	padding:4px;
+	text-align:left;
+	vertical-align:top;
+}

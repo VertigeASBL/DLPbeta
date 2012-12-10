@@ -1,0 +1,17 @@
+<!-- news -->
+<BOUCLE_event1(RUBRIQUES){id_rubrique=10}>
+<div class="event">
+	<h3>[(#TITRE|supprimer_numero)]</h3>
+	<BOUCLE_event11(ARTICLES){id_rubrique}{par date}{inverse}{0,9}>
+	<h4><a href="#URL_ARTICLE">#TITRE</a></h4>
+	[(#LOGO_ARTICLE||inserer_attribut{"alt",#TITRE}|inserer_attribut{"class","onglet5"}||image_reduire{206})]
+	<p>#CHAPO</p>
+	<span class="details">[(#DATE|affdate)] | <a href="#URL_ARTICLE">lire plus</a></span>
+	</BOUCLE_event11>
+	<ul>
+	<BOUCLE_event12(ARTICLES){id_rubrique}{par date}{inverse}{9,n}>
+		<li><a href="#URL_ARTICLE">[(#DATE|jour)]/[(#DATE|mois)]/[(#DATE|annee)] : #TITRE</a></li>
+	</BOUCLE_event12>
+	</ul>
+</div>
+</BOUCLE_event1>

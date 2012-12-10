@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{$lang_insert_ibulle_title}</title>
+	<script language="javascript" type="text/javascript" src="../../tiny_mce_popup.js"></script>
+	<base target="_self" />
+<script type="text/javascript">
+<!--
+function init() {
+	tinyMCEPopup.resizeToInnerSize();
+
+	if (obj = document.getElementById("in1tit"))
+		obj.innerHTML = tinyMCE.getLang("lang_insert_ibulle_title");
+	if (obj = document.getElementById("in2tit"))
+		obj.innerHTML = tinyMCE.getLang("lang_insert_ibulle_name");
+	document.forms[0].insert.value = tinyMCE.getLang("lang_update");
+	document.forms[0].cancel.value = tinyMCE.getLang("lang_cancel");
+}
+function aprescharg() {
+	var inst = tinyMCE.getInstanceById(tinyMCE.getWindowArg('editor_id'));
+
+	var chn = tinyMCE.getAttrib(inst.getFocusElement(), "onmouseover");
+	if (chn != "") {
+		k = chn.indexOf("&#39;)");
+		if (k != -1) {
+			g = chn.indexOf("yBulle(event,&#39;");
+			if (g != -1)
+				g += 18;
+		}
+		else {
+			k = chn.indexOf("')");
+			if (k != -1) {
+				g = chn.indexOf("yBulle(event,'");
+				if (g != -1)
+					g += 14;
+			}
+		}
+		if (k != -1 && g != -1)
+			chn = chn.substring(g, k);
+		else {
+			alert("Erreur: l'infobulle n'est pas valide\n"+chn);
+			chn = "";
+		}
+	}
+	document.forms[0].ibulleName.value = chn;
+
+	if (tinyMCE.getParentElement(inst.getFocusElement(), "font,p,img,span,div,td,a") == null)
+		alert("Il faut sélectionner un élément (par exemple du texte avec un style, ou une image, un lien...)");
+}
+function insertibulle() {
+	var chn = document.forms[0].ibulleName.value.replace(/'/g, "´");
+	tinyMCE.execInstanceCommand(tinyMCE.getWindowArg("editor_id"), "mceSrichirBul", false, chn);
+
+	tinyMCEPopup.close();
+}
+//-->
+</script>
+</head>
+<body onload="tinyMCEPopup.executeOnLoad('init();'); aprescharg();" style="display: none">
+<form onsubmit="insertibulle(); return false;" action="#">
+
+	<table border="0" cellpadding="4" cellspacing="0">
+		<tr>
+			<td colspan="2" class="title" id="in1tit">{$lang_insert_ibulle_title}</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap" id="in2tit">{$lang_insert_ibulle_name}:</td>
+			<td><input name="ibulleName" type="text" id="ibulleName" value="" style="width: 260px" /></td>
+		</tr>
+	</table>
+
+	<div class="mceActionPanel">
+		<div style="float: left">
+			<input type="button" id="insert" name="insert" value="{$lang_update}" onclick="insertibulle();" />
+		</div>
+
+		<div style="float: right">
+			<input type="button" id="cancel" name="cancel" value="{$lang_cancel}" onclick="tinyMCEPopup.close();" />
+		</div>
+	</div>
+
+</form>
+</body>
+</html>

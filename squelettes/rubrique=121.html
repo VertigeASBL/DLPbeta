@@ -1,0 +1,109 @@
+#CACHE{0}
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="header">
+	<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> -->
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+<?php
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+
+	session_start();
+	include_spip('inc/session');
+	if (session_get('id_spectateur') && isset($_SESSION['id_spectateur']) && $_SESSION['id_spectateur']) {
+		if (isset($_GET['logout'])) {
+			//---------------------------------------------------------
+			// Procédure de LOG OFF
+			//---------------------------------------------------------
+			$_SESSION['nom_spectateur'] = NULL;
+			$_SESSION['prenom_spectateur'] = NULL;
+			$_SESSION['id_spectateur'] = NULL;
+			$_SESSION['pseudo_spectateur'] = NULL;
+			$_SESSION['group_admin_spec'] = NULL;
+			$_SESSION['group_admin_spec_name'] = NULL;
+			$_SESSION['nom_admin_spec'] = NULL;
+
+			include_spip('inc/session');
+		    session_set('nom_spectateur', '');
+		    session_set('prenom_spectateur', '');
+		    session_set('id_spectateur', 0);
+		    session_set('pseudo_spectateur', '');
+		    session_set('group_admin_spec', 0);
+		    session_set('group_admin_spec_name', '');
+
+			echo '<h2>Vous n\'êtes plus connecté.</h2>';
+		}
+		else {
+?>
+		<h2>Bienvenue [(#SESSION{pseudo_spectateur})] !</h2>
+
+		<table width="400" border="0" align="center" cellpadding="10" cellspacing="0" class="table_spectateur" >
+		  <tr>
+		    <td align="center">
+		    	<a href="[(#URL_RUBRIQUE{122}|parametre_url{id_spect,#SESSION{id_spectateur}})]" title="Modifier mes infos spectateur"><img src="agenda/design_pics/g_bouton_spectateur.jpg" alt="Votre profil d'utilisateur" width="100" height="101" border="0"></a>
+		    </td>
+		    <td>
+		    	<p>
+					<a href="[(#URL_RUBRIQUE{122}|parametre_url{id_spect,#SESSION{id_spectateur}})]">Visualiser ma page</a>
+		    		<br /><br />
+		    		<a href="[(#URL_RUBRIQUE{157})]" title="Modifier mes infos spectateur">Modifier mon profil</a>
+		    	</p>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<a href="[(#URL_ARTICLE{335})]" target="_blank"><img src="agenda/design_pics/g_bouton_help_spect.jpg" alt="Aide en ligne" width="100" height="100" border="0"></a>
+		    </td>
+		    <td>
+		    	<p>
+		    		<a href="[(#URL_ARTICLE{335})]" target="_blank">Aide aux spectateurs</a></td>
+		    	</p>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<a href="[(#URL_RUBRIQUE{120})"><img src="agenda/design_pics/bouton_communaute_spectateurs.jpg" alt="Communauté des spectateurs" width="100" height="66" border="0"></a>
+		    </td>
+		    <td>
+		    	<p>
+		    		<a href="[(#URL_RUBRIQUE{120})]">La Communauté des spectateurs</a>
+		    	</p>
+		    </td>
+		  </tr>
+		</table>
+<?php
+		}
+	}
+	else {
+		echo '<br /><div class="alerte"><br />Veuillez vous connecter d\'abord au moyen du <br />formulaire de login à droite<br /><br /></div>';
+		echo '<p><a href="[(#URL_RUBRIQUE{159})]">Vous n\'êtes pas encore membre ? Inscrivez-vous comme spectateur</a></p>';
+	}
+?>
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

@@ -1,0 +1,59 @@
+<BOUCLE_princ(ARTICLES){id_article}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<INCLURE{fond=inc_tur/agartiheader}{id_article}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/livreshaut}>
+</div>
+<INCLURE{fond=inc_tur/livresmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+		[<h2 style="color:#009A99;">(#TITRE)</h2>]
+		[<h4>(#SOUSTITRE)</h4>]
+		<B_docmp3><br />
+		<BOUCLE_docmp3(DOCUMENTS){id_article}{mode=document}{extension=mp3}{par num titre}{doublons}>
+			<object width="200" height="20" type="application/x-shockwave-flash" data="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" style="vertical-align:middle;">
+				<param name="movie" value="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" /><param name="src" value="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" />
+				<param name="quality" value="high" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" />
+				<embed width="200" height="45" type="video/quicktime" src="#URL_DOCUMENT" autostart="0" autoplay="0" showcontrols="1" controller="1" loop="0" pluginspage="http://www.apple.com/quicktime/download/" style="vertical-align:middle;"></embed>
+			</object>
+			[<span class="detail_event_lieu"><a href="(#URL_DOCUMENT)" target="_blank">[(#TITRE|supprimer_numero)][ ((#TAILLE|taille_en_octets))]</a></span>]<br /><br />
+		</BOUCLE_docmp3>
+		[<span class="detail_event_photo" style="margin-left:0;">(#LOGO_ARTICLE||image_reduire{180,0}|inserer_attribut{"alt",#TITRE}|inserer_attribut{"style","margin-bottom:8px;"})[<br /><i>(#PS)</i>]</span>]
+		[(#TEXTE|paragrapher|liens_ouvrants)]
+		<div class="float_stop" style="text-align:right; font-size:12px; margin-top:6px">
+			[(#ID_RUBRIQUE|=={153}|?{'<a href="m&#97;i&#108;t&#111;&#58;jeanjauniaux&#64;gmail.com">Interviews réalisées par Jean Jauniaux</a>','<a href="m&#97;i&#108;t&#111;&#58;edmondmorrel&#64;gmail.com">Interviews réalisées par Edmond Morrel</a>'})]
+		</div>
+
+		[(#ENV{rtr}|?{'<p style="clear:both;text-align:center;"><a href="#retour" onclick="window.history.go(-1); return false;">Retour</a></p>',''})]
+<br />
+<br />
+<br />
+<a href="envoyer-ami?id_rub=#ID_RUBRIQUE&amp;id_art=#ID_ARTICLE" style="text-decoration:none;">&nbsp;</a>
+<br />
+	</div>
+	<div class="colonne2" style="margin-top:0px;">
+		<h3>Recherche</h3>
+		<form action="#SELF" method="get">
+			<input type="hidden" name="page" value="livresrecherche" />
+			<input type="text" class="text" name="recherche" value="#ENV{recherche}" accesskey="4" style="width:130px;" />
+			<input type="submit" class="submit" value="Ok" style="width:30px;" />
+		</form>
+		<div class="ligne_bas_col_2">&nbsp;</div>
+
+		<INCLURE{fond=inc_tur/livresnewsletter}>
+		<INCLURE{fond=inc_tur/services}>
+		<a href="[(#URL_RUBRIQUE{#ID_RUBRIQUE})?page=fluxlitterature]" target="_blank" style="font-size:1.3em;">[<img src="(#CHEMIN{assets/rssicon24.png})" title="flux rss" alt="flux rss" style="vertical-align:middle; margin-right:10px;" />]S'abonner au podcast</a>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

@@ -1,0 +1,110 @@
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+<!-- Styles propres à cette page. Sont repris de styles.css
+
+
+.event{
+	width:209px;
+	margin-right:13px;
+	float:left;
+}
+.event P{
+	height:8.8em;
+	
+}
+.event P, .event LI{
+	font-size:1.2em;
+	line-height:1.3em;
+}
+.event H3{
+	margin-top:0;
+}
+.event2{
+	width:212px;
+	margin-right:12px;
+	float:left;
+	min-height:300px;
+}
+
+
+.event2trois{
+	width:208px;
+	float:left;
+	min-height:300px;
+}
+.event2 P, .event LI, .event2trois P, .event2trois LI {
+	font-size:1.2em;
+	line-height:1.3em;
+}
+.event2 H3, .event2trois H3 {
+	margin-top:0;
+	height:1.8em;
+	font-size:1.2em;
+}
+.event2 P, .event2trois P {
+	height:10.8em;
+}
+SPAN.details{
+	border-top:1px dotted #666!important;
+	border-top:1px solid #666;
+	display:block;
+	font-size:1em;
+	margin:5px 0 15px 0;
+	padding:2px 0 0 0;
+	
+}
+
+-->
+</style>
+
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique=66}>
+<div id="principal">
+	<div class="colonne1">
+
+<?php
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+?>
+		<B_articles><!-- qart interview ||image_reduire{206} -->
+			[<h2>(#TITRE|supprimer_numero)</h2>]
+		<BOUCLE_articles(ARTICLES){id_rubrique IN 104,105,66}{par date}{inverse}>
+			<div class="event2[(#COMPTEUR_BOUCLE|alterner{'','','trois'})]">
+				[<h3><a href="#URL_ARTICLE?rtr=y&amp;page=article-3">(#TITRE)</a></h3>]
+				[<a href="#URL_ARTICLE?&amp;page=article-3">(#LOGO_ARTICLE||inserer_attribut{"alt",#TITRE}|inserer_attribut{"class","onglet5"})</a>]
+				[<p>(#CHAPO)</p>]
+				<span class="details">[(#DATE|affdate)]</span>
+			</div>[(#COMPTEUR_BOUCLE|alterner{'','','<br style="clear:both;line-height:0;" />'})]
+		</BOUCLE_articles>
+
+
+
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

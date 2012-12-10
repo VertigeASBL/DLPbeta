@@ -1,0 +1,29 @@
+#CACHE{2073600}
+<title>[(#NOM_SITE_SPIP|textebrut) : ]#COMENV{meta1plus}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="description" content="#COMENV{meta1plus}#COMENV{meta2plus}<BOUCLE_desc(RUBRIQUES){id_rubrique}>[(#TITRE|supprimer_numero|attribut_html)][ - (#DESCRIPTIF|attribut_html)]</BOUCLE_desc>" />
+<meta name="keywords" content="#COMENV{meta1plus}#COMENV{meta2plus}<BOUCLE_metatags(MOTS){id_groupe=1}{","}>[(#TITRE|supprimer_numero|attribut_html)]</BOUCLE_metatags>" />
+<meta name="copyright" content="© Vertige asbl" />
+<meta name="identifier-url" content="#URL_SITE_SPIP" />
+<meta name="Robots" content="all" />
+<link rel="alternate" type="application/rss+xml" title="Comedien.be - Invit&eacute;" href="#URL_SITE_SPIP/?page=rss1" />
+<link rel="alternate" type="application/rss+xml" title="Comedien.be - News" href="#URL_SITE_SPIP/?page=rss2" />
+<link rel="alternate" type="application/rss+xml" title="Comedien.be - Coup de projecteur" href="#URL_SITE_SPIP/?page=rss3" />
+<link rel="stylesheet" href="[(#CHEMIN{styles.css})]" type="text/css" media="screen" />
+<link href="[(#CHEMIN{favicon.ico})]" rel="shortcut icon" />
+
+[(#REM) Balise permettant aux plugins d'inserer des appels javascript ou css  ]
+#INSERT_HEAD
+<!-- Includes pour les banners -->
+<!-- link rel="stylesheet" href="[(#CHEMIN{jd.gallery.css})]" type="text/css" media="screen" charset="utf-8" / -->
+<!-- script type="text/javascript" src="squelettes/js/jquery-1.1.js"></script -->
+<!-- script type="text/javascript" src="[(#CHEMIN{js/mootools-v1-11.js})]"></script -->
+<!-- script src="[(#CHEMIN{js/jd.gallery.js})]" type="text/javascript"></script -->
+<script type="text/javascript" src="squelettes/js/combanniere.js"></script>
+[<script type="text/javascript" src="(#CHEMIN{js/swfobject3.js})"></script>]
+<style type="text/css">
+	/** Behavior IE pour le menu horizontal */
+	body {
+		behavior:url("squelettes/menu.htc");
+	}
+</style>

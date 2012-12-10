@@ -1,0 +1,92 @@
+/*                                */
+/* Calendar style sheet           */
+/* Feuille de style du calendrier */
+/*                                */
+
+
+.calendar {
+	color: #000066;
+	letter-spacing: 1px;
+}
+
+.calendar a {
+	color: #FF6633;
+	letter-spacing: 1px;
+}
+.calendar a:hover {
+	border-bottom: 1px solid #666666;
+	text-decoration:none;
+	background-color: #FF0033;
+	color: #000000;
+}
+
+table.calendar {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+table.calendar th { /* Day jours */
+	color: #000033;
+	font-size: 11px;
+	background-color: #D1D1D6;
+	font-weight: bold;
+}
+
+table.calendar tr {
+	background-color: #EEEEEE;
+	font-size: 9px;
+}
+
+.calendar-month {
+	font-size: 12px;
+	color: #CCCCCC;
+	font-weight: bold;
+	background-color: #666666;
+}
+.calendar-month a {
+	color: #FF9966;
+}
+.calendar-month a:hover {
+	color: #0000FF;
+	background-color: #EEEEEE;
+}
+
+.linked-day {
+	color: #33FFFF;
+}
+
+.checked {
+	color: #000000;
+	font-size: 9px;
+	background-color: #B1DDB6;
+}
+
+.unchecked {
+	color: #666666;
+	font-size: 9px;
+	background-color: #F8DCB1;
+}
+
+
+.nonchecked {
+	color: #AA9999;
+	font-size: 9px;
+	background-color: #CCCCCC;
+}
+
+.event {
+	color: #000000;
+	font-size: 9px;
+	background-color: #B1DDB6;
+}
+.event a:hover {
+	color: #EEEEEE;
+	font-size: 9px;
+	background-color: #336633;
+}
+
+.non_event {
+	color: #AA9999;
+	font-size: 9px;
+	background-color: #CCCCCC;
+}

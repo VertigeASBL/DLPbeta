@@ -1,0 +1,147 @@
+#CACHE{0}
+<?php
+require 'agenda/inc_var.php';
+
+	$tab = '<a name="anc_' . $GLOBALS['donnees']['critique_event'] .'"></a><div class="breve">' ;	
+	$id_event = $GLOBALS['donnees']['id_event'] ;
+
+
+	// ____________________________________________
+	// VIGNETTE EVENEMENT	
+	if (isset ($GLOBALS['donnees']['pic_event_1']) AND $GLOBALS['donnees']['pic_event_1'] == 'set' )
+	{
+		$nom_event = $GLOBALS['donnees']['nom_event'] ;
+		$id_event = $GLOBALS['donnees']['id_event'] ;
+		$tab.= '<span class="breve_pic"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" /></a></span>';
+	}
+	
+	
+	// ____________________________________________
+	// NOM EVENEMENT
+	
+		
+		// Icone pour impression :
+		$tab.= '<span class="ico_float_droite">
+		<a href="-Critique-imprimable-?id_event='. $id_event .'" title="Imprimer la critique" target="_blank">
+		<img src="agenda/design_pics/ico_impr.jpg"  hspace="10"  /></a>
+		</span> ';
+
+		$tab.= '<br /><div class="breve_titre"><a href="-Detail-agenda-?id_event=' . $id_event . '" title="Voir en détail">
+		' . $GLOBALS['donnees']['nom_event'] . '</a></div>';
+
+	// ____________________________________________
+	// ID
+	$tab.= ' <span class="id_breve">(id ' . $GLOBALS['donnees']['id_event'] . ')</span><br />' ;
+
+
+	// ____________________________________________
+	// LIEU
+	$id_lieu = $GLOBALS['donnees']['lieu_event'] ;
+	$reponse_2 = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = $id_lieu");
+	$donnees_2 = mysql_fetch_array($reponse_2) ;
+			
+	$tab.= '<span class="breve_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$id_lieu.'" title="Lieu où se joue le spectacle">' . $donnees_2['nom_lieu'] . '</a></span> ';	
+
+
+	// ____________________________________________
+	// GENRE
+	
+	if (isset($GLOBALS['donnees']['genre_event']) AND ($GLOBALS['donnees']['genre_event'] != NULL)) 
+	{
+		$genre_name = $GLOBALS['donnees']['genre_event'] ;
+		$tab.= '<span class="breve_genre"><acronym title="Genre du spectacle">' . $genres[$genre_name] . 
+		'</acronym></span> ';	
+	}
+
+
+	// ____________________________________________
+	// DATES
+	
+	$date_event_debut = $GLOBALS['donnees']['date_event_debut'];	
+	$date_event_debut_annee = substr($date_event_debut, 0, 4);
+	$date_event_debut_mois = substr($date_event_debut, 5, 2);
+	$date_event_debut_jour = substr($date_event_debut, 8, 2);
+	
+	$date_event_fin = $GLOBALS['donnees']['date_event_fin'];
+	$date_event_fin_annee = substr($date_event_fin, 0, 4);
+	$date_event_fin_mois = substr($date_event_fin, 5, 2);
+	$date_event_fin_jour = substr($date_event_fin, 8, 2);
+
+	// note : pour mois en LETTRES : $NomDuMois[$date_event_debut_mois+0]
+	$tab.= ' <span class="breve_date"><acronym title="Période de représentation">' . $date_event_debut_jour . '/'
+	. $date_event_debut_mois . '/'
+	. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . '/'
+	. $date_event_fin_mois . '/'
+	. $date_event_fin_annee . '</acronym></span>';	
+
+
+	// ____________________________________________
+	// CHAPEAU DE LA CRITIQUE 
+		
+	echo $tab ;
+	
+	echo '<span class="id_breve">ID article SPIP = ' . $GLOBALS['contexte']['la_critique_cms'] . '</span>
+	<div class="float_stop"> <br /> </div>' ;
+
+
+
+	// Utiliser ID à partir de 100000
+	$id_critique_2_toggle = $GLOBALS['contexte']['la_critique_cms'] ;
+	
+	$zone = 'Zone' . ($id_critique_2_toggle + 100000) ;
+	$zoneB = 'Zone' . ($id_critique_2_toggle + 100000) . 'B' ;
+	$ZoneLink = 'Zone' . ($id_critique_2_toggle + 100000) . 'Link' ;
+
+
+	// *** CHAPO ***
+	echo '<div id="'.$zone.'" style="display:block;"> <div class="detail_corps_event"> ';
+	
+	?>
+	<BOUCLE_critique_chapo(ARTICLES){id_article=#COMENV{la_critique_cms}}>
+		[<h3>(#TITRE)</h3>] 
+
+		[<p>(#CHAPO)</p>]
+		<br />
+		<span class="id_breve">#ID_ARTICLE</span>
+	</BOUCLE_critique_chapo>
+	L'article n'a pas été trouvé
+	<//B_critique_chapo>
+	<?php
+	 
+	echo '<span class="en_savoir_plus"><a href="#voir" onclick="return toggle_zone(';
+	echo "'$zone','Afficher la suite','Replier'); " ;
+	echo '" id="$ZoneLink">Afficher la suite &gt;&gt;</a></span> <br  />  <br  /> </div></div>' ;
+	
+	
+	
+	// *** TEXTE COMPLET ***
+	echo '<div id="'.$zoneB.'" style="display:none;"> <div class="detail_corps_event">' ;
+	
+	?>
+	<BOUCLE_critique(ARTICLES){id_article=#COMENV{la_critique_cms}}>
+		[<h3>(#TITRE|supprimer_numero)</h3>]
+		[<p>(#SOUSTITRE)</p>]
+		<div class="float_stop"><br /></div>
+
+		[<p>(#CHAPO)</p>]
+		[<p>(#TEXTE)</p>]
+		[<div class="ps">(#PS)</div>]
+		<br />
+		<span class="id_breve">#ID_ARTICLE</span>
+	</BOUCLE_critique>
+	L'article n'a pas été trouvé
+	<//B_critique>
+	<?php
+	
+	echo ' <a href="#voir" onclick="return toggle_zone(' ;
+	echo "'$zone','Afficher la suite','Replier'); " ;
+	echo '" id="$ZoneLink"> &lt;&lt; Replier</a></div></div> ' ;
+	
+
+	echo '<div class="float_stop"><br /></div>
+		
+	</div> <br> <br>' ;
+
+
+
+?>

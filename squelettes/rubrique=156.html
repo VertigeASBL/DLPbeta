@@ -1,0 +1,37 @@
+#CACHE{0}
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta name="robots" content="noindex,nofollow" />
+<link href="agenda/css_impression_agenda.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+<!--
+p img {
+	/*display: none;*/
+	border: none;
+}
+-->
+</style>
+
+</head>
+<body onLoad="window.print()">
+
+
+
+<?php
+	if (! isset($GLOBALS['spip_connect_version'])) {
+		include_once('ecrire/base/connect_sql.php');
+		require('config/connect.php');
+	}
+
+?>
+	<INCLURE{fond=inc_tur/ag_chronique}{id_event}>
+
+
+
+</body>
+</html>
+</BOUCLE_princ>

@@ -1,0 +1,99 @@
+<?php
+session_start();
+/*
+----- Styles déjà présents dans styles_tur.css -----
+<!--style type="text/css">
+.event2{
+	width:212px;
+	margin-right:12px;
+	float:left;
+	min-height:300px;
+}
+.event2trois{
+	width:208px;
+	float:left;
+	min-height:300px;
+}
+.event2 P, .event LI, .event2trois P, .event2trois LI {
+	font-size:1.2em;
+	line-height:1.3em;
+}
+.event2 H3, .event2trois H3 {
+	margin-top:0;
+	height:1.8em;
+	font-size:1.2em;
+}
+.event2 P, .event2trois P {
+	height:10.8em;
+}
+SPAN.details{
+	border-top:1px dotted #666!important;
+	border-top:1px solid #666;
+	display:block;
+	font-size:1em;
+	margin:5px 0 15px 0;
+	padding:2px 0 0 0;
+}
+</style -->
+*/
+?>
+
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+
+<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<div id="header">
+	<INCLURE{fond=inc_tur/banner_haut}>
+	<INCLURE{fond=inc_tur/agoutils}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique=66}>
+<div id="principal">
+	<div class="colonne1" id="eventinterview">
+<?php
+	//--- Se connecter à comedien.be, voir interview.html
+	$k = 0; $chn = '';
+	$fp = fsockopen('www.comedien.be', 80, $k, $chn, 10);
+	if (! $fp)
+		echo '--- Connexion impossible : ',$k,' : ',$chn,' ---';
+	else {
+		//--- Envoyer la requête
+		fputs($fp, 'GET /spip.php?page=interview1 HTTP/1.0'."\r\n");
+		fputs($fp, 'HOST: www.comedien.be'."\r\n");
+		fputs($fp, "Connection: close\r\n\r\n");
+	
+		//--- Recevoir la réponse
+		$k = false;
+		while (! feof($fp)) {
+			$chn = fgets($fp, 4096);
+			if ($k)
+				echo $chn,"\n";
+			else if (strpos($chn, '**V_COM**') !== false)
+				$k = true;
+		}
+		fclose($fp);
+	}
+	unset($fp, $chn, $k);
+?>
+	</div><!-- fin colonne1 -->
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

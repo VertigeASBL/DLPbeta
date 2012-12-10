@@ -1,0 +1,317 @@
+/* CSS Document */
+#persos_top{
+	background: url(design_pics/persoHome.gif) no-repeat;
+	width:208px;
+	height:220px;
+	margin-left:-80px;
+	margin-top:-7px;
+	float:left;
+	position:relative;
+	z-index:9;
+}
+/*
+#persos_top{
+	background: url(design_pics/persos.gif) no-repeat;
+	width:167px;
+	height:176px;
+	margin-left:-45px;
+	float:left;
+	position:relative;
+	z-index:9;
+}
+*/
+.colonne1_h{
+	width:670px;
+	float:left;
+	position:relative;
+	left:0px;
+	top:15px;
+	
+	margin-top:30px;
+}
+
+.cadre_actu{
+	background-color:#e8e8e8;
+	width:404px;
+	padding:10px 5px;
+	margin-bottom:30px;
+	
+	position:relative;
+	top:auto;
+	z-index:1;
+	
+	float:left;
+}
+
+.cadre_evt{
+	background-color:#e8e8e8;
+	width:320px;
+	padding:10px 2px 10px 10px;
+	margin-right:8px;
+	margin-bottom:8px;
+	margin-left:0;	
+	margin-top:0;
+	
+	float:left;
+}
+.cadre_evt2{
+	background-color:#e8e8e8;
+	width:320px;
+	padding:10px 0px 10px 10px;
+	margin-right:0;
+	margin-bottom:8px;
+	margin-left:0;	
+	margin-top:0;
+	
+	float:left;
+}
+#niveau2_wrap_h{
+	background: transparent url(design_pics/bg_niveau2.jpg) repeat-x left top;
+	margin:0 auto;
+	clear:both;
+}
+.titre_home{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:1.4em;
+	color:#8F0033;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+h2.titre_cadre{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:1.3em;
+	font-weight:bold;
+	line-height:1.4em;
+	margin:0;
+	padding:0;
+}
+.cadre_actu h2.titre_cadre{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:1.8em;
+	font-weight:bold;
+	text-transform:uppercase;
+	letter-spacing:0.2em;
+	color:#9A0133;
+	
+	margin-top:-22px;
+	margin-bottom:2px;
+
+	position:relative;
+	z-index:9;
+}
+#litterature h2.titre_cadre{
+	font-family:Georgia, Arial, Times, serif;
+	font-size:1.8em;
+	font-weight:bold;
+	text-transform:uppercase;
+	letter-spacing:0.1em;
+	color:#9A0133;
+	
+	margin-top:-22px;
+	margin-bottom:2px;
+	
+	position:relative;
+	z-index:9;	
+}
+
+h3.titre_actu{
+	font-size: 1.3em;
+	font-weight:bold;
+	color: #8F0133;
+	text-transform: none;
+	line-height:1.4em;
+	margin:0;
+	padding:0;
+}
+h3.titre_actu a:link,h3.titre_actu a:visited{
+	color: #8F0133;
+	text-decoration:none;
+}
+h3.titre_actu a:hover{
+	text-decoration:underline;
+}
+/*Concours*/
+.cloture_non {
+	background: #e8e8e8;
+}
+.cloture_oui {
+	background: #e8e8e8;
+}
+.cloture_non form{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	width: 300px;
+}
+
+
+.titre_conc {
+	color: #FFFFFF;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.descriptif_actu {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	margin-top:5px;
+	line-height:15px;
+}
+
+.date_cloture {
+	font-size: 12px;
+	color: #000000;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-weight: bold;
+}
+
+.liste_lots li {
+	font-size: 12px;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.actu_photo {
+	float:left;
+	margin:0px 5px 0px 0px;
+	text-align: left;
+	width: 100px;
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+
+.cadre_actu .actu_photo {
+	float:left;
+	margin:0px 5px 0px 0px;
+	text-align: left;
+	width: 150px;
+	
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+	
+	text-align:center;
+}
+.actu_photo img:a {
+	border: 1px solid #000000;
+	padding: 1px;
+}
+
+.bloc_texte {
+	/*float:left;*/
+	margin:0;
+	text-align: left;
+	/*width: 404px;*/
+	width:250px;
+}
+
+.grande_image_conc {
+	float:right;
+	margin:0px 20px 10px 15px;
+	text-align: right;
+}
+.titre_form {
+	color: #FFFFFF;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+.vignette_actu{
+	border: solid 1px #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+}
+.texte_actu{
+	float:right;
+	width:240px;
+}
+.actu_lieu a{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.2em;
+	color: #009A99;
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+#sepa_home{
+	background:url(design_pics/ligne_rouge.jpg) no-repeat;
+	width:669px;
+	height:3px;
+	margin-top:20px;
+	margin-bottom:5px;
+}
+
+/* Evénements */
+.texte_evt{
+	float:right;
+	/*width:190px;*/
+	width:206px;
+}
+.evt_lieu a{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.2em;
+	color: #009A99;
+	padding-right: 5px;
+	font-weight: bold;
+}
+.evt_date{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	margin-top:5px;
+}
+
+#cadre_persos{
+	float:right;
+	width:230px;
+	margin:0;
+	padding:0;
+}
+/*
+#perso{
+	margin-top:-16px;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+	text-align:center;
+	z-index:9;	
+}
+*/
+#perso{
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+	text-align:center;
+	z-index:9;	
+}
+#litterature{
+	background-color:#e8e8e8;
+	width:200px;
+	padding:10px;
+	margin-bottom:0px;
+	padding-bottom:20px;
+}
+#litterature .actu_photo{
+	float:none;
+	/*margin:0px 10px 0px 0px;*/
+	margin:0px 0px 10px 0px;
+	text-align: left;
+	width: 120px;
+	
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	padding: 1px;
+	
+	text-align:center;
+}
+#litterature .texte_actu{
+	float:none;
+	clear:both;
+	width:190px;
+	margin-top:10px;
+	padding-left:5px;
+}

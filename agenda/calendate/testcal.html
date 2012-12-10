@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>Calendrier</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<script type="text/javascript">
+<!--
+	function calendatp(cal) {
+		window.open("calendatp.html?cal="+cal, "calw", "left=200,top=200,width=300,height=190,toolbar=0,location=0,status=0,menubar=0,scrollbars=0,resizable=1");
+		return false;
+	}
+	function calendate(cal) {
+		window.open("calendate.html?cal="+cal, "calw", "left=200,top=200,width=300,height=190,toolbar=0,location=0,status=0,menubar=0,scrollbars=0,resizable=1");
+		return false;
+	}
+//-->
+</script>
+<style type="text/css">
+	.cmsicmg { border:0; vertical-align:middle; }
+</style>
+</head>
+<body>
+	<br /><br />
+	<form method="get" action="?">
+		Date jj-mm-aaaa <input name="date5" id="calid5" type="text" size="12" value="20-06-2007" />&nbsp;<a href="#calendrier" onclick="return calendatp('calid5');"><img src="calendp.gif" class="cmsicmg" alt="" title="calendrier" /></a>
+		<br /><br />
+		Date aaaa-mm-jj <input name="jour6" id="cal6" type="text" size="12" value="15-04-2007" />&nbsp;<a href="#calendrier" onclick="return calendate('cal6');"><img src="calendp.gif" class="cmsicmg" alt="" title="calendrier" /></a>
+		<br /><br />
+		<input type="submit" value="Ok" />
+	</form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<script type="text/javascript">
+<!--
+function changchrapide() {
+	if (obj = document.getElementById("catrapideid"))
+		switch (obj.selectedIndex) {
+			case 1: obj.form.action = "-Autres-metiers-"; break;
+			case 2: obj.form.action = "-Compagnies-"; break;
+			default: obj.form.action = "-Comediens-";
+		}
+	return true;
+}
+function effachrapide(chp) {
+	if (chp.value == 'un nom et/ou un prénom')
+		chp.value = "";
+}
+//-->
+</script>
+<h3>Recherche rapide</h3>
+<form method="post" action="-Comediens-" onsubmit="changchrapide();">
+	<fieldset>				
+	<label for="recherche" style="display:none">un nom et/ou un prénom</label>
+<?
+	echo '<input name="recherche" type="text" class="champ1" value="',isset($recherche) ? $recherche : 'un nom et/ou un pr&eacute;nom','" onfocus="effachrapide(this);" />',"\n";
+	$k = isset($catr) ? $catr : '0';
+	echo '<br /><select name="catr" id="catrapideid"><option value="0"',$k == '0' ? ' selected="selected">' : '>','dans les comediens</option><option value="1"',$k == '1' ? ' selected="selected">' : '>','dans les autres m&eacute;tiers</option><option value="2"',$k == '2' ? ' selected="selected">' : '>','dans les compagnies</option></select>',"\n";
+?>
+	<input type="submit" value="OK" class="bouton1" />
+	</fieldset>
+</form>

@@ -1,0 +1,19 @@
+<!-- LES LIVRES POUR LA NEWSLETTER DE DLP (conservez la balise **...** ci-dessous svp) -->
+**V_COM**
+#CACHE{2073600}
+<BOUCLE_princ(RUBRIQUES){id_rubrique=125}>
+	<div class="colonne1">
+		<BOUCLE_littart(ARTICLES){branche}{par date}{inverse}{age<31}>
+			<div class="breve">
+				[<div class="breve_titre"><a href="http://www.demandezleprogramme.be/#URL_ARTICLE">(#TITRE)</a>[<span class="breve_date"> - (#DATE|affdate)</span>]</div>]
+				[<h4>(#SOUSTITRE)</h4>]
+				[<span class="breve_pic"><a href="http://www.demandezleprogramme.be/#URL_ARTICLE">(#LOGO_ARTICLE||image_reduire{70,0}||abs_url||inserer_attribut{"alt",#TITRE})</a></span>]
+				[<p style="font-size:13px; font-style:italic;">(#CHAPO|couper{500})</p>]
+				<div class="en_savoir_plus"><a href="http://www.demandezleprogramme.be/#URL_ARTICLE"><img src="http://www.demandezleprogramme.be/agenda/design_pics/ensavoirplus.jpg" title="En savoir plus" alt="En savoir plus" /></a></div>
+				<div style="clear:both;"></div>
+			</div>
+		</BOUCLE_littart>
+		
+	</div>
+
+</BOUCLE_princ>

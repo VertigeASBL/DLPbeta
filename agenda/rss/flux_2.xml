@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rss version="2.0" xmlns:periode="http://www.demandezleprogramme.be/agenda/rss/doc/">
+
+ 
+<channel>
+<title>Dernières critiques - Cinéma - Français</title>
+<link>http://www.cine-horaire.com/</link>
+<description>Dernières critiques par cine-horaire.com</description>
+<language>fr-ca</language>
+    <image>
+      <title>cine-horaire.com</title>
+      <url>http://www.agencenews.com/rss/cinehoraire_logo.gif</url>
+      <link>http://www.cine-horaire.com</link>
+      <width>144</width>
+      <height>34</height>
+    </image>
+
+
+<item>
+<title> Le Prix à payer</title>
+<link>http://www.cine-horaire.com/film.php?film=6114</link>
+<description>Jean-Pierre (Christian Clavier) et Odile (Nathalie Baye) forment un couple heureux, du moins en apparence. Car sous le couvert de la bonne entente se cache un profond ennui. En fait, le couple fait chambre à part depuis des années. Sa femme se refusant désormais à toute activité sexuelle, Jean-Pierre prend les grands moyens pour obtenir son attention : il lui coupe les vivres.</description>
+<periode:debut>16-12-2007</periode:debut>
+<periode:fin>17-12-2007</periode:fin>
+</item>
+
+
+<item>
+<title>American Gangster (vf. Gangster américain)</title>
+<link>http://www.cine-horaire.com/film.php?film=5784</link>
+<description>Avec " American Gangster " Ridley Scott est dans une zone de confort et il avait tous éléments pour offrir un grand film. Un solide scénario et des interprètes de premier ordre lui permettent en effet de laisser libre cours à tout son savoir-faire, ce qui donne un résultat très satisfaisant et l'un des meilleurs films de l'année 2007. Pourtant, il manque un petit quelque chose…</description>
+<periode:debut>11-12-2007</periode:debut>
+<periode:fin>12-12-2007</periode:fin>
+</item>
+
+
+<item>
+<title>Bee Movie (vf. Drôle d'abeille)</title>
+<link>http://www.cine-horaire.com/film.php?film=5438</link>
+<description>Le film d'animation "Bee Movie", mettant en vedette Jerry Seinfeld dans le rôle d'une abeille qui refuse la destinée qui lui est réservée, s'avère être un agréable divertissement pour toute la famille sans nécessairement susciter les fous rires non-stop. Notons qu'il ne s'adresse pas nécessairement aux tout-petits.</description>
+<periode:debut>02-12-2007</periode:debut>
+<periode:fin>03-12-2007</periode:fin>
+</item>
+
+
+<item>
+<title>Continental, un film sans fusil (Continental, A film Without Guns) (vf. Continental, un film sans fusil)</title>
+<link>http://www.cine-horaire.com/film.php?film=5881</link>
+<description>Continental: un film sans fusil", le premier long-métrage de Stéphane Lafleur, nous propose un voyage dans un monde à la fois hyper réaliste mais aussi fantastique. Centré avant tout sur quatre personnages dont le lien commun est la solitude et un certain désarroi, ce film d'auteur ne s'adresse pas nécessairement à tous publics.</description>
+<periode:debut>25-11-2007</periode:debut>
+<periode:fin>26-11-2007</periode:fin>
+</item>
+
+
+</channel>
+</rss>

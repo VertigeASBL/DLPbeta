@@ -1,0 +1,74 @@
+<BOUCLE_princ(RUBRIQUES){id_rubrique}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<INCLURE{fond=inc_tur/agheader}{id_rubrique}>
+	<link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+
+<div id="header">
+	<INCLURE{fond=inc_tur/agoutils}>
+	<INCLURE{fond=inc_tur/banner_haut}>
+</div>
+<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+<div id="principal">
+	<div class="colonne1">
+	
+	<!-- Entete de la page -->
+	<table width="100%" border="0" cellspacing="0" cellpadding="15">
+	  <tr>
+		<td valign="top"><h2>[(#TITRE)]</h2>
+		</td>
+		<td valign="top" width="150">[<p>(#TEXTE)</p>]
+		
+		<div align="center">
+			<div class="fb-like" data-href="[(#SELF|url_absolue|rawurlencode)]" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>
+		</div>
+	
+		</td>
+		<td valign="middle"><img src="IMG/christian_jade_photo-200.jpg" alt="Christian Jade" /></td>
+	  </tr>
+	</table>
+	<!-- #Entete de la page -->
+	
+
+	<!-- Liste des articles -->
+	<BOUCLE_articles_jade(ARTICLES){id_rubrique}{par date}{inverse}>
+	 <div class="breve">
+	 
+		<!-- <div class="breve_titre">[(#DATE|jour)] [(#DATE|nom_mois)] [(#DATE|annee)]</div> -->
+		<h3>[(#TITRE)]</h3>
+		<p>[(#TEXTE)]</p>
+	
+		<B_docmp3><br />
+		<BOUCLE_docmp3(DOCUMENTS){id_article}{mode=document}{extension=mp3}{par num titre}{doublons}>
+			<object width="200" height="20" type="application/x-shockwave-flash" data="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" style="vertical-align:middle;">
+				<param name="movie" value="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" /><param name="src" value="IMG/mp3/dewplayer.swf?son=#URL_DOCUMENT" />
+				<param name="quality" value="high" /><param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" />
+				<embed width="200" height="45" type="video/quicktime" src="#URL_DOCUMENT" autostart="0" autoplay="0" showcontrols="1" controller="1" loop="0" pluginspage="http://www.apple.com/quicktime/download/" style="vertical-align:middle;"></embed>
+			</object>
+			
+			[<span class="detail_event_lieu"><a href="(#URL_DOCUMENT)" target="_blank" title="Pour enregistrer le fichier sur votre disque dur, cliquez avec le bouton droit de la souris sur le lien et sélectionnez l'option 'Enregistrer la cible du lien sous...'.">[(#TITRE|supprimer_numero) > ]T&eacute;l&eacute;charger</a></span>]<br /><br />
+		</BOUCLE_docmp3>
+	
+	  </div>
+	</BOUCLE_articles_jade>
+
+	</div>
+
+	<div class="colonne2">
+		<INCLURE{fond=inc_tur/outils_spectateurs}>
+		<INCLURE{fond=inc_tur/formagnewsletter}>
+		<INCLURE{fond=inc_tur/recherche_rapide}>
+		<INCLURE{fond=inc/decouvrir_pgm}>
+		<INCLURE{fond=inc_tur/services}>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="footer">
+	<INCLURE{fond=inc_tur/footer}>
+</div>
+</body>
+</html>
+</BOUCLE_princ>

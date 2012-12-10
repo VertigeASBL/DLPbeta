@@ -1,0 +1,1050 @@
+#CACHE{0}
+
+<?php 
+require 'agenda/inc_var.php';
+//require 'agenda/inc_db_connect.php';
+require 'agenda/inc_fct_base.php';
+require 'agenda/calendrier/inc_calendrier.php';
+
+$indetermine = '' ; // Texte par défaut (-- INDETERMINE --)
+
+
+// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+// Fonction d'affichage du calendrier avec cases colorées en fonction des jours actifs
+// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+function affich_jours_actifs ($jours_actifs, $MM_traite, $AAAA_traite)
+{
+	global $date_event_debut;
+	global $date_event_fin;
+	$date_event_debut_condition = str_replace("-","",$date_event_debut);
+	$date_event_fin_condition = str_replace("-","",$date_event_fin);
+	
+	$j=1;
+	for ($j=1 ; $j<=31 ; $j++)
+	{
+		// Composer la chaine qui sera cherchée dans la DB :
+		$MM_traite = str_pad($MM_traite, 2, "0", STR_PAD_LEFT) ;  // Complète la chaîne
+		$JJ_traite = str_pad($j, 2, "0", STR_PAD_LEFT) ;  // Complète la chaîne
+		$date_traite = $AAAA_traite . '-' . $MM_traite . '-' . $JJ_traite ;
+		settype($JJ_traite, "integer"); // Pour éviter problèmes avec les nombres précédés de "0"
+
+		$date_traite_condition = str_replace("-","",$date_traite); 
+
+		// jour HORS période
+		if (($date_traite < $date_event_debut)OR($date_traite > $date_event_fin))
+		{
+			//echo $date_traite_condition .' - ' .$date_event_debut_condition .'<br>';
+			$tableau_jours[$JJ_traite] = array(NULL,'linked-day nonchecked',$JJ_traite);
+		}
+		
+		// jour ACTIF
+		elseif (in_array($date_traite, $jours_actifs))
+		{
+			$tableau_jours[$JJ_traite] = array(NULL,'linked-day checked',$JJ_traite);
+		}
+		else
+		{
+			$tableau_jours[$JJ_traite] = array(NULL,'linked-day unchecked',$JJ_traite);
+		}
+	}
+	echo '<span class ="alignLeftMargin">' ;
+	echo generate_calendar($AAAA_traite, $MM_traite, $tableau_jours, 2, NULL, 1); // Affichage du calendrier
+	echo '</span>'."\n" ;
+}
+
+// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+
+
+if (empty ($_GET['id_event']) OR $_GET['id_event'] == NULL )
+{
+	echo '<p>&nbsp;</p><p>&nbsp;</p>',"\n",'<div class="alerte">Mauvais paramètre GET<br><a href="index.php" >Retour</a></div>',"\n" ;
+
+}
+else
+{
+	$id_event = htmlentities($_GET['id_event'], ENT_QUOTES);
+	$reponse = mysql_query("SELECT * FROM $table_evenements_agenda WHERE id_event = '$id_event'");
+	$donnees = mysql_fetch_array($reponse);
+ 
+	// Si la valeur de $_GET['id_event'] ne correspond à aucune entrée de la TABLE :
+	if (empty ($donnees))
+	{
+		echo '<p>&nbsp;</p><p>&nbsp;</p>',"\n",'<div class="alerte">Cette entrée n\'existe pas<br><a href="index.php" >Retour</a></div>'."\n" ;
+	}
+	else
+	{
+		// ------------------------------------------------
+		// Lecture des infos de la DB pour cette entrée
+		// ------------------------------------------------
+		$parent_event = $donnees['parent_event'];
+		$lieu_event = $donnees['lieu_event'];
+		$nom_event = $donnees['nom_event'];
+		$ville_event = $donnees['ville_event'];
+		$description_event = $donnees['description_event'];
+		$genre_event = $donnees['genre_event'];
+		$pic_event_1 = $donnees['pic_event_1'];
+		$pic_event_2 = $donnees['pic_event_2'];
+		$pic_event_3 = $donnees['pic_event_3'];
+		
+		$video_event = $donnees['video_event'];
+		$critique_event = $donnees['critique_event'];
+		$chronique_event = $donnees['chronique_event'];
+		$video_spip_event = $donnees['video_spip_event'] ;
+		$interview_event = $donnees['interview_event'];
+		$interview_espace_livres = $donnees['espace_livres'];
+		
+		$date_event_debut = $donnees['date_event_debut'];
+		$date_event_fin = $donnees['date_event_fin'];
+
+		$AAAA_debut = substr($date_event_debut, 0, 4);
+		$AAAA_fin = substr($date_event_fin, 0, 4);
+		$MM_debut = substr($date_event_debut, 5, 2);	
+		$MM_fin = substr($date_event_fin, 5, 2);
+		$JJ_debut = substr($date_event_debut, 8, 2);
+		$JJ_fin = substr($date_event_fin, 8, 2);
+		$AAAA_MM_debut = substr($date_event_debut, 0, 7);
+
+		$jours_actifs_event = $donnees['jours_actifs_event'];
+		$jours_actifs_event = explode(",", $jours_actifs_event);
+
+		$saison_preced_event = $donnees['saison_preced_event'] ;
+
+		//$article_kidonaki = $donnees['article_kidonaki'] ;
+
+		// TABLE LIEU
+		$reponse_lieu = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = $lieu_event");
+		$donnees_lieu = mysql_fetch_array($reponse_lieu) ;
+		
+		// Affichage lien retour au listing
+		if (isset($_SERVER['HTTP_REFERER']) AND $_SERVER['HTTP_REFERER'] != NULL AND preg_match('-Agenda-', $_SERVER['HTTP_REFERER']))
+		{
+			$lien_retour_moteur = $_SERVER['HTTP_REFERER'] ;
+		}
+		else
+		{
+			$lien_retour_moteur = '-Agenda-' ;
+		}
+		echo '<span class="lien_retour_public"><a href="' . $lien_retour_moteur . '"><img src="agenda/design_pics/loupe_fond_ec.jpg" align="absmiddle" /> Retour à la recherche</a></span>',"\n" ;
+
+
+		
+		// ------------------------------------------------
+		// Affichage contenu de l'événement
+		// ------------------------------------------------
+		
+		$tab= '<div class="detail_event">'."\n".'<div class="detail_event_bloc_1">'."\n" ;
+	
+		// ____________________________________________
+		// ICONES FLOTTANTES (au niveau du titre)
+	
+		$tab.= '<span class="ico_float_droite_relative">'."\n" ;
+		
+	
+		// Icone "J'ai vu et aimé"
+		if (isset ($donnees['jai_vu_event']) AND $donnees['jai_vu_event'] != 0 )
+		{
+			$jai_vu_event = $donnees['jai_vu_event'] ;
+		}
+		else
+		{
+			$jai_vu_event = ' ' ;
+		}
+		$lien_jai_vu = '<a href="#vote" onclick="popup_jai_vu';
+		$lien_jai_vu.= "('agenda/jai_vu/jai_vu_popup.php?id=" . $id_event . "','Votons');";
+		$lien_jai_vu.= '">'."\n";
+		
+		/*$adresse_jai_vu = 'agenda/jai_vu/jai_vu_popup.php?id=' . $id_event ;
+		$lien_jai_vu = '<a href="#voter" onclick="popup_jai_vu' ;
+		$lien_jai_vu.= "('" . $adresse_jai_vu . "','J ai vu et aimé !!! ');" ;
+		$lien_jai_vu.= '">' ;*/
+		
+		$tab.= '<div class="nombre_votes">' .
+		$lien_jai_vu . '<img src="agenda/design_pics/ico_jai_vu.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" /></a>
+		<div class="nombre_votes_bulle_detail">' . $jai_vu_event .'</div></div>'."\n" ;
+
+		// Icone Interview
+		if (! $interview_event)
+			$interview_event = saisonprecedente($id_event, 'interview');
+		if ($interview_event)
+			$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview.jpg" align="middle"/>Voir l\'interview</a> &nbsp; '."\n";
+
+
+		$tab.= '<iframe src="http://www.facebook.com/plugins/like.php?href=[(#SELF|url_absolue|rawurlencode)]&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=285556531500909" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; margin-top: 10px; height:21px;" allowTransparency="true"></iframe> &nbsp; '."\n";
+
+
+		// Icone Imprimer
+		$tab.= '<a href="agenda/spip/print_description_event.php?id_event=' . $id_event . '" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.jpg"  hspace="10" align="middle" /></a>'."\n" ;
+
+		$tab.= '</span>'."\n\n" ;
+
+
+
+		// ____________________________________________
+		// NOM EVENEMENT (titre)
+		
+		if (isset($nom_event) AND $nom_event != NULL)
+		{
+			$tab.= '<span class="detail_event_titre">' . $nom_event . '</span>'."\n";
+		}
+	
+	
+		// ____________________________________________
+		// ID
+		$tab.= ' <span class="id_breve">(id ' . $id_event . ')</span>'."\n" ;
+
+
+		// ____________________________________________
+		// LIEU
+				
+		$tab.= '<span class="detail_event_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$lieu_event.'" title="Lieu où est joué le spectacle">' . $donnees_lieu['nom_lieu'] . '</a></span> '."\n";	
+	
+
+	
+		// ____________________________________________
+		// VILLE
+		
+		if (isset($donnees['ville_event']) AND ($donnees['ville_event'] != NULL)) 
+		{
+			$ville_event = $donnees['ville_event'] ;
+			$tab.= '<span class="detail_corps_event"><acronym title="Ville où du spectacle">' . $regions[$ville_event] .'</acronym></span><br /><br />'."\n";	
+		}
+	
+	
+	
+		// ____________________________________________
+		// PHOTO EVENEMENT *** Replié ***	
+		$photo_replie = '' ;
+		if (isset ($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set' )
+		{
+			$photo_replie.= '<span class="detail_event_photo"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event .'_1.jpg" title="' . $nom_event . '" /></span>'."\n";
+		}
+
+		
+		// ____________________________________________
+		// PHOTO EVENEMENT *** Déplié ***	
+		$photo_deplie = '<span class="detail_event_photo">'."\n" ;
+		if (isset ($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set' )
+		{
+			$photo_deplie.= '<img src="agenda/' . $folder_pics_event . 'event_' . $id_event .'_1.jpg" title="' . $nom_event . '" />';
+		}
+		
+		if (isset ($donnees['pic_event_2']) AND $donnees['pic_event_2'] == 'set' )
+		{
+			$photo_deplie.= '<br /> <br /><img src="agenda/' . $folder_pics_event . 'event_' . $id_event .'_2.jpg" />';
+		}
+		
+		if (isset ($donnees['pic_event_3']) AND $donnees['pic_event_3'] == 'set' )
+		{
+			$photo_deplie.= '<br /> <br /><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_3.jpg" />';
+		}
+		
+		$photo_deplie.= ' ' ;
+		
+		//Icone Vidéo
+		if (isset ($donnees['video_event']) AND $donnees['video_event'] != NULL )
+		{
+			$video_event = $donnees['video_event'] ;
+			$photo_deplie.= '<br /> <br /><a href="agenda/videos/' . $video_event . '" target="_blank" title="Cliquez ici pour voir la vidéo"><img src="agenda/design_pics/ico_video_2.jpg"/></a>' ;
+		}
+
+
+		$photo_deplie.= "\n".'</span>'."\n\n" ;
+	
+		// ____________________________________________
+		// GENRE
+		
+		$genre_concat = '' ;
+		if (isset($genre_event) AND ($genre_event != NULL)) 
+		{
+			$genre_concat.= '<span class="detail_event_genre"><acronym title="Genre du spectacle">' . $genres[$genre_event] .'</acronym></span> '."\n";	
+		}
+		
+		
+		// ____________________________________________
+		// DATES
+		
+		$date_event_debut_annee = substr($date_event_debut, 0, 4);
+		$date_event_debut_mois = substr($date_event_debut, 5, 2);
+		$date_event_debut_jour = substr($date_event_debut, 8, 2);
+		
+		$date_event_fin_annee = substr($date_event_fin, 0, 4);
+		$date_event_fin_mois = substr($date_event_fin, 5, 2);
+		$date_event_fin_jour = substr($date_event_fin, 8, 2);
+	
+		
+		$date_concat = '<a href="#calendrier" class="detail_event_date" title="Cliquez pour accéder au calendrier">'
+		. $date_event_debut_jour . ' '
+		. $NomDuMois[$date_event_debut_mois+0] . ' '
+		. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . ' '
+		. $NomDuMois[$date_event_fin_mois+0] . ' '
+		. $date_event_fin_annee . '</a><br /><br />'."\n";
+
+
+		// ____________________________________________
+		// TEXTE DESCRIPTIF
+
+		$desciption = $donnees['description_event'] ;// Raccourcir la chaine :
+		$max=1000; // Longueur MAX de la chaîne de caractères
+		$allowed_tags = '<p>, <br>, <br />, <BR />, <BR />';
+		$descript_strip_tags = strip_tags($desciption,$allowed_tags) ;
+		$chaine_raccourcie = raccourcir_chaine ($descript_strip_tags,$max); // retourne $chaine_raccourcie
+
+
+		// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
+		// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
+		// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
+
+		// Rajouter des liens vers les pages perso des comédiens si leur nom apparait dans le texte sous la forme "prénom nom" 
+		
+		// Connecter à la DB des Comediens
+		require 'agenda/inc_db_connect_to_comedien.php';
+		
+		// PS : Dans la Requête, ID 1726 est là pour éviter Marion
+		$reponse_comedien_lien = mysql_query("SELECT * FROM comediens WHERE accord > 0 AND ID != 1726 ");
+		while ($donnees_comedien_lien = mysql_fetch_array($reponse_comedien_lien))
+		{
+			$comedien_prenom_nom = $donnees_comedien_lien['prenom'] . ' ' . $donnees_comedien_lien['nom'] ;
+			//echo ' <br />Prénom et Nom : ' . $comedien_prenom_nom ;
+		
+			$comedien_url = '<span class="un_nom_de_comedien_dans_description"><a href="http://www.comedien.be/' . $donnees_comedien_lien['url'] . '" title="Voir le profil sur le site comedien.be" target="_blank" style="color: #E38E0F;"><img src="agenda/design_pics/voir_comedien.gif" / height="12" align="bottom">' . $comedien_prenom_nom . '</a></span>' ;
+			//echo ' -- URL : ' . $comedien_url ;
+			if (preg_match("!$comedien_prenom_nom+[^a-zA-Z]!", $desciption))
+			{
+				$desciption = str_replace($comedien_prenom_nom, $comedien_url, $desciption);
+			}
+			if (preg_match("!$comedien_prenom_nom+[^a-zA-Z]!", $chaine_raccourcie))
+			{
+				$chaine_raccourcie = str_replace($comedien_prenom_nom, $comedien_url, $chaine_raccourcie);
+			}
+		}
+		require 'agenda/inc_db_connect.php' ; // reconnecter à la DB DLP
+		$le_texte_checke_remplace = str_replace($array_comedien_prenom_nom, $array_comedien_url, $le_texte_checke);
+		
+		// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
+		// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
+		// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
+
+
+			
+
+		// *** Texte introductif ***
+		$tab.= '<div id="Zone1" style="display:block;"> ' . $photo_replie . $genre_concat . $date_concat.
+		'<div class="detail_corps_event"> ' . $chaine_raccourcie . ' 
+		<span class="en_savoir_plus"><a href="#voir" onclick="return toggle_zone(';
+		$tab.= "'Zone1','Afficher la suite','Replier');" ;
+		$tab.= '" id="Zone1Link">Afficher la suite &gt;&gt;</a></span> <br  />  <br  /> </div></div>'."\n\n" ;
+		
+		
+		// *** Texte complet ***
+		$tab.= '<div id="Zone1B" style="display:none;"> ' . $photo_deplie . $genre_concat . $date_concat.
+		'<div class="detail_corps_event"> ' . $desciption . ' 
+		<a href="#voir" onclick="return toggle_zone(' ;
+		$tab.= "'Zone1','Afficher la suite','Replier');" ;
+		$tab.= '" id="Zone1Link"> &lt;&lt; Replier</a></div>'."\n".'</div>'."\n\n" ;
+
+
+		// *** tel reservation ***
+		$time_date_event_fin = date(mktime(0, 0, 0, $MM_fin, $JJ_fin, $AAAA_fin));
+		$time_date_aujourdhui = date(mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+
+		// Enfilade de boutons :
+		$tab.= '<div class="enfilade_de_boutons">&nbsp; '."\n" ;
+		
+		if (!empty($donnees['tel_reserv_event']) AND $donnees['tel_reserv_event'] != NULL 
+		AND  ($time_date_event_fin+86400) > ($time_date_aujourdhui+0)
+		AND ($genre_event != 'g07'))
+		{
+			$tab.= '<span class="tel_reserv">Réservation : '.$donnees['tel_reserv_event'].'</span>'."\n";
+		}
+		
+		/*--- Y a-til des places sur Kidonaki ?
+		$date_actuelle = time();
+		$date_limite_vente = date(mktime(0, 0, 0, $MM_fin, $JJ_fin-15, $AAAA_fin));
+		if ($article_kidonaki > 0 AND ($date_limite_vente-$date_actuelle) > 0)
+		{
+			$tab.= '<a href="http://www.kidonaki.be/spip.php?article' . $donnees['article_kidonaki'] . '"><img src="agenda/kidonaki/acheter_sur_kidonaki.jpg" title="Achetez vos places sur Kidonaki" alt="Achetez vos places sur Kidonaki" hspace="2" align="middle" /></a>'."\n" ;
+		} ---*/
+		
+		
+		// afficher Bouton "INTERVIEW ESPACE LIVRE" ;
+		if (isset ($donnees['espace_livres']) AND $donnees['espace_livres'] != 0 )
+		{ 
+			$tab.= '<a href="spip.php?article'.$interview_espace_livres . '" title="écouter l\'interview espace livres"><img src="agenda/design_pics/bouton_ecouter_int_espace_livre.jpg" hspace="2" align="middle" /></a>'."\n" ;
+		}
+
+
+		// afficher Envoyer à un ami ;
+		$tab.= '<a href="-Envoyer-a-un-ami-?id_event=' . $id_event . '"><img src="agenda/e_card/pics/ico_envoyer_ami.jpg" title="Informer un ami" alt="Informer un ami" hspace="2" align="middle" /></a>'."\n" ;
+
+			
+		// Afficher bouton de Réservation
+		if (!empty($donnees_lieu['email_reservation']) AND $donnees_lieu['email_reservation'] != NULL 
+		AND  ($time_date_event_fin+86400) > ($time_date_aujourdhui+0)
+		AND ($genre_event != 'g07'))
+		{
+			$tab.= '<a href="-Reserver-?id_event='. $id_event .'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.jpg"  hspace="2" align="middle" /></a>'."\n" ;
+		}
+		
+
+		
+		// #enfilade de boutons
+		$tab.= '</div>'."\n\n" ;
+		
+		
+		$tab.= '</div>'."\n".'
+		<div class="float_stop"> <br /> </div>'."\n".'
+		</div>'."\n".'
+		<div class="float_stop"> <br /> </div>'."\n\n" ; //--- fin div detail_event + detail_event_bloc_1
+		
+		echo $tab ;
+		
+		// Fin bloc du haut
+
+
+		// ***************************************************************************************
+		// CALENDRIERS :
+
+			echo'<div class="detail_event_bloc_2">
+				<div class="head_detail_event_bloc_2">
+					<div class="top_left_bloc_calendrier"></div>
+	
+					<span class="titre_paragr_detail_event">Calendrier de l\'&eacute;v&eacute;nement "' .$nom_event . '"</span>
+
+					<span class="ico_float_droite">
+					<a href="agenda/spip/print_calendrier_event.php?id_event=' . $id_event . '"  
+					target="_blank" title="Imprimer le calendrier des dates de représentation">
+					<img src="agenda/design_pics/ico_impr.jpg"  hspace="10" /></a>
+					</span>	
+				</div>';
+											
+		echo '<div class="detail_corps_event">
+		<a name="calendrier"></a> <br /> <br /> ' ;
+	
+	// CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+			  
+	// --------------------------------------------------------------------
+	// ----------------------- AFFICHER CALENDRIERS -----------------------
+	// --------------------------------------------------------------------
+	// [A] Si p&eacute;riode comprise dans le m&ecirc;me mois : traiter les jours de JJ_debut &agrave; JJ_fin
+	if (($MM_debut == $MM_fin) && ($AAAA_debut == $AAAA_fin))
+	{
+		$AAAA_traite = $AAAA_debut ;
+		$MM_traite = $MM_debut ;
+
+		/*echo  ' [A] P&eacute;riode couvrant 1 mois unique. Mois trait&eacute; = '.$MM_traite.' 
+		et Ann&eacute;e trait&eacute;e = '.$AAAA_traite . '<br>' ; */
+		
+		affich_jours_actifs ($jours_actifs_event, $MM_traite, $AAAA_traite) ;
+	}
+	
+	// ------------------------------------------------------------------------------------------------------
+	else
+	{
+		// [B1] si la p&eacute;riode s'&eacute;tend sur plusieurs mois, afficher 1 calendrier &agrave; chaque passage dans la boucle. 
+		// Commencer par traiter le mois de d&eacute;but de p&eacute;riode
+		$AAAA_MM_traite = substr($date_event_debut, 0, 7);
+		$AAAA_traite = $AAAA_debut ;
+		$MM_traite = $MM_debut ;
+		// echo '<b>[B1] Mois trait&eacute; (1er mois de la p&eacute;riode) = '.$MM_traite.' et Ann&eacute;e trait&eacute;e = '.$AAAA_traite . '</b><br>' ;
+		
+		$tableau_jours = array() ;	
+	
+		affich_jours_actifs ($jours_actifs_event, $MM_traite, $AAAA_traite) ;
+	
+		// Incr&eacute;menter le mois :		
+		if	($MM_traite == 12)
+		{
+			$MM_traite = 1 ;
+			$AAAA_traite = $AAAA_traite + 1 ;
+		}
+		else
+		{
+			$MM_traite = $MM_traite + 1 ;
+		}
+	
+		// -------------------------------------------------------------------------------------------------
+		// [B2] traiter tous les mois suivants jusqu'&agrave; ce qu'on arrive au mois de fin de PERIODE
+		// La boucle s'arr&ecirc;te quand (($MM_traite == $MM_debut) && ($AA_fin == $AAAA_traite))
+	
+		while (($MM_traite != $MM_fin) OR ($AAAA_traite != $AAAA_fin))
+		{
+			/*unset ($tableau_jours[$JJ_db]);	*/
+			$tableau_jours = array() ;
+		
+			//echo  '<b>[B2] Mois "suivant" trait&eacute; = '.$MM_traite.' et Ann&eacute;e trait&eacute;e = '.$AAAA_traite.'</b><br>' ;
+			
+			affich_jours_actifs ($jours_actifs_event, $MM_traite, $AAAA_traite) ;
+	
+			// Incr&eacute;menter le mois :		
+			if	($MM_traite == 12)
+			{
+				$MM_traite = 1 ;
+				$AAAA_traite = $AAAA_traite + 1 ;
+			}
+			else
+			{
+				$MM_traite = $MM_traite + 1 ;
+			}
+		}
+		// -------------------------------------------------------------------------------------------------
+		// [B3] traiter le dernier mois de JJ = 1 &agrave; JJ = JJ_fin
+		$tableau_jours = array() ;
+		$AAAA_MM_traite = substr($date_event_fin, 0, 7);
+	
+		//echo  '<b> [B3] Mois trait&eacute; (Dernier mois de la p&eacute;riode) = '.$MM_traite.' et Ann&eacute;e trait&eacute;e = '.$AAAA_traite . '</b><br>' ;
+	
+		affich_jours_actifs ($jours_actifs_event, $MM_traite, $AAAA_traite) ;
+	}
+	
+
+	// CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+
+	// -----------------------------
+	// Légende du calendrier 
+	echo '<div class="float_stop"><br></div>
+	<!-- em>Légende du calendrier : 
+	<span class="checked">Jour de représentation</span> / 
+	<span class="unchecked">Pas de représentation</span></em -->
+	</div><br /> '."\n" ;
+	
+	// Fin bloc agenda
+
+	echo  '</div>'."\n\n" ; //--- fin detail_event_bloc_2 CALENDRIERS
+
+
+
+		// ***************************************************************************************
+		// Video d'un article SPIP :
+
+		if (isset ($video_spip_event) AND $video_spip_event != NULL AND $video_spip_event != 0 )
+		{
+			echo '<div class="detail_event_bloc_2">
+					<div class="head_detail_event_bloc_2">
+						<div class="top_left_bloc_video">&nbsp;</div>
+
+						<span class="titre_paragr_detail_event">Vidéo relative à l\'&eacute;v&eacute;nement "' .$nom_event . '"</span>
+					</div>';
+											
+			echo '<div class="detail_corps_event">
+					<a name="video"></a>' ;
+
+		$reponse_video_spip_article = mysql_query("SELECT texte FROM spip_articles WHERE id_article = $video_spip_event ");
+		$donnees_video_spip_article = mysql_fetch_array($reponse_video_spip_article) ;		
+				echo '<div align="center">' . $donnees_video_spip_article['texte'] . '</div>';
+	
+				echo '<div align="center"><a href="-Videos-?#anc_' . $video_spip_event . '">Voir les autres vidéos</a></div>' ;
+
+			echo  '</div><br />
+			</div>'."\n\n"; 
+	// Fin bloc Video
+	}
+
+
+	
+		// ***************************************************************************************
+		// CRITIQUE :
+		if (! $critique_event)
+			$critique_event = saisonprecedente($id_event, 'critique');
+		if ($critique_event)
+		{
+			echo '<a name="critique" id="critique"></a>
+				<div class="detail_event_bloc_2">'."\n".'
+					<div class="head_detail_event_bloc_2">
+						<div class="top_left_bloc_critique"> </div>
+	
+						<span class="titre_paragr_detail_event">Critique</span>
+	
+						<span class="ico_float_droite">
+							<a href="-Critique-imprimable-?id_event='. $id_event .'" title="Imprimer la critique" target="_blank">
+							<img src="agenda/design_pics/ico_impr.jpg"  hspace="10"  /></a>
+						</span>	
+					</div>'."\n\n";
+											
+		?> <!-- Critique provenant d'un article SPIP -->
+		<div class="detail_corps_event">
+		
+		
+		<!-- *** Début critique *** -->
+			<div id="Zone3" style="display:block;">
+
+				<BOUCLE_artun2(ARTICLES){id_article=#ENV{id_event}|saisonprecedente{critique}}>
+					[<a href="-Critiques-?#anc_#ENV{id_event}" title="Détail de la critique">
+					<h3>(#TITRE)</h3></a>] 
+					[<p>(#SOUSTITRE)</p>]
+					[<p>(#CHAPO)</p>]
+					<br />
+				</BOUCLE_artun2>
+					L'article n'a pas été trouvé(1)
+				<//B_artun2>
+				
+				<a href="#voir3" onclick="return toggle_zone('Zone3','Afficher la suite','Replier');" id="Zone3Link">Afficher la suite &gt;&gt;</a>
+			</div>
+		
+		
+		<!-- *** Critique complète *** -->
+			<div id="Zone3B" style="display:none;"> 
+				
+				<BOUCLE_artun3(ARTICLES){id_article=#ENV{id_event}|saisonprecedente{critique}}>
+					[<a href="-Critiques-?#anc_#ENV{id_event}" title="Détail de la critique">
+					<h3>(#TITRE)</h3></a>] 
+					[<p>(#SOUSTITRE)</p>]
+					[<p>(#CHAPO)</p>]
+					[<p>(#TEXTE)</p>]
+					[<div class="ps">(#PS)</div>]
+					<br />
+				</BOUCLE_artun3>
+					L'article n'a pas été trouvé(2)
+				<//B_artun3>
+	
+				<a href="#voir3" onclick="return toggle_zone('Zone3','Afficher la suite','Replier');" id="Zone3Link"> &lt;&lt; Replier</a>
+			</div>
+
+			<div class="float_stop"><br /></div>
+			
+		</div><!-- detail_corps_event -->
+
+		<?php
+		echo '</div>'."\n\n" ; //--- detail_event_bloc_2
+		}
+		// Fin bloc critique				
+
+
+		// ***************************************************************************************
+		// CHRONIQUE :
+		if (! $chronique_event)
+			$chronique_event = saisonprecedente($id_event, 'chronique');
+		if ($chronique_event)
+		{
+			echo '<a name="chronique" id="chronique"></a>
+				<div class="detail_event_bloc_2">'."\n".'
+					<div class="head_detail_event_bloc_2">
+						<div class="top_left_bloc_critique"> </div>
+	
+						<span class="titre_paragr_detail_event">Chronique</span>
+	
+						<span class="ico_float_droite">
+							<a href="-Chronique-imprimable-?id_event='. $id_event .'" title="Imprimer la chronique" target="_blank">
+							<img src="agenda/design_pics/ico_impr.jpg"  hspace="10"  /></a>
+						</span>	
+					</div>'."\n\n";
+											
+		?> <!-- chronique provenant d'un article SPIP -->
+		<div class="detail_corps_event">
+		
+		
+		<!-- *** Début chronique *** -->
+			<div id="Zone4" style="display:block;">
+
+				<BOUCLE_artun4(ARTICLES){id_article=#ENV{id_event}|saisonprecedente{chronique}}>
+					[<a href="-Chroniques-?#anc_#ENV{id_event}" title="Détail de la chronique">
+					<h3>(#TITRE)</h3></a>] 
+					[<p>(#SOUSTITRE)</p>]
+					[<p>(#CHAPO)</p>]
+					<br />
+				</BOUCLE_artun4>
+					L'article n'a pas été trouvé(1)
+				<//B_artun4>
+				
+				<a href="#voir4" onclick="return toggle_zone('Zone4','Afficher la suite','Replier');" id="Zone4Link">Afficher la suite &gt;&gt;</a>
+			</div>
+		
+		
+		<!-- *** chronique complète *** -->
+			<div id="Zone4B" style="display:none;"> 
+				
+				<BOUCLE_artun5(ARTICLES){id_article=#ENV{id_event}|saisonprecedente{chronique}}>
+					[<a href="-Chroniques-?#anc_#ENV{id_event}" title="Détail de la chronique">
+					<h3>(#TITRE)</h3></a>] 
+					[<p>(#SOUSTITRE)</p>]
+					[<p>(#CHAPO)</p>]
+					[<p>(#TEXTE)</p>]
+					[<div class="ps">(#PS)</div>]
+					<br />
+				</BOUCLE_artun5>
+					L'article n'a pas été trouvé(2)
+				<//B_artun5>
+	
+				<a href="#voir4" onclick="return toggle_zone('Zone4','Afficher la suite','Replier');" id="Zone4Link"> &lt;&lt; Replier</a>
+			</div>
+
+			<div class="float_stop"><br /></div>
+			
+		</div><!-- detail_corps_event -->
+
+		<?php
+		echo '</div>'."\n\n" ; //--- detail_event_bloc_2
+		}
+		// Fin bloc chronique				
+
+
+		// ***************************************************************************************
+		// VOS AVIS :
+
+		// compter le nbre d'entrées :
+		$avis_concat ='<a name="avis" id="avis"></a>' ;
+
+		$t_saison_preced = saisonprecedente($id_event, 'avis');
+		$reponse_avis= mysql_query('SELECT COUNT(*) AS nbre_entrees FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\'');
+		$donnees_avis = mysql_fetch_array($reponse_avis) ;
+
+		// compter le nombre de caractères dans le cas où il n'y a que 1 seul avis (à faire avant de lancer les conditions d'après !)
+		$total_entrees = $donnees_avis['nbre_entrees'];
+		
+		// S'il n'y a aucun avis, proposer d'en écrire un
+		if ($total_entrees == 0)
+		{
+			$avis_concat.= '<div class="detail_event_bloc_2">
+				<div class="head_detail_event_bloc_2">
+					<div class="top_left_bloc_donner_avis"></div>
+
+					<span class="ico_float_droite">
+						<a href="-Donnez-votre-avis-?id_event=' . $id_event . '"><img src="agenda/design_pics/bouton_donnez_avis.jpg"  vspace="4"/></a>
+					</span>
+
+					<span class="titre_paragr_detail_event" style="width:440px; ">Vos avis sur "' .$nom_event . '"</span>
+				</div>
+			
+				<br />
+				<div align="center" style="font-size:13px">
+					<b><a href="-Donnez-votre-avis-?id_event=' . $id_event . '">&gt;&gt; Aucun lecteur n\'a encore fait part de son avis, soyez le premier !! &lt;&lt; </a></b>
+				</div>
+				<br />'."\n\n" ;  		
+		}
+
+
+// YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+		// s'il n'existe qu'un avis et que celui-ci est court, ne pas afficher le lien "Lire la suite"
+			// c'est enlevé
+// YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY		
+		
+		else	
+		{			
+			$avis_concat.= '<div class="detail_event_bloc_2">
+				<div class="head_detail_event_bloc_2">
+					<div class="top_left_bloc_avis"></div>
+			
+					<span class="nombre_avis">' . $total_entrees .'</span>
+			
+					<span class="titre_paragr_detail_event" style="width:440px; ">Il y a ' . $total_entrees .' avis sur "' .$nom_event . '"</span>
+			
+					<span class="ico_float_droite">
+						<a href="-Donnez-votre-avis-?id_event=' . $id_event . '"><img src="agenda/design_pics/bouton_donnez_avis.jpg"  vspace="4"/></a>
+
+						<a href="agenda/spip/print_avis_event.php?id_event=' . $id_event . '" target="_blank" title="Imprimer les avis des lecteurs">
+							<img src="agenda/design_pics/ico_impr.jpg"  hspace="10" title="Imprimer les avis des visiteurs" />
+						</a>
+					</span>	
+				</div>'."\n\n";
+			
+			
+			$avis_concat.= '<div class="detail_corps_event">
+				<div id="Zone2" style="display:block;">';			
+
+			// Afficher tous les avis (au complet)(Avant, c'était 1, puis 4)
+			// On se limitera à 25 quand même
+			$reponse_avis= mysql_query('SELECT * FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\' ORDER BY id_avis DESC LIMIT 25');
+			while ($donnees_avis = mysql_fetch_array($reponse_avis))
+			{		
+				//$debut_avis = strip_tags($donnees_avis['texte_avis']) ;
+
+					
+				// -----------------------------------------------------------------------------------------------
+				/* Si l'auteur du message est un SPECTATEUR enregistré sur le site 
+				ET muni d'un compte en ordre, afficher un lien vers sa page "détail" */
+				// -----------------------------------------------------------------------------------------------
+				$nom_pseudo_comp = $donnees_avis['nom_avis'] ;				
+				$reponse_spectateur = mysql_query("SELECT * FROM ag_spectateurs WHERE compte_actif_spectateur = 'oui' 
+				AND pseudo_spectateur = '$nom_pseudo_comp'");
+				$donnees_spectateur = mysql_fetch_array($reponse_spectateur) ;
+				if (!empty($donnees_spectateur['id_spectateur']))
+				{
+					$id_spectateur = $donnees_spectateur['id_spectateur'] ;
+					$pseudo_spectateur = $donnees_spectateur['pseudo_spectateur'] ;
+					
+					$avis_valides_spectateur = $donnees_spectateur['avis_valides_spectateur'];
+		    		$_tot_entrees_pour_lui = connaitre_nb_avis_spect ($pseudo_spectateur) ;
+					$result_categorie_spectateur = trouve_categorie_spectateur ($_tot_entrees_pour_lui) ; 
+
+					$qui_spectateur = '<a href="-Detail-d-un-spectateur-?id_spect=' . $id_spectateur . '"
+					title="Cliquez pour voir le profil de ce spectateur" >' . $pseudo_spectateur . '</a>' ;
+					
+					$qui_spectateur.= '<span class="help_cursor"><img src="agenda/design_pics/spectateurs/' . $result_categorie_spectateur['icone_spectateur'] . '" alt="Votre score" align="top" title="' . $result_categorie_spectateur['categorie_spectateur'] . '" /></span> 
+
+					<span title="Totalité des avis déposés" class="help_cursor"> ' . $_tot_entrees_pour_lui . '</span>'; 
+				}
+				else
+				{
+					$qui_spectateur = $donnees_avis['nom_avis'] ;
+				}
+	
+				$avis_concat.= '<span class="nom_avis">' . $qui_spectateur . '</span> 
+				<span class="date_avis">' .date('d/m/Y - H\hi', $donnees_avis['t_stamp_avis']) . '</span>
+				<span class="id_breve">(id  :' . $donnees_avis['id_avis'] . ')</span> <br /> <br />' ;
+				
+				$avis_concat.= $donnees_avis['texte_avis'] . ' <br /> <br /> ' ;
+				
+			}
+				
+			$avis_concat.= '<div align="right">' ;
+
+			if ($total_entrees > 25)
+			{
+				$avis_concat.= '<a href="#voir" onclick="return toggle_zone(';
+				$avis_concat.= "'Zone2','Afficher tous les avis','Replier');" ;
+				$avis_concat.= '" id="Zone2Link">
+				<img src="agenda/design_pics/bouton_suite_avis.jpg"  vspace="6"/>
+				</a>' ;
+			}
+			
+			$avis_concat.= '<a href="-Donnez-votre-avis-?id_event=' . $id_event . '">
+			<img src="agenda/design_pics/bouton_donnez_avis.jpg"  vspace="6"/>
+			</a>
+			</div></div>'."\n" ; //--- align right + Zone2 ?
+			
+
+			
+			// ----| AVIS complet |---- 
+			$avis_concat.= '<div id="Zone2B" style="display:none;"> ' ;
+			
+			$reponse_avis= mysql_query('SELECT * FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\' ORDER BY id_avis DESC');
+			while ($donnees_avis = mysql_fetch_array($reponse_avis))
+			{
+
+				// -----------------------------------------------------------------------------------------------
+				/* Si l'auteur du message est un SPECTATEUR enregistré sur le site 
+				ET muni d'un compte en ordre, afficher un lien vers sa page "détail" */
+				// -----------------------------------------------------------------------------------------------
+				$nom_pseudo_comp = $donnees_avis['nom_avis'] ;				
+				$reponse_spectateur = mysql_query("SELECT * FROM ag_spectateurs WHERE compte_actif_spectateur = 'oui' 
+				AND pseudo_spectateur = '$nom_pseudo_comp'");
+				$donnees_spectateur = mysql_fetch_array($reponse_spectateur) ;
+				if (!empty($donnees_spectateur['id_spectateur']))
+				{
+					$id_spectateur = $donnees_spectateur['id_spectateur'] ;
+					$pseudo_spectateur = $donnees_spectateur['pseudo_spectateur'] ;
+					
+					$avis_valides_spectateur = $donnees_spectateur['avis_valides_spectateur'];
+		    		$_tot_entrees_pour_lui = connaitre_nb_avis_spect ($pseudo_spectateur) ;
+					$result_categorie_spectateur = trouve_categorie_spectateur ($_tot_entrees_pour_lui) ; 
+
+					$qui_spectateur = '<a href="-Detail-d-un-spectateur-?id_spect=' . $id_spectateur . '"
+					title="Cliquez pour voir le profil de ce spectateur" >' . $pseudo_spectateur . '</a>' ;
+					
+					$qui_spectateur.= '<span class="help_cursor">
+					<img src="agenda/design_pics/spectateurs/' . $result_categorie_spectateur['icone_spectateur'] . '" alt="Votre score" align="top" title="' . $result_categorie_spectateur['categorie_spectateur'] . '" /></span> 
+
+					<span title="Totalité des avis déposés" class="help_cursor"> ' . $_tot_entrees_pour_lui . '</span>'; 
+				}
+				else
+				{
+					$qui_spectateur = $donnees_avis['nom_avis'] ;
+				}
+	
+				$avis_concat.= '<span class="nom_avis">' . $qui_spectateur . '</span> 
+				<span class="date_avis">' .date('d/m/Y - H\hi', $donnees_avis['t_stamp_avis']) . '</span>
+				<span class="id_breve">(id  :' . $donnees_avis['id_avis'] . ')</span> <br /> <br />' ;
+				
+				$avis_concat.= $donnees_avis['texte_avis'] . '<br /> <br /> <br />';
+			}
+			
+			
+			$avis_concat.=' <a href="#voir" onclick="return toggle_zone(' ;
+			$avis_concat.= "'Zone2','Afficher tous les avis','Replier');" ;
+			$avis_concat.= '" id="Zone2Link"> &lt;&lt; Replier</a>' ;
+			$avis_concat.= '<div align="right"><b><a href="-Donnez-votre-avis-?id_event=' . $id_event . '">
+			<img src="agenda/design_pics/bouton_donnez_aussi_avis.jpg" />
+			</a></b></div></div>'."\n" ;
+			
+			$avis_concat.=  '<div class="float_stop"> <br /> </div>'; // Rajouté le 01-09-07
+
+			$avis_concat.=  '<div class="float_stop"><br /></div>
+			</div>'."\n" ;
+		}
+		
+		$avis_concat.='</div>'."\n\n" ; //--- detail_event_bloc_2
+		echo $avis_concat ;
+
+		// Fin bloc AVIS
+	
+/*
+		// ____________________________________________
+		// RESUME
+		$resume ='<li><span class="titre_2_resume_event">Quoi ? </span>' . $nom_event . '</li>' ; // nom
+		if (isset($donnees['genre_event']) AND $donnees['genre_event'] != NULL) // genre
+		{ $resume.='<li><span class="titre_2_resume_event">Quel genre ? </span>' . $genres[$genre_event] . '</li>' ; }
+		
+		$resume.='<li><span class="titre_2_resume_event">Où</span> : <a href="detail_lieu.php?id_lieu='.$lieu_event.'" title="Cliquez pour obtenir plus d\'infos">' .
+		$donnees_lieu['nom_lieu'] . '</a></li>' ;
+		
+		if (isset($donnees['ville_event']) AND $donnees['ville_event'] != NULL) // genre
+		{ $resume.='<li><span class="titre_2_resume_event">Quelle ville ? </span> : ' . $regions[$donnees['ville_event']] . '</li>' ; }
+		
+		
+		$resume.='<li><span class="titre_2_resume_event">Quand</span> : du ' . $date_event_debut_jour . '-' . $date_event_debut_mois . '-' . 
+		$date_event_debut_annee . ' au ' . $date_event_fin_jour . '-' . $date_event_fin_mois . '-' . $date_event_fin_annee .
+		'<a href="#calendrier"> &gt;&gt; Calendrier</a>';
+
+		$tab.= '<div class="resume_event"><span class="titre_resume_event">En résumé : </span><br />
+		<ul>' .$resume . '</ul></div>'."\n" ;
+
+*/
+	}
+
+	/*	************************************************************************************
+		******************** L'événement parent et les événements enfants ******************
+		************************************************************************************ */
+
+	$reponse = mysql_query('SELECT * FROM '.$table_evenements_agenda.' WHERE (id_event='.$parent_event.' OR parent_event<>0 AND parent_event='.$parent_event.' OR parent_event='.$id_event.') AND id_event<>'.$id_event.' ORDER BY parent_event,date_event_debut DESC');
+	if (mysql_num_rows($reponse))
+		echo '<br /><hr /><br />',"\n";
+	while ($donnees = mysql_fetch_array($reponse)) {
+
+		$id_event = $donnees['id_event'];
+		$parent_event = $donnees['parent_event'];
+		$lieu_event = $donnees['lieu_event'];
+		$nom_event = $donnees['nom_event'];
+		$ville_event = $donnees['ville_event'];
+		$description_event = $donnees['description_event'];
+		$genre_event = $donnees['genre_event'];
+		$pic_event_1 = $donnees['pic_event_1'];
+		$pic_event_2 = $donnees['pic_event_2'];
+		$pic_event_3 = $donnees['pic_event_3'];
+	
+		$video_event = $donnees['video_event'];
+		$critique_event = $donnees['critique_event'];
+		$chronique_event = $donnees['chronique_event'];
+		$video_spip_event = $donnees['video_spip_event'] ;
+		$interview_event = $donnees['interview_event'];
+		$interview_espace_livres = $donnees['espace_livres'];
+	
+		$date_event_debut = $donnees['date_event_debut'];
+		$date_event_fin = $donnees['date_event_fin'];
+
+		// ------------------------------------------------
+		// Affichage contenu de l'événement
+		// ------------------------------------------------
+		$tab= '<div class="detail_event'.($parent_event ? ' brenfant' : '').'" style="margin:0 2px;">' ;
+//---		$tab.= ($parent_event ? 'enfant' : 'parent').' : '.$id_event;
+
+		// ____________________________________________
+		// ICONES FLOTTANTES (au niveau du titre)
+	
+		$tab.= '<span class="ico_float_droite_relative">'."\n" ;
+		
+	
+		// Icone "J'ai vu et aimé"
+		if (isset ($donnees['jai_vu_event']) AND $donnees['jai_vu_event'] != 0 )
+		{
+			$jai_vu_event = $donnees['jai_vu_event'] ;
+		}
+		else
+		{
+			$jai_vu_event = ' ' ;
+		}
+		$lien_jai_vu = '<a href="#vote" onclick="popup_jai_vu';
+		$lien_jai_vu.= "('agenda/jai_vu/jai_vu_popup.php?id=" . $id_event . "','Votons');";
+		$lien_jai_vu.= '">'."\n";
+		
+		/*$adresse_jai_vu = 'agenda/jai_vu/jai_vu_popup.php?id=' . $id_event ;
+		$lien_jai_vu = '<a href="#voter" onclick="popup_jai_vu' ;
+		$lien_jai_vu.= "('" . $adresse_jai_vu . "','J ai vu et aimé !!! ');" ;
+		$lien_jai_vu.= '">' ;*/
+		
+		$tab.= '<div class="nombre_votes">' .
+		$lien_jai_vu . '<img src="agenda/design_pics/ico_jai_vu.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" /></a>
+		<div class="nombre_votes_bulle_detail">' . $jai_vu_event .'</div></div>'."\n" ;
+
+		// Icone Interview
+		if (! $interview_event)
+			$interview_event = saisonprecedente($id_event, 'interview');
+		if ($interview_event)
+			$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview.jpg" align="middle"/>Voir l\'interview</a> &nbsp; '."\n";
+
+		// Icone Imprimer
+		$tab.= '<a href="agenda/spip/print_description_event.php?id_event=' . $id_event . '" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.jpg"  hspace="10" align="middle" /></a>'."\n" ;
+
+		$tab.= '</span>'."\n\n" ;
+
+
+		// ____________________________________________
+		// NOM EVENEMENT (titre)
+		
+		if (isset($nom_event) AND $nom_event != NULL)
+		{
+			$tab.= '<span class="detail_event_titre">' . $nom_event . '</span>'."\n";
+		}
+	
+	
+		// ____________________________________________
+		// ID
+		$tab.= ' <span class="id_breve">(id ' . $id_event . ')</span>'."\n" ;
+
+
+		// ____________________________________________
+		// LIEU
+				
+		$tab.= '<span class="detail_event_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$lieu_event.'" title="Lieu où est joué le spectacle">..lieu de repr..</a></span> '."\n";	
+
+	
+		// ____________________________________________
+		// VILLE
+		
+		if (isset($donnees['ville_event']) AND ($donnees['ville_event'] != NULL)) 
+		{
+			$ville_event = $donnees['ville_event'] ;
+			$tab.= '<span class="detail_corps_event"><acronym title="Ville où du spectacle">' . $regions[$ville_event] .'</acronym></span><br /><br />'."\n";	
+		}
+	
+	
+	
+		// ____________________________________________
+		// PHOTO EVENEMENT *** Replié ***	
+		$photo_replie = '' ;
+		if (isset ($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set' )
+		{
+			$photo_replie.= '<span class="detail_event_photo"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event .'_1.jpg" title="' . $nom_event . '" /></a></span>'."\n";
+		}
+
+		// ____________________________________________
+		// GENRE
+		
+		$genre_concat = '' ;
+		if (isset($genre_event) AND ($genre_event != NULL)) 
+		{
+			$genre_concat.= '<span class="detail_event_genre"><acronym title="Genre du spectacle">' . $genres[$genre_event] .'</acronym></span> '."\n";	
+		}
+		
+		
+		// ____________________________________________
+		// DATES
+		
+		$date_event_debut_annee = substr($date_event_debut, 0, 4);
+		$date_event_debut_mois = substr($date_event_debut, 5, 2);
+		$date_event_debut_jour = substr($date_event_debut, 8, 2);
+		
+		$date_event_fin_annee = substr($date_event_fin, 0, 4);
+		$date_event_fin_mois = substr($date_event_fin, 5, 2);
+		$date_event_fin_jour = substr($date_event_fin, 8, 2);
+	
+		
+		$date_concat = '<a href="#calendrier" class="detail_event_date" title="Cliquez pour accéder au calendrier">'
+		. $date_event_debut_jour . ' '
+		. $NomDuMois[$date_event_debut_mois+0] . ' '
+		. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . ' '
+		. $NomDuMois[$date_event_fin_mois+0] . ' '
+		. $date_event_fin_annee . '</a><br /><br />'."\n";
+
+
+		// ____________________________________________
+		// TEXTE DESCRIPTIF
+		$tab.= '<div id="Zone1" style="display:block;"> ' . $photo_replie . $genre_concat . $date_concat . 
+		'<div class="detail_corps_event"> ' . $donnees['resume_event'] . '<br />  <br style="clear:both;" /> </div>'."\n".'</div>'."\n\n" ;
+
+		$tab.= '</div>'."\n";
+		echo $tab;
+	}
+} 
+
+?>
+

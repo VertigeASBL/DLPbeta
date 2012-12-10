@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rss version="2.0" xmlns:dc="http://www.demandezleprogramme.be/agenda/flux_sortant/"><channel>
+<title>DemandezLeProgramme</title>
+<link>http://www.demandezleprogramme.be</link>
+<description>Votre agenda culturel critique et interractif</description>
+<language>FR</language>
+<webMaster>info@demandezleprogramme.be  (Renaud)</webMaster>
+<generator>Vertige-pgm</generator>
+<copyright>Vertige asbl</copyright>
+<image>
+	<title>DemandezLeProgramme</title>
+	<url>http://www.demandezleprogramme.be/squelettes/assets/logo_header_turquoise.jpg</url>
+	<link>http://www.demandezleprogramme.be</link>
+</image>
+<pubDate>Mon, 10 Sep 2012 15:31:28 +0100</pubDate>
+</channel>
+</rss>
