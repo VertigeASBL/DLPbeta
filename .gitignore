@@ -2,17 +2,17 @@
 ## DLP
 ###########
 
-IMG
-local
-tmp
-assets
-banner
-media
-nmedia
-agenda/pics_events
-agenda/vignettes_home
-agenda/vignettes_lieux_culturels
-agenda/vignettes_spectateurs
+IMG/
+local/
+tmp/
+assets/
+banner/
+media/
+nmedia/
+agenda/pics_events/
+agenda/vignettes_home/
+agenda/vignettes_lieux_culturels/
+agenda/vignettes_spectateurs/
 .htaccess
 agenda/admin_agenda/.htpasswd
 agenda/inc_db_connect_to_comedien.php
