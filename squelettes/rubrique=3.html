@@ -490,7 +490,7 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 
 <!-- ++++++++++++++++++++++ Focus debut ++++++++++++++++++++++ -->
 	<BOUCLE_art_focus(ARTICLES){id_rubrique=162}{!par date}{0,1}>
-		#SET{varurl,#URL_ARTICLEparametre_url{rtr,y}}
+		#SET{varurl,#URL_ARTICLE|parametre_url{rtr,y}}
 		<div class="cadre_actu">
 			<h2 class="titre_cadre">Focus</h2>
 			[<span class="actu_photo">
