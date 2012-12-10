@@ -32,6 +32,7 @@ if (isset($_SESSION['group_admin_spec']) AND $_SESSION['group_admin_spec'] == 1)
 
 	$artiste_prefere_spectateur = $donnees ['artiste_prefere_spectateur'];
 	$lieu_prefere_spectateur = $donnees ['lieu_prefere_spectateur'];
+	$avis_valides_spectateur = $donnees['avis_valides_spectateur'];
 
 	
 	
@@ -237,6 +238,16 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	if ($rec == NULL) // Enregistrement les données dans la DB 
 	{
 		$avis_ok_masquer_formulaire = true ; // On peut masquer le formulaire pour ne pas que le visiteur ne reposte l'avis
+
+		/* Didier => En cas de changement de niveau on log pour l'afficher sur l'espace public. */
+		$avant_avis = trouve_categorie_spectateur($avis_valides_spectateur);
+		$apres_avis = trouve_categorie_spectateur($avis_valides_spectateur+1);
+
+		/* On teste s'il y a un changement de niveau après l'ajout de l'avis de la personne. Si oui, on enregistre le changement de niveau */
+		if ($avant_avis['categorie_spectateur'] != $apres_avis['categorie_spectateur']) {
+			include_once('agenda/activite/activite_fonctions.php');
+			activite_log ('level');
+		}
 
 		$approuv_check = mysql_query("INSERT INTO `$table_avis_agenda` 
 		( `id_avis` , `event_avis` , `nom_avis` , `texte_avis` , `t_stamp_avis` , `publier_avis` , `email_avis` , `ip_avis` ) 
