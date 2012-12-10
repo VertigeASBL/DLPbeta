@@ -733,7 +733,13 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 	</BOUCLE_art_chronique>
 <!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
 
-<INCLURE{fond=inc/boite_activite, env}>
+<!-- Didier => Affiche la boite des activités -->
+<INCLURE{fond=inc_tur/boite_activite, env}>
+
+<!-- Affiche le dernier avis posté sur le site -->
+<INCLURE{fond=inc_tur/dernier_avis_boite, env}>
+
+
 	<div class="clear"></div>
 
 	</div><!-- fin colonne1 -->

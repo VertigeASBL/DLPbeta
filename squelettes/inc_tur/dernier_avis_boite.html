@@ -1,0 +1,9 @@
+<div class="dernier_avis">
+<?php 
+$dernier_avis = sql_allfetsel('nom_avis, texte_avis, nom_event', 'ag_avis as a INNER JOIN ag_event as e ON a.event_avis = e.id_event', '', '', 'id_avis DESC', '0,1');
+
+foreach ($dernier_avis as $key => $value) {
+	echo '<p>'.$value['texte_avis'].'</p>';
+}
+?>
+</div>
