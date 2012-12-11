@@ -233,8 +233,8 @@ function fill(thisValue) {
 	margin-right: 5px;
 	margin-bottom: 2px;
 	margin-left: 5px;
-	width:30px ;
-	height:30px ;
+	width:30px;
+	height:30px;
 	padding:1px;
 	border:1px solid #000000;
 	background-color:#FFFFFF;
@@ -247,6 +247,7 @@ function fill(thisValue) {
 	padding:1px;
 	border:1px solid #000000;
 	background-color:#FFFFFF;
+	z-index:999;
 }
 .colonne2 { /* écrase le style général de styles_tur.css */
 	min-height:200px;
@@ -370,14 +371,6 @@ function relance_la_page() {
 
 require 'agenda/inc_fct_base.php';
 require 'agenda/inc_var.php';
-
-// VVVVVVVVVVVVVVVVVVVVVVVVV Variables VVVVVVVVVVVVVVVVVVVVVVVVV
-/*$date_anterieure_critique = date ('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")-7, date("Y"))); // La date limite de la critique la plus ancienne qui sera affichée de façon complète*/
-
-$date_anterieure_critique = date ('Y-m-d');		//pas de délai de 1 semaine pour la home
-
-$date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, date("Y")));  // Afin de ne pas afficher de critique dont l'événement ne se jouera pas avant 15 jours
-// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 ?>
 
 <div id="header">
@@ -467,7 +460,7 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 
 <div id="niveau2_wrap"><br />
 	<div id="niveau2">
-	<div class="colonne1_h">
+	<div class="colonne3">
 
 <!-- ++++++++++++++++++++++ Focus debut ++++++++++++++++++++++ -->
 	<BOUCLE_art_focus(ARTICLES){id_rubrique=162}{!par date}{0,1}>
@@ -582,25 +575,6 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 	require_once ('agenda/inc_fct_base.php');
 	require_once ('agenda/calendrier/inc_calendrier.php');	
 
-
-	/* ++++++++++++++++++++++ Dernière critique debut ++++++++++++++++++++++ */
-	$reponse = mysql_query("SELECT * FROM $table_evenements_agenda INNER JOIN  $table_lieu L
-			 ON cotisation_lieu > CURDATE() AND lieu_event = id_lieu
-			 AND critique_event != 0
-			 WHERE (date_event_fin > '$date_anterieure_critique' AND date_event_debut < '$date_limite_debut')
-			 AND pic_event_1 = 'set' 
-			 ORDER BY critique_event DESC LIMIT 1");
-
-	while ($GLOBALS['donnees'] = mysql_fetch_array($reponse))
-	{
-		$GLOBALS['contexte']['la_critique_cms'] = $GLOBALS['donnees']['critique_event']; /* Créer une variable environnement pour SPIP (cfr mesfonctions.php). Cette variable est définie AVANT d'inclure {fond=inc_tur/......" !!!! */
-?>
-<INCLURE{fond=inc_tur/critique_liste_home}>
-<?php
-	} //--- fin while fetch
-	/* ++++++++++++++++++++++ Dernière critique fin ++++++++++++++++++++++ */
-
-
 	/* ++++++++++++++++++++++ Dernier Concours debut ++++++++++++++++++++++ */
 	$public_cible = 'jou01' ; // Groupe de joueurs auquel s'adresse ce concours
 	$page_contenant_concours = '-Concours,95-' ; // Pour les liens de retour
@@ -608,8 +582,98 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 	$bouton_retour = 'conc_retour.gif' ;
 	include('agenda/spip/conc_public_home.php');  	
 	/* ++++++++++++++++++++++ Dernier Concours fin ++++++++++++++++++++++ */
-
 ?>
+
+<!-- ++++++++++++++++++++++ Critique debut ++++++++++++++++++++++ -->
+	#SET{tablo,#VAL{103}|obtenirarticleslies{critique_event,1,1}}
+	#SET{urldetail,#URL_RUBRIQUE{92}}
+
+	<BOUCLE_art_critique(POUR){tableau #GET{tablo}}>
+		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{critique}}
+		<div class="cadre_actu">
+			<h2 class="titre_cadre">Critique</h2>
+			#SET{vimage,''}
+			[(#VALEUR|table_valeur{pic_event_1}|oui)
+				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{150,0}}
+			<span class="actu_photo">
+				<a href="#GET{varurl}">
+					[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
+				</a>
+			</span>]
+			<div class="texte_actu">
+				<h3 class="titre_actu">
+					<a href="#GET{varurl}">
+						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+					</a>
+				</h3>
+				[<div class="actu_lieu">
+					<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
+						[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
+					</a>
+				</div>]
+				<h4>
+					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+				</h4>
+		<BOUCLE_etoiles(DOCUMENTS){id_article=#VALEUR|table_valeur{id_article}}{fichier LIKE %etoile%}{mode=image}{0,1}>
+			<img src="#FICHIER" alt="" /><br />
+		</BOUCLE_etoiles>
+				[par (#VALEUR|table_valeur{nom})]
+				[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-120,30}})</div>]
+				<p><a href="#GET{varurl}" title="Voir en détail">
+					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
+				</a></p>
+			</div>
+			<div class="float_stop"></div>
+		</div>
+	</BOUCLE_art_critique>
+<!-- ++++++++++++++++++++++ Critique fin ++++++++++++++++++++++ -->
+
+<!-- ++++++++++++++++++++++ Chronique debut ++++++++++++++++++++++ -->
+	#SET{tablo,#VAL{113}|obtenirarticleslies{chronique_event,1,1}}
+	#SET{urldetail,#URL_RUBRIQUE{92}}
+
+	<BOUCLE_art_chronique(POUR){tableau #GET{tablo}}>
+		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{chronique}}
+		<div class="cadre_actu">
+			<h2 class="titre_cadre">Chronique</h2>
+			#SET{vimage,''}
+			[(#VALEUR|table_valeur{pic_event_1}|oui)
+				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{150,0}}
+			<span class="actu_photo">
+				<a href="#GET{varurl}">
+					[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
+				</a>
+			</span>]
+			<div class="texte_actu">
+				<h3 class="titre_actu">
+					<a href="#GET{varurl}">
+						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+					</a>
+				</h3>
+				[<div class="actu_lieu">
+					<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
+						[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
+					</a>
+				</div>]
+				<h4>
+					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+				</h4>
+				[par (#VALEUR|table_valeur{nom})]
+				[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-100,30}})</div>]
+				<p><a href="#GET{varurl}" title="Voir en détail">
+					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
+				</a></p>
+			</div>
+			<div class="float_stop"></div>
+		</div>
+	</BOUCLE_art_chronique>
+<!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
+
+		<div class="clear"></div>
+	</div><!-- fin colonne3 -->
+
+	<div class="colonne4">
+
 <!-- ++++++++++++++++++++++ Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
 	<div class="cadre_actu">
 		<h2 class="titre_cadre">Vos coups de coeur du moment</h2>
@@ -639,6 +703,12 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 	</div>
 <!-- ++++++++++++++++++++++ #Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
 
+<!-- Didier => Affiche la boite des activités -->
+<INCLURE{fond=inc_tur/boite_activite, env}>
+
+<!-- Affiche le dernier avis posté sur le site -->
+<INCLURE{fond=inc_tur/dernier_avis_boite, env}>
+
 <?php
 	/* ++++++++++++++++++++++ Dernière Interview debut ++++++++++++++++++++++
 	--- Se connecter à comedien.be */
@@ -665,18 +735,16 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 	}
 	unset($fp, $chn, $k);
 	/* ++++++++++++++++++++++ Dernière Interview fin ++++++++++++++++++++++ */
-
-	echo '<div class="clear"></div>';
 ?>
 
-<!-- ++++++++++++++++++++++ Chronique debut ++++++++++++++++++++++ -->
-	#SET{tablo,#VAL{113}|obtenirarticleslies{chronique_event,1}}
+<!-- ++++++++++++++++++++++ Video debut ++++++++++++++++++++++ -->
+	#SET{tablo,#VAL{155}|obtenirarticleslies{video_spip_event,1,1}}
 	#SET{urldetail,#URL_RUBRIQUE{92}}
 
-	<BOUCLE_art_chronique(POUR){tableau #GET{tablo}}>
-		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{chronique}}
+	<BOUCLE_art_video(POUR){tableau #GET{tablo}}>
+		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
 		<div class="cadre_actu">
-			<h2 class="titre_cadre">Chronique</h2>
+			<h2 class="titre_cadre">Vidéo</h2>
 			#SET{vimage,''}
 			[(#VALEUR|table_valeur{pic_event_1}|oui)
 				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{150,0}}
@@ -687,7 +755,9 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 			</span>]
 			<div class="texte_actu">
 				<h3 class="titre_actu">
-					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+					<a href="#GET{varurl}">
+						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+					</a>
 				</h3>
 				[<div class="actu_lieu">
 					<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
@@ -695,39 +765,24 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 					</a>
 				</div>]
 				<h4>
-					<a href="#GET{varurl}">
-						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
-					</a>
+					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
 				</h4>
-				[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-65,50}})</div>]
 				<p><a href="#GET{varurl}" title="Voir en détail">
 					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
 				</a></p>
-				[par (#VALEUR|table_valeur{nom})]
-				[<br />(#VALEUR|table_valeur{date}|affdate)]
 			</div>
 			<div class="float_stop"></div>
 		</div>
-	</BOUCLE_art_chronique>
-<!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
+	</BOUCLE_art_video>
+<!-- ++++++++++++++++++++++ Video fin ++++++++++++++++++++++ -->
+		<div class="clear"></div>
+	</div><!-- fin colonne4 -->
 
-<!-- Didier => Affiche la boite des activités -->
-<INCLURE{fond=inc_tur/boite_activite, env}>
-Didier, y a-t-il un problème ici ? dans mon rubrique=3, il y a un appel fond=inc_tur/boite_activite, mais inc_tur/boite_activite.html n'existe pas sur le serveur. Il existe inc/boite_activite.html, ancien je suppose. Est-ce que je me suis mal servi de gitHub ?
-
-<!-- Affiche le dernier avis posté sur le site -->
-<INCLURE{fond=inc_tur/dernier_avis_boite, env}>
-
-
-	<div class="clear"></div>
-
-	</div><!-- fin colonne1 -->
 	<div class="colonne2">
 		<INCLURE{fond=inc_tur/outils_spectateurs}>
 		<INCLURE{fond=inc_tur/formagnewsletter}>
 		<INCLURE{fond=inc/decouvrir_pgm}>
 		<INCLURE{fond=inc_tur/services}>
-
 	</div>
 	<div class="clear"></div>
 	
@@ -744,9 +799,7 @@ Didier, y a-t-il un problème ici ? dans mon rubrique=3, il y a un appel fond=inc
 */
 	/* ++++++++++++++++++++++ Prochains Events debut ++++++++++++++++++++++ */
 ?>
-	
-	
-</div>
+	</div><!-- fin niveau2 -->
 </div>
 <div id="footer">
 	<INCLURE{fond=inc_tur/footer}>

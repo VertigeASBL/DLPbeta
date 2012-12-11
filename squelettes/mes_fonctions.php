@@ -278,7 +278,7 @@ function monraccourcirchaine($chn, $max) {
 	rub 147 : chroniques - rub 113 : Espace chroniques
 	rub 155 : vidéos
 */
-function obtenirarticleslies($id_rubrique, $champlien, $max = 21) {
+function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 	$req = 'SELECT A.id_article,A.titre,A.date,MAX(E.id_event) AS id_event,E.nom_event,E.pic_event_1,L.id_lieu,L.nom_lieu';
 	if ($id_rubrique != 155)
 		$req .= ',MAX(R.id_auteur),P.nom,A.chapo';
@@ -286,7 +286,13 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21) {
 	if ($id_rubrique != 155)
 		$req .= ' LEFT JOIN spip_auteurs_articles AS R ON A.id_article=R.id_article LEFT JOIN spip_auteurs AS P ON P.id_auteur=R.id_auteur';
 	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND A.statut=\'publie\' AND A.id_rubrique='.$id_rubrique.' AND E.'.$champlien.'=A.id_article';
-	$req .= ' GROUP BY A.id_article ORDER BY A.date DESC LIMIT '.$max;
+	if ($home) {
+		$home = time(); //--- 1296000 == 15 jours
+		$req .= ' AND E.date_event_fin>=\''.date('Y-m-d', $home - 1296000).'\' AND E.date_event_debut<=\''.date('Y-m-d', $home).'\'';
+	}
+	$req .= ' GROUP BY A.id_article';
+	if ($home)
+		$req .= $home ? ' ORDER BY RAND() LIMIT 1' : ' ORDER BY A.date DESC LIMIT '.$max;
 	$req = spip_query($req);
 
 	$tab = array();
@@ -296,7 +302,7 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21) {
 }
 /*
 	Obtenir les événéments de la période par nombre d'avis desc cumulés avec saison_preced
-	rub 160 : Avis des spectateurs
+	rub 160 : Avis des spectateurs			604800 == 7 jours
 */
 function obteniravislies($max = 21) {
 	$req = time(); $date_debut = date('Y-m-d', $req - 604800); $date_fin = date('Y-m-d', $req + 604800);

@@ -1,4 +1,4 @@
-/* CSS Document */
+/* CSS Document
 #persos_top{
 	background: url(design_pics/persoHome.gif) no-repeat;
 	width:208px;
@@ -9,7 +9,6 @@
 	position:relative;
 	z-index:9;
 }
-/*
 #persos_top{
 	background: url(design_pics/persos.gif) no-repeat;
 	width:167px;
@@ -20,26 +19,25 @@
 	z-index:9;
 }
 */
-.colonne1_h{
-	width:670px;
+.colonne3{
+	width:330px;
 	float:left;
-	position:relative;
-	left:0px;
-	top:15px;
-	
-	margin-top:30px;
+	margin:30px 12px 0 0;
+}
+.colonne4{
+	width:330px;
+	float:left;
+	margin:30px 0 0 0;
 }
 
 .cadre_actu{
 	background-color:#e8e8e8;
-	width:404px;
-	padding:10px 5px;
+	width:330px;
+	padding:5px 0;
+/*	z-index:1; */
 	margin-bottom:30px;
-	
 	position:relative;
 	top:auto;
-	z-index:1;
-	
 	float:left;
 }
 
@@ -227,7 +225,7 @@ h3.titre_actu a:hover{
 }
 .texte_actu{
 	float:right;
-	width:240px;
+	width:170px;
 }
 .actu_lieu a{
 	font-family: Georgia, "Times New Roman", Times, serif;

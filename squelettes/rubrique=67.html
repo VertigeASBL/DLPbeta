@@ -36,13 +36,13 @@
 			[par (#VALEUR|table_valeur{nom})]
 
 		<BOUCLE_etoiles(DOCUMENTS){id_article=#VALEUR|table_valeur{id_article}}{fichier LIKE %etoile%}{mode=image}{0,1}>
-			<br /><img src="#FICHIER" alt="" />
+			<div style="background:#e8e8e8;"><img src="#FICHIER" alt="" /></div>
 		</BOUCLE_etoiles>
 
 			#SET{vimage,''}
 			[(#VALEUR|table_valeur{pic_event_1}|oui)
 				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}}
-			<br /><a href="#GET{varurl}">
+			<a href="#GET{varurl}">
 				<img src="#GET{vimage}" class="onglet6" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />
 			</a>]
 			[<p>(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{350,38}})</p>]
