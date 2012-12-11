@@ -1,0 +1,31 @@
+<div class="activite_box">
+	<?php
+	include_once('agenda/activite/activite_fonctions.php');
+	$champs = array(
+					'a.type',
+					'a.id_spectateur',
+					's.pseudo_spectateur',
+
+					'a.id_event',
+					'e.nom_event',
+
+					'a.id_concours',
+					'c.nom_event_conc'
+					);
+
+	$activite = sql_allfetsel($champs, 'ag_activite as a 
+										INNER JOIN ag_spectateurs as s ON a.id_spectateur = s.id_spectateur
+										LEFT JOIN ag_event as e ON a.id_event = e.id_event
+										LEFT JOIN ag_conc_fiches as c ON a.id_concours = c.id_conc', '', '','date DESC', '0, 5');
+
+	foreach ($activite as $key => $value) {
+
+		if (!empty($value['nom_event'])) $add = '<a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a>';
+		elseif (!empty($value['nom_event_conc'])) $add = '<a href="-Concours,95-?id='.$value['id_concours'].'&lot=0">'.$value['nom_event_conc'].'</a>';
+		else $add = '';
+
+		echo '<p><a href="-Detail-d-un-spectateur-?id_spect='.$value['id_spectateur'].'">'.$value['pseudo_spectateur'].'</a> '.getLog($value['type']).' '.$add.'</p>';
+	}
+
+	?>
+</div>

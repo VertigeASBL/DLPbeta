@@ -430,11 +430,10 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 
 	<h2 style="width:400px; margin-left:0px; color:#009ABB;">Votre agenda culturel et interactif</h2>
 
-<!-- ++++++++++++++++++++++ carousel debut  ++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++ carousel debut # SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'} ++++++++++++++++++++++ -->
 		#SET{urldetail,#URL_RUBRIQUE{92}}
 		#SET{aujourdhui,#VAL{'Y-m-d'}|date}
 		#SET{unesemaine,#VAL{'Y-m-d'}|date{#VAL{}|time|plus{604800}}} [(#REM)--- dans 1 semaine ---]
-#SET{aujourdhui,'2012-01-01'} #SET{unesemaine,'2014-01-01'}
 		<B_carousel>
 	<a id="carouprev" href="#precedent">&nbsp;</a>
 	<div class="carouselwrapper">
@@ -714,6 +713,7 @@ $date_limite_debut = date ('Y-m-d', mktime(0, 0, 0, date("m") , date("d")+15, da
 
 <!-- Didier => Affiche la boite des activités -->
 <INCLURE{fond=inc_tur/boite_activite, env}>
+Didier, y a-t-il un problème ici ? dans mon rubrique=3, il y a un appel fond=inc_tur/boite_activite, mais inc_tur/boite_activite.html n'existe pas sur le serveur. Il existe inc/boite_activite.html, ancien je suppose. Est-ce que je me suis mal servi de gitHub ?
 
 <!-- Affiche le dernier avis posté sur le site -->
 <INCLURE{fond=inc_tur/dernier_avis_boite, env}>
