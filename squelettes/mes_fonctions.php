@@ -291,8 +291,7 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 		$req .= ' AND E.date_event_fin>=\''.date('Y-m-d', $home - 1296000).'\' AND E.date_event_debut<=\''.date('Y-m-d', $home).'\'';
 	}
 	$req .= ' GROUP BY A.id_article';
-	if ($home)
-		$req .= $home ? ' ORDER BY RAND() LIMIT 1' : ' ORDER BY A.date DESC LIMIT '.$max;
+	$req .= $home ? ' ORDER BY RAND() LIMIT 1' : ' ORDER BY A.date DESC LIMIT '.$max;
 	$req = spip_query($req);
 
 	$tab = array();
