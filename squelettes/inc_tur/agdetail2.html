@@ -143,12 +143,10 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	if ($donnees_preview = mysql_fetch_array($reponse_preview))
 		$qqch = true;
-/*	if ($qqch)
-		echo '<hr />',"\n"; */
 
 	while ($donnees_preview) {
 		if (! $max)
-			echo '<br style="clear:both;" /><a id="liste1deplier" href="#deplier" onclick="return depliersuite(\'liste1\',true);" style="float:right;">Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;</a>',"\n",'<div id="liste1suite" style="display:none;">',"\n";
+			echo '<p id="liste1deplier" style="clear:both;float:right;" /><a href="#deplier" onclick="return depliersuite(\'liste1\',true);">Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;</a></p>',"\n",'<div id="liste1suite" style="display:none;margin:0;padding:0;">',"\n";
 
 		$ev_url = generer_url_entite(92, 'rubrique', 'id_event='.$donnees_preview['id_event']);
 		echo '<div class="un_event_preview',($donnees_preview['parent_event'] ? ' brenfant' : ''),'">
@@ -158,7 +156,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 				</a>
 			</span> 
 			<strong><a href="',$ev_url,'">',monraccourcirchaine($donnees_preview['nom_event'], 45),'</a></strong>
-			| du ',affdate_court($donnees_preview['date_event_debut']),' au ',affdate_court($donnees_preview['date_event_fin']),'
+			| du ',affdate_jourcourt($donnees_preview['date_event_debut']),' au ',affdate_jourcourt($donnees_preview['date_event_fin']),'
 			| <strong>',$donnees_preview['nom_lieu'],'</strong>';
 			if (isset($regions[$donnees_preview['ville_event']]))
 				echo ' (',$regions[$donnees_preview['ville_event']],')';
@@ -169,7 +167,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		$max--;
 	}
 	if ($max < 0)
-		echo '<br style="clear:both;" /><a href="#replier" onclick="return depliersuite(\'liste1\',false);" style="float:right;">&lt;&lt;&nbsp;Replier</a>',"\n",'</div>',"\n";
+		echo '<p style="clear:both;float:right;" /><a href="#replier" onclick="return depliersuite(\'liste1\',false);">&lt;&lt;&nbsp;Replier</a></p>',"\n",'</div>',"\n";
 	if ($qqch)
 		echo '<br style="clear:both;" />',"\n";
 }
@@ -335,7 +333,12 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	echo '<table class="tableinfosevent" border="0" cellspacing="0" cellpadding="0" summary="">'."\n";
 	echo '<tr><td colspan="2" class="detail_corps_event"><h3>Infos utiles</h3></td></tr>',"\n";
 
-	echo '<tr><td>Quand</td><td>du ',affdate_court($date_event_debut),' au ',affdate_court($date_event_fin),'</td></tr>'."\n";
+	echo '<tr><td>Quand</td><td>';
+	if ($date_event_debut == $date_event_fin)
+		echo 'le ',affdate_jourcourt($date_event_debut);
+	else
+		echo 'du ',affdate_jourcourt($date_event_debut),' au ',affdate_jourcourt($date_event_fin);
+	echo '</td></tr>'."\n";
 
 	if ($donnees['heure_minute_event'] != 'nn-nn')
 		echo '<tr><td>Horaire</td><td>',$donnees['heure_minute_event'],'</td></tr>'."\n";
@@ -458,6 +461,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// LISTE DES ENFANTS D'UN FESTIVAL
 	if (! $donnees['parent_event'])
 		affich_parent_enfants($donnees['parent_event'], $id_event, 4, $regions);
+	echo '<br style="clear:both;" />',"\n";
 
 
 	/* --------------------------------------------------------------------
