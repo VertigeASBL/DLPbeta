@@ -21,6 +21,7 @@ $(document).ready(function() {
 		if (! tabonglet[thisid])
 			thisid = "";
 	}
+
 	$("#zonglet"+(thisid != "" ? thisid : "descriptif")).show();
 
 	//----- ajouter nombre d'avis, étoiles
@@ -33,9 +34,13 @@ $(document).ready(function() {
 	//----- ouvrir un onglet avec la souris
 	$(".onglettitre").click(function() {
 		thisid = $(this).attr('id');
+		
 		$(".ongletevent").each( function() {
-			if ($(this).attr('id') == "z"+thisid)
+			if ($(this).attr('id') == "z"+thisid) {
+				/* Quand on clique sur un onglet, on lance la fonction de Google Maps pour charger la carte. */
+				initialize();
 				$(this).show();
+			}
 			else
 				$(this).hide();
 		});
@@ -467,7 +472,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	/* --------------------------------------------------------------------
 	   ----------------------------- ONGLETS ------------------------------
-	   -------------------------------------------------------------------- */
+	   -------------------------------------------------------------------- */	   
 	echo '<div id="ongletdescriptif" class="onglettitre">Descriptif</div>',"\n";
 	echo '<div id="ongletavis" class="onglettitre">Avis</div>',"\n";
 	echo '<div id="ongletcritique" class="onglettitre">Critique</div>',"\n";
@@ -480,7 +485,6 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		ONGLET DESCRIPTIF
 	____________________________________________ */
 	echo '<div id="zongletdescriptif" class="ongletevent">',"\n";
-
 	/* COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
 	Rajouter des liens vers les pages perso des comédiens si leur nom apparait dans le texte sous la forme "prénom nom" 
 	PS : Dans la Requête, ID 1726 est là pour éviter Marion
@@ -523,11 +527,11 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			$n++;
 		}
 	}
+
 	echo '<br style="clear:both;" /></div>',"\n"; //--- Fin bloc detail_corps_event
 
 	echo '<br style="clear:both;" />
 	</div>',"\n"; //--- fin ongletevent descriptif
-
 
 /*	____________________________________________
 		ONGLET AVIS
@@ -741,10 +745,11 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 /*	____________________________________________
 		ONGLET MAPPING
 	____________________________________________ */
+
 	echo '<div id="zongletmapping" class="ongletevent">',"\n";
 	//--- off $codejavascript .= 'tabonglet.mapping = false; ';
-	echo 'inactif<br style="clear:both;" />
-	</div>',"\n"; //--- fin ongletevent mapping
+	echo '<div id="map_canvas" style="width: 500px; height: 500px;"></div>';
+	echo '</div>',"\n"; //--- fin ongletevent mapping
 
 
 	// ____________________________________________

@@ -1,0 +1,4 @@
+AuthName "Administration Agenda"
+AuthType Basic
+AuthUserFile "/var/www/htdocs/demandezleprogramme/public/beta/agenda/admin_agenda/.htpasswd"
+Require valid-user

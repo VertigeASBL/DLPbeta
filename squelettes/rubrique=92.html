@@ -19,6 +19,50 @@ table.calendar th { /* Day jours */
 -->
 </style>
 
+<!-- Ajout de l'API de Google maps -->
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<?php
+/* On a besoin de la liste des pays, donc on ajoute inc_var */
+require 'agenda/inc_var.php';
+
+/* On récupère l'adresse */
+$champs = array(
+				'adresse_pres',
+				'postal_pres',
+				'pays_pres'
+				);
+$adresse = sql_fetsel($champs, 'ag_event 
+									INNER JOIN ag_representation ON ag_event.lieu_event = ag_representation.id_pres', 'id_event = '._request('id_event'));
+?>
+
+<script type="text/javascript">
+	function initialize() {
+    	/* PHP écrit l'adresse du lieux pour la passer à Google maps */
+		var address = "<?php echo $adresse['adresse_pres'].' '.$adresse['postal_pres'].' '.$payspresent[$adresse['pays_pres']]; ?>";
+		var geocoder = new google.maps.Geocoder();
+
+		geocoder.geocode( { 'address': address}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				var myOptions = {
+					zoom: 14,
+					center: results[0].geometry.location,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				}
+				var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+
+				var marker = new google.maps.Marker({
+					map: map,
+					position: results[0].geometry.location
+				});
+			} else {
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		});
+	}
+</script>
+
 <script type="text/javascript">
 /* juste pour popup de "J'ai vu et aimé" */
 var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
@@ -31,7 +75,6 @@ var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 </script>
 </head>
 <body>
-
 <div id="header">
 	<INCLURE{fond=inc_tur/banner_haut}>
 	<INCLURE{fond=inc_tur/agoutils}>
@@ -40,7 +83,7 @@ var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 
 <div id="principal">
 	<div class="colonne1">
-
+	
 	<INCLURE{fond=inc_tur/agdetail2}{id_event}>
 
 	</div><!-- fin colonne1 -->
