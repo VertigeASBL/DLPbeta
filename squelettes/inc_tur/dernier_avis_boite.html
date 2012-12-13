@@ -1,4 +1,5 @@
-<div class="dernier_avis">
+<div class="cadre_actu">
+<h2 class="titre_cadre">Dernier Avis</h2>
 <?php 
 $dernier_avis = sql_allfetsel('nom_avis, texte_avis, nom_event', 'ag_avis as a INNER JOIN ag_event as e ON a.event_avis = e.id_event', '', '', 'id_avis DESC', '0,1');
 
