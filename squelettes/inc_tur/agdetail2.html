@@ -3,7 +3,7 @@
 <script type="text/javascript">
 var pretjquery = false;
 var tabonglet = {descriptif:true, avis:true, critique:true, chronique:true, video:true, mapping:true};
-var nombreavis = 0, etoilecritique = "", etoilechronique = "";
+var nombreavis = 0, etoilecritique = "";
 
 $(document).ready(function() {
 	var thisid;
@@ -28,8 +28,6 @@ $(document).ready(function() {
 	$("#ongletavis").text("Avis ("+nombreavis+")");
 	if (etoilecritique != "")
 		$("#ongletcritique").html("Critique "+etoilecritique);
-	if (etoilechronique != "")
-		$("#ongletchronique").html("Chronique "+etoilechronique);
 
 	//----- ouvrir un onglet avec la souris
 	$(".onglettitre").click(function() {
@@ -693,12 +691,6 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			[<p>(#CHAPO)</p>]
 			[<p>(#TEXTE)</p>]
 			[<div class="ps">(#PS)</div>]
-			<br />
-			<BOUCLE_etoilechronique(DOCUMENTS){id_article}{fichier LIKE %etoile%}{mode=image}{0,1}>
-[<?php
-	$codejavascript .= 'etoilechronique = \'<img src="(#FICHIER|attribut_html)" alt="" />\'; ';
-?>]
-			</BOUCLE_etoilechronique>
 		</BOUCLE_artchronique>
 			La chronique n'a pas été trouvée
 		<//B_artchronique>
