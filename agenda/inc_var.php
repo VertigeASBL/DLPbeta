@@ -185,4 +185,5 @@ $groupes_joueurs = array (
 // Facteur CHANCE lors de participation aux concours ====> voir dans les fonctions !
 
 
+
 ?>

@@ -1,4 +1,6 @@
 <?php
+exit(); //--- fichier inutilisé
+
 ini_set("max_execution_time", "780");
 
 require '../inc_fct_base.php';

@@ -287,8 +287,8 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 		$req .= ' LEFT JOIN spip_auteurs_articles AS R ON A.id_article=R.id_article LEFT JOIN spip_auteurs AS P ON P.id_auteur=R.id_auteur';
 	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND A.statut=\'publie\' AND A.id_rubrique='.$id_rubrique.' AND E.'.$champlien.'=A.id_article';
 	if ($home) {
-		$home = time(); //--- 1296000 == 15 jours
-		$req .= ' AND E.date_event_fin>=\''.date('Y-m-d', $home - 1296000).'\' AND E.date_event_debut<=\''.date('Y-m-d', $home).'\'';
+		$maintenant = time(); //--- 1296000 == 15 jours
+		$req .= ' AND E.date_event_fin>=\''.date('Y-m-d', $maintenant).'\' AND E.date_event_debut<=\''.date('Y-m-d', $maintenant + 1296000).'\'';
 	}
 	$req .= ' GROUP BY A.id_article';
 	$req .= $home ? ' ORDER BY RAND() LIMIT 1' : ' ORDER BY A.date DESC LIMIT '.$max;
@@ -304,10 +304,9 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 	rub 160 : Avis des spectateurs			604800 == 7 jours
 */
 function obteniravislies($max = 21) {
-	$req = time(); $date_debut = date('Y-m-d', $req - 604800); $date_fin = date('Y-m-d', $req + 604800);
-
+	$maintenant = time();
 	$req = 'SELECT E.id_event,E.nom_event,E.pic_event_1,L.id_lieu,L.nom_lieu FROM ag_event AS E,ag_lieux AS L';
-	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND E.date_event_fin>=\''.$date_debut.'\' AND E.date_event_debut<=\''.$date_fin.'\'';
+	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND E.date_event_fin>=\''.date('Y-m-d', $maintenant - 604800).'\' AND E.date_event_debut<=\''.date('Y-m-d', $maintenant + 604800).'\'';
 	$req = spip_query($req);
 
 	$t_ev = array(); $t_nom = array(); $t_pic = array(); $t_idlieu = array(); $t_lieu = array(); $t_nbr = array();
@@ -333,10 +332,9 @@ function obteniravislies($max = 21) {
 	60 sec * 60 min * 24 h * 7 jours == 604800
 */
 function obtenirjaivulies($max = 5) {
-	$req = time(); $date_debut = date('Y-m-d', $req - 604800); $date_fin = date('Y-m-d', $req + 604800);
-
+	$maintenant = time();
 	$req = 'SELECT E.id_event,E.nom_event,E.pic_event_1,E.date_event_debut,E.date_event_fin,E.resume_event,L.nom_lieu FROM ag_event AS E,ag_lieux AS L';
-	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND E.date_event_fin>=\''.$date_debut.'\' AND E.date_event_debut<=\''.$date_fin.'\'';
+	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND E.date_event_fin>=\''.date('Y-m-d', $maintenant - 604800).'\' AND E.date_event_debut<=\''.date('Y-m-d', $maintenant + 604800).'\'';
 	$req = spip_query($req);
 
 	$t_ev = array(); $t_nom = array(); $t_pic = array(); $t_dbu = array(); $t_fin = array(); $t_txt = array(); $t_lieu = array(); $t_nbr = array();
