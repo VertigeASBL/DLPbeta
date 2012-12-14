@@ -119,11 +119,15 @@ if ((isset($_GET['req']) AND $_GET['req'] == 'ext')OR (isset($_GET['req']) AND $
 		$_SESSION['date_fin'] = $date_fin ;
 	}
 	else
-	{
-		// Aujourd'hui + 15 jours afin d'afficher les "prochains événements"
-		//$date_fin = date(mktime(0, 0, 0, date('m'), date('d') + $nb_jours_ahead, date('Y')));
-		//$date_fin = date('d-m-Y', $date_fin);
-		$date_fin = date ('d-m-Y', $maintenant + 7948800); // 92 jours / mktime(0, 0, 0, date("m")+3 , date("d"), date("Y")) Ceci est valable quand on vient de la page http://www.demandezleprogramme.be/-Les-lieux-partenaires- (=liste des LIEUX)
+	{ /*
+		Aujourd'hui + 15 jours afin d'afficher les "prochains événements"
+		$date_fin = date(mktime(0, 0, 0, date('m'), date('d') + $nb_jours_ahead, date('Y')));
+		$date_fin = date('d-m-Y', $date_fin);
+		7948800 = 92 jours / mktime(0, 0, 0, date("m")+3 , date("d"), date("Y"))
+		31536000 = 365 jours
+		Ceci est valable quand on vient de la page http://www.demandezleprogramme.be/-Les-lieux-partenaires- (=liste des LIEUX)
+	*/
+		$date_fin = date ('d-m-Y', $maintenant + 31536000);
 		$_SESSION['date_fin'] = $date_fin ;
 	}
 }
@@ -349,11 +353,15 @@ else {
 		$date_mini_calendrier_annee = substr($date_debut, 6, 4);
 		$date_mini_calendrier_mois = substr($date_debut, 3, 2);	
 	}
-	// Date de fin : si rien n'et précisé, date fin = aujourd'hui + 3 mois
+	/*
+		Date de fin : si rien n'et précisé, date fin = aujourd'hui + 3 mois
+		7948800 = 92 jours / mktime(0, 0, 0, date("m")+3 , date("d"), date("Y"))); 
+		31536000 = 365 jours
+	*/
 	if ($date_fin == '')
 	{
-		$date_fin = date ('d-m-Y', $maintenant + 7948800); // 92 jours / mktime(0, 0, 0, date("m")+3 , date("d"), date("Y"))); 
-		$date_fin_to_requete = date ('Y-m-d', $maintenant + 7948800); // 92 jours / mktime(0, 0, 0, date("m")+3 , date("d"), date("Y")));
+		$date_fin = date ('d-m-Y', $maintenant + 31536000);
+		$date_fin_to_requete = date ('Y-m-d', $maintenant + 31536000);
 	}
 	else
 	{
@@ -892,7 +900,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	$total_entrees = mysql_fetch_array($count_avis);
 	$total_entrees = $total_entrees['total_entrees'];
 	if ($total_entrees > 0)
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" title="Nombre d\'avis postés par les visiteurs"><img src="agenda/design_pics/ico_avis_mini.jpg"/><div class="nombre_avis_breve">'.$total_entrees.'</div></a>'."\n";
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" title="Nombre d\'avis postés par les visiteurs"><img src="agenda/design_pics/ico_avis_mini.jpg" alt="" /><div class="nombre_avis_breve">'.$total_entrees.'</div></a>'."\n";
 	
 	
 	// Icone Interview
@@ -901,7 +909,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	else
 		$interview_event = saisonprecedente($id_event, 'interview');
 	if ($interview_event)
-		$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview_mini.jpg"/></a>'."\n" ;
+		$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview_mini.jpg" alt="" /></a>'."\n" ;
 
 
 	// Icone Critique
@@ -910,7 +918,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	else
 		$critique_event = saisonprecedente($id_event, 'critique');
 	if ($critique_event)
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#critique" title="Cliquez ici pour lire la critique"><img src="agenda/design_pics/ico_critique_mini.jpg"/></a>'."\n" ;
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#critique" title="Cliquez ici pour lire la critique"><img src="agenda/design_pics/ico_critique_mini.jpg" alt="" /></a>'."\n" ;
 
 
 	// Icone chronique
@@ -919,7 +927,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	else
 		$chronique_event = saisonprecedente($id_event, 'chronique');
 	if ($chronique_event)
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#chronique" title="Cliquez ici pour lire la chronique"><img src="agenda/design_pics/ico_chronique_mini.jpg"/></a>'."\n" ;
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#chronique" title="Cliquez ici pour lire la chronique"><img src="agenda/design_pics/ico_chronique_mini.jpg" alt="" /></a>'."\n" ;
 
 
 	// Icone "J'ai vu et aimé"
@@ -940,7 +948,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	{
 		$nom_event = htmlspecialchars($donnees_1['nom_event']);
 		$id_event = $donnees_1['id_event'];
-		$tab.= '<span class="breve_pic"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" /></a></span>'."\n";
+		$tab.= '<span class="breve_pic"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" /></a></span>'."\n";
 	}
 	
 	
@@ -1073,7 +1081,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	if (!empty($donnees_1['email_reservation']) AND $donnees_1['email_reservation'] != NULL 
 	AND ($donnees_1['genre_event'] != 'g07'))
 	{
-		$tab.= '<a href="-Reserver-?id_event='. $id_event .'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.jpg"  hspace="10"  /></a>'."\n" ;
+		$tab.= '<a href="-Reserver-?id_event='. $id_event .'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.jpg"  hspace="10" alt="" /></a>'."\n" ;
 	}
 	// Lien e-card
 	$tab.= '<a href="-Envoyer-a-un-ami-?id_event=' . $id_event . '"><img src="agenda/e_card/pics/ico_envoyer_ami.jpg" title="Informer un ami" alt="Informer un ami" /></a>'."\n" ;
