@@ -85,7 +85,9 @@ $saison_preced_event = $donnees ['saison_preced_event'] ;
 
 // Données sur le LIEU culturel
 $reponse_lieu = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = $lieu_event");
-$donnees_lieu = mysql_fetch_array($reponse_lieu) ;
+$donnees_lieu = mysql_fetch_array($reponse_lieu);
+
+/* Didier: On va chercher le nouvel email de réservation de l'événement */
 
 $nom_lieu = $donnees_lieu['nom_lieu'] ;
 

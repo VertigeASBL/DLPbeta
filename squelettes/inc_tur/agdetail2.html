@@ -369,6 +369,10 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	if (($time_date_event_fin+86400) > ($time_date_aujourdhui+0) && ($genre_event != 'g07')) {
 		if (!empty($donnees['tel_reserv_event']) && $donnees['tel_reserv_event'] != NULL)
 			echo '<tr><td>Réservation</td><td>'.$donnees['tel_reserv_event'].'</td></tr>'."\n";
+		if (!empty($donnees['email_reservation'])) {
+			echo '<tr><td>Réservation par email</td><td><a href="mailto:'.$donnees['email_reservation'].'">'.$donnees['email_reservation'].'</a></td></tr>';
+		}
+
 
 		// Afficher bouton de Réservation
 		if ($donnees_prod && $donnees_prod['email_reservation'])

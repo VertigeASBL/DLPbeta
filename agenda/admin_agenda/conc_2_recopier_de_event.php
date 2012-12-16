@@ -221,7 +221,7 @@ if (isset($_GET['event_correspondant']) AND preg_match('/[0-9]$/', $_GET['event_
 	$nom_event = $donnees_event['nom_event'] ;
 	$resume_event = $donnees_event['resume_event'] ;
 	$pic_event_1 = $donnees_event['pic_event_1'] ;
-
+	$email_reservation = $donnees_event['email_reservation'];
 
 	// Récupération des valeurs liées au LIEU de l'événement
 	$reponse_lieu = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = '$lieu_event'");
@@ -230,7 +230,6 @@ if (isset($_GET['event_correspondant']) AND preg_match('/[0-9]$/', $_GET['event_
 	$nom_lieu = $donnees_lieu['nom_lieu'] ;
 	$e_mail_lieu = $donnees_lieu['e_mail_lieu'] ;
 	$adresse_lieu = $donnees_lieu['adresse_lieu'] ;
-	$email_reservation = $donnees_lieu['email_reservation'] ;
 
 
 	// Récupération des valeurs liées au CONCOURS

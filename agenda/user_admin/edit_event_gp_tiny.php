@@ -601,6 +601,15 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	else
 		$tel_reserv_event = $indetermine;
 
+
+	/*
+		Didier: On ajoute l'email de réservation pour un evenement.
+	*/
+	if (!empty($_POST['email_reservation'])) {
+		$email_reservation = htmlentities($_POST['email_reservation'], ENT_QUOTES);
+	}
+	else $email_reservation = $indetermine;
+
 	// -----------------------------------------
 	// TEST PRIX MINIMUM
 	if (isset($_POST['prix_min_event'])) 
@@ -723,15 +732,15 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		genre_event = '$genre_event' ,
 		tel_reserv_event = '$tel_reserv_event' ,
 		prix_min_event = '$prix_min_event' ,
-		prix_max_event = '$prix_max_event'
+		prix_max_event = '$prix_max_event',
+		email_reservation = '$email_reservation'
+
 		WHERE id_event = '$id' LIMIT 1 ") ;
 
 		if ($approuv_check)
 		{
 			// Enregistrer cette modifivation dans le rapport
 			log_write ($donnees['lieu_event'], '2', $id, 'Modification événement', 'send_mail') ; //($lieu_log, $type_log, $context_id_log, $description_log, $action_log)
-			
-			
 
 			// COMEDIEN - COMEDIEN - COMEDIEN - COMEDIEN - COMEDIEN - COMEDIEN - COMEDIEN - COMEDIEN - COMEDIEN - 
 			// Vérifier si l'événement contient un "Prénom Nom" de comedien, et effectuer une mise à jour de "ag_comedien_lien"
@@ -790,6 +799,7 @@ else // Si on n'a pas appuyé sur le bouton UPDATE -> récupérer les données de la
 	$description_event = $donnees['description_event'];
 	$genre_event = $donnees['genre_event'];
 	$tel_reserv_event = $donnees['tel_reserv_event'];
+	$email_reservation = $donnees['email_reservation'];
 	$prix_min_event = $donnees['prix_min_event'];
 	$prix_max_event = $donnees['prix_max_event'];
 	$pic_event_1 = $donnees['pic_event_1'];
@@ -850,10 +860,11 @@ echo '<h1>Edition d\'une fiche spectacle</h1>
           <tr>
             <th colspan="2"><?php 
 
-			$reponse_2 = mysql_query("SELECT nom_lieu,tel_reserv_lieu FROM $table_lieu WHERE id_lieu = $lieu_event");
+			$reponse_2 = mysql_query("SELECT nom_lieu,tel_reserv_lieu, email_reservation FROM $table_lieu WHERE id_lieu = $lieu_event");
 			$donnees_2 = mysql_fetch_array($reponse_2) ;
 			if (! $nom_event && ! $tel_reserv_event)
 				$tel_reserv_event = $donnees_2['tel_reserv_lieu'];
+			if (! $nom_event && ! $email_reservation) $email_reservation = $donnees_2['email_reservation'];
 			echo '- ' . $donnees_2['nom_lieu'] . ' -<br>' ;
 			
 			if (empty ($_GET['id']) OR $_GET['id'] == NULL)
@@ -1334,9 +1345,14 @@ echo '<input type="hidden" name="jours_actifs_event" value="',implode(',', $jour
             <td>Numéro de téléphone de réservation</td>
             <td>
   <input name="tel_reserv_event" type="text" id="tel_reserv_event" value="<?php 
-			if (isset ($tel_reserv_event))
-		{echo $tel_reserv_event;}?>" size="30" maxlength="50" /> <span class="mini">(facultatif)</span>
+			if (isset ($tel_reserv_event)) echo $tel_reserv_event; ?>" size="30" maxlength="50" /> <span class="mini">(facultatif)</span>
             </td>
+          </tr>
+          <tr>
+          	<td>Adresse e-mail de réservation</td>
+          	<td>
+          		<input type="text" value="<?php if (isset($email_reservation)) echo $email_reservation; ?>" name="email_reservation" />
+          	</td>
           </tr>
           <tr>
             <td>Prix minimum</td>
