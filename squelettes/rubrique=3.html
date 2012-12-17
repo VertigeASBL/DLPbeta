@@ -5,7 +5,6 @@
 <head>
 <INCLURE{fond=inc_tur/agheader}{id_rubrique}>
 <!-- link href="agenda/css_1_inspip.css" rel="stylesheet" type="text/css" media="screen" / -->
-<link href="agenda/css_calendrier_inspip.css" rel="stylesheet" type="text/css" media="screen" />
 <link href="agenda/css_home.css" rel="stylesheet" type="text/css" media="screen" />
 <link rel="stylesheet" href="[(#CHEMIN{print_tur.css})]" type="text/css" media="print" />
 
@@ -19,136 +18,6 @@
 
 //window.loadFirebugConsole();
 $(document).ready(function (){
-	var numeroajax = 0;
-
-	/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	Cette fonction est appelée par les "mouvements" du visiteur
-	Elle va chercher les variables dans tous les champs du formulaire, 
-	et les envoie au PHP qui va ensuite les tester (==0 ?)
-	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-	function appel_php() {
-		//console.debug("Fonction appel_php lancée") ;
-		$('#nbre_resultats_id').fadeOut(10);
-
-		$('#event_preview_id').fadeTo(10, 0.2);
-		$('#event_preview_id').slideUp(20);
-
-		$('#event_preview_id_fleche').fadeTo(10, 0.2);
-		$('#event_preview_id_fleche').slideUp(20);		
-		
-		// ---------------------------------------------
-		// On récupère toutes les valeurs des champs
-		// ---------------------------------------------
-		// RAZ champ d'info
-		$("#montrer_selection").html(""); 
-		votre_selection = '';
-
-		// TEXTE LIBRE
-		valeur_txt_libre_recup = $("#chp_txt_libre").val();
-
-		//console.debug("Txte libre : "+valeur_txt_libre_recup) ;
-		if(valeur_txt_libre_recup!='') {
-			votre_selection+= "Texte libre : "+valeur_txt_libre_recup+"<br />";
-				//alert ('QQ') ;
-		}
-		else {
-			//votre_selection+= "Aucun texte libre choisi<br />";
-		}
-		// ---------------------------------------------
-
-		// ---------------------------------------------
-		// Requête AJAX
-		// ---------------------------------------------
-		$.post("agenda/moteur_2_3/requete_utf8/requete_home.php", {
-		chaine_txt_libre: ""+valeur_txt_libre_recup+""
-		}, function(data){
-			if (numeroajax > 1)
-				{ numeroajax--; return; }
-			var response_se = eval("(" + data + ")");
-			//console.log(response_se.variable_test);
-			//console.log(response_se.nombre_resultats);
-			//console.log(response_se.preview_event);
-
-			// Nombre de résultats
-			// ---------------------------------
-			$('#nbre_resultats_fleche').fadeIn(10);
-			$('#nbre_resultats_id').fadeIn(30);
-			if(response_se.nombre_resultats>0) {
-				$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
-			}
-			else {
-				$('#nbre_resultats_id').html("Aucun résultat");
-			}
-
-			// Liste prévisualisation
-			// ---------------------------------
-			if(response_se.nombre_resultats>0) {
-			
-					$('#event_preview_id_fleche').fadeIn(10);
-					$('#event_preview_id').fadeTo(10, 0.1, function () {
-				
-					$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
-					$('#event_preview_id').slideDown(20);
-					$('#event_preview_id').fadeTo(10, 1);
-					$('#event_preview_id_fleche').slideDown(20);
-					$('#event_preview_id_fleche').fadeTo(10, 1);
-				});
-			}
-			
-			// Afficher liste de proposition de titres quand des valeurs de retour AJAX existent 
-			// ------------------------------------------------------------------------------------
-			if(response_se.dlp_list_events.length != 0) {
-				var response_se = eval("(" + data + ")");
-	
-				$('#autoSuggestionsList').html(response_se.dlp_list_events);
-
-				// Effets de déroulement de la liste des suggestions
-				$('#suggestions').slideDown(40);
-				$('#suggestions').fadeTo(10, 1);
-			}
-			numeroajax--;
-		},"json");
-
-	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */		
-	}
-	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
-	/* TEST CHP LIBRE
-	********************* */
-	$("#chp_txt_libre").keyup(function() {
-		chaine_txt_libre = $(this).val();
-		if (chaine_txt_libre.length < 2)
-			return;
-
-		// Effets d'effacement de la liste des suggestions
-		$('#suggestions').fadeTo(1,0.4);
-		$('#suggestions').slideUp(30);
-
-		
-		// setTimeout = retarder une action
-		setTimeout(function attendre_un_peu() {
-			appel_php() ;
-		}, 500);
-	});
-		
-	/* Champ texte libre
-	********************* */
-	$("#chp_txt_libre").keyup(function lookup(valeur_chp_txt_libre) {
-		valeur_chp_txt_libre = $(this).val();
-		//console.log("Lookup = "+valeur_chp_txt_libre);
-		if(valeur_chp_txt_libre.length == 0) {
-			// Hide the suggestion box.
-			$('#suggestions').fadeOut(10);
-		}
-	}) // # fct lookup
-
-	$("#form_moteur_dlp_ajax").submit(function() {
-		var chn = $(this).attr("action");
-		chn += chn.indexOf("?") == -1 ? "?" : "&";
-		chn += "recherche="+encodeURI($("#chp_txt_libre").val());
-		$(this).attr("action", chn);
-	});
-
 	//******************* galerie carousel - http://caroufredsel.dev7studios.com/index.php *******************
 	$("#carouselhome").carouFredSel({
 		width:"variable",
@@ -168,25 +37,13 @@ $(document).ready(function (){
 		}
 	});
 });
-function fill(thisValue) {
-	$("input[name='chp_txt_libre']").val(thisValue)
-	setTimeout("$('#suggestions').hide();", 20);
-	//alert(thisValue);
-}	
 </script>
 
 <style type="text/css">
 <!--
+/*
 .spip_documents_left, .spip_documents_right { 
-	border:none; /* pour bypasser le style de styles_tur.css */
-}
-.ligne_rouge {
-	position: absolute;
-	left: 0px;
-	top: 455px;
-	border-top: #8F0133 8px solid;
-	display: block;
-	width: 100%;
+	border:none;
 }
 
 .case_hors_periode_titre, .case_periode_actuelle_titre {
@@ -221,7 +78,6 @@ function fill(thisValue) {
 	background-color: #E9E9E9;
 }
 
-/* Styles pour Top 5 */
 .un_event_preview {
 	font-size: 11px;
 	clear: both;
@@ -249,39 +105,13 @@ function fill(thisValue) {
 	background-color:#FFFFFF;
 	z-index:999;
 }
-.colonne2 { /* écrase le style général de styles_tur.css */
-	min-height:200px;
-}
-
-.nombre_de_jai_vu { /* écrase le style général de styles_tur.css */
+.nombre_de_jai_vu {
 	min-height:200px;
 	color: #900033;
 	padding-left: 3px;
 	padding-right: 3px;
 }
-
-.actu_photo {
-	margin:0px 10px 2px 0px; /* écrase css_home */
-}
-#sepa_home{
-	width:100%; /* écrase css_home */
-	background:url(agenda/design_pics/ligne_rouge.jpg) repeat-x;
-}
-
-/* Styles moteur AJAX */
-.suggestionsBox {
-	background-color: #027473;
-	position: relative;
-	left: 0px;
-	margin: 10px 0px 0px 0px;
-	padding: 1px 10px 5px 10px;
-	width: 180px;
-	z-index: 5000;
-}
-.suggestionList li:hover {
-	color: #FFFF99;
-}
-
+*/
 /*--- galerie carousel - caroufredsel - voir background images : image_recadre : #333333 ---*/
 .carouselwrapper {
 	float:left; width:435px; height:158px;
@@ -322,24 +152,6 @@ function fill(thisValue) {
 }
 -->
 </style>
-<script language="javascript" type="text/javascript">
-/* Toggle entre 2 blocs */
-function toggle_zone(Zone_id,txtReplier,txtDeplier) {
-	var targetElement; var targetElementLink;
-	targetElement = document.getElementById(Zone_id) ;
-	targetElementB = document.getElementById(Zone_id+'B');
-	targetElementLink = document.getElementById(Zone_id+'Link');
-	
-	if (targetElement.style.display == "none") {
-		targetElement.style.display = "block" ;
-		targetElementB.style.display = "none" ;
-	} else {
-		targetElement.style.display = "none" ;
-		targetElementB.style.display = "block" ;
-	}
-	return false;
-}
-</script>
 
 <script type="text/javascript">
 <!--
@@ -375,115 +187,61 @@ require 'agenda/inc_var.php';
 
 <div id="header">
 	<INCLURE{fond=inc_tur/banner_haut}>
-	<INCLURE{fond=inc_tur/agoutils}>
 </div>
 <INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
 
-<div id="niveau1">
-<!--<div class="ligne_rouge"></div>-->
-
-<div class="colonne1">
-
-	<div class="recherche_et_calendrier">
-<!-- ++++++++++++++++++++++ Champ recherche contextuelle debut ++++++++++++++++++++++ -->
-	  <form id="form_moteur_dlp_ajax" name="form_moteur_dlp_ajax" method="post" action="[(#URL_RUBRIQUE{65})]">
-	  <div class="recherche_et_calendrier_bulle_cal">
-		  
-		  <input name="chp_txt_libre" type="text" size="20" value="recherche" id="chp_txt_libre" onclick="if (this.value=='recherche') this.value='';" />
-		  <input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" style="position: relative; top: 0px;" type="submit" alt="Cliquez pour lancer la recherche" />
-		  <br />
-		  <a href="[(#URL_RUBRIQUE{65})]"><img src="agenda/design_pics/bouton-rech-avancee.png" alt="" /></a>
-	  </div>
-		
-		<div class="suggestionsBox" id="suggestions" style="display: none;">
-		 <img src="agenda/moteur_2_3/pics/fleche_verte_h.gif" style="position: relative; top: -11px; left: 30px;" alt="upArrow" />
-		 <div class="suggestionList" id="autoSuggestionsList"> &nbsp; </div>
-		</div>
-		
-		<input type="hidden" name="genre_event" value="non_selct" />
-		<input type="hidden" name="lieu_event" value="non_selct" />
-		<input type="hidden" name="ville_event" value="non_selct" />
-<?php
-		// Date de début et fin de la période de recherche
-		$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y"))); // 
-		$date_fin_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")+12, date("d"), date("Y"))); // 
-		echo '<input type="hidden" name="date_debut" value="' . $date_debut_pour_moteur . '" />
-		<input type="hidden" name="date_fin" value="' . $date_fin_pour_moteur . '" />' ;
-?>
-	  </form>
-<!-- ++++++++++++++++++++++ Champ recherche contextuelle fin ++++++++++++++++++++++ -->
-
-
-<!-- ++++++++++++++++++++++ Calendrier événements du mois debut ++++++++++++++++++++++ -->
-<?php
-		include('squelettes/inc_tur/inc_mini_calendrier_home.php'); 
-?>
-<!-- ++++++++++++++++++++++ Calendrier événements du mois fin ++++++++++++++++++++++ -->
-	</div><!-- fin recherche_et_calendrier -->
-
-	<h2 style="width:400px; margin-left:0px; color:#009ABB;">Votre agenda culturel et interactif</h2>
+<div id="principal">
+	<div class="colonne1">
+		<h2 style="width:400px; margin-left:0px; color:#009ABB;">Votre agenda culturel et interactif</h2>
 
 <!-- ++++++++++++++++++++++ carousel debut # SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'} ++++++++++++++++++++++ -->
 		#SET{urldetail,#URL_RUBRIQUE{92}}
 		#SET{aujourdhui,#VAL{'Y-m-d'}|date}
 		#SET{unesemaine,#VAL{'Y-m-d'}|date{#VAL{}|time|plus{604800}}} [(#REM)--- dans 1 semaine ---]
 		<B_carousel>
-	<a id="carouprev" href="#precedent">&nbsp;</a>
-	<div class="carouselwrapper">
-		<div class="list_carousel">
-			<ul id="carouselhome">
+		<a id="carouprev" href="#precedent">&nbsp;</a>
+		<div class="carouselwrapper">
+			<div class="list_carousel">
+				<ul id="carouselhome">
 		<BOUCLE_carousel(ag_event){pic_event_1=set}{date_event_debut<=#GET{unesemaine}}{date_event_fin>=#GET{aujourdhui}}{!par id_event}>
-				<li>
-					<a href="[(#GET{urldetail}|parametre_url{id_event,#ID_EVENT})]">
+					<li>
+						<a href="[(#GET{urldetail}|parametre_url{id_event,#ID_EVENT})]">
 			#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#ID_EVENT,_1.jpg}|image_passe_partout{20,150}}
 			#SET{vimage,#GET{vimage}|image_recadre{0,150,'center center','#333333'}}
 			[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#NOM_EVENT})]
-					</a>
-				</li>
+						</a>
+					</li>
 		</BOUCLE_carousel>
-			</ul>
+				</ul>
+			</div>
 		</div>
-	</div>
-	<a id="carounext" href="#suivant">&nbsp;</a>
+		<a id="carounext" href="#suivant">&nbsp;</a>
 		</B_carousel>
 <!-- ++++++++++++++++++++++ carousel fin ++++++++++++++++++++++ -->
 
-	<div class="clear"></div>
-</div><!-- fin colonne1 -->
-
-<div class="colonne2">
-	<a href="agenda/user_admin/ins/a.php" target="_blank"><img src="squelettes/assets/inscrivezlieu.jpg" style="margin:0 0 0 -6px;" alt="" /></a>
-	<INCLURE{fond=inc_tur/christian_jade_home}>
-</div>
-<div class="clear"></div>
-</div><!-- fin niveau1 -->
-
-<div id="niveau2_wrap"><br />
-	<div id="niveau2">
-	<div class="colonne3">
+		<div class="clear"></div>
+		<div class="colonne3">
 
 <!-- ++++++++++++++++++++++ Focus debut ++++++++++++++++++++++ -->
 	<BOUCLE_art_focus(ARTICLES){id_rubrique=162}{!par date}{0,1}>
 		#SET{varurl,#URL_ARTICLE|parametre_url{rtr,y}}
-		<div class="cadre_actu">
-			<h2 class="titre_cadre">Focus</h2>
-			[<span class="actu_photo">
-				<a href="#URL_ARTICLE">(#LOGO_ARTICLE|image_reduire{150,0})</a>
-			</span>]
-			<div class="texte_actu">
-				[<h3 class="titre_actu">
-					(#TITRE)
-				</h3>]
-				[<div class="descriptif_actu">
-					(#CHAPO|PtoBR)
-				</div>]
-				<p><a href="#GET{varurl}" title="Voir en détail">
-					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
-				</a></p>
-				[<br />(#VALEUR|table_valeur{date}|affdate)]
+			<div class="cadre_actu">
+				<h2 class="titre_cadre">Focus</h2>
+				[<span class="actu_photo">
+					<a href="#URL_ARTICLE">(#LOGO_ARTICLE|image_reduire{91,0})</a>
+				</span>]
+				<div class="texte2_actu">
+					[<h3 class="titre_actu">
+						(#TITRE)
+					</h3>]
+					[<div class="descriptif_actu">
+						(#CHAPO|PtoBR)
+					</div>]
+					<p></p>
+					[<br />(#DATE|affdate)][ | <a href="(#GET{varurl})" title="Voir en détail">suite&nbsp;&gt;&gt;</a>]
+				</div>
+				<div class="float_stop"></div>
 			</div>
-			<div class="float_stop"></div>
-		</div>
 	</BOUCLE_art_focus>
 <!-- ++++++++++++++++++++++ Focus fin ++++++++++++++++++++++ -->
 
@@ -573,7 +331,6 @@ require 'agenda/inc_var.php';
 
 	require_once ('agenda/inc_var.php');
 	require_once ('agenda/inc_fct_base.php');
-	require_once ('agenda/calendrier/inc_calendrier.php');	
 
 	/* ++++++++++++++++++++++ Dernier Concours debut ++++++++++++++++++++++ */
 	$public_cible = 'jou01' ; // Groupe de joueurs auquel s'adresse ce concours
@@ -590,41 +347,39 @@ require 'agenda/inc_var.php';
 
 	<BOUCLE_art_critique(POUR){tableau #GET{tablo}}>
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{critique}}
-		<div class="cadre_actu">
-			<h2 class="titre_cadre">Critique</h2>
-			#SET{vimage,''}
-			[(#VALEUR|table_valeur{pic_event_1}|oui)
-				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{150,0}}
-			<span class="actu_photo">
-				<a href="#GET{varurl}">
-					[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
-				</a>
-			</span>]
-			<div class="texte_actu">
-				<h3 class="titre_actu">
+			<div class="cadre_actu">
+				<h2 class="titre_cadre">Critique</h2>
+				#SET{vimage,''}
+				[(#VALEUR|table_valeur{pic_event_1}|oui)
+					#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{91,0}}
+				<span class="actu_photo">
 					<a href="#GET{varurl}">
-						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+						[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
 					</a>
-				</h3>
-				[<div class="actu_lieu">
-					<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
-						[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
-					</a>
-				</div>]
-				<h4>
-					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
-				</h4>
+				</span>]
+				<div class="texte2_actu">
+					<h3 class="titre_actu">
+						<a href="#GET{varurl}">
+							[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+						</a>
+					</h3>
+					[<div class="actu_lieu">
+						<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
+							[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
+						</a>
+					</div>]
+					<h4>
+						[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+					</h4>
 		<BOUCLE_etoiles(DOCUMENTS){id_article=#VALEUR|table_valeur{id_article}}{fichier LIKE %etoile%}{mode=image}{0,1}>
-			<img src="#FICHIER" alt="" /><br />
+				<img src="#FICHIER" alt="" /><br />
 		</BOUCLE_etoiles>
-				[par (#VALEUR|table_valeur{nom})]
-				[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-120,30}})</div>]
-				<p><a href="#GET{varurl}" title="Voir en détail">
-					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
-				</a></p>
+					[par (#VALEUR|table_valeur{nom})]
+					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-120,30}})</div>]
+					[<br />(#VALEUR|table_valeur{date}|affdate)][ | <a href="(#GET{varurl})" title="Voir en détail">suite&nbsp;&gt;&gt;</a>]
+				</div>
+				<div class="float_stop"></div>
 			</div>
-			<div class="float_stop"></div>
-		</div>
 	</BOUCLE_art_critique>
 <!-- ++++++++++++++++++++++ Critique fin ++++++++++++++++++++++ -->
 
@@ -634,17 +389,48 @@ require 'agenda/inc_var.php';
 
 	<BOUCLE_art_chronique(POUR){tableau #GET{tablo}}>
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{chronique}}
-		<div class="cadre_actu">
-			<h2 class="titre_cadre">Chronique</h2>
-			#SET{vimage,''}
-			[(#VALEUR|table_valeur{pic_event_1}|oui)
-				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{150,0}}
-			<span class="actu_photo">
-				<a href="#GET{varurl}">
-					[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
-				</a>
-			</span>]
-			<div class="texte_actu">
+			<div class="cadre_actu">
+				<h2 class="titre_cadre">Chronique</h2>
+				#SET{vimage,''}
+				[(#VALEUR|table_valeur{pic_event_1}|oui)
+					#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{91,0}}
+				<span class="actu_photo">
+					<a href="#GET{varurl}">
+						[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
+					</a>
+				</span>]
+				<div class="texte2_actu">
+					<h3 class="titre_actu">
+						<a href="#GET{varurl}">
+							[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+						</a>
+					</h3>
+					[<div class="actu_lieu">
+						<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
+							[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
+						</a>
+					</div>]
+					<h4>
+						[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+					</h4>
+					[par (#VALEUR|table_valeur{nom})]
+					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-100,30}})</div>]
+					[<br />(#VALEUR|table_valeur{date}|affdate)][ | <a href="(#GET{varurl})" title="Voir en détail">suite&nbsp;&gt;&gt;</a>]
+				</div>
+				<div class="float_stop"></div>
+			</div>
+	</BOUCLE_art_chronique>
+<!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
+
+<!-- ++++++++++++++++++++++ Video debut ++++++++++++++++++++++ -->
+	#SET{tablo,#VAL{155}|obtenirarticleslies{video_spip_event,1,1}}
+	#SET{urldetail,#URL_RUBRIQUE{92}}
+
+	<BOUCLE_art_video(POUR){tableau #GET{tablo}}>
+		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
+			<div class="cadre_actu">
+				<h2 class="titre_cadre">Vidéo</h2>
+				[(#VALEUR|table_valeur{texte}|replace_lien_video{284,160})]
 				<h3 class="titre_actu">
 					<a href="#GET{varurl}">
 						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
@@ -658,79 +444,43 @@ require 'agenda/inc_var.php';
 				<h4>
 					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
 				</h4>
-				[par (#VALEUR|table_valeur{nom})]
-				[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-100,30}})</div>]
-				<p><a href="#GET{varurl}" title="Voir en détail">
-					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
-				</a></p>
+				[<br />(#VALEUR|table_valeur{date}|affdate)][ | <a href="(#GET{varurl})" title="Voir en détail">suite&nbsp;&gt;&gt;</a>]
 			</div>
-			<div class="float_stop"></div>
-		</div>
-	</BOUCLE_art_chronique>
-<!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
-
-<!-- ++++++++++++++++++++++ Video debut ++++++++++++++++++++++ -->
-	#SET{tablo,#VAL{155}|obtenirarticleslies{video_spip_event,1,1}}
-	#SET{urldetail,#URL_RUBRIQUE{92}}
-
-	<BOUCLE_art_video(POUR){tableau #GET{tablo}}>
-		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
-		<div class="cadre_actu">
-			<h2 class="titre_cadre">Vidéo</h2>
-			[(#VALEUR|table_valeur{texte}|replace_lien_video{330,186})]
-			<h3 class="titre_actu">
-				<a href="#GET{varurl}">
-					[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
-				</a>
-			</h3>
-			[<div class="actu_lieu">
-				<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
-					[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
-				</a>
-			</div>]
-			<h4>
-				[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
-			</h4>
-			<p><a href="#GET{varurl}" title="Voir en détail">
-				Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
-			</a></p>
-		</div>
-
 	</BOUCLE_art_video>
 <!-- ++++++++++++++++++++++ Video fin ++++++++++++++++++++++ -->
 
-		<div class="clear"></div>
-	</div><!-- fin colonne3 -->
+			<div class="clear"></div>
+		</div><!-- fin colonne3 -->
 
-	<div class="colonne4">
+		<div class="colonne4">
 
 <!-- ++++++++++++++++++++++ Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
-	<div class="cadre_actu">
-		<h2 class="titre_cadre">Vos coups de coeur du moment</h2>
+			<div class="cadre_actu">
+				<h2 class="titre_cadre">Vos coups de coeur</h2>
 	#SET{tablo,#VAL{5}|obtenirjaivulies}
 	#SET{urldetail,#URL_RUBRIQUE{92}}
 
 	<BOUCLE_art_jai_vu(POUR){tableau #GET{tablo}}>
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{jai_vu}}
-		<div class="un_event_preview">
-			<span class="image_flottante_preview">
-				<a href="#GET{varurl}">
-				[(#VALEUR|table_valeur{pic_event_1}|oui)
-					<img src="agenda/pics_events/event_[(#VALEUR|table_valeur{id_event})]_1.jpg" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
-				[(#VALEUR|table_valeur{pic_event_1}|non)
-					<img src="agenda/moteur_2_3/pics/event_sans_image.gif" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
-				</a>
-			</span>
-			<span class="nombre_de_jai_vu">[(#VALEUR|table_valeur{jai_vu})]</span>
-			<a href="#vote" onclick="popup_jai_vu('agenda/jai_vu/jai_vu_popup.php?id=[(#VALEUR|table_valeur{id_event})]','Votons');">
-				<img src="agenda/design_pics/ico_jai_vu_mini.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" />
-			</a>
-			<strong><a href="#GET{varurl}">[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]</a></strong> | 
-			du [(#VALEUR|table_valeur{date_event_debut}|affdate{'d-m-Y'})] au [(#VALEUR|table_valeur{date_event_fin}|affdate{'d-m-Y'})] |
-			<strong>[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]</strong> | [(#VALEUR|table_valeur{resume_event}|monraccourcirchaine{65})]
-		</div>
+				<div class="un_event_preview">
+					<span class="image_flottante_preview">
+						<a href="#GET{varurl}">
+		[(#VALEUR|table_valeur{pic_event_1}|oui)
+							<img src="agenda/pics_events/event_[(#VALEUR|table_valeur{id_event})]_1.jpg" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
+		[(#VALEUR|table_valeur{pic_event_1}|non)
+							<img src="agenda/moteur_2_3/pics/event_sans_image.gif" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
+						</a>
+					</span>
+					<span class="nombre_de_jai_vu">[(#VALEUR|table_valeur{jai_vu})]</span>
+					<a href="#vote" onclick="popup_jai_vu('agenda/jai_vu/jai_vu_popup.php?id=[(#VALEUR|table_valeur{id_event})]','Votons');">
+						<img src="agenda/design_pics/ico_jai_vu_mini.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" />
+					</a>
+					<strong><a href="#GET{varurl}">[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]</a></strong> | 
+					du [(#VALEUR|table_valeur{date_event_debut}|affdate{'d-m-Y'})] au [(#VALEUR|table_valeur{date_event_fin}|affdate{'d-m-Y'})] |
+					<strong>[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]</strong> | [(#VALEUR|table_valeur{resume_event}|monraccourcirchaine{65})]
+				</div>
 	</BOUCLE_art_jai_vu>
-	</div>
+			</div>
 <!-- ++++++++++++++++++++++ #Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
 
 <!-- Didier => Affiche la boite des activités -->
@@ -766,13 +516,12 @@ require 'agenda/inc_var.php';
 	unset($fp, $chn, $k);
 	/* ++++++++++++++++++++++ Dernière Interview fin ++++++++++++++++++++++ */
 ?>
-		<div class="clear"></div>
-	</div><!-- fin colonne4 -->
-
-	</BOUCLE_art_chronique>
-<!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
+			<div class="clear"></div>
+		</div><!-- fin colonne4 -->
+	</div><!-- fin colonne1 -->
 
 	<div class="colonne2">
+		<INCLURE{fond=inc_tur/recherche_rapide}>
 		<INCLURE{fond=inc_tur/outils_spectateurs}>
 		<INCLURE{fond=inc_tur/formagnewsletter}>
 		<INCLURE{fond=inc/decouvrir_pgm}>
@@ -780,21 +529,7 @@ require 'agenda/inc_var.php';
 	</div>
 	<div class="clear"></div>
 	
-	<?php
-	echo '<div id="sepa_home"></div>';
-	
-	/* ++++++++++++++++++++++ Prochains Events debut ++++++++++++++++++++++ */
-/*
-	echo '<div class="titre_home">Prochains événements</div>';
-	
-	echo'<br />';
-	//include('agenda/spip/une_agenda_home.php');
-	include('agenda/spip/home_affich_event_hasard.php');
-*/
-	/* ++++++++++++++++++++++ Prochains Events debut ++++++++++++++++++++++ */
-?>
-	</div><!-- fin niveau2 -->
-</div>
+</div><!-- fin principal -->
 <div id="footer">
 	<INCLURE{fond=inc_tur/footer}>
 </div>

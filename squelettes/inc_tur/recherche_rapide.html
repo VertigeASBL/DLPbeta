@@ -12,9 +12,6 @@ $(document).ready(function (){
 <br />
 <form id="form_recherche" name="form_recherche" method="post" action="-Agenda-">
 
-<h3>Rechercher<br />
-sur le site</h3>
-
 <div align="center">
 <table width="90%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -31,16 +28,14 @@ sur le site</h3>
 		<input type="hidden" name="lieu_event" value="non_selct" />
 		<input type="hidden" name="ville_event" value="non_selct" />
 
-		<?php
+<?php
 		// Date de début et fin de la période de recherche
-		$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y"))); // 
-		$date_fin_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")+6, date("d"), date("Y"))); // 
+		$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));
+		$date_fin_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")+12, date("d"), date("Y")));
+
 		echo '<input type="hidden" name="date_debut" value="' . $date_debut_pour_moteur . '" />
 		<input type="hidden" name="date_fin" value="' . $date_fin_pour_moteur . '" />' ;
-		?>		
-		
-		
-		
+?>		
 	</td>
     <td>
 		<input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" type="submit" alt="Cliquez pour lancer la recherche">
@@ -68,6 +63,10 @@ $date_fin_form_rapide = '01-' . $MM_form_rapide . '-' . $AAAA_form_rapide_fin ;
 </div>
 
 </form>
+
+<?php
+		include('squelettes/inc_tur/inc_mini_calendrier_home.php'); 
+?>
 
 <!-- Tracer un ligne blanche -->
 <div class="ligne_bas_col_2">&nbsp;</div>

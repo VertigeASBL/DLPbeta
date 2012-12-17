@@ -73,7 +73,7 @@ require 'agenda/inc_db_connect.php';
 		{	
 			$image = 'agenda/' . $folder_vignettes_concours . 'conc_' . $id_conc .'_1.jpg';
 			//$haut_img = vignette_home($image,100,'concours');
-			$haut_img = vignette_home($image,150,'concours');
+			$haut_img = vignette_home($image,91,'concours');
 						
 			$tab.= '<span class="actu_photo"><a href="-Concours,95-" style="text-decoration:none;"><img src="agenda/vignettes_home/concours.jpg" alt="concours" /></a></span>';
 	
@@ -81,7 +81,7 @@ require 'agenda/inc_db_connect.php';
 
 	
 		//INTITULE CADRE
-		$tab.= '<div class="texte_actu">';
+		$tab.= '<div class="texte2_actu">';
 		//$tab.= '<h2 class="titre_cadre">Concours</h2>';
 
 		// TITRE

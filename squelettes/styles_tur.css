@@ -140,10 +140,10 @@ DD SMALL{
 	top:0px;
 }
 #principal{
-	background: transparent url('assets/bg_principal.gif') repeat-y 694px top;
+/*	background: transparent url('assets/bg_principal.gif') repeat-y 694px top;
+	padding:0 4px 50px 10px; */
 	margin:0 auto;
-	width:894px;
-	padding:0 4px 50px 10px;
+	width:900px;
 }
 #niveau_accueil{
 	clear:both;
@@ -193,7 +193,7 @@ DD SMALL{
 	top:0px; */
 }
 .colonne1{
-	width:670px;
+	width:680px;
 	float:left;
 	position:relative;
 	left:0px;
@@ -201,11 +201,11 @@ DD SMALL{
 }
 .colonne2{
 	float:right;
-	margin:34px 0 0 0;
-	background:#EFEFEF url('assets/bg_colonne2.jpg') repeat-x left top;
-	width:190px;
-	padding:0px 10px 0 10px;
+/*	background:#EFEFEF url('assets/bg_colonne2.jpg') repeat-x left top;
+	padding:0px 10px 0 10px; */
+	width:203px;
 	min-height:228px;
+	background:#cccccc;
 }
 .colonne2 H3{
 	margin-top:15px;
