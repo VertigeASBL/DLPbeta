@@ -280,7 +280,9 @@ function monraccourcirchaine($chn, $max) {
 */
 function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 	$req = 'SELECT A.id_article,A.titre,A.date,MAX(E.id_event) AS id_event,E.nom_event,E.pic_event_1,L.id_lieu,L.nom_lieu';
-	if ($id_rubrique != 155)
+	if ($id_rubrique == 155)
+		$req .= ',A.texte';
+	else
 		$req .= ',MAX(R.id_auteur),P.nom,A.chapo';
 	$req .= ' FROM ag_event AS E,ag_lieux AS L,spip_articles AS A';
 	if ($id_rubrique != 155)
@@ -355,5 +357,18 @@ function obtenirjaivulies($max = 5) {
 	for ($req = 0; $req < $max && list($k) = each($t_ev); $req++)
 		$tab[] = array('id_event'=>$t_ev[$k], 'nom_event'=>$t_nom[$k], 'pic_event_1'=>$t_pic[$k], 'date_event_debut'=>$t_dbu[$k], 'date_event_fin'=>$t_fin[$k], 'resume_event'=>$t_txt[$k], 'nom_lieu'=>$t_lieu[$k], 'jai_vu'=>$t_nbr[$k]);
 	return $tab;
+}
+/* repris de comedien.be --- $vx/$vy == 16/9 */
+function replace_lien_video($codevideo, $vx, $vy) {
+	include_spip('inc_tur/video_embed');
+
+	$r = url_to_video_id($codevideo);
+	if ($r !== NULL)
+		return video_embed($r['which'], $r['video_id'], $vx, $vy);
+	else
+		if (strpos($codevideo, '<')===false && stripos($codevideo, 'http://')!==false)
+			return  '<a href="'.htmlspecialchars($codevideo).'" target="_blank">Voir la vidéo</a>';
+		else
+			return preg_replace(',\swidth(:|=)(\'|")?(\d+)(\D),Ui', ' width${1}${2}'.$vx.'${4}', preg_replace(',\sheight(:|=)(\'|")?(\d+)(\D),Ui', ' height${1}${2}'.$vy.'${4}', $codevideo));
 }
 ?>

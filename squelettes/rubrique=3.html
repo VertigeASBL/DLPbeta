@@ -669,6 +669,36 @@ require 'agenda/inc_var.php';
 	</BOUCLE_art_chronique>
 <!-- ++++++++++++++++++++++ Chronique fin ++++++++++++++++++++++ -->
 
+<!-- ++++++++++++++++++++++ Video debut ++++++++++++++++++++++ -->
+	#SET{tablo,#VAL{155}|obtenirarticleslies{video_spip_event,1,1}}
+	#SET{urldetail,#URL_RUBRIQUE{92}}
+
+	<BOUCLE_art_video(POUR){tableau #GET{tablo}}>
+		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
+		<div class="cadre_actu">
+			<h2 class="titre_cadre">Vidéo</h2>
+			[(#VALEUR|table_valeur{texte}|replace_lien_video{330,186})]
+			<h3 class="titre_actu">
+				<a href="#GET{varurl}">
+					[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
+				</a>
+			</h3>
+			[<div class="actu_lieu">
+				<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
+					[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
+				</a>
+			</div>]
+			<h4>
+				[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
+			</h4>
+			<p><a href="#GET{varurl}" title="Voir en détail">
+				Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
+			</a></p>
+		</div>
+
+	</BOUCLE_art_video>
+<!-- ++++++++++++++++++++++ Video fin ++++++++++++++++++++++ -->
+
 		<div class="clear"></div>
 	</div><!-- fin colonne3 -->
 
@@ -736,46 +766,6 @@ require 'agenda/inc_var.php';
 	unset($fp, $chn, $k);
 	/* ++++++++++++++++++++++ Dernière Interview fin ++++++++++++++++++++++ */
 ?>
-
-<!-- ++++++++++++++++++++++ Video debut ++++++++++++++++++++++ -->
-	#SET{tablo,#VAL{155}|obtenirarticleslies{video_spip_event,1,1}}
-	#SET{urldetail,#URL_RUBRIQUE{92}}
-
-	<BOUCLE_art_video(POUR){tableau #GET{tablo}}>
-		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
-		<div class="cadre_actu">
-			<h2 class="titre_cadre">Vidéo</h2>
-			#SET{vimage,''}
-			[(#VALEUR|table_valeur{pic_event_1}|oui)
-				#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{150,0}}
-			<span class="actu_photo">
-				<a href="#GET{varurl}">
-					[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#VALEUR|table_valeur{nom_event}})]
-				</a>
-			</span>]
-			<div class="texte_actu">
-				<h3 class="titre_actu">
-					<a href="#GET{varurl}">
-						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]
-					</a>
-				</h3>
-				[<div class="actu_lieu">
-					<a href="id_lieu=(#VALEUR|table_valeur{id_lieu})" title="Producteur du spectacle">
-						[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]
-					</a>
-				</div>]
-				<h4>
-					[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
-				</h4>
-				<p><a href="#GET{varurl}" title="Voir en détail">
-					Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;
-				</a></p>
-			</div>
-			<div class="float_stop"></div>
-		</div>
-
-	</BOUCLE_art_video>
-<!-- ++++++++++++++++++++++ Video fin ++++++++++++++++++++++ -->
 		<div class="clear"></div>
 	</div><!-- fin colonne4 -->
 
