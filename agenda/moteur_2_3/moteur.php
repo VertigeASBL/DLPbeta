@@ -335,11 +335,11 @@ else {
 		$date_debut = date ('d-m-Y'); //, $date_debut = mktime(0, 0, 0, date("m"), date("d"), date("Y"))
 		$date_debut_to_requete = date ('Y-m-d'); //, $date_debut_to_requete = mktime(0, 0, 0, date("m"), date("d"), date("Y"))
 		
-		// Pour mini calendrier
+		/* Pour mini calendrier
 		$date_mini_calendrier = date('d-m-Y');
 		$date_mini_calendrier_annee = substr($date_mini_calendrier, 6, 4); 
 		$date_mini_calendrier_mois = substr($date_mini_calendrier, 3, 2); 
-		$date_mini_calendrier_jour = substr($date_mini_calendrier, 0, 2); 
+		$date_mini_calendrier_jour = substr($date_mini_calendrier, 0, 2); */
 	}
 	else
 	{
@@ -349,9 +349,9 @@ else {
 		$date_debut_jour = substr($date_debut, 0, 2);
 		$date_debut_to_requete = $date_debut_annee.'-'.$date_debut_mois.'-'.$date_debut_jour ;
 
-		// Pour mini calendrier
+		/* Pour mini calendrier
 		$date_mini_calendrier_annee = substr($date_debut, 6, 4);
-		$date_mini_calendrier_mois = substr($date_debut, 3, 2);	
+		$date_mini_calendrier_mois = substr($date_debut, 3, 2);	*/
 	}
 	/*
 		Date de fin : si rien n'et précisé, date fin = aujourd'hui + 3 mois
@@ -557,11 +557,11 @@ echo '</table>',"\n";
 
 /* RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
    RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-*/
 	require_once 'agenda/calendrier/inc_calendrier.php';
 	echo '<div class="recherche_et_calendrier" style="float:right;">',"\n";
 	include('agenda/moteur_2_3/inc_mini_calendrier.php'); 
 	echo '</div>',"\n";
+*/
 
  
 /*   #######################################################################################################

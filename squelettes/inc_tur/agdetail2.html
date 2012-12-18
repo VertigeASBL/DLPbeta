@@ -128,8 +128,12 @@ function affich_jours_actifs($jours_actifs, $MM_traite, $AAAA_traite, $datev_deb
 	$j = $AAAA_traite.(int) $MM_traite;
 	echo '<div id="mois'.$j.'" style="display:'.($affich ? 'block' : 'none').';">';
 	$j = $AAAA_traite.','.(int) $MM_traite;
+/*
 	$pn = array('&lt;&lt;' => $pn & 1 ? 'return naviguermois(true,'.$j.');' : '',
 				'&gt;&gt;' => $pn & 2 ? 'return naviguermois(false,'.$j.');' : '');
+*/
+	$pn = array('&lt;&lt;' => $pn & 1 ? 'href="#precedent" onclick="return naviguermois(true,'.$j.');"' : '',
+				'&gt;&gt;' => $pn & 2 ? 'href="#precedent" onclick="return naviguermois(false,'.$j.');"' : '');
 	echo generate_calendar($AAAA_traite, $MM_traite, $tableau_jours, 2, NULL, 1, $pn);
 	echo '</div>'."\n";
 }

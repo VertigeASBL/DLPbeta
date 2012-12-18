@@ -34,7 +34,8 @@ function affich_jours_spectacles ($MM_traite, $AAAA_traite)
 
 	// Recherche de la valeur du dernier jour du mois afin de préremplir la date de fin de recherche
 	$valeur_dernier_jour_mois = date("t",mktime(0,0,0,$mois_next + 1,0,$annee_next));
-	$next = '?req=mini_calendr&date_debut=01-' . $mois_next . '-' . $annee_next . '&date_fin=' . $valeur_dernier_jour_mois . '-' . $mois_next . '-' . $annee_next ;
+//	$next = '?req=mini_calendr&date_debut=01-' . $mois_next . '-' . $annee_next . '&date_fin=' . $valeur_dernier_jour_mois . '-' . $mois_next . '-' . $annee_next ;
+	$next = 'href="?req=mini_calendr&date_debut=01-'.$mois_next.'-'.$annee_next.'&date_fin='.$valeur_dernier_jour_mois.'-'.$mois_next.'-'.$annee_next.'" class="ajax"';
 	
 	// 1) mois précédant :
 	if ($MM_traite == 1 )
@@ -53,8 +54,8 @@ function affich_jours_spectacles ($MM_traite, $AAAA_traite)
 
 	// Recherche de la valeur du dernier jour du mois afin de préremplir la date de fin de recherche
 	$valeur_dernier_jour_mois = date("t",mktime(0,0,0,$mois_prev + 1,0,$annee_prev));
-	$prev = '?req=mini_calendr&date_debut=01-' . $mois_prev . '-' . $annee_prev . '&date_fin=' . $valeur_dernier_jour_mois . '-' . $mois_prev . '-' . $annee_prev ;
-
+//	$prev = '?req=mini_calendr&date_debut=01-' . $mois_prev . '-' . $annee_prev . '&date_fin=' . $valeur_dernier_jour_mois . '-' . $mois_prev . '-' . $annee_prev ;
+	$prev = 'href="?req=mini_calendr&date_debut=01-'.$mois_prev.'-'.$annee_prev.'&date_fin='.$valeur_dernier_jour_mois.'-'.$mois_prev.'-'.$annee_prev.'" class="ajax"';
 	
 	// echo '<p>'.$prev . ' <<==>> ' . $next . '</p>';
 	$pn = array('&lt;&lt;'=> $prev, '&gt;&gt;'=> $next);
