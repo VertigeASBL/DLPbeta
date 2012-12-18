@@ -68,7 +68,6 @@ SPAN.details{
 
 <div id="header">
 	<INCLURE{fond=inc_tur/banner_haut}>
-	<INCLURE{fond=inc_tur/agoutils}>
 </div>
 <INCLURE{fond=inc_tur/agmenu}{id_rubrique=66}>
 <div id="principal">
@@ -103,10 +102,11 @@ SPAN.details{
 		[(#ENV{rtr}|?{'<div class="more"><a href="#retour" onclick="window.history.go(-1); return false;"><img src="pimg/icon_back.gif" alt="retour" title="retour" />Retour</a></div>',''})]
 	</div><!-- fin colonne1 -->
 	<div class="colonne2">
+		<INCLURE{fond=inc_tur/recherche_rapide}>
 		<INCLURE{fond=inc_tur/outils_spectateurs}>
 		
 		<INCLURE{fond=inc_tur/formagnewsletter}>
-		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+
 		<INCLURE{fond=inc/decouvrir_pgm}>
 		<INCLURE{fond=inc_tur/services}>
 	</div>

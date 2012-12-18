@@ -8,26 +8,21 @@ $(document).ready(function (){
 	});
 });
 </script>
-
 <br />
 <form id="form_recherche" name="form_recherche" method="post" action="-Agenda-">
-
 <div align="center">
 <table width="90%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>
 		<input name="chp_txt_libre" id="chp_txt_libre" type="text" size="20" maxlength="30" value="Rechercher" onfocus="if (this.value == 'Rechercher') this.value = '';" onblur="if (this.value == '') this.value = 'Rechercher';" />
-		
 		<!-- <input type="hidden" name="genre_event" value="non_selct" />
 		<input type="hidden" name="lieu_event" value="non_selct" />
 		<input type="hidden" name="ville_event" value="non_selct" />
 		<input type="hidden" name="date_debut" value="01-01-2007" />
 		<input type="hidden" name="date_fin" value="01-01-2012" /> -->
-
 		<input type="hidden" name="genre_event" value="non_selct" />
 		<input type="hidden" name="lieu_event" value="non_selct" />
 		<input type="hidden" name="ville_event" value="non_selct" />
-
 <?php
 		// Date de début et fin de la période de recherche
 		$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));
@@ -42,9 +37,6 @@ $(document).ready(function (){
 	</td>
   </tr>
 </table>
-
-
-
 <?php
 // Période de recherche
 $MM_form_rapide = date('m');
@@ -56,17 +48,13 @@ $date_fin_form_rapide = '01-' . $MM_form_rapide . '-' . $AAAA_form_rapide_fin ;
 ?>
 <input name="saisie_date_1" id="saisie_date_1" type="hidden" size="12" value="<?php echo $date_debut_form_rapide_fin ; ?>" />
 <input name="saisie_date_2" id="saisie_date_2" type="hidden" size="12" value="<?php echo $date_fin_form_rapide ; ?>" />
-
-
 <br />
-
 </div>
-
 </form>
-
 <?php
-		include('squelettes/inc_tur/inc_mini_calendrier_home.php'); 
+	$idrub = isset($GLOBALS['contexte']['id_rubrique']) ? (int) $GLOBALS['contexte']['id_rubrique'] : 0;
+	if ($idrub && $idrub != 92 && $idrub != 65)
+		require_once('squelettes/inc_tur/inc_mini_calendrier_home.php');
 ?>
-
 <!-- Tracer un ligne blanche -->
 <div class="ligne_bas_col_2">&nbsp;</div>

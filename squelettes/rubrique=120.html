@@ -32,7 +32,6 @@ function toggle_zone(Zone_id,txtReplier,txtDeplier) {
 <div id="header">
 	<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> -->
 	<INCLURE{fond=inc_tur/banner_haut}>
-	<INCLURE{fond=inc_tur/agoutils}>
 </div>
 <INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
 <div id="principal">
@@ -54,9 +53,9 @@ function toggle_zone(Zone_id,txtReplier,txtDeplier) {
 
 	</div>
 	<div class="colonne2">
+		<INCLURE{fond=inc_tur/recherche_rapide}>
 		<INCLURE{fond=inc_tur/outils_spectateurs}>
 		<INCLURE{fond=inc_tur/formagnewsletter}>
-		<INCLURE{fond=inc_tur/recherche_rapide}>
 		<INCLURE{fond=inc/decouvrir_pgm}>
 		<INCLURE{fond=inc_tur/services}>
 	</div>

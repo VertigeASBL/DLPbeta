@@ -1,5 +1,5 @@
 <?php
-require 'agenda/calendrier/inc_calendrier.php';
+require_once('agenda/calendrier/inc_calendrier.php');
 
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 // Fonction d'affichage du calendrier avec cases colorées en fonction des jours actifs

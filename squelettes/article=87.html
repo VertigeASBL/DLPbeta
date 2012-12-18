@@ -10,7 +10,6 @@
 <div id="header">
 	<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> (enlevé par Renaud) -->
 	<INCLURE{fond=inc_tur/banner_haut}>
-	<INCLURE{fond=inc_tur/agoutils}>
 </div>
 <INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
 <div id="principal">
@@ -46,9 +45,10 @@ if (isset($id_article) && $id_article == 161) {
 ?>
 	</div>
 	<div class="colonne2">
+		<INCLURE{fond=inc_tur/recherche_rapide}>
 		<INCLURE{fond=inc_tur/outils_spectateurs}>
 		<INCLURE{fond=inc_tur/formagnewsletter}>
-		<INCLURE{fond=inc_tur/bouton_cherch_evt}>
+
 		<INCLURE{fond=inc/decouvrir_pgm}>
 		<INCLURE{fond=inc_tur/services}>
 	</div>

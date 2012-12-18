@@ -70,7 +70,10 @@ require 'agenda/inc_var.php';
 	<div class="colonne1">
 		<h2 style="margin-left:0px; color:#009ABB;">[(#TITRE|supprimer_numero)]</h2>
 
-<!-- ++++++++++++++++++++++ carousel debut # SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'} ++++++++++++++++++++++ -->
+<!-- ++++++++++++++++++++++ carousel debut ++++++++++++++++++++++
+# SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'} 
+(ag_event ag_lieux){ag_lieux.id_lieu=ag_event.lieu_event} ,' / ',# NOM_LIEU
+-->
 		#SET{urldetail,#URL_RUBRIQUE{92}}
 		#SET{aujourdhui,#VAL{'Y-m-d'}|date}
 		#SET{unesemaine,#VAL{'Y-m-d'}|date{#VAL{}|time|plus{604800}}} [(#REM)--- dans 1 semaine ---]
@@ -79,11 +82,11 @@ require 'agenda/inc_var.php';
 			<a id="carouprev" href="#precedent">&nbsp;</a>
 			<div class="list_carousel">
 				<ul id="carouselhome">
-		<BOUCLE_carousel(ag_event){pic_event_1=set}{date_event_debut<=#GET{unesemaine}}{date_event_fin>=#GET{aujourdhui}}{!par id_event}>
+		<BOUCLE_carousel(ag_event){pic_event_1=set}{date_event_fin>=#GET{aujourdhui}}{date_event_debut<=#GET{unesemaine}}{!par id_event}>
 					<li>
 						<a href="[(#GET{urldetail}|parametre_url{id_event,#ID_EVENT})]">
 			#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#ID_EVENT,_1.jpg}|image_reduire{161,230}}
-			[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#NOM_EVENT})]
+			[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#NOM_EVENT|concat{' / ',#DATE_EVENT_DEBUT}})]
 						</a>
 					</li>
 		</BOUCLE_carousel>
