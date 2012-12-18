@@ -1,4 +1,4 @@
-/* CSS Document */
+/* CSS Document - background:#ddddaa; */
 .colonne3{
 	width:284px;
 	float:left;
@@ -186,4 +186,49 @@ h3.titre_actu a:hover{
 	font-size: 12px;
 	color: #000000;
 	margin-top:5px;
+}
+/*--- galerie carousel - caroufredsel - voir background images ---*/
+.carouselwrapper {
+	position:relative;
+	width:680px; height:230px;
+	margin:0 0 15px 0; padding:0;
+	border:none;
+	z-index:5;
+}
+.list_carousel {
+	margin:0;
+	width:680px; height:230px;
+	z-index:6;
+	overflow:hidden;
+}
+.list_carousel ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+	display:block;
+	z-index:7;
+}
+.list_carousel li {
+	text-align:center;
+	background:#ffffff;
+	border:none;
+	width:161px; height:230px;
+	padding:0; margin:0 9px 0 0;
+	display:block;
+	float:left;
+	z-index:8;
+}
+#carouprev {
+	position:absolute; top:90px; left:-10px;
+	display:block; width:42px; height:43px; margin:0; padding:0;
+	cursor:pointer; text-decoration:none;
+	background:url(../squelettes/js/caroufredsel/prev-horizontal.gif) no-repeat;
+	z-index:9;
+}
+#carounext {
+	position:absolute; top:90px; right:-1px;
+	display:block; width:42px; height:43px; margin:0; padding:0;
+	cursor:pointer; text-decoration:none;
+	background:url(../squelettes/js/caroufredsel/next-horizontal.gif) no-repeat;
+	z-index:9;
 }

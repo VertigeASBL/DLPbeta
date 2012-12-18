@@ -1,7 +1,7 @@
 <?php 
 require 'agenda/inc_var.php';
 require 'agenda/inc_db_connect.php';
-
+include_spip('inc/utils');
 
 	//---------------------------------------------------------------------------
 	// Listing des concours (n'est pas affiché quand le visiteur joue pour un élément sélectionné
@@ -104,7 +104,7 @@ require 'agenda/inc_db_connect.php';
 			$short_descr = couper_txt($descr,$nb_car);
 			$tab.= '<div class="descriptif_actu">' . $short_descr . '</div>' ;
 		}
-		$tab.='<p><a href="-Concours,95-">Afficher la suite &gt;&gt;</a></p>';
+		$tab.='<br />'.affdate($date_cloture_annee.'-'.$date_cloture_mois.'-'.$date_cloture_jour).' | <a href="'.generer_url_entite(95,'rubrique').'" title="Voir en détail">suite&nbsp;&gt;&gt;</a>';
 		$tab.='</div><div class="float_stop"></div> </div>';
 		
 		echo $tab . '</div>' ;
@@ -113,4 +113,3 @@ require 'agenda/inc_db_connect.php';
 
 
 ?>
-

@@ -22,7 +22,7 @@ require '../inc_var.php';
 require '../inc_var_dist_local.php';
 require '../inc_db_connect.php';
 require '../user_admin/ins/inc_var_inscription.php';
-
+require '../inc_fct_base.php';
 require '../../comgestion/approComCie.php'; // Système "gestion des abonnements" de Philippe
 
 $group_admin_spec = '3' ;// Goupe auquel appartiendra le USER inscrit

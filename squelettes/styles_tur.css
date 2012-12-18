@@ -201,8 +201,6 @@ DD SMALL{
 }
 .colonne2{
 	float:right;
-/*	background:#EFEFEF url('assets/bg_colonne2.jpg') repeat-x left top;
-	padding:0px 10px 0 10px; */
 	width:203px;
 	min-height:228px;
 	background:#cccccc;

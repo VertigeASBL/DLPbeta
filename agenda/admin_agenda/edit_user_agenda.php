@@ -22,7 +22,6 @@
 <?php 
 require '../inc_var.php';
 require '../inc_db_connect.php';
-require '../inc_db_connect.php';
 require '../user_admin/ins/inc_var_inscription.php';
 require '../inc_fct_base.php';
 

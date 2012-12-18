@@ -16,145 +16,26 @@
 
 <script type="text/javascript">
 
-//window.loadFirebugConsole();
 $(document).ready(function (){
 	//******************* galerie carousel - http://caroufredsel.dev7studios.com/index.php *******************
 	$("#carouselhome").carouFredSel({
-		width:"variable",
-		height:158,
+		width:680, height:230,
 		circular:true, infinite:true,
 		auto:4000, //--- pauses
 		prev:"#carouprev", next:"#carounext",
 		items:{
 			width:"variable",
-			visible:6 //--- sinon des images sont sautées
+			visible:4
 		},
 		scroll:{
-			items:3,
+			items:4,
 			fx:"scroll",
 			duration:"auto",
 			pauseOnHover:true
 		}
 	});
 });
-</script>
 
-<style type="text/css">
-<!--
-/*
-.spip_documents_left, .spip_documents_right { 
-	border:none;
-}
-
-.case_hors_periode_titre, .case_periode_actuelle_titre {
-	font-size: 17px;
-	font-weight: bold;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	text-indent: 20px;
-}
-.case_hors_periode_titre{
-	color: #BBB;
-	background-color: #CCC;
-}
-.case_periode_actuelle_titre {
-	color: #009A99;
-	background-color: #FFF;
-}
-
-.case_hors_periode ul {
-	color: #CCC;
-}
-.case_periode_actuelle ul {
-	color: #333333;
-}
-
-.recherche_et_calendrier {
-	float:right; width:180px;
-}
-.recherche_et_calendrier_bulle_cal {
-	text-align:center;
-	padding-bottom:8px;
-	background-color: #E9E9E9;
-}
-
-.un_event_preview {
-	font-size: 11px;
-	clear: both;
-}
-
-.image_flottante_preview img {
-	float:left;
-	margin-top: 2px;
-	margin-right: 5px;
-	margin-bottom: 2px;
-	margin-left: 5px;
-	width:30px;
-	height:30px;
-	padding:1px;
-	border:1px solid #000000;
-	background-color:#FFFFFF;
-}
-.image_flottante_preview a:hover img {
-	width:auto;
-	height:auto;
-	position:absolute;
-	left:-30px;
-	padding:1px;
-	border:1px solid #000000;
-	background-color:#FFFFFF;
-	z-index:999;
-}
-.nombre_de_jai_vu {
-	min-height:200px;
-	color: #900033;
-	padding-left: 3px;
-	padding-right: 3px;
-}
-*/
-/*--- galerie carousel - caroufredsel - voir background images : image_recadre : #333333 ---*/
-.carouselwrapper {
-	float:left; width:435px; height:158px;
-	margin:0; padding:0;
-	background:#E9E9E8;
-	border-width:0 4px 0 0; border-style:solid; border-color:#E9E9E8;
-	overflow:hidden;
-}
-.list_carousel {
-	background-color:#E9E9E8;
-	margin:0;
-	width:600px;
-}
-.list_carousel ul {
-	margin:0;
-	padding:0;
-	list-style:none;
-	display:block;
-}
-.list_carousel li {
-	text-align:center;
-	background:#E9E9E8;
-	border:none;
-	width:auto; height:150px;
-	padding:0; margin:4px;
-	display:block;
-	float:left;
-}
-#carouprev {
-	display:block; float:left; width:18px; height:158px; margin:0; padding:0;
-	cursor:pointer; text-decoration:none;
-	background:#E9E9E8 url(squelettes/js/caroufredsel/prev-horizontal.gif) no-repeat 0 45%;
-}
-#carounext {
-	display:block; float:left; width:18px; height:158px; margin:0; padding:0;
-	cursor:pointer; text-decoration:none;
-	background:#E9E9E8 url(squelettes/js/caroufredsel/next-horizontal.gif) no-repeat 0 45%;
-}
--->
-</style>
-
-<script type="text/javascript">
-<!--
 /* Pour popup de "J'ai vu et aimé" */
 var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 	ma_fenetre = window.open(Adresse_de_la_page,Nom_de_la_fenetre,'height=500,width=500,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=yes,top=100px,left=250px');
@@ -168,19 +49,14 @@ var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 function relance_la_page() {
 	location.reload();
 }
-
--->
 </script>
-
-
-<script type="text/javascript" src="squelettes/insererhom.js"></script>
+<!--script type="text/javascript" src="squelettes/insererhom.js"></script-->
 
 <script type="text/javascript" src="squelettes/js/caroufredsel/jquery.carouFredSel-6.1.0-packed.js"></script>
 </head>
 
 <body>
 <?php
-
 require 'agenda/inc_fct_base.php';
 require 'agenda/inc_var.php';
 ?>
@@ -192,30 +68,29 @@ require 'agenda/inc_var.php';
 
 <div id="principal">
 	<div class="colonne1">
-		<h2 style="width:400px; margin-left:0px; color:#009ABB;">Votre agenda culturel et interactif</h2>
+		<h2 style="margin-left:0px; color:#009ABB;">[(#TITRE|supprimer_numero)]</h2>
 
 <!-- ++++++++++++++++++++++ carousel debut # SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'} ++++++++++++++++++++++ -->
 		#SET{urldetail,#URL_RUBRIQUE{92}}
 		#SET{aujourdhui,#VAL{'Y-m-d'}|date}
 		#SET{unesemaine,#VAL{'Y-m-d'}|date{#VAL{}|time|plus{604800}}} [(#REM)--- dans 1 semaine ---]
 		<B_carousel>
-		<a id="carouprev" href="#precedent">&nbsp;</a>
 		<div class="carouselwrapper">
+			<a id="carouprev" href="#precedent">&nbsp;</a>
 			<div class="list_carousel">
 				<ul id="carouselhome">
 		<BOUCLE_carousel(ag_event){pic_event_1=set}{date_event_debut<=#GET{unesemaine}}{date_event_fin>=#GET{aujourdhui}}{!par id_event}>
 					<li>
 						<a href="[(#GET{urldetail}|parametre_url{id_event,#ID_EVENT})]">
-			#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#ID_EVENT,_1.jpg}|image_passe_partout{20,150}}
-			#SET{vimage,#GET{vimage}|image_recadre{0,150,'center center','#333333'}}
+			#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#ID_EVENT,_1.jpg}|image_reduire{161,230}}
 			[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#NOM_EVENT})]
 						</a>
 					</li>
 		</BOUCLE_carousel>
 				</ul>
 			</div>
+			<a id="carounext" href="#suivant">&nbsp;</a>
 		</div>
-		<a id="carounext" href="#suivant">&nbsp;</a>
 		</B_carousel>
 <!-- ++++++++++++++++++++++ carousel fin ++++++++++++++++++++++ -->
 
@@ -246,7 +121,6 @@ require 'agenda/inc_var.php';
 <!-- ++++++++++++++++++++++ Focus fin ++++++++++++++++++++++ -->
 
 <?php
-
 	if (! isset($GLOBALS['spip_connect_version'])) {
 		include_once('ecrire/base/connect_sql.php');
 		require('config/connect.php');
