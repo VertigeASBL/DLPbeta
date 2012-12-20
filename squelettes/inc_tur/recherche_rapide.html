@@ -1,7 +1,7 @@
 <script type="text/javascript">
 $(document).ready(function (){
-	$("#form_recherche").submit(function() {
-		var txtlibre = $("#chp_txt_libre").val();
+	$("#form2_recherche").submit(function() {
+		var txtlibre = $("#chp2_txt_libre").val();
 		if (txtlibre == "Rechercher")
 			txtlibre = "";
 		var chn = $(this).attr("action");
@@ -12,8 +12,8 @@ $(document).ready(function (){
 });
 </script>
 <br />
-<form id="form_recherche" name="form_recherche" method="post" action="#URL_RUBRIQUE{65}">
-	<input name="chp_txt_libre" id="chp_txt_libre" type="text" size="20" maxlength="30" value="Rechercher" onfocus="if (this.value == 'Rechercher') this.value = '';" onblur="if (this.value == '') this.value = 'Rechercher';" />
+<form id="form2_recherche" name="form_recherche" method="post" action="#URL_RUBRIQUE{65}">
+	<input name="chp_txt_libre" id="chp2_txt_libre" type="text" maxlength="30" value="Rechercher" onfocus="if (this.value == 'Rechercher') this.value = '';" onblur="if (this.value == '') this.value = 'Rechercher';" />
 	<!-- <input type="hidden" name="genre_event" value="non_selct" />
 	<input type="hidden" name="lieu_event" value="non_selct" />
 	<input type="hidden" name="ville_event" value="non_selct" />
@@ -30,7 +30,7 @@ $(document).ready(function (){
 	echo '<input type="hidden" name="date_debut" value="' . $date_debut_pour_moteur . '" />
 	<input type="hidden" name="date_fin" value="' . $date_fin_pour_moteur . '" />' ;
 ?>		
-	<input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" type="submit" alt="Cliquez pour lancer la recherche">
+	<input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" type="submit" alt="Cliquez pour lancer la recherche" />
 <?php
 // Période de recherche
 $MM_form_rapide = date('m');

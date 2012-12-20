@@ -907,13 +907,17 @@ INPUT.recherche{
 }
 
 .bouton_recherche_mini_moteur{
+	float:right;
 	background: #EEEEEE url('assets/bouton_recherche_mini_mot.gif') no-repeat left top;
 	/*font-size:1%;*/
 	width:46px;
 	height:23px;
 	border:none;
-	padding:0;
-	cursor:hand;
+	margin:0; padding:0;
+	cursor:pointer;
+}
+#chp2_txt_libre {
+	width:144px; height:19px; margin:1px 0 0 0; padding:0 0 0 5px; border:1px solid #BF0043;
 }
 
 .comedien_dans_description a {
