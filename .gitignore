@@ -189,3 +189,5 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+agenda/vertiny/jscripts/tiny_mce/plugins/ajaxfilemanager/langs/zh_cn.php
