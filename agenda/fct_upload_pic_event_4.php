@@ -218,5 +218,10 @@ function uploader_4 ($id_update,$num_pic)
 	
 	$debug_concat.=  '</div> <br />';
 	//echo $debug_concat ;
+
+	/*
+		Didier: on renvoie le chemein de l'image de base pour la recadrer plus tard.
+	*/
+	return $destination;
 }
 ?>

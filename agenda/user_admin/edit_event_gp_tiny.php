@@ -30,10 +30,6 @@ if (isset($_GET['id_pres'])) {
 }
 
 session_start();
-
-echo '<pre>';
-var_dump($_SESSION);
-echo '</pre>';
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -157,6 +153,14 @@ $(function() {
 		
 		return false;
 	}
+
+	jQuery(document).ready(function($) {
+		$(".jCropme").on("click", function () {
+			window.open(this.href, "jCrop", "menubar=0,resizable=0,width=350,height=250");
+			return false;
+		});
+	});
+	
 </script>
 <!-- /tinyMCE -->
 
@@ -643,6 +647,12 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	// -----------------------------------------
 	// TEST IMAGES et VIGNETTE
 	$id_update = $_GET['id'] ;
+
+	/*
+		Didier => On créer un tableau qui contiendra la liste des images à recadrer.
+	*/
+	$list_image_jCrop = array();
+
 	// Checker les 3 champs d'upload
 	for ($uii = 1; $uii <= 10; $uii++)
 	{
@@ -650,7 +660,11 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		if(!empty($_FILES[$source_im]['tmp_name']) AND is_uploaded_file($_FILES[$source_im]['tmp_name']))
 		{
 			$num_pic = $uii ; // correspond à l'extension du nom du futur fichier JPEG uploadé
-			uploader_4 ($id_update,$uii);	// Upload et construction vignette
+			
+			/*
+				On remplit le tableau avec l'image.
+			*/
+			$list_image_jCrop[] = uploader_4 ($id_update,$uii);	// Upload et construction vignette
 		}
 	}
 	
@@ -751,12 +765,23 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			
 			
 			echo '<div class="menu_back"><a href="listing_events_gp.php?lieu=',$donnees['lieu_event'],'" >Vos événements</a></div>',"\n";
-			echo '<br /><br /><div class="info">Les données sont mises à jour.<br />
+			echo '<br /><br /><div class="info">Les données sont mises à jour.<br />';
+
+			echo '
+			<div>
+				<h3>Recadrer</h3>
+			';
+			/* On ce place a la fin, quand les images sont sur le serveur, on les porpose au recadrage */
+				foreach ($list_image_jCrop as $key => $value) {
+					echo '<br /><a href="../jCrop/index.php?source='.urldecode($value).'" class="jCropme"><img src="'.$value.'" alt="recadrage" /></a>';
+				}
+			echo '</div>
+
 			Veuillez maintenant cocher les jours pendant lesquels l\'événement aura lieu.<br /><br />
 			<a href="edit_jours_gp.php?id=' . $id . '">Cliquez ici pour continuer</a></div>' ;
 			
 			//echo '<meta http-equiv="refresh" content="4; url=edit_jours_gp.php?id=' . $id . '">' ; 
-			
+
 			exit() ;
 		}
 		else 
