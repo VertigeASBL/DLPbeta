@@ -56,10 +56,9 @@ $date_fin_form_rapide = '01-' . $MM_form_rapide . '-' . $AAAA_form_rapide_fin ;
 	$idrub = isset($GLOBALS['contexte']['id_rubrique']) ? (int) $GLOBALS['contexte']['id_rubrique'] : 0;
 	if ($idrub != 92)
 		require_once('squelettes/inc_tur/inc_mini_calendrier_home.php');
-[(#ENV{id_rubrique}|!={92}|oui) oui]
-[(#ENV{id_rubrique}|!={92}|non) non]
 */
 ?>
-	<INCLURE{fond=inc_tur/inc_mini_calendrier_home}{ajax}>
+[(#ENV{id_rubrique}|!={92}|oui)
+	<INCLURE{fond=inc_tur/inc_mini_calendrier_home}{ajax}>]
 <!-- Tracer un ligne blanche -->
 <div class="ligne_bas_col_2">&nbsp;</div>
