@@ -1,42 +1,36 @@
 <script type="text/javascript">
 $(document).ready(function (){
 	$("#form_recherche").submit(function() {
+		var txtlibre = $("#chp_txt_libre").val();
+		if (txtlibre == "Rechercher")
+			txtlibre = "";
 		var chn = $(this).attr("action");
 		chn += chn.indexOf("?") == -1 ? "?" : "&";
-		chn += "recherche="+encodeURI($("#chp_txt_libre").val());
+		chn += "recherche="+encodeURI(txtlibre);
 		$(this).attr("action", chn);
 	});
 });
 </script>
 <br />
-<form id="form_recherche" name="form_recherche" method="post" action="-Agenda-">
-<div align="center">
-<table width="90%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td>
-		<input name="chp_txt_libre" id="chp_txt_libre" type="text" size="20" maxlength="30" value="Rechercher" onfocus="if (this.value == 'Rechercher') this.value = '';" onblur="if (this.value == '') this.value = 'Rechercher';" />
-		<!-- <input type="hidden" name="genre_event" value="non_selct" />
-		<input type="hidden" name="lieu_event" value="non_selct" />
-		<input type="hidden" name="ville_event" value="non_selct" />
-		<input type="hidden" name="date_debut" value="01-01-2007" />
-		<input type="hidden" name="date_fin" value="01-01-2012" /> -->
-		<input type="hidden" name="genre_event" value="non_selct" />
-		<input type="hidden" name="lieu_event" value="non_selct" />
-		<input type="hidden" name="ville_event" value="non_selct" />
+<form id="form_recherche" name="form_recherche" method="post" action="#URL_RUBRIQUE{65}">
+	<input name="chp_txt_libre" id="chp_txt_libre" type="text" size="20" maxlength="30" value="Rechercher" onfocus="if (this.value == 'Rechercher') this.value = '';" onblur="if (this.value == '') this.value = 'Rechercher';" />
+	<!-- <input type="hidden" name="genre_event" value="non_selct" />
+	<input type="hidden" name="lieu_event" value="non_selct" />
+	<input type="hidden" name="ville_event" value="non_selct" />
+	<input type="hidden" name="date_debut" value="01-01-2007" />
+	<input type="hidden" name="date_fin" value="01-01-2012" /> -->
+	<input type="hidden" name="genre_event" value="non_selct" />
+	<input type="hidden" name="lieu_event" value="non_selct" />
+	<input type="hidden" name="ville_event" value="non_selct" />
 <?php
-		// Date de début et fin de la période de recherche
-		$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));
-		$date_fin_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")+12, date("d"), date("Y")));
+	// Date de début et fin de la période de recherche
+	$date_debut_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")));
+	$date_fin_pour_moteur = date ('d-m-Y', $date_fin = mktime(0, 0, 0, date("m")+12, date("d"), date("Y")));
 
-		echo '<input type="hidden" name="date_debut" value="' . $date_debut_pour_moteur . '" />
-		<input type="hidden" name="date_fin" value="' . $date_fin_pour_moteur . '" />' ;
+	echo '<input type="hidden" name="date_debut" value="' . $date_debut_pour_moteur . '" />
+	<input type="hidden" name="date_fin" value="' . $date_fin_pour_moteur . '" />' ;
 ?>		
-	</td>
-    <td>
-		<input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" type="submit" alt="Cliquez pour lancer la recherche">
-	</td>
-  </tr>
-</table>
+	<input id="go" name="go" value=" " class="bouton_recherche_mini_moteur" type="submit" alt="Cliquez pour lancer la recherche">
 <?php
 // Période de recherche
 $MM_form_rapide = date('m');
@@ -46,19 +40,13 @@ $AAAA_form_rapide_fin = date('Y')+1;
 $date_debut_form_rapide_fin = '01-' . $MM_form_rapide . '-' . $AAAA_form_rapide_debut ; 
 $date_fin_form_rapide = '01-' . $MM_form_rapide . '-' . $AAAA_form_rapide_fin ; 
 ?>
-<input name="saisie_date_1" id="saisie_date_1" type="hidden" size="12" value="<?php echo $date_debut_form_rapide_fin ; ?>" />
-<input name="saisie_date_2" id="saisie_date_2" type="hidden" size="12" value="<?php echo $date_fin_form_rapide ; ?>" />
-<br />
-</div>
+	<input name="saisie_date_1" id="saisie_date_1" type="hidden" size="12" value="<?php echo $date_debut_form_rapide_fin ; ?>" />
+	<input name="saisie_date_2" id="saisie_date_2" type="hidden" size="12" value="<?php echo $date_fin_form_rapide ; ?>" />
 </form>
-<?php
-/*
-	$idrub = isset($GLOBALS['contexte']['id_rubrique']) ? (int) $GLOBALS['contexte']['id_rubrique'] : 0;
-	if ($idrub != 92)
-		require_once('squelettes/inc_tur/inc_mini_calendrier_home.php');
-*/
-?>
+	<br /><br />
+
 [(#ENV{id_rubrique}|!={92}|oui)
 	<INCLURE{fond=inc_tur/inc_mini_calendrier_home}{ajax}>]
+
 <!-- Tracer un ligne blanche -->
 <div class="ligne_bas_col_2">&nbsp;</div>

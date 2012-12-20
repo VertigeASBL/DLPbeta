@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 var pretjquery = false;
-var tabonglet = {descriptif:true, avis:true, critique:true, chronique:true, video:true, mapping:true};
+var tabonglet = {descriptif:true, avis:true, critique:true, chronique:true, interview:true, video:true, mapping:true};
 var nombreavis = 0, etoilecritique = "";
 
 $(document).ready(function() {
@@ -128,12 +128,11 @@ function affich_jours_actifs($jours_actifs, $MM_traite, $AAAA_traite, $datev_deb
 	$j = $AAAA_traite.(int) $MM_traite;
 	echo '<div id="mois'.$j.'" style="display:'.($affich ? 'block' : 'none').';">';
 	$j = $AAAA_traite.','.(int) $MM_traite;
-/*
-	$pn = array('&lt;&lt;' => $pn & 1 ? 'return naviguermois(true,'.$j.');' : '',
-				'&gt;&gt;' => $pn & 2 ? 'return naviguermois(false,'.$j.');' : '');
-*/
-	$pn = array('&lt;&lt;' => $pn & 1 ? 'href="#precedent" onclick="return naviguermois(true,'.$j.');"' : '',
-				'&gt;&gt;' => $pn & 2 ? 'href="#precedent" onclick="return naviguermois(false,'.$j.');"' : '');
+
+//--- $pn = array('&lt;&lt;' => $pn & 1 ? 'return naviguermois(true,'.$j.');' : '', '&gt;&gt;' => $pn & 2 ? 'return naviguermois(false,'.$j.');' : '');
+
+	$pn = array('&lt;' => $pn & 1 ? 'href="#precedent" onclick="return naviguermois(true,'.$j.');"' : '',
+				'&gt;' => $pn & 2 ? 'href="#precedent" onclick="return naviguermois(false,'.$j.');"' : '');
 	echo generate_calendar($AAAA_traite, $MM_traite, $tableau_jours, 2, NULL, 1, $pn);
 	echo '</div>'."\n";
 }
@@ -287,11 +286,13 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	.'<img src="agenda/design_pics/ico_jai_vu.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="voter" /></a>'
 	.'</div>'."\n";
 
+/*
 	// Icone Interview
 	if (! $interview_event)
 		$interview_event = saisonprecedente($id_event, 'interview');
 	if ($interview_event)
 		echo '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview" style="float:right;"><img src="agenda/design_pics/ico_interview.jpg" align="middle" alt="interview" />Voir l\'interview</a> &nbsp; '."\n";
+*/
 
 	// Icone concours
 	$reponse = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
@@ -460,7 +461,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	}
 	// -----------------------------
 	// Légende du calendrier 
-	echo '<br /><em><span class="checked">Jour de représentation</span><br /><span class="unchecked">Pas de représentation</span></em>';
+	echo '<br /><em><span style="background:#8F0033;color:#ffffff;">Jour de représentation</span><br /><span style="background:#ffffff;color:#000000;">Pas de représentation</span></em>';
 	echo '</div>',"\n"; //--- fin detail_corps_event
 	echo '</div>',"\n\n"; //--- fin agenda detail_event_bloc_2 CALENDRIERS
 	echo '<br style="clear:both;" />',"\n";
@@ -480,6 +481,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	echo '<div id="ongletavis" class="onglettitre">Avis</div>',"\n";
 	echo '<div id="ongletcritique" class="onglettitre">Critique</div>',"\n";
 	echo '<div id="ongletchronique" class="onglettitre">Chronique</div>',"\n";
+	echo '<div id="ongletinterview" class="onglettitre">Interview</div>',"\n";
 	echo '<div id="ongletvideo" class="onglettitre">Vidéo</div>',"\n";
 	echo '<div id="ongletmapping" class="onglettitre">Mapping</div>',"\n";
 
@@ -710,6 +712,58 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 
 /*	____________________________________________
+		ONGLET INTERVIEW
+	____________________________________________ */
+	echo '<div id="zongletinterview" class="ongletevent">',"\n";
+	$donnees_onglet = '';
+	if (! $donnees['interview_event'])
+		$donnees['interview_event'] = saisonprecedente($id_event, 'interview');
+	if ($donnees['interview_event']) {
+		echo '<div class="detail_event_bloc_2">
+				<div class="head_detail_event_bloc_2">
+					<div class="top_left_bloc_interview"></div>
+					<span class="titre_paragr_detail_event">Interview</span>
+				</div>';
+			echo '<div class="detail_corps_event">' ;
+				echo '<div>',"\n";
+
+				//--- Se connecter à comedien.be, voir rubrique=66.html
+				$k = 0; $chn = '';
+				$fp = fsockopen('www.comedien.be', 80, $k, $chn, 10);
+				if (! $fp)
+					echo '--- Connexion impossible : ',$k,' : ',$chn,' ---';
+				else {
+					//--- Envoyer la requête
+					$chn = 'spip.php?page=interview&id_article='.$donnees['interview_event'];
+					fputs($fp, 'GET /'.$chn.' HTTP/1.0'."\r\n");
+					fputs($fp, 'HOST: www.comedien.be'."\r\n");
+					fputs($fp, "Connection: close\r\n\r\n");
+
+					//--- Recevoir la réponse
+					$k = false;
+					while (! feof($fp)) {
+						$chn = fgets($fp, 4096);
+						if ($k)
+							echo $chn,"\n";
+						else if (strpos($chn, '**V_COM**') !== false)
+							$k = true;
+					}
+					fclose($fp);
+				}
+				unset($fp, $chn, $k);
+
+				echo '</div>',"\n";
+				echo '<a href="',generer_url_entite(66, 'rubrique'),'">Voir les autres interviews</a>';
+			echo '</div>
+			</div>',"\n\n"; //---- fin detail_event_bloc_2
+	}
+	else
+		$codejavascript .= 'tabonglet.interview = false; ';
+	echo '<br style="clear:both;" />
+	</div>',"\n"; //--- fin ongletevent interview
+
+
+/*	____________________________________________
 		ONGLET VIDEO
 	____________________________________________ */
 	echo '<div id="zongletvideo" class="ongletevent">',"\n";
@@ -729,9 +783,9 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 				</div>';
 			echo '<div class="detail_corps_event">' ;
 				echo '<div align="center">',$donnees_onglet,'</div>',"\n";
-				echo '<div align="center"><a href="',generer_url_entite(155, 'rubrique'),'">Voir les autres vidéos</a></div>' ;
+				echo '<a href="',generer_url_entite(155, 'rubrique'),'">Voir les autres vidéos</a>';
 			echo '</div>
-		</div>',"\n\n"; //---- fin detail_event_bloc_2
+			</div>',"\n\n"; //---- fin detail_event_bloc_2
 	}
 	else
 		$codejavascript .= 'tabonglet.video = false; ';

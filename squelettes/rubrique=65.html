@@ -410,7 +410,7 @@ $(document).ready(function (){
 			return;
 		chn = $(this).attr("action");
 		chn += chn.indexOf("?") == -1 ? "?" : "&";
-		chn += "recherche="+encodeURI($("#chp_txt_libre").val());
+		chn += "recherche="+encodeURI(txtlibre);
 		$(this).attr("action", chn);
 	});
 });

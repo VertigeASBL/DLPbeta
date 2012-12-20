@@ -56,9 +56,9 @@ h2.titre_cadre{
 	text-transform:uppercase;
 	letter-spacing:0.2em;
 	color:#9A0133;
-	margin-top:-22px;
-	margin-bottom:2px;
-	position:relative;
+	margin-bottom:5px;
+/*	margin-top:-22px;
+	position:relative;*/
 	z-index:9;
 }
 h3.titre_actu{

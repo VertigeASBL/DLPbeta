@@ -203,7 +203,7 @@ DD SMALL{
 	float:right;
 	width:203px;
 	min-height:228px;
-	background:#cccccc;
+/*	background:#cccccc; */
 }
 .colonne2 H3{
 	margin-top:15px;
@@ -909,8 +909,8 @@ INPUT.recherche{
 .bouton_recherche_mini_moteur{
 	background: #EEEEEE url('assets/bouton_recherche_mini_mot.gif') no-repeat left top;
 	/*font-size:1%;*/
-	width:29px;
-	height:22px;
+	width:46px;
+	height:23px;
 	border:none;
 	padding:0;
 	cursor:hand;

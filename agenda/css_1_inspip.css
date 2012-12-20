@@ -437,9 +437,9 @@ div.breve span.help_cursor {
 }
 
 .detail_event_bloc_2 {
-	/* float:left; */
+	/* float:left;
 	color: #333333;
-	background-color: #E9E9E9;
+	background-color: #E9E9E9; */
 }
 
 
@@ -538,7 +538,7 @@ div.breve span.help_cursor {
 	padding-left: 20px;
 	padding-right: 20px;
 	font-family: Arial, Helvetica, sans-serif;
-	background-color: #E9E9E9;
+/*	background-color: #E9E9E9; */
 }
 
 .detail_corps_event h3 {

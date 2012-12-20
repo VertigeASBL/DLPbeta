@@ -55,7 +55,7 @@ function affich_jours_spectacles ($MM_traite, $AAAA_traite)
 
 	
 	// echo '<p>'.$prev . ' <<==>> ' . $next . '</p>';
-	$pn = array('&lt;&lt;'=> $prev, '&gt;&gt;'=> $next);
+	$pn = array('&lt;'=> $prev, '&gt;'=> $next);
 // .......................................................................
 
 	// Initialiser le tableau. (Car un simple "else" n'aurait pas été)
