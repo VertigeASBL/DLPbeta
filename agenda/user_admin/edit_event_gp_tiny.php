@@ -30,6 +30,10 @@ if (isset($_GET['id_pres'])) {
 }
 
 session_start();
+
+echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>';
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -529,12 +533,6 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		$error_description_event = '<div class="error_form">Vous devez introduire un texte descriptif de l\'événement</div>';
 		$rec .= '- Vous devez introduire un texte descriptif de l\'événement<br>';
 	}
-	
-
-
-
-
-//var_dump ($_POST['resume_event_chp']) ;
 	
 	// -----------------------------------------
 	// TEST RESUME EVENEMENT
