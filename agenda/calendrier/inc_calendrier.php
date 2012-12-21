@@ -29,8 +29,8 @@ setlocale(LC_TIME, 'fr_BE.ISO-8859-1');
 	if ($p) $p = '<span class="calendar-prev">'.($pl ? '<a'.(strpos($pl,'naviguer')!==false ? ' href="#precedent" onclick="' : ' class="ajax" href="').htmlspecialchars($pl).'">'.$p.'</a>' : $p).'</span>&nbsp;';
 	if ($n) $n = '&nbsp;<span class="calendar-next">'.($nl ? '<a'.(strpos($nl,'naviguer')!==false ? ' href="#suivant" onclick="' : ' class="ajax" href="').htmlspecialchars($nl).'">'.$n.'</a>' : $n).'</span>';
 */
-	if ($p) $p = '<span class="calendar-prev">'.($pl ? '<a '.$pl.'>'.$p.'</a>' : $p).'</span>&nbsp;';
-	if ($n) $n = '&nbsp;<span class="calendar-next">'.($nl ? '<a '.$nl.'>'.$n.'</a>' : $n).'</span>';
+	if ($p) $p = '<span class="calendar-prev">'.($pl ? '<a '.$pl.'>'.$p.'&nbsp;</a>' : $p).'</span>';
+	if ($n) $n = '<span class="calendar-next">'.($nl ? '<a '.$nl.'>&nbsp;'.$n.'</a>' : $n).'</span>';
 	$calendar = '<table class="calendar">'."\n".
 		'<caption class="calendar-month">'.$p.($month_href ? '<a href="'.htmlspecialchars($month_href).'">'.$title.'</a>' : $title).$n."</caption>\n<tr>";
 

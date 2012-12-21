@@ -51,7 +51,7 @@ table.calendar tr {
 	text-decoration:none;
 }
 .calendar-month a:hover {
-	color: #333333;
+	color: #999999;
 	text-decoration:none;
 }
 
@@ -90,7 +90,7 @@ table.calendar tr {
 }
 
 td.event_cal a:hover {
-	color: #cccccc;
+	color: #999999;
 	text-decoration:none;
 /*	background-image: url(calendrier/bg_3.jpg);*/
 }
