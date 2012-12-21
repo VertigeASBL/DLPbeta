@@ -27,7 +27,7 @@ function getLog ($type) {
 /*
 	Cette fonction va créer un log.
 */
-function activite_log ($type, $id_event = null, $id_concours = null) {
+function activite_log ($type, $id_event = 'null', $id_concours = 'null') {
 	$champs = array(
 					'id_spectateur' => $_SESSION['id_spectateur'],
 					'id_event' => $id_event,
@@ -35,7 +35,7 @@ function activite_log ($type, $id_event = null, $id_concours = null) {
 					'type' => $type
 		);
 
-	sql_insertq('ag_activite', $champs);
+	mysql_query('INSERT INTO ag_activite VALUES(null, '.$_SESSION['id_spectateur'].', \''.$id_event.'\', \''.$id_concours.'\', \''.$type.'\', CURRENT_TIMESTAMP() )') or die(mysql_error());
 }
 
 
