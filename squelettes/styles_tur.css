@@ -172,6 +172,7 @@ DD SMALL{
 	padding:8px 4px 0 10px;
 }
 #footer{
+	clear:both;
 	background:#8F0033 url('assets/bg_footer.jpg') repeat-x left top;
 	margin:0 auto;
 	padding:10px 0 10px 0;
@@ -184,6 +185,12 @@ DD SMALL{
 }
 #footer A{
 	color:#00BFBF;
+}
+#footerin{
+	margin:0; padding:0;
+	color:#FFFFFF;
+	text-align:center;
+	font-size:1.2em;
 }
 .colonne_accueil{
 	float:left;
