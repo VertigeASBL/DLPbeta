@@ -674,11 +674,11 @@ echo '</table>',"\n";
 	 </div>
 	  
 
-	 <div class="bouton_en_file">
+	 <!-- div class="bouton_en_file">
 	  	<div id="nbre_resultats_fleche" style="display: none;">
 		  <div id="nbre_resultats_id"></div>
 		</div>
-	 </div>
+	 </div -->
 	 
 	 <div class="float_stop">&nbsp;</div>
 
