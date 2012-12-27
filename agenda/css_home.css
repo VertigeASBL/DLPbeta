@@ -53,14 +53,26 @@ h2.titre_cadre{
 	font-family:Georgia, Arial, Times, serif;
 	font-size:1.8em;
 	font-weight:bold;
+	height:24px;
 	text-transform:uppercase;
 	letter-spacing:0.2em;
 	color:#9A0133;
 	margin-bottom:5px;
 /*	margin-top:-22px;
 	position:relative;*/
+	padding:3px 0 0 32px;
 	z-index:9;
 }
+#titre_focus { background:url(../squelettes/assets/icone_focus.gif) no-repeat left top; }
+#titre_critique { background:url(../squelettes/assets/icone_critique.gif) no-repeat left top; }
+#titre_chronique { background:url(../squelettes/assets/icone_chronique.gif) no-repeat left top; }
+#titre_video { background:url(../squelettes/assets/icone_video.gif) no-repeat left top; }
+#titre_coeur { background:url(../squelettes/assets/icone_coeur.gif) no-repeat left top; }
+#titre_interview { background:url(../squelettes/assets/icone_interview.gif) no-repeat left top; }
+#titre_activite { background:url(../squelettes/assets/icone_activite.gif) no-repeat left top; }
+#titre_avis { background:url(../squelettes/assets/icone_avis.gif) no-repeat left top; }
+#titre_concours { background:url(../squelettes/assets/icone_concours.gif) no-repeat left top; }
+
 h3.titre_actu{
 	font-size: 1.3em;
 	font-weight:bold;

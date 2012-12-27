@@ -105,7 +105,7 @@ include_spip('inc/utils');
 	while ($donnees = mysql_fetch_array($reponse))
 	{
 		$tab.='<div class="cadre_actu">';
-		$tab.= '<h2 class="titre_cadre">Concours</h2>';
+		$tab.= '<h2 class="titre_cadre" id="titre_concours">Concours</h2>';
 	
 		
 		$id_conc = $donnees['id_conc'] ;

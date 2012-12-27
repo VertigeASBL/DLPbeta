@@ -104,7 +104,7 @@ require 'agenda/inc_var.php';
 	<BOUCLE_art_focus(ARTICLES){id_rubrique=162}{!par date}{0,1}>
 		#SET{varurl,#URL_ARTICLE|parametre_url{rtr,y}}
 			<div class="cadre_actu">
-				<h2 class="titre_cadre">Focus</h2>
+				<h2 class="titre_cadre" id="titre_focus">Focus</h2>
 				[<span class="actu_photo">
 					<a href="#URL_ARTICLE">(#LOGO_ARTICLE|image_reduire{91,0})</a>
 				</span>]
@@ -148,7 +148,7 @@ require 'agenda/inc_var.php';
 	<BOUCLE_art_critique(POUR){tableau #GET{tablo}}>
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{critique}}
 			<div class="cadre_actu">
-				<h2 class="titre_cadre">Critique</h2>
+				<h2 class="titre_cadre" id="titre_critique">Critique</h2>
 				#SET{vimage,''}
 				[(#VALEUR|table_valeur{pic_event_1}|oui)
 					#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{91,0}}
@@ -190,7 +190,7 @@ require 'agenda/inc_var.php';
 	<BOUCLE_art_chronique(POUR){tableau #GET{tablo}}>
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{chronique}}
 			<div class="cadre_actu">
-				<h2 class="titre_cadre">Chronique</h2>
+				<h2 class="titre_cadre" id="titre_chronique">Chronique</h2>
 				#SET{vimage,''}
 				[(#VALEUR|table_valeur{pic_event_1}|oui)
 					#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#VALEUR|table_valeur{id_event},_1.jpg}|image_reduire{91,0}}
@@ -229,7 +229,7 @@ require 'agenda/inc_var.php';
 	<BOUCLE_art_video(POUR){tableau #GET{tablo}}>
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
 			<div class="cadre_actu">
-				<h2 class="titre_cadre">Vidéo</h2>
+				<h2 class="titre_cadre" id="titre_video">Vidéo</h2>
 				[(#VALEUR|table_valeur{texte}|replace_lien_video{284,160})]
 				<h3 class="titre_actu">
 					<a href="#GET{varurl}">
@@ -256,7 +256,7 @@ require 'agenda/inc_var.php';
 
 <!-- ++++++++++++++++++++++ Top 5 des votes du public pour les événement ++++++++++++++++++++++ -->
 			<div class="cadre_actu">
-				<h2 class="titre_cadre">Vos coups de coeur</h2>
+				<h2 class="titre_cadre" id="titre_coeur">Vos coups de coeur</h2>
 	#SET{tablo,#VAL{5}|obtenirjaivulies}
 	#SET{urldetail,#URL_RUBRIQUE{92}}
 
