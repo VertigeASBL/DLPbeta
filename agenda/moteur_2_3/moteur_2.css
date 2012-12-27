@@ -13,8 +13,8 @@
 }
 
 #montrer_selection_fleche {
-	position: relative;
-	top: -5px;
+	position:absolute;
+	left:0px; top:0px;
 }
 
 #montrer_selection {
@@ -106,17 +106,22 @@
 	font-size: 9px;
 }
 
+#event_preview_cont {
+	position:relative;
+}
 #event_preview_id {
 	margin: 0;
-	padding-top:2px;
+	padding:10px;
 	background-color: #E9E9E9;
 	color: #000;
-	width:672px; height:200px;
-	overflow-y:scroll;
-	display: none;
+	width:auto; /* 652px overflow-y:auto; */
+	border:1px solid #ccccdd;
+	z-index:99;
 }
 #event_preview_id_fleche {
-
+	position:absolute;
+	top:0px; left:0px;
+	z-index:98;
 }
 
 .style_mes_notes {color: #0000FF}

@@ -85,26 +85,13 @@ $(document).ready(function (){
 
 		//console.debug("Fonction appel_php lancée") ;
 		
-		$('#nbre_resultats_id').fadeOut(10);
-
-
-		$('#event_preview_id').fadeTo(10, 0.2);
-		$('#event_preview_id').slideUp(20);
-
-		$('#event_preview_id_fleche').fadeTo(10, 0.2);
-		$('#event_preview_id_fleche').slideUp(20);		
-		
+		$('#event_preview_id_fleche').show();
+		$('#nbre_resultats_fleche').show();
 		
 		// ---------------------------------------------
 		// On récupère toutes les valeurs des champs
 		// ---------------------------------------------
 		
-		
-		// RAZ champ d'info
-		$("#montrer_selection").html(""); 
-		votre_selection = '';
-		
-
 		// Date Début
 		selecteur_date_in = $("#selecteur_date_in").val();
 		//console.debug("Date fin : "+selecteur_date_out) ;
@@ -127,8 +114,6 @@ $(document).ready(function (){
 			selecteur_date_out = 'non_selct' ;
 		}
 
-
-
 		// LIEU
 		valeur_lieu_recup = $("#selecteur_lieu").val();
 		//console.debug("lieu : "+valeur_lieu_recup) ;
@@ -139,7 +124,6 @@ $(document).ready(function (){
 		else {
 			//votre_selection+= "Aucun lieu choisi<br />";
 		}
-		
 	
 		// REGION
 		valeur_region_recup = $("#selecteur_region").val();
@@ -151,7 +135,6 @@ $(document).ready(function (){
 		else {
 			//votre_selection+= "Aucune region choisie<br />";
 		}
-		
 
 		// GENRE
 		valeur_genre_recup = $("#selecteur_genre").val();
@@ -173,17 +156,6 @@ $(document).ready(function (){
 		else {
 			//votre_selection+= "Aucun texte libre choisi<br />";
 		}
-		
-		
-		// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		// Afficher le message "Votre sélection) :
-		// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		$('#montrer_selection_fleche').fadeIn("slow");
-		$("#montrer_selection").append("<strong>Votre s&eacute;tection</strong><br />"+votre_selection+"");
-		$("#montrer_selection").fadeIn(10);
-
-
-
 		// ---------------------------------------------
 
 
@@ -207,51 +179,22 @@ $(document).ready(function (){
 
 			// Nombre de résultats
 			// ---------------------------------
-			$('#nbre_resultats_fleche').fadeIn(10);
-			$('#nbre_resultats_id').fadeIn(30);
 			if(response_se.nombre_resultats>0) {
-				$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
+//				$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
+				$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
 			}
 			else {
-				$('#nbre_resultats_id').html("Aucun résultat");
+//				$('#nbre_resultats_id').html("Aucun résultat");
+				$('#event_preview_id').html("Aucun résultat");
 			}
 
-			// Liste prévisualisation
-			// ---------------------------------
-			if(response_se.nombre_resultats>0) {
-					$('#event_preview_id_fleche').fadeIn(10);
-					$('#event_preview_id').fadeTo(10, 0.1, function () {
-				
-					$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
-					$('#event_preview_id').slideDown(20);
-					$('#event_preview_id').fadeTo(10, 1);
-					$('#event_preview_id_fleche').slideDown(20);
-					$('#event_preview_id_fleche').fadeTo(10, 1);
-				});
-			}
 			
-			// Afficher liste de proposition de titres quand des valeurs de retour AJAX existent 
-			// ------------------------------------------------------------------------------------
-			/* !!!!!!!!! désactivé !!!!!!!!! 
-			if(response_se.dlp_list_events.length != 0) {
-				var response_se = eval("(" + data + ")");
-	
-				$('#autoSuggestionsList').html(response_se.dlp_list_events);
-
-				// Effets de déroulement de la liste des suggestions
-				$('#suggestions').slideDown(40);
-				$('#suggestions').fadeTo(10, 1);
-				
-			} */
 			numeroajax--;
 		},"json");
-
-
 
 	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */		
 	}
 	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
 
 	
 	/* Sélecteur de DATE IN
@@ -286,7 +229,6 @@ $(document).ready(function (){
 		// Appel PHP
 		appel_php();
 	});
-	
 
 	
 	/* Sélecteur de DATE OUT
@@ -323,10 +265,6 @@ $(document).ready(function (){
 		appel_php();
 	});
 
-
-
-
-	
 	/* Sélecteur de LIEU
 	********************* */
 	$("#selecteur_lieu").change(function() {
@@ -356,14 +294,13 @@ $(document).ready(function (){
 	********************* */
 	$("#chp_txt_libre").keyup(function() {
 		chaine_txt_libre = $(this).val();
-		if (chaine_txt_libre.length < 2)
+
+		if (chaine_txt_libre == "") {
+			$('#event_preview_id_fleche').hide();
+			$('#nbre_resultats_fleche').hide();
 			return;
+		}
 
-		// Effets d'effacement de la liste des suggestions
-		$('#suggestions').fadeTo(1,0.4);
-		$('#suggestions').slideUp(30);
-
-		
 		// setTimeout = retarder une action
 		numeroajax++;
 		setTimeout(function attendre_un_peu() {
@@ -371,23 +308,7 @@ $(document).ready(function (){
 		}, 500);
 	});
 
-
-
 		
-	/* Champ texte libre
-	********************* */
-	$("#chp_txt_libre").keyup(function lookup(valeur_chp_txt_libre) {
-	valeur_chp_txt_libre = $(this).val();
-	//console.log("Lookup = "+valeur_chp_txt_libre);
-	if(valeur_chp_txt_libre.length == 0) {
-		// Hide the suggestion box.
-		$('#suggestions').fadeOut(10);
-	} else {
-		
-		}
-	}) // # fct lookup
-
-	
 	/* RAZ du formulaire
 	********************* */
 	$("#effacer_tous_champs").click(function() {

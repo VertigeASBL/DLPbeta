@@ -663,14 +663,8 @@ echo '</table>',"\n";
 	<!-- Champ pour le texte libre -->	
 	<div>Rechercher un événement <input name="chp_txt_libre" type="text" size="30" value="" id="chp_txt_libre" /></div>
 
-	<div class="suggestionsBox" id="suggestions" style="display: none;">
-		<img src="agenda/moteur_2_3/pics/up_arrow.png" style="position: relative; top: -12px; left: 30px;" alt="upArrow" />
-		
-		<div class="suggestionList" id="autoSuggestionsList"> &nbsp; </div>
-	</div>	  
 	<br />
 
-	<div align="center">
 	 <div class="bouton_en_file">
       <input id="effacer_tous_champs" name="effacer_tous_champs" value="Effacer les critères" class="effacer_tous_champs" type="button">
 	 </div>
@@ -682,25 +676,19 @@ echo '</table>',"\n";
 
 	 <div class="bouton_en_file">
 	  	<div id="nbre_resultats_fleche" style="display: none;">
-		  <div id="nbre_resultats_id" style="display: none;"></div>
+		  <div id="nbre_resultats_id"></div>
 		</div>
 	 </div>
 	 
 	 <div class="float_stop">&nbsp;</div>
-	
-	<!-- Enlevé pour DLP <div id="montrer_selection_fleche" style="display: none;">
-		<div id="montrer_selection"></div>
-		<img src="agenda/moteur_2_3/pics/fleche_verte_b.gif" style="position: relative; top: 15px; left: 30px;" alt="upArrow" />
-	</div> -->
-	  
+
+	<div id="event_preview_cont">
+		<div id="event_preview_id_fleche" style="display: none;">
+			<!-- img src="agenda/moteur_2_3/pics/fleche_grise_h.gif" style="position: relative; top: 3px; left: 50px;" alt="upArrow" / -->
+			<div id="event_preview_id"></div>
+		</div>
     </div>
 </form>
-
-
-	<div id="event_preview_id_fleche" style="display: none;">
-		<img src="agenda/moteur_2_3/pics/fleche_grise_h.gif" style="position: relative; top: 3px; left: 50px;" alt="upArrow" />
-		<div id="event_preview_id" style="display: none;"></div>
-	</div>
 
 <?php
 
