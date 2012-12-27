@@ -60,7 +60,7 @@ option.option_col_2, select.option_col_2 {
 var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 	ma_fenetre = window.open(Adresse_de_la_page,Nom_de_la_fenetre,'height=500,width=500,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=yes,top=100px,left=250px');
 	/* Donner le focus */
-	if(ma_fenetre.window.focus){
+	if (ma_fenetre.window.focus){
 		ma_fenetre.window.focus();
 	}
 }
@@ -75,7 +75,7 @@ var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 //window.loadFirebugConsole();
 $(document).ready(function (){
 	var numeroajax = 0;
-	
+
 	/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	Cette fonction est appelée par les "mouvements" du visiteur
 	Elle va chercher les variables dans tous les champs du formulaire, 
@@ -95,7 +95,7 @@ $(document).ready(function (){
 		// Date Début
 		selecteur_date_in = $("#selecteur_date_in").val();
 		//console.debug("Date fin : "+selecteur_date_out) ;
-		if(selecteur_date_in) {
+		if (selecteur_date_in) {
 			votre_selection+= "Date de début : "+selecteur_date_in+"<br />";
 		}
 		else {
@@ -106,7 +106,7 @@ $(document).ready(function (){
 		// Date fin
 		selecteur_date_out = $("#selecteur_date_out").val();
 		//console.debug("Date fin : "+selecteur_date_out) ;
-		if(selecteur_date_out) {
+		if (selecteur_date_out) {
 			votre_selection+= "Date de fin : "+selecteur_date_out+"<br />";
 		}
 		else {
@@ -117,7 +117,7 @@ $(document).ready(function (){
 		// LIEU
 		valeur_lieu_recup = $("#selecteur_lieu").val();
 		//console.debug("lieu : "+valeur_lieu_recup) ;
-		if(valeur_lieu_recup!='non_selct') {
+		if (valeur_lieu_recup!='non_selct') {
 			nom_lieu_recup = $('#selecteur_genre :selected').text() ;
 			votre_selection+= "Lieu : "+nom_lieu_recup+"<br />";
 		}
@@ -128,7 +128,7 @@ $(document).ready(function (){
 		// REGION
 		valeur_region_recup = $("#selecteur_region").val();
 		//console.debug("Region : "+valeur_region_recup) ;
-		if(valeur_region_recup!='non_selct') {
+		if (valeur_region_recup!='non_selct') {
 			nom_region_recup = $('#selecteur_region :selected').text() ;
 			votre_selection+= "region : "+nom_region_recup+"<br />";
 		}
@@ -139,7 +139,7 @@ $(document).ready(function (){
 		// GENRE
 		valeur_genre_recup = $("#selecteur_genre").val();
 		//console.debug("Genre : "+valeur_genre_recup) ;
-		if(valeur_genre_recup!='non_selct') {
+		if (valeur_genre_recup!='non_selct') {
 			nom_genre_recup = $('#selecteur_genre :selected').text() ;
 			votre_selection+= "Genre : "+nom_genre_recup+"<br />";
 		}
@@ -150,7 +150,7 @@ $(document).ready(function (){
 		// TEXTE LIBRE
 		valeur_txt_libre_recup = $("#chp_txt_libre").val();
 		//console.debug("Genre : "+valeur_txt_libre_recup) ;
-		if(valeur_txt_libre_recup!='') {
+		if (valeur_txt_libre_recup!='') {
 			votre_selection+= "Texte libre : "+valeur_txt_libre_recup+"<br />";
 		}
 		else {
@@ -179,16 +179,19 @@ $(document).ready(function (){
 
 			// Nombre de résultats
 			// ---------------------------------
-			if(response_se.nombre_resultats>0) {
-//				$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
-				$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
+			if (valeur_txt_libre_recup == "") {
+				$('#event_preview_id_fleche').hide();
+//				$('#nbre_resultats_fleche').hide();
 			}
-			else {
-//				$('#nbre_resultats_id').html("Aucun résultat");
-				$('#event_preview_id').html("Aucun résultat");
-			}
-
-			
+			else
+				if (response_se.nombre_resultats>0) {
+//					$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
+					$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
+				}
+				else {
+//					$('#nbre_resultats_id').html("Aucun résultat");
+					$('#event_preview_id').html("Aucun résultat");
+				}
 			numeroajax--;
 		},"json");
 
@@ -294,18 +297,9 @@ $(document).ready(function (){
 	********************* */
 	$("#chp_txt_libre").keyup(function() {
 		chaine_txt_libre = $(this).val();
-
-		if (chaine_txt_libre == "") {
-			$('#event_preview_id_fleche').hide();
-//			$('#nbre_resultats_fleche').hide();
-			return;
-		}
-
 		// setTimeout = retarder une action
 		numeroajax++;
-		setTimeout(function attendre_un_peu() {
-			appel_php() ;
-		}, 500);
+		setTimeout(function attendre_un_peu() { appel_php(); }, 500);
 	});
 
 		
