@@ -329,6 +329,7 @@ $(document).ready(function (){
 		chn += "recherche="+encodeURI(txtlibre);
 		$(this).attr("action", chn);
 	});
+	$("#event_preview_close").click(function() { $('#event_preview_id_fleche').hide(); });
 });
 
 function fill(thisValue) {

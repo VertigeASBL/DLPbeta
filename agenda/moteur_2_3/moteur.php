@@ -685,6 +685,7 @@ echo '</table>',"\n";
 	<div id="event_preview_cont">
 		<div id="event_preview_id_fleche" style="display: none;">
 			<!-- img src="agenda/moteur_2_3/pics/fleche_grise_h.gif" style="position: relative; top: 3px; left: 50px;" alt="upArrow" / -->
+			<div id="event_preview_close"></div>
 			<div id="event_preview_id"></div>
 		</div>
     </div>
