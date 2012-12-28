@@ -14,7 +14,7 @@ function uploader_4 ($id_update,$num_pic)
 	$fichier_source = 'source_pic_' . $num_pic ;
 	$taille_max = 4000000 ;
 	$taille_min = 2 ;
-	$destination = '../' . $folder_pics_event . 'event_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de image de destination
+	$destination = '../' . $folder_pics_event . 'event_' . $id_update . '_' . $num_pic . '.tmp.jpg' ; // Chemin & nom de image de destination
 	$destination_vi = '../' . $folder_pics_event . 'vi_event_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de Vignette
 	$destination_micro = '../' . $folder_pics_event . 'micro_event_' . $id_update . '_' . $num_pic . '.jpg' ; //--- richir
 
@@ -103,7 +103,10 @@ function uploader_4 ($id_update,$num_pic)
 
 			if ($largeur_uploaded >= $w_absolue) // Largeur Suffisante
 			{
-				if ($largeur_uploaded == $w_absolue) // Largeur OK
+				/*
+					Didier => On ne test plus la lageur puisque l'ont va de toute façon demander le recadrage de l'image.
+				*/
+				/*if ($largeur_uploaded == $w_absolue) // Largeur OK
 				{	
 					$debug_concat.=  '<br />- <b>Largeur strictement OK</b>)';
 					$new_H = $hauteur_uploaded ;
@@ -116,7 +119,7 @@ function uploader_4 ($id_update,$num_pic)
 					// On recalcule la Hauteur proportionnellement
 					$new_H = round($hauteur_uploaded * $w_absolue / $largeur_uploaded);
 					$debug_concat.=  '<br />- <b>nouvelle hauteur</b> = '.$new_H ;
-				}
+				}*/
 			
 				// Redimensionner et ré-enregistrer dans le répertoire
 				$resample = imagecreatetruecolor($w_absolue, $new_H); // Création image vide

@@ -12,8 +12,10 @@ function crop_image($source) {
 	imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],
 	$targ_w,$targ_h,$_POST['w'],$_POST['h']);
 
-	$image = imagejpeg($dst_r, $source, $jpeg_quality);
-	
+	/* Créer l'image recadrée */
+	$image = imagejpeg($dst_r, str_replace('.tmp', '', $source), $jpeg_quality);
+	/* Supprimer l'image temporaire. */
+	@unlink($source);
 }
 
 ?>

@@ -1,5 +1,13 @@
 <?php 
+session_start();
 include_once('function_crop.php');
+
+/*
+	Protection contre le reformatage d'autre image: la personne à t'elle le droit de modifier cette image ?
+*/
+
+/* On récupère l'id de l'évement dans le nom du fichier */
+$id_event[3] = explode('_', $_GET['source']);
 
 if (isset($_POST['source'])) {
 	crop_image($_POST['source']);
@@ -15,7 +23,9 @@ if (isset($_POST['source'])) {
 	jQuery(document).ready(function($) {
 		$('#cropbox').Jcrop({
 			aspectRatio: 0.7,
-			onSelect: updateCoords
+			onSelect: updateCoords,
+		 	boxWidth: 450, 
+		 	boxHeight: 400 
 		});
 
 		function updateCoords(c) {
@@ -28,6 +38,8 @@ if (isset($_POST['source'])) {
 	</script>
 </head>
 <body>
+
+<?php if (!isset($_POST['source'])): ?>
 	<img src="<?php echo urldecode($_GET['source']); ?>" alt="jCrop" id="cropbox" />
 	
 	<form action="index.php?source=<?php echo urlencode($_GET['source']); ?>" method="post">
@@ -38,5 +50,11 @@ if (isset($_POST['source'])) {
 		<input type="hidden" id="h" name="h" />
 		<input type="submit" value="recadrer" />
 	</form>
+	<?php else: 
+		echo '<img src="'.str_replace('.tmp', '', $_POST['source']).'" alt="Prévisualisation" />';
+	?>
+	<br />
+	<a href="javascript: window.close();">[Fermer]</a>
+<?php endif; ?>
 </body>
 </html>

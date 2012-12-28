@@ -156,7 +156,7 @@ $(function() {
 
 	jQuery(document).ready(function($) {
 		$(".jCropme").on("click", function () {
-			window.open(this.href, "jCrop", "menubar=0,resizable=0,width=350,height=250");
+			window.open(this.href, "jCrop", "menubar=0,resizable=0,width=500,height=430");
 			return false;
 		});
 	});
@@ -771,9 +771,9 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			<div>
 				<h3>Recadrer</h3>
 			';
-			/* On ce place a la fin, quand les images sont sur le serveur, on les porpose au recadrage */
+			/* Didier => On ce place a la fin, quand les images sont sur le serveur, on les porpose au recadrage */
 				foreach ($list_image_jCrop as $key => $value) {
-					echo '<br /><a href="../jCrop/index.php?source='.urldecode($value).'" class="jCropme"><img src="'.$value.'" alt="recadrage" /></a>';
+					echo '<br /><a href="../jCrop/index.php?source='.urldecode($value).'" class="jCropme"><img src="'.$value.'" alt="recadrage" style="width: 200px;" /></a>';
 				}
 			echo '</div>
 
