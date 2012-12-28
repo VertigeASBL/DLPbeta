@@ -19,6 +19,7 @@ if (isset($_POST['source'])) {
 	<link rel="stylesheet" href="css/jquery.Jcrop.min.css" type="text/css" />
 	<script type="text/javascript" src="../js/jquery.js"></script>
 	<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$('#cropbox').Jcrop({
@@ -39,7 +40,16 @@ if (isset($_POST['source'])) {
 </head>
 <body>
 
-<?php if (!isset($_POST['source'])): ?>
+<?php 
+if (isset($_POST['source'])): 
+	echo '<img src="'.str_replace('.tmp', '', $_POST['source']).'" alt="Prévisualisation" />';
+?>
+	<br />
+	<a href="javascript: window.close();">[Fermer]</a>
+	<?php
+elseif (!file_exists($_GET['source'])): 
+	echo '<p>Cet image à déjà été recadrée.</p>';
+else: ?>
 	<img src="<?php echo urldecode($_GET['source']); ?>" alt="jCrop" id="cropbox" />
 	
 	<form action="index.php?source=<?php echo urlencode($_GET['source']); ?>" method="post">
@@ -50,11 +60,7 @@ if (isset($_POST['source'])) {
 		<input type="hidden" id="h" name="h" />
 		<input type="submit" value="recadrer" />
 	</form>
-	<?php else: 
-		echo '<img src="'.str_replace('.tmp', '', $_POST['source']).'" alt="Prévisualisation" />';
-	?>
-	<br />
-	<a href="javascript: window.close();">[Fermer]</a>
+		
 <?php endif; ?>
 </body>
 </html>
