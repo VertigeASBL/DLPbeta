@@ -17,5 +17,4 @@ function crop_image($source) {
 	/* Supprimer l'image temporaire. */
 	@unlink($source);
 }
-
 ?>
