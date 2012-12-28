@@ -440,7 +440,7 @@ UL#menu UL LI{
     opacity:.85;
 }
 .onglet3:HOVER{
-	background-color:#F16B13;
+	background-color:#009A99;
 	filter:alpha(opacity=100);
     opacity:1;
 }
@@ -465,7 +465,7 @@ UL#menu UL LI{
 	margin-bottom: 5px;
 }
 .onglet5:HOVER{
-	border:1px solid #009A99;
+	border:1px solid #333333;
 	background-color:#009A99;
 	padding:1px;
 }
@@ -474,8 +474,8 @@ UL#menu UL LI{
 	padding:1px; margin-bottom:5px;
 }
 .onglet6:hover {
-	background-color:#F16B13;
-	border:1px solid #F16B13;
+	background-color:#009A99;
+	border:1px solid #333333;
 }
 .portfolio{
 	float:left;
@@ -924,7 +924,7 @@ INPUT.recherche{
 	cursor:pointer;
 }
 #chp2_txt_libre {
-	width:144px; height:19px; margin:1px 0 0 0; padding:0 0 0 5px; border:1px solid #BF0043;
+	width:144px; height:19px; margin:1px 0 0 0; padding:0 0 0 5px; border:1px solid #990033;
 }
 
 .comedien_dans_description a {
@@ -976,25 +976,52 @@ INPUT.recherche{
 	margin-top:0;
 	height:2.3em;
 }
+#ongletsdetails {
+	width:673px; height:24px;
+	margin:0; padding:0 0 0 4px;
+	list-style:none;
+	background:#ffffff;
+	border-color:#029595; border-style:solid; border-width:0 0 3px 0;
+}
 .onglettitre {
 	float:left;
-	height:30px; padding:0 20px;
-	border:1px solid #999999;
+	width:auto; height:20px;
+	margin:0; padding:4px 0 0 15px;;
+	border:none;
 	cursor:pointer;
-	background-color: #E9E9E9;
+	color:#ffffff;
+	font-weight:bold;
 }
 .onglettitre IMG {
 	vertical-align:middle;
+}
+.ongletgauche0 { background:url(assets/onglet_g0.gif) no-repeat; }
+.ongletgauche1 { background:url(assets/onglet_g1.gif) no-repeat; }
+.ongletdroite0 { float:right; width:4px; height:24px; margin:-4px 0 0 10px; background:url(assets/onglet_d0.gif) no-repeat; }
+.ongletdroite1 { float:right; width:4px; height:24px; margin:-4px 0 0 10px; background:url(assets/onglet_d1.gif) no-repeat; }
+.ongletpremier0 { background:url(assets/onglet_p0.gif) no-repeat; }
+.ongletpremier1 { background:url(assets/onglet_p1.gif) no-repeat; }
+
+/* #ongletavis { width:65px; } */
+.etoilecritique1et { padding:0 55px; background:url(assets/etoiles10.gif) no-repeat right top; }
+.etoilecritique1_5 { padding:0 55px; background:url(assets/etoiles15.gif) no-repeat right top; }
+.etoilecritique2et { padding:0 55px; background:url(assets/etoiles20.gif) no-repeat right top; }
+.etoilecritique2_5 { padding:0 55px; background:url(assets/etoiles25.gif) no-repeat right top; }
+.etoilecritique3et { padding:0 55px; background:url(assets/etoiles30.gif) no-repeat right top; }
+.etoilecritique3_5 { padding:0 55px; background:url(assets/etoiles35.gif) no-repeat right top; }
+.etoilecritique4et { padding:0 55px; background:url(assets/etoiles40.gif) no-repeat right top; }
+.etoilecritique4_5 { padding:0 55px; background:url(assets/etoiles45.gif) no-repeat right top; }
+.etoilecritique5et { padding:0 55px; background:url(assets/etoiles50.gif) no-repeat right top; }
+
+#suggestion ul li {
+	background: none;
 }
 
 .ongletevent {
 	clear:both;
 	display:none;
-	background-color: #E9E9E9;
-}
-
-#suggestion ul li {
-	background: none;
+	background-color:#ffffff;
+	padding:0 0 10px 0;
 }
 
 #suggestion p {
@@ -1014,4 +1041,21 @@ INPUT.recherche{
 
 #suggestion #toutes_suggestions {
 	text-align: right;
+}
+.event_enfant {
+	font-size: 11px;
+	clear: both;
+}
+.event_enfant A IMG {
+	float:left;
+	margin:2px 8px 2px 5px;
+	width:43px;
+	padding:1px;
+	border:1px solid #333333;
+	background-color:#FFFFFF;
+}
+.event_enfant A:hover IMG {
+	padding:1px;
+	border:1px solid #333333;
+	background-color:#009A99;
 }

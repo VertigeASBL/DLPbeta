@@ -230,7 +230,7 @@ require 'agenda/inc_var.php';
 		#SET{varurl,#GET{urldetail}|parametre_url{id_event,#VALEUR|table_valeur{id_event}}|ancre_url{video}}
 			<div class="cadre_actu">
 				<h2 class="titre_cadre" id="titre_video">Vidéo</h2>
-				[(#VALEUR|table_valeur{texte}|replace_lien_video{284,160})]
+				[(#VALEUR|table_valeur{chapo}|sinon{#VALEUR|table_valeur{texte}}|replace_lien_video{284,160})]
 				<h3 class="titre_actu">
 					<a href="#GET{varurl}">
 						[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]

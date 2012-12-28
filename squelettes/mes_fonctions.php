@@ -281,7 +281,7 @@ function monraccourcirchaine($chn, $max) {
 function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 	$req = 'SELECT A.id_article,A.titre,A.date,MAX(E.id_event) AS id_event,E.nom_event,E.pic_event_1,L.id_lieu,L.nom_lieu';
 	if ($id_rubrique == 155)
-		$req .= ',A.texte';
+		$req .= ',A.chapo,A.texte';
 	else
 		$req .= ',MAX(R.id_auteur),P.nom,A.chapo';
 	$req .= ' FROM ag_event AS E,ag_lieux AS L,spip_articles AS A';

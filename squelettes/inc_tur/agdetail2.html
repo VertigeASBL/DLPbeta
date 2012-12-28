@@ -1,4 +1,4 @@
-<!-- #CACHE{0} -->
+#CACHE{0}
 
 <script type="text/javascript">
 var pretjquery = false;
@@ -6,41 +6,62 @@ var tabonglet = {descriptif:true, avis:true, critique:true, chronique:true, inte
 var nombreavis = 0, etoilecritique = "";
 
 $(document).ready(function() {
-	var thisid;
+
+	function activeronglet(vonglet2, vshow1) {
+		var vshow0, vclasse, vobj;
+		vclasse = vonglet2 == "descriptif" ? "premier" : "gauche";
+		vobj = $("#zonglet"+vonglet2);
+		if (vshow1) {
+			vobj.show(); vshow0 = "0"; vshow1 = "1";
+		}
+		else {
+			vobj.hide(); vshow0 = "1"; vshow1 = "0";
+		}
+		vobj = $("#onglet"+vonglet2);
+		vobj.removeClass("onglet"+vclasse+vshow0).addClass("onglet"+vclasse+vshow1);
+		vobj = vobj.children(".ongletdroite"+vshow0);
+		vobj.removeClass("ongletdroite"+vshow0).addClass("ongletdroite"+vshow1);
+	}
+
+	var vonglet1, vonglet2;
+
 	//----- cacher les onglets vides
 	$(".onglettitre").each( function() {
-		thisid = $(this).attr('id').substr(6);
-		if (! tabonglet[thisid])
+		vonglet1 = $(this).attr('id').substr(6);
+		if (! tabonglet[vonglet1])
 			$(this).hide();
 	});
 
 	//----- ouvrir un onglet au départ
-	thisid = location.hash;
-	if (thisid != "") {
-		thisid = thisid.substr(1);
-		if (! tabonglet[thisid])
-			thisid = "";
+	vonglet1 = location.hash;
+	if (vonglet1 != "") {
+		vonglet1 = vonglet1.substr(1);
+		if (! tabonglet[vonglet1])
+			vonglet1 = "";
 	}
-
-	$("#zonglet"+(thisid != "" ? thisid : "descriptif")).show();
+	if (vonglet1 == "")
+		vonglet1 = "descriptif";
+	activeronglet(vonglet1, true);
 
 	//----- ajouter nombre d'avis, étoiles
-	$("#ongletavis").text("Avis ("+nombreavis+")");
+	$("#ongletplusavis").text(" ("+nombreavis+")");
 	if (etoilecritique != "")
-		$("#ongletcritique").html("Critique "+etoilecritique);
+		$("#ongletpluscritique").addClass("etoilecritique"+etoilecritique);
 
 	//----- ouvrir un onglet avec la souris
 	$(".onglettitre").click(function() {
-		thisid = $(this).attr('id');
+		vonglet1 = $(this).attr('id').substr(6);
 		
-		$(".ongletevent").each( function() {
-			if ($(this).attr('id') == "z"+thisid) {
-				/* Quand on clique sur un onglet, on lance la fonction de Google Maps pour charger la carte. */
-				initialize();
-				$(this).show();
-			}
-			else
-				$(this).hide();
+		$(".onglettitre").each( function() {
+			vonglet2 = $(this).attr('id').substr(6);
+			if (tabonglet[vonglet1])
+				if (vonglet2 == vonglet1) {
+					if (vonglet2 == "mapping") /* Quand on clique sur un onglet, on lance la fonction de Google Maps pour charger la carte. */
+						initialize();
+					activeronglet(vonglet2, true);
+				}
+				else
+					activeronglet(vonglet2, false);
 		});
 	});
 	pretjquery = true;
@@ -137,36 +158,38 @@ function affich_jours_actifs($jours_actifs, $MM_traite, $AAAA_traite, $datev_deb
 	echo '</div>'."\n";
 }
 
-// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-// Fonction d'affichage du parent et des événements enfants
-// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+/*	FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+	Fonction d'affichage du parent et des événements enfants
+	FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+	--- <span class="image_flottante_preview"></span> 
+	--- ',($donnees_preview['parent_event'] ? ' brenfant' : ''),'
+*/
 function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 {
-	$reponse_preview = mysql_query('SELECT id_event,parent_event,L.nom_lieu,nom_event,date_event_debut,date_event_fin,ville_event,resume_event,pic_event_1
+	$reponse_preview = mysql_query('SELECT id_event,parent_event,L.id_lieu,L.nom_lieu,nom_event,date_event_debut,date_event_fin,ville_event,resume_event,pic_event_1
 	FROM ag_event LEFT JOIN ag_lieux AS L ON lieu_event=L.id_lieu
 	WHERE (id_event='.$parent_event.' OR parent_event<>0 AND parent_event='.$parent_event.' OR parent_event='.$id_event.') AND id_event<>'.$id_event.'
 	ORDER BY parent_event,date_event_debut');
 
-	if ($donnees_preview = mysql_fetch_array($reponse_preview))
+	if ($donnees_preview = mysql_fetch_array($reponse_preview)) {
 		$qqch = true;
-
+		echo '<h3 style="text-transform:none;">Consulter les événements de l\'événement parent</h3>',"\n";
+	}
 	while ($donnees_preview) {
 		if (! $max)
 			echo '<p id="liste1deplier" style="clear:both;float:right;" /><a href="#deplier" onclick="return depliersuite(\'liste1\',true);">Afficher&nbsp;la&nbsp;suite&nbsp;&gt;&gt;</a></p>',"\n",'<div id="liste1suite" style="display:none;margin:0;padding:0;">',"\n";
 
 		$ev_url = generer_url_entite(92, 'rubrique', 'id_event='.$donnees_preview['id_event']);
-		echo '<div class="un_event_preview',($donnees_preview['parent_event'] ? ' brenfant' : ''),'">
-			<span class="image_flottante_preview">
+		echo '<div class="event_enfant">
 				<a href="',$ev_url,'">
 					<img src="agenda/',($donnees_preview['pic_event_1'] == 'set' ? 'pics_events/vi_event_'.$donnees_preview['id_event'].'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif'),'" title="',htmlspecialchars($donnees_preview['nom_event']),'" />
 				</a>
-			</span> 
 			<strong><a href="',$ev_url,'">',monraccourcirchaine($donnees_preview['nom_event'], 45),'</a></strong>
 			| du ',affdate_jourcourt($donnees_preview['date_event_debut']),' au ',affdate_jourcourt($donnees_preview['date_event_fin']),'
-			| <strong>',$donnees_preview['nom_lieu'],'</strong>';
+			| <strong><a href="',generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees_preview['id_lieu']),'">',$donnees_preview['nom_lieu'],'</a></strong>';
 			if (isset($regions[$donnees_preview['ville_event']]))
 				echo ' (',$regions[$donnees_preview['ville_event']],')';
-			echo '<br />',monraccourcirchaine($donnees_preview['resume_event'], 120),'
+			echo '<br />',monraccourcirchaine($donnees_preview['resume_event'], 300),'
 		</div>',"\n";
 
 		$donnees_preview = mysql_fetch_array($reponse_preview);
@@ -262,7 +285,6 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ------------------------------------------------
 	echo '<div class="detail_event_bloc_1">',"\n";
 
-
 	// titre parent
 	if ($donnees_parent)
 		echo '<h2><a href="',generer_url_entite(92, 'rubrique', 'id_event='.$donnees['parent_event']),'" title="Voir en détail">',monraccourcirchaine($donnees_parent['nom_event'], 45),'</a></h2>';
@@ -286,24 +308,10 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	.'<img src="agenda/design_pics/ico_jai_vu.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="voter" /></a>'
 	.'</div>'."\n";
 
-/*
-	// Icone Interview
-	if (! $interview_event)
-		$interview_event = saisonprecedente($id_event, 'interview');
-	if ($interview_event)
-		echo '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview" style="float:right;"><img src="agenda/design_pics/ico_interview.jpg" align="middle" alt="interview" />Voir l\'interview</a> &nbsp; '."\n";
-*/
-
 	// Icone concours
 	$reponse = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
 	if ($total_entrees = mysql_fetch_array($reponse))
 		echo '<a href="',generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']),'" style="float:right;" title="Cliquez ici pour voir le concours">Concours</a> &nbsp; '."\n";
-
-	// facebook j'aime
-	echo '<div class="fb-like" style="clear:both; float:right;" data-href="[(#SELF|url_absolue|rawurlencode)]" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div> &nbsp; '."\n";
-
-	// afficher Envoyer à un ami;
-	echo '<a href="',generer_url_entite(132, 'rubrique', 'id_event='.$id_event),'" style="float:right;"><img src="agenda/e_card/pics/ico_envoyer_ami.jpg" title="Informer un ami" alt="informer un ami" hspace="2" align="middle" /></a>',"\n";
 
 	echo '</div>'."\n\n"; //--- fin ICONES FLOTTANTES
 
@@ -315,24 +323,24 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ____________________________________________
 	// VILLE
 	if (isset($regions[$donnees['ville_event']]))
-	echo '<br /><span class="detail_corps_event"><acronym title="Ville où du spectacle">'.$regions[$donnees['ville_event']].'</acronym></span>'."\n";	
+	echo '<br /><span class="detail_event_genre"><acronym title="Ville où du spectacle">'.$regions[$donnees['ville_event']].'</acronym></span>'."\n";	
 
 	// ____________________________________________
 	// GENRE
 	if (isset($genres[$genre_event]))
-		echo '<span class="detail_event_genre"><acronym title="Genre du spectacle">'.$genres[$genre_event].'</acronym></span> '."\n";	
+		echo '<span class="detail_event_genre">| <acronym title="Genre du spectacle">'.$genres[$genre_event].'</acronym></span> '."\n";	
 
 	// ____________________________________________
 	// LIEU
 	if ($donnees_prod)
-		echo '<span class="detail_event_lieu"><a href="',generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees['lieu_event']),'" title="Producteur du spectacle">',$donnees_prod['nom_lieu'],'</a></span> ',"\n";
+		echo '<span class="detail_event_lieu">| <a href="',generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees['lieu_event']),'" title="Producteur du spectacle">',monraccourcirchaine($donnees_prod['nom_lieu'], 40),'</a></span> ',"\n";
 
 	echo '<br style="clear:both;" /><br />',"\n";
 
 	// ____________________________________________
 	// Vignette
 	if ($donnees['pic_event_1'] == 'set')
-		echo '<span class="detail_event_photo"><img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" title="'.htmlspecialchars($donnees['nom_event']).'" alt="vignette" /></span>'."\n";
+		echo '<span class="detail_event_photo"><img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" title="'.htmlspecialchars($donnees['nom_event']).'" alt="vignette" width="162" /></span>'."\n";
 	
 
 	//_________________ Infos utiles _____________________
@@ -340,9 +348,8 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	$time_date_aujourdhui = date(mktime(0, 0, 0, date("m"), date("d"), date("Y")));
 
 	echo '<table class="tableinfosevent" border="0" cellspacing="0" cellpadding="0" summary="">'."\n";
-	echo '<tr><td colspan="2" class="detail_corps_event"><h3>Infos utiles</h3></td></tr>',"\n";
 
-	echo '<tr><td>Quand</td><td>';
+	echo '<tr><td class="tableinfogauche">Quand</td><td>';
 	if ($date_event_debut == $date_event_fin)
 		echo 'le ',affdate_jourcourt($date_event_debut);
 	else
@@ -350,13 +357,13 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	echo '</td></tr>'."\n";
 
 	if ($donnees['heure_minute_event'] != 'nn-nn')
-		echo '<tr><td>Horaire</td><td>',$donnees['heure_minute_event'],'</td></tr>'."\n";
+		echo '<tr><td class="tableinfogauche">Horaire</td><td>',$donnees['heure_minute_event'],'</td></tr>'."\n";
 
 	if ($donnees_repres)
-		echo '<tr><td>Où</td><td>',$donnees_repres['nom_pres'],'<br />',$donnees_repres['adresse_pres'],'<br />',$donnees_repres['postal_pres'],' ',$donnees_repres['localite_pres'],'</td></tr>'."\n";
+		echo '<tr><td class="tableinfogauche">Où</td><td>',$donnees_repres['nom_pres'],'<br />',$donnees_repres['adresse_pres'],'<br />',$donnees_repres['postal_pres'],' ',$donnees_repres['localite_pres'],'</td></tr>'."\n";
 
 	if ($donnees['prix_min_event'] || $donnees['prix_max_event']) {
-		echo '<tr><td>Prix</td><td>';
+		echo '<tr><td class="tableinfogauche">Prix</td><td>';
 		if ($donnees['prix_min_event'] == $donnees['prix_max_event'] || ! $donnees['prix_max_event'])
 			echo $donnees['prix_min_event'];
 		else if (! $donnees['prix_min_event'])
@@ -368,9 +375,9 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	if (($time_date_event_fin+86400) > ($time_date_aujourdhui+0) && ($genre_event != 'g07')) {
 		if (!empty($donnees['tel_reserv_event']) && $donnees['tel_reserv_event'] != NULL)
-			echo '<tr><td>Réservation</td><td>'.$donnees['tel_reserv_event'].'</td></tr>'."\n";
+			echo '<tr><td class="tableinfogauche">Réservation</td><td>'.$donnees['tel_reserv_event'].'</td></tr>'."\n";
 		if (!empty($donnees['email_reservation'])) {
-			echo '<tr><td>Réservation par email</td><td><a href="mailto:'.$donnees['email_reservation'].'">'.$donnees['email_reservation'].'</a></td></tr>';
+			echo '<tr><td class="tableinfogauche">Réservation par email</td><td><a href="mailto:'.$donnees['email_reservation'].'">'.$donnees['email_reservation'].'</a></td></tr>';
 		}
 
 
@@ -380,16 +387,12 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	}
 
 	echo '</table>'."\n";
+
 	echo '</div>'."\n\n"; //--- fin detail_event_bloc_1
-	
 
 	// ***************************************************************************************
 	// CALENDRIERS :
-	echo'<div class="detail_event_bloc_2 detail_calendrier">
-		<div class="detail_corps_event">
-			<h3>Calendrier</h3>
-		</div>';
-	echo '<div class="detail_corps_event">';
+	echo'<div class="detail_calendrier">';
 
 	/* --------------------------------------------------------------------
 	   ----------------------- AFFICHER CALENDRIERS -----------------------
@@ -464,11 +467,17 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		affich_jours_actifs($jours_actifs_event, $MM_traite, $AAAA_traite, $date_event_debut, $date_event_fin, $cemois==$AAAA_traite.$MM_traite, 1);
 	}
 	// -----------------------------
-	// Légende du calendrier 
-	echo '<br /><em><span style="background:#8F0033;color:#ffffff;">Jour de représentation</span><br /><span style="background:#ffffff;color:#000000;">Pas de représentation</span></em>';
-	echo '</div>',"\n"; //--- fin detail_corps_event
-	echo '</div>',"\n\n"; //--- fin agenda detail_event_bloc_2 CALENDRIERS
-	echo '<br style="clear:both;" />',"\n";
+	// Légende du calendrier / echo '<br /><em><span style="background:#8F0033;color:#ffffff;">Jour de représentation</span><br /><span style="background:#ffffff;color:#000000;">Pas de représentation</span></em>';
+
+
+	// afficher Envoyer à un ami;
+	echo '<a href="',generer_url_entite(132, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/e_card/pics/ico_envoyer_ami.jpg" title="Informer un ami" alt="informer un ami" style="margin:4px 0;" /></a>',"\n";
+
+	// facebook j'aime
+	echo '<br /><div class="fb-like" data-href="[(#SELF|url_absolue|rawurlencode)]" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>'."\n";
+
+	echo '</div>',"\n\n"; //--- fin detail_calendrier CALENDRIERS
+	echo '<br style="clear:both;" />&nbsp;',"\n";
 
 
 	// ____________________________________________
@@ -481,14 +490,15 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	/* --------------------------------------------------------------------
 	   ----------------------------- ONGLETS ------------------------------
 	   -------------------------------------------------------------------- */	   
-	echo '<div id="ongletdescriptif" class="onglettitre">Descriptif</div>',"\n";
-	echo '<div id="ongletavis" class="onglettitre">Avis</div>',"\n";
-	echo '<div id="ongletcritique" class="onglettitre">Critique</div>',"\n";
-	echo '<div id="ongletchronique" class="onglettitre">Chronique</div>',"\n";
-	echo '<div id="ongletinterview" class="onglettitre">Interview</div>',"\n";
-	echo '<div id="ongletvideo" class="onglettitre">Vidéo</div>',"\n";
-	echo '<div id="ongletmapping" class="onglettitre">Mapping</div>',"\n";
-
+	echo '<ul id="ongletsdetails">',"\n";
+	echo '<li id="ongletdescriptif" class="onglettitre ongletpremier0">Descriptif<div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletavis" class="onglettitre ongletgauche0">Avis<span id="ongletplusavis"> (0)</span><div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletcritique" class="onglettitre ongletgauche0">Critique<span id="ongletpluscritique"></span><div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletchronique" class="onglettitre ongletgauche0">Chronique<div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletinterview" class="onglettitre ongletgauche0">Interview<div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletvideo" class="onglettitre ongletgauche0">Vidéo<div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletmapping" class="onglettitre ongletgauche0">Localisation<div class="ongletdroite0"></div></li>',"\n";
+	echo '</ul>',"\n";
 
 /*	____________________________________________
 		ONGLET DESCRIPTIF
@@ -514,13 +524,10 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	require 'agenda/inc_db_connect.php'; // reconnecter à la DB DLP
 	// COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN  -  COMEDIEN
 
-	echo '<br /><div class="detail_corps_event">',"\n";
+	echo '<div class="detail_corps_event">',"\n";
 
-	echo '<span class="ico_float_droite"><a href="agenda/spip/print_description_event.php?id_event='.$id_event.'" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.jpg"  hspace="10" align="middle" /></a></span>',"\n";
-/*
-	if ($donnees['resume_event'])
-		echo $donnees['resume_event'],'<br style="clear:both;" /><br />',"\n";
-*/
+	echo '<h3>',$donnees['nom_event'],'</h3>',"\n";
+
 	if ($donnees['description_event'])
 		echo $donnees['description_event'],"\n";
 	else
@@ -536,6 +543,8 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			$n++;
 		}
 	}
+
+	echo '<br style="clear:both;" /><span class="ico_float_droite"><a href="agenda/spip/print_description_event.php?id_event='.$id_event.'" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.jpg"  hspace="10" align="middle" /></a></span>',"\n";
 
 	echo '<br style="clear:both;" /></div>',"\n"; //--- Fin bloc detail_corps_event
 
@@ -559,11 +568,10 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// S'il n'y a aucun avis, proposer d'en écrire un
 	if ($total_entrees == 0) {
 		echo '<div class="head_detail_event_bloc_2">
-				<div class="top_left_bloc_donner_avis"></div>
 				<span class="ico_float_droite">
 					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.jpg" vspace="4" alt="donnez votre avis" /></a>
 				</span>
-				<span class="titre_paragr_detail_event" style="width:440px; ">Vos avis sur "',$donnees['nom_event'],'"</span>
+				<span class="titre_paragr_detail_event">Vos avis sur "',$donnees['nom_event'],'"</span>
 			</div>
 		
 			<br />
@@ -578,9 +586,8 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	else	
 	{			
 		echo '<div class="head_detail_event_bloc_2">
-				<div class="top_left_bloc_avis"></div>
 				<span class="nombre_avis">',$total_entrees,'</span>
-				<span class="titre_paragr_detail_event" style="width:440px; ">Il y a ',$total_entrees,' avis sur "',$donnees['nom_event'],'"</span>
+				<span class="titre_paragr_detail_event">Il y a ',$total_entrees,' avis sur "',$donnees['nom_event'],'"</span>
 				<span class="ico_float_droite">
 					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.jpg" vspace="4" alt="donnez votre avis" /></a>
 					<a href="agenda/spip/print_avis_event.php?id_event=',$id_event,'" target="_blank" title="Imprimer les avis des lecteurs">
@@ -640,15 +647,6 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	if (! $donnees['critique_event'])
 		$donnees['critique_event'] = saisonprecedente($id_event, 'critique');
 	if ($donnees['critique_event']) {
-		echo '<div class="detail_event_bloc_2">',"\n",'
-				<div class="head_detail_event_bloc_2">
-					<div class="top_left_bloc_critique"></div>
-					<span class="titre_paragr_detail_event">Critique</span>
-					<span class="ico_float_droite">
-						<a href="',generer_url_entite(112, 'rubrique', 'id_event='.$id_event),'" title="Imprimer la critique" target="_blank">
-						<img src="agenda/design_pics/ico_impr.jpg" hspace="10" alt="imprimer la critique" /></a>
-					</span>	
-				</div>',"\n\n";
 ?>
 	<!-- Critique provenant d'un article SPIP -->
 	<div class="detail_corps_event">
@@ -659,17 +657,23 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			[<p>(#TEXTE)</p>]
 			[<div class="ps">(#PS)</div>]
 			<br />
-			<BOUCLE_etoilecritique(DOCUMENTS){id_article}{fichier LIKE %etoile%}{mode=image}{0,1}>
+			<BOUCLE_etoilecritique(DOCUMENTS){id_article}{fichier LIKE %etoile%}{mode=image}{extension=jpg}{0,1}>
 [<?php
-	$codejavascript .= 'etoilecritique = \'<img src="(#FICHIER|attribut_html)" alt="" />\'; ';
+	$codejavascript .= 'etoilecritique = \'(#FICHIER|substr{8,3})\'; ';
 ?>]
 			</BOUCLE_etoilecritique>
+
+			<br style="clear:both;" />
+			<span class="ico_float_droite">
+				<a href="',generer_url_entite(112, 'rubrique', 'id_event='.$id_event),'" title="Imprimer la critique" target="_blank">
+				<img src="agenda/design_pics/ico_impr.jpg" hspace="10" alt="imprimer la critique" /></a>
+			</span>	
 		</BOUCLE_artcritique>
 			La critique n'a pas été trouvée
 		<//B_artcritique>
+		<br style="clear:both;" />
 	</div>
 <?php
-		echo '</div>',"\n\n" ; //--- Fin bloc critique detail_event_bloc_2
 	}
 	else
 		$codejavascript .= 'tabonglet.critique = false; ';
@@ -684,15 +688,6 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	if (! $donnees['chronique_event'])
 		$donnees['chronique_event'] = saisonprecedente($id_event, 'chronique');
 	if ($donnees['chronique_event']) {
-		echo '<div class="detail_event_bloc_2">',"\n",'
-				<div class="head_detail_event_bloc_2">
-					<div class="top_left_bloc_chronique"></div>
-					<span class="titre_paragr_detail_event">Chronique</span>
-					<span class="ico_float_droite">
-						<a href="',generer_url_entite(156, 'rubrique', 'id_event='.$id_event),'" title="Imprimer la chronique" target="_blank">
-						<img src="agenda/design_pics/ico_impr.jpg" hspace="10" alt="imprimer la chronique" /></a>
-					</span>	
-				</div>',"\n\n";
 ?>
 	<!-- Chronique provenant d'un article SPIP -->
 	<div class="detail_corps_event">
@@ -702,12 +697,18 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			[<p>(#CHAPO)</p>]
 			[<p>(#TEXTE)</p>]
 			[<div class="ps">(#PS)</div>]
+
+			<br style="clear:both;" />
+			<span class="ico_float_droite">
+				<a href="',generer_url_entite(156, 'rubrique', 'id_event='.$id_event),'" title="Imprimer la chronique" target="_blank">
+				<img src="agenda/design_pics/ico_impr.jpg" hspace="10" alt="imprimer la chronique" /></a>
+			</span>	
 		</BOUCLE_artchronique>
 			La chronique n'a pas été trouvée
 		<//B_artchronique>
+		<br style="clear:both;" />
 	</div>
 <?php
-		echo '</div>',"\n\n" ; //--- Fin bloc chronique detail_event_bloc_2
 	}
 	else
 		$codejavascript .= 'tabonglet.chronique = false; ';
@@ -723,43 +724,37 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	if (! $donnees['interview_event'])
 		$donnees['interview_event'] = saisonprecedente($id_event, 'interview');
 	if ($donnees['interview_event']) {
-		echo '<div class="detail_event_bloc_2">
-				<div class="head_detail_event_bloc_2">
-					<div class="top_left_bloc_interview"></div>
-					<span class="titre_paragr_detail_event">Interview</span>
-				</div>';
-			echo '<div class="detail_corps_event">' ;
-				echo '<div>',"\n";
+			echo '<div class="detail_corps_event">&nbsp;<br />' ;
 
-				//--- Se connecter à comedien.be, voir rubrique=66.html
-				$k = 0; $chn = '';
-				$fp = fsockopen('www.comedien.be', 80, $k, $chn, 10);
-				if (! $fp)
-					echo '--- Connexion impossible : ',$k,' : ',$chn,' ---';
-				else {
-					//--- Envoyer la requête
-					$chn = 'spip.php?page=interview&id_article='.$donnees['interview_event'];
-					fputs($fp, 'GET /'.$chn.' HTTP/1.0'."\r\n");
-					fputs($fp, 'HOST: www.comedien.be'."\r\n");
-					fputs($fp, "Connection: close\r\n\r\n");
+			//--- Se connecter à comedien.be, voir rubrique=66.html
+			$k = 0; $chn = '';
+			$fp = fsockopen('www.comedien.be', 80, $k, $chn, 10);
+			if (! $fp)
+				echo '--- Connexion impossible : ',$k,' : ',$chn,' ---';
+			else {
+				//--- Envoyer la requête
+				$chn = 'spip.php?page=interview&id_article='.$donnees['interview_event'];
+				fputs($fp, 'GET /'.$chn.' HTTP/1.0'."\r\n");
+				fputs($fp, 'HOST: www.comedien.be'."\r\n");
+				fputs($fp, "Connection: close\r\n\r\n");
 
-					//--- Recevoir la réponse
-					$k = false;
-					while (! feof($fp)) {
-						$chn = fgets($fp, 4096);
-						if ($k)
-							echo $chn,"\n";
-						else if (strpos($chn, '**V_COM**') !== false)
-							$k = true;
-					}
-					fclose($fp);
+				//--- Recevoir la réponse
+				$k = false;
+				while (! feof($fp)) {
+					$chn = fgets($fp, 4096);
+					if ($k)
+						echo $chn,"\n";
+					else if (strpos($chn, '**V_COM**') !== false)
+						$k = true;
 				}
-				unset($fp, $chn, $k);
+				fclose($fp);
+			}
+			unset($fp, $chn, $k);
 
-				echo '</div>',"\n";
-				echo '<a href="',generer_url_entite(66, 'rubrique'),'">Voir les autres interviews</a>';
-			echo '</div>
-			</div>',"\n\n"; //---- fin detail_event_bloc_2
+			echo '<br style="clear:both;" /><a href="',generer_url_entite(66, 'rubrique'),'">Voir les autres interviews</a>',"\n";
+
+			echo '<br style="clear:both;" />',"\n";
+			echo '</div>',"\n";
 	}
 	else
 		$codejavascript .= 'tabonglet.interview = false; ';
@@ -781,15 +776,13 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		$donnees_onglet = '<br /> <br /><a href="agenda/videos/'.$donnees['video_event'].'" target="_blank" title="Cliquez ici pour voir la vidéo"><img src="agenda/design_pics/ico_video_2.jpg" alt="voir la vidéo" /></a>' ;
 
 	if ($donnees_onglet) {
-		echo '<div class="detail_event_bloc_2">
-				<div class="head_detail_event_bloc_2">
-					<div class="top_left_bloc_video"></div>
-				</div>';
-			echo '<div class="detail_corps_event">' ;
-				echo '<div align="center">',$donnees_onglet,'</div>',"\n";
-				echo '<a href="',generer_url_entite(155, 'rubrique'),'">Voir les autres vidéos</a>';
-			echo '</div>
-			</div>',"\n\n"; //---- fin detail_event_bloc_2
+		echo '<div class="detail_corps_event">' ;
+		echo '<div align="center">',$donnees_onglet,'</div>',"\n";
+
+		echo '<br style="clear:both;" /><a href="',generer_url_entite(155, 'rubrique'),'">Voir les autres vidéos</a>',"\n";
+
+		echo '<br style="clear:both;" />',"\n";
+		echo '</div>',"\n";
 	}
 	else
 		$codejavascript .= 'tabonglet.video = false; ';
@@ -804,6 +797,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	echo '<div id="zongletmapping" class="ongletevent">',"\n";
 	//--- off $codejavascript .= 'tabonglet.mapping = false; ';
 	echo '<div id="map_canvas" style="width: 500px; height: 500px;"></div>';
+	echo '<br style="clear:both;" />',"\n";
 	echo '</div>',"\n"; //--- fin ongletevent mapping
 
 

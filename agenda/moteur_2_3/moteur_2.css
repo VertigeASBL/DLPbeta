@@ -143,8 +143,8 @@
 	margin-right: 5px;
 	margin-bottom: 2px;
 	margin-left: 5px;
-	width:30px ;
-	height:30px ;
+	width:30px;
+	height:30px;
 	padding:1px;
 	border:1px solid #000000;
 	background-color:#FFFFFF;
@@ -157,6 +157,7 @@
 	padding:1px;
 	border:1px solid #000000;
 	background-color:#FFFFFF;
+	z-index:50;
 }
 
 INPUT.go_recherche_ajax {

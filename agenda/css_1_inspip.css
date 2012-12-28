@@ -396,7 +396,6 @@ div.breve span.help_cursor {
 	font-size: 17px;
 	color:#8F0133;
 	font-weight: bold;
-	padding-left: 15px;
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
@@ -433,22 +432,15 @@ div.breve span.help_cursor {
 
 .detail_event_bloc_1 {
 	color: #333333;
-	background-color: #E9E9E9;
 }
 
 .detail_event_bloc_2 {
-	/* float:left;
-	color: #333333;
-	background-color: #E9E9E9; */
 }
-
-
 .head_detail_event_bloc_2 {
 	position: relative;
-	background: #E9E9E9 url('http://www.demandezleprogramme.be/agenda/design_pics/bg_cadres_det_event.jpg') repeat-x top;
 	height:34px;
 }
-
+/*
 .detail_event_bloc_2 .top_left_bloc_critique, .top_left_bloc_chronique, .detail_event_bloc_2 .top_left_bloc_avis , .detail_event_bloc_2 .top_left_bloc_calendrier, .detail_event_bloc_2 .top_left_bloc_donner_avis, .detail_event_bloc_2 .top_left_bloc_video { 
 	height: 54px;
 	width: 48px;
@@ -482,8 +474,12 @@ div.breve span.help_cursor {
 	background-image: url("http://www.demandezleprogramme.be/agenda/design_pics/ico_calendrier.jpg");
 	z-index: 20;
 }
+*/
 .detail_calendrier {
-	width:180px; float:right; text-align:right;
+	width:195px; float:right; text-align:left;
+}
+.detail_calendrier .calendar {
+	width:195px;
 }
 .top_left_bloc_avis {
 	top: 0px;
@@ -552,22 +548,14 @@ div.breve span.help_cursor {
 	list-style-image: none;
 }
 
-.detail_event_lieu a{
-	font-size: 12px;
-	color: #009A99;
-	padding-left: 10px;
-	padding-right: 5px;
-	font-weight: bold;
-	font-family: Georgia, "Times New Roman", Times, serif;
-}
-
-.detail_event_genre {
-	font-family: Georgia, "Times New Roman", Times, serif;
+.detail_event_lieu, .detail_event_genre {
 	font-size: 13px;
 	color: #000000;
-	padding-left: 0px;
-	padding-right: 5px;
 	font-weight: bold;
+	font-family:Arial, Helvetica, sans-serif;
+}
+.detail_event_lieu a{
+	color: #009A99;
 }
 
 .detail_event_date {
@@ -582,13 +570,14 @@ div.breve span.help_cursor {
 
 .detail_event_photo {
 	float:left;
-	margin:0px 6px 0px 0px;
+	margin:0 5px 5px 0;
 	text-align: left;
 }
-.detail_event_photo img, .detail_event_photo a img, .detail_event_photo a img:hover {
+.detail_event_photo img {
 	border: 1px solid #000000;
 	background-color: #FFFFFF;
 	padding: 1px;
+	width:154px;
 }
 
 
@@ -864,12 +853,12 @@ z-index:500;
 	left:-5000px;
 }
 .tableinfosevent {
-	float:left; width:320px;
-	/*margin:0 10px;*/
+	float:left; width:270px;
+	margin:0 0 0 10px;
 }
 .tableinfosevent TD {
 	vertical-align:top;
-	border:1px solid #cccccc;
 	padding:2px;
 	font-size: 12px;
 }
+.tableinfogauche { font-weight:bold; width:130px; }
