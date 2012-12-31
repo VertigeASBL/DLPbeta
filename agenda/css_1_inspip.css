@@ -397,6 +397,7 @@ div.breve span.help_cursor {
 	color:#8F0133;
 	font-weight: bold;
 	font-family: Georgia, "Times New Roman", Times, serif;
+	padding:0; margin:0 0 8px 0;
 }
 
 .titre_paragr_detail_event {
@@ -505,9 +506,7 @@ div.breve span.help_cursor {
 	float:right;
 	font-size: 10px;
 	color: #009A99;
-	padding-top: 15px;
-	padding-left: 10px;
-	padding-right: 5px;
+	padding:0 5px 0 10px;
 	font-weight: bold;
 	position: relative;
 }

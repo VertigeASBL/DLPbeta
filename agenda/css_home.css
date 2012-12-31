@@ -235,13 +235,13 @@ h3.titre_actu a:hover{
 	position:absolute; top:90px; left:-10px;
 	display:block; width:42px; height:43px; margin:0; padding:0;
 	cursor:pointer; text-decoration:none;
-	background:url(../squelettes/js/caroufredsel/prev-horizontal.gif) no-repeat;
+	background:url(../squelettes/js/caroufredsel/prev-horizontal.png) no-repeat;
 	z-index:9;
 }
 #carounext {
 	position:absolute; top:90px; right:-1px;
 	display:block; width:42px; height:43px; margin:0; padding:0;
 	cursor:pointer; text-decoration:none;
-	background:url(../squelettes/js/caroufredsel/next-horizontal.gif) no-repeat;
+	background:url(../squelettes/js/caroufredsel/next-horizontal.png) no-repeat;
 	z-index:9;
 }

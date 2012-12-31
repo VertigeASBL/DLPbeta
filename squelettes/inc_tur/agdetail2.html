@@ -318,12 +318,12 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	// ____________________________________________
 	// NOM EVENEMENT (titre)
-	echo '<span class="detail_event_titre">'.monraccourcirchaine($donnees['nom_event'], 45).'</span>'."\n";
+	echo '<h2 class="detail_event_titre">'.monraccourcirchaine($donnees['nom_event'], 45).'</h2>'."\n";
 
 	// ____________________________________________
 	// VILLE
 	if (isset($regions[$donnees['ville_event']]))
-	echo '<br /><span class="detail_event_genre"><acronym title="Ville où du spectacle">'.$regions[$donnees['ville_event']].'</acronym></span>'."\n";	
+	echo '<span class="detail_event_genre"><acronym title="Ville où du spectacle">'.$regions[$donnees['ville_event']].'</acronym></span>'."\n";	
 
 	// ____________________________________________
 	// GENRE
@@ -340,7 +340,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ____________________________________________
 	// Vignette
 	if ($donnees['pic_event_1'] == 'set')
-		echo '<img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" alt="" class="onglet6" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
+		echo '<img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" alt="" class="onglet7" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
 	
 
 	//_________________ Infos utiles _____________________
@@ -542,9 +542,9 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		$j = $i == 11 ? 1 : $i;
 		if ($donnees['pic_event_'.$j] == 'set') {
 			if ($n % 4 == 0)
-				echo '<br style="clear:both;" /><img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" class="onglet6" width="158" style="float:left; width:158px; margin:0 0 8px 4px;" />',"\n";
+				echo '<br style="clear:both;" /><img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" class="onglet7" width="158" style="float:left; width:158px; margin:0 0 8px 4px;" />',"\n";
 			else
-				echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" class="onglet6" width="158" style="float:left; width:158px; margin:0 0 8px 8px;" />',"\n";
+				echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" class="onglet7" width="158" style="float:left; width:158px; margin:0 0 8px 8px;" />',"\n";
 			$n++;
 		}
 	}
