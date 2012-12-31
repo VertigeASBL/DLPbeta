@@ -287,7 +287,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	// titre parent
 	if ($donnees_parent)
-		echo '<h2><a href="',generer_url_entite(92, 'rubrique', 'id_event='.$donnees['parent_event']),'" title="Voir en détail">',monraccourcirchaine($donnees_parent['nom_event'], 45),'</a></h2>';
+		echo '<h2 class="detail_event_titre"><a href="',generer_url_entite(92, 'rubrique', 'id_event='.$donnees['parent_event']),'" title="Voir en détail" style="color:#8F0133;">',monraccourcirchaine($donnees_parent['nom_event'], 45),'</a></h2>';
 
 	// ______________________
 	// ICONES FLOTTANTES
@@ -318,7 +318,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	// ____________________________________________
 	// NOM EVENEMENT (titre)
-	echo '<h2 class="detail_event_titre">'.monraccourcirchaine($donnees['nom_event'], 45).'</h2>'."\n";
+	echo '<h2 class="detail_event_titre"'.($donnees_parent ? ' style="color:#009A99;">' : '>').monraccourcirchaine($donnees['nom_event'], 45).'</h2>'."\n";
 
 	// ____________________________________________
 	// VILLE
@@ -383,7 +383,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 		// Afficher bouton de Réservation
 		if ($donnees_prod && $donnees_prod['email_reservation'])
-			echo '<tr><td colspan="2"><a href="',generer_url_entite(115, 'rubrique', 'id_event='.$id_event),'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.jpg" hspace="2" align="middle" alt="réserver" /></a></td></tr>',"\n";
+			echo '<tr><td colspan="2"><a href="',generer_url_entite(115, 'rubrique', 'id_event='.$id_event),'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.gif" alt="réserver" /></a></td></tr>',"\n";
 	}
 
 	echo '</table>'."\n";
@@ -471,7 +471,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 
 	// afficher Envoyer à un ami;
-	echo '<a href="',generer_url_entite(132, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/e_card/pics/ico_envoyer_ami.jpg" title="Informer un ami" alt="informer un ami" style="margin:4px 0;" /></a>',"\n";
+	echo '<a href="',generer_url_entite(132, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/e_card/pics/ico_envoyer_ami.gif" title="Informer un ami" alt="informer un ami" style="margin:4px 0;" /></a>',"\n";
 
 	// facebook j'aime
 	echo '<br /><div class="fb-like" data-href="[(#SELF|url_absolue|rawurlencode)]" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>'."\n";

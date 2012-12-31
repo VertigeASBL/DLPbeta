@@ -140,26 +140,29 @@ session_start();
 <div class="alerte">Notre module de concours est en développement : nous effectuons actuellement les derniers tests. Il n'y a donc pour l'instant rien à gagner. Merci de revenir plus tard.</div> -->
 
 		<INCLURE{fond=inc/varticle}{id_rubrique}>
-	<?php
-		if (! isset($GLOBALS['spip_connect_version'])) {
+<?php
+	if (! isset($GLOBALS['spip_connect_version'])) {
 		include_once('ecrire/base/connect_sql.php');
 		require('config/connect.php');
 	}
 
-
+	include_spip('inc/session');
+	if ((int) session_get('id_spectateur')) {
 		// ********************************************************************************
 		// Affichage des concours :
 		// *************************
-		
+
 		$public_cible = 'jou01' ; // Groupe de joueurs auquel s'adresse ce concours
 		$page_contenant_concours = '-Concours,95-' ; // Pour les liens de retour
 		$bouton_tout_savoir = 'conc_tout_savoir.gif' ;
 		$bouton_retour = 'conc_retour.gif' ;
 		include('agenda/spip/conc_public.php'); 
-		
-		// ********************************************************************************
-		?>
 
+		// ********************************************************************************
+	}
+	else
+		echo '<br /><div class="alerte"><br />Veuillez vous connecter d\'abord au moyen du <br />formulaire de login à droite<br /><br /></div>';
+?>
 	</div>
 	<div class="colonne2">
 		<INCLURE{fond=inc_tur/recherche_rapide}>
