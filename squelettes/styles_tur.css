@@ -470,12 +470,15 @@ UL#menu UL LI{
 	padding:1px;
 }
 .onglet6{
+	background-color:#FFFFFF;
 	border:1px solid #333333;
-	padding:1px; margin-bottom:5px;
+	padding:1px;
+	margin-bottom:5px;
 }
 .onglet6:hover {
 	background-color:#009A99;
 	border:1px solid #333333;
+	padding:1px;
 }
 .portfolio{
 	float:left;
@@ -1002,16 +1005,15 @@ INPUT.recherche{
 .ongletpremier0 { background:url(assets/onglet_p0.gif) no-repeat; }
 .ongletpremier1 { background:url(assets/onglet_p1.gif) no-repeat; }
 
-/* #ongletavis { width:65px; } */
-.etoilecritique1et { padding:0 55px; background:url(assets/etoiles10.gif) no-repeat right top; }
-.etoilecritique1_5 { padding:0 55px; background:url(assets/etoiles15.gif) no-repeat right top; }
-.etoilecritique2et { padding:0 55px; background:url(assets/etoiles20.gif) no-repeat right top; }
-.etoilecritique2_5 { padding:0 55px; background:url(assets/etoiles25.gif) no-repeat right top; }
-.etoilecritique3et { padding:0 55px; background:url(assets/etoiles30.gif) no-repeat right top; }
-.etoilecritique3_5 { padding:0 55px; background:url(assets/etoiles35.gif) no-repeat right top; }
-.etoilecritique4et { padding:0 55px; background:url(assets/etoiles40.gif) no-repeat right top; }
-.etoilecritique4_5 { padding:0 55px; background:url(assets/etoiles45.gif) no-repeat right top; }
-.etoilecritique5et { padding:0 55px; background:url(assets/etoiles50.gif) no-repeat right top; }
+.etoilecritique1et { height:18px; padding:2px 53px; background:url(assets/etoiles10.gif) no-repeat 0% 50%; }
+.etoilecritique1_5 { height:18px; padding:2px 53px; background:url(assets/etoiles15.gif) no-repeat 0% 50%; }
+.etoilecritique2et { height:18px; padding:2px 53px; background:url(assets/etoiles20.gif) no-repeat 0% 50%; }
+.etoilecritique2_5 { height:18px; padding:2px 53px; background:url(assets/etoiles25.gif) no-repeat 0% 50%; }
+.etoilecritique3et { height:18px; padding:2px 53px; background:url(assets/etoiles30.gif) no-repeat 0% 50%; }
+.etoilecritique3_5 { height:18px; padding:2px 53px; background:url(assets/etoiles35.gif) no-repeat 0% 50%; }
+.etoilecritique4et { height:18px; padding:2px 53px; background:url(assets/etoiles40.gif) no-repeat 0% 50%; }
+.etoilecritique4_5 { height:18px; padding:2px 53px; background:url(assets/etoiles45.gif) no-repeat 0% 50%; }
+.etoilecritique5et { height:18px; padding:2px 53px; background:url(assets/etoiles50.gif) no-repeat 0% 50%; }
 
 #suggestion ul li {
 	background: none;

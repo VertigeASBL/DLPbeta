@@ -340,7 +340,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ____________________________________________
 	// Vignette
 	if ($donnees['pic_event_1'] == 'set')
-		echo '<span class="detail_event_photo"><img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" title="'.htmlspecialchars($donnees['nom_event']).'" alt="vignette" width="162" /></span>'."\n";
+		echo '<img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" alt="" class="onglet6" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
 	
 
 	//_________________ Infos utiles _____________________
@@ -493,7 +493,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	echo '<ul id="ongletsdetails">',"\n";
 	echo '<li id="ongletdescriptif" class="onglettitre ongletpremier0">Descriptif<div class="ongletdroite0"></div></li>',"\n";
 	echo '<li id="ongletavis" class="onglettitre ongletgauche0">Avis<span id="ongletplusavis"> (0)</span><div class="ongletdroite0"></div></li>',"\n";
-	echo '<li id="ongletcritique" class="onglettitre ongletgauche0">Critique<span id="ongletpluscritique"></span><div class="ongletdroite0"></div></li>',"\n";
+	echo '<li id="ongletcritique" class="onglettitre ongletgauche0">Critique&nbsp;<span id="ongletpluscritique"></span><div class="ongletdroite0"></div></li>',"\n";
 	echo '<li id="ongletchronique" class="onglettitre ongletgauche0">Chronique<div class="ongletdroite0"></div></li>',"\n";
 	echo '<li id="ongletinterview" class="onglettitre ongletgauche0">Interview<div class="ongletdroite0"></div></li>',"\n";
 	echo '<li id="ongletvideo" class="onglettitre ongletgauche0">Vidéo<div class="ongletdroite0"></div></li>',"\n";
@@ -533,21 +533,21 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	else
 		echo 'aucune description',"\n";
 
-	$n = 0;
-	for ($i = 2; $i <= 11; $i++) {
-		$j = $i == 11 ? 1 : $i;
-		if ($donnees['pic_event_'.$j] == 'set') {
-			if ($n % 3 == 0)
-				echo '<br style="clear:both;" /><br />',"\n";
-			echo '<span class="detail_event_photo"><img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" /></span>',"\n";
-			$n++;
-		}
-	}
-
 	echo '<br style="clear:both;" /><span class="ico_float_droite"><a href="agenda/spip/print_description_event.php?id_event='.$id_event.'" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.jpg"  hspace="10" align="middle" /></a></span>',"\n";
 
 	echo '<br style="clear:both;" /></div>',"\n"; //--- Fin bloc detail_corps_event
 
+	$n = 0;
+	for ($i = 2; $i <= 11; $i++) {
+		$j = $i == 11 ? 1 : $i;
+		if ($donnees['pic_event_'.$j] == 'set') {
+			if ($n % 4 == 0)
+				echo '<br style="clear:both;" /><img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" class="onglet6" width="158" style="float:left; width:158px; margin:0 0 8px 4px;" />',"\n";
+			else
+				echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_'.$j.'.jpg" alt="" class="onglet6" width="158" style="float:left; width:158px; margin:0 0 8px 8px;" />',"\n";
+			$n++;
+		}
+	}
 	echo '<br style="clear:both;" />
 	</div>',"\n"; //--- fin ongletevent descriptif
 

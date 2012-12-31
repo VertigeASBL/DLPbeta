@@ -346,7 +346,7 @@ div.breve span.help_cursor {
 	padding-left:50px;
 	background-image:url(design_pics/evenfant.gif); background-position:-40px 50%; background-repeat:no-repeat;
 }
-.brenfant .breve_pic IMG, .brenfant .detail_event_photo IMG {
+.brenfant .breve_pic IMG {
 	width:60px;
 }
 
@@ -570,16 +570,8 @@ div.breve span.help_cursor {
 
 .detail_event_photo {
 	float:left;
-	margin:0 5px 5px 0;
-	text-align: left;
+	margin:0px 20px 10px 0px;
 }
-.detail_event_photo img {
-	border: 1px solid #000000;
-	background-color: #FFFFFF;
-	padding: 1px;
-	width:154px;
-}
-
 
 .nom_avis {
 	font-size: 12x;

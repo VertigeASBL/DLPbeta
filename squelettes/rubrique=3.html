@@ -172,7 +172,7 @@ require 'agenda/inc_var.php';
 						[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
 					</h4>
 		<BOUCLE_etoiles(DOCUMENTS){id_article=#VALEUR|table_valeur{id_article}}{fichier LIKE %etoile%}{mode=image}{0,1}>
-				<img src="#FICHIER" alt="" /><br />
+					[<div class="etoilecritique(#FICHIER|substr{8,3})"></div>]
 		</BOUCLE_etoiles>
 					[par (#VALEUR|table_valeur{nom})]
 					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-120,30}})</div>]
