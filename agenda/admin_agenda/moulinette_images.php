@@ -41,10 +41,12 @@ function redim_image($source) {
 
 	$resultat = '../pics_events_2/'.$source;
 	$uploaded_pic = imagecreatefromjpeg('../pics_events/'.$source);
-	if (! $uploaded_pic)
+	if (! $uploaded_pic) {
+		echo '<br />file_exists ',file_exists('../pics_events/'.$source) ? 'oui' : 'non';
 		return false;
+	}
 //	echo '<br /><img src="../pics_events/',$source,'" alt="" />';
-	echo '<br />',$source;
+//	echo '<br />',$source;
 	$largeur_uploaded = imagesx($uploaded_pic);
 	$hauteur_uploaded = imagesy($uploaded_pic);
 
@@ -91,7 +93,9 @@ function redim_image($source) {
 		unlink($resultat);
 	imagejpeg($resample, $resultat, $jpeg_quality);// Enregistrer la miniature sous le nom
 //	echo '<br /><img src="',$resultat,'" alt="" /><br />';
-	echo '<br />X : ',imagesx($resample),' Y : ',imagesy($resample);
+//	echo '<br />X : ',imagesx($resample),' Y : ',imagesy($resample);
+	if (imagesx($resample) != $targ_w || imagesy($resample) != $targ_h)
+		return false;
 	return true;
 }
 
@@ -99,16 +103,16 @@ if (isset($_GET['prm']) && $_GET['prm'] == '6gms87z3x') {
 
 	$req = mysql_query('SELECT id_event,pic_event_1,pic_event_2,pic_event_3,pic_event_4,pic_event_5,pic_event_6,pic_event_7,pic_event_8,pic_event_9,pic_event_10 FROM ag_event WHERE pic_prov=\'\' ORDER BY id_event DESC') or die('Erreur SQL : '.mysql_error());
 	while ($data = mysql_fetch_array($req)) {
-		echo '<hr />',$data['id_event'];
+		echo ' / ',$data['id_event'];
 		for ($num = 1; $num <= 10; $num++)
 			if ($data['pic_event_'.$num] != '') {
-				echo '<br />',$num,"\n";
+				echo ' - ',$num,"\n";
 //				echo $num,'<img src="../pics_events/event_'.$data['id_event'].'_'.$num.'.jpg" alt="" />',"\n";
 				if (! redim_image('event_'.$data['id_event'].'_'.$num.'.jpg')) {
-					echo '<br />erreur redim_image<hr />',"\n";
-					break;
+					echo '<br />erreur redim_image event_'.$data['id_event'].'_'.$num.'.jpg<hr />',"\n";
+//					break 2;
 				}
-				echo '<br />';
+//				echo '<br />';
 			}
 		$num = mysql_query('UPDATE ag_event SET pic_prov=\'1\' WHERE id_event='.$data['id_event']) or die('Erreur SQL : '.mysql_error());
 	}
@@ -118,7 +122,11 @@ echo '<hr />',"\n";
 mysql_close($db_link);
 //	echo '</pre>';
 /*
-	update `ag_event` set pic_prov=''
+	UPDATE ag_event SET pic_prov=''
+	SELECT pic_prov,COUNT(*) AS nbr FROM ag_event GROUP BY pic_prov
+
+	http://localhost/DLPbeta/DLPbeta/agenda/admin_agenda/moulinette_images.php?prm=6gms87z3x
+	http://www.demandezleprogramme.be/beta/agenda/admin_agenda/moulinette_images.php?prm=6gms87z3x
 */
 ?>
 </body>
