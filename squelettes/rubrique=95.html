@@ -147,7 +147,7 @@ session_start();
 	}
 
 	include_spip('inc/session');
-	if ((int) session_get('id_spectateur')) {
+	if ((int) session_get('id_spectateur') || ! isset($_GET['id']) || ! isset($_GET['lot'])) {
 		// ********************************************************************************
 		// Affichage des concours :
 		// *************************

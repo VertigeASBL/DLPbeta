@@ -486,6 +486,13 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	}
 		
 	// -----------------------------------------
+	// CHOIX DE L'HEURE DE L'EVENEMENT 
+	if (isset($_POST['heure_minute_event']) AND ($_POST['heure_minute_event'] != 'NULL')) 
+		$heure_minute_event = mysql_real_escape_string(str_replace('’', '\'', $_POST['heure_minute_event']));
+	else
+		$heure_minute_event = $indetermine;
+
+	// -----------------------------------------
 	// CHOIX DE LA REGION OU A LIEU L'EVENEMENT 
 	
 	// Liste déroulante des régions
@@ -595,7 +602,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	}
 	
 	// -----------------------------------------
-	// TETEST TEL RESERVATION EVENEMENT
+	// TEST TEL RESERVATION EVENEMENT
 	if (isset($_POST['tel_reserv_event']) AND ($_POST['tel_reserv_event'] != NULL)) 
 	{
 		$tel_reserv_event = htmlentities($_POST['tel_reserv_event'], ENT_QUOTES);
@@ -613,19 +620,18 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	else $email_reservation = $indetermine;
 
 	// -----------------------------------------
-	// TEST PRIX MINIMUM
-	if (isset($_POST['prix_min_event'])) 
-	{
-		$prix_min_event = (float) str_replace(',', '.', $_POST['prix_min_event']);
-		$prix_min_event = $prix_min_event >= 0.01 ? number_format($prix_min_event, 2, ',', '') : '';
-	}
-	// -----------------------------------------
+	// TEST PRIX
+	if (isset($_POST['prix_event']) AND ($_POST['prix_event'] != 'NULL')) 
+		$prix_event = mysql_real_escape_string(str_replace('’', '\'', $_POST['prix_event']));
+	else
+		$prix_event = $indetermine;
+	/* -----------------------------------------
 	// TEST PRIX MAXIMUM
 	if (isset($_POST['prix_max_event']))
 	{
 		$prix_max_event = (float) str_replace(',', '.', $_POST['prix_max_event']);
 		$prix_max_event = $prix_max_event >= 0.01 ? number_format($prix_max_event, 2, ',', '') : '';
-	}
+	} */
 
 	// -----------------------------------------
 	// TEST LIEN AVEC SAISON PRECEDENTE
@@ -737,14 +743,14 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		nom_event = '$nom_event' ,
 		date_event_debut = '$date_event_debut' ,
 		date_event_fin = '$date_event_fin' ,
+		heure_minute_event = '$heure_minute_event' ,
 		ville_event = '$ville_event' ,
 		pres_event = $id_pres_event ,
 		resume_event = '$resume_event_2_db' ,
 		description_event = '$description_event_2_db' ,
 		genre_event = '$genre_event' ,
 		tel_reserv_event = '$tel_reserv_event' ,
-		prix_min_event = '$prix_min_event' ,
-		prix_max_event = '$prix_max_event',
+		prix_event = '$prix_event' ,
 		email_reservation = '$email_reservation'
 
 		WHERE id_event = '$id' LIMIT 1 ") ;
@@ -816,6 +822,7 @@ else // Si on n'a pas appuyé sur le bouton UPDATE -> récupérer les données de la
 	$parent_event = $donnees['parent_event'];
 	$lieu_event = $donnees['lieu_event'];
 	$nom_event = stripslashes($donnees['nom_event']);
+	$heure_minute_event = $donnees['heure_minute_event'];
 	$ville_event = $donnees['ville_event'];
 	$id_pres_event = $donnees['pres_event'];
 	$resume_event = $donnees['resume_event'];
@@ -823,8 +830,7 @@ else // Si on n'a pas appuyé sur le bouton UPDATE -> récupérer les données de la
 	$genre_event = $donnees['genre_event'];
 	$tel_reserv_event = $donnees['tel_reserv_event'];
 	$email_reservation = $donnees['email_reservation'];
-	$prix_min_event = $donnees['prix_min_event'];
-	$prix_max_event = $donnees['prix_max_event'];
+	$prix_event = $donnees['prix_event'];
 	$pic_event_1 = $donnees['pic_event_1'];
 	
 	$date_event_debut = $donnees['date_event_debut'];
@@ -1289,6 +1295,18 @@ echo '<input type="hidden" name="jours_actifs_event" value="',implode(',', $jour
 ?>          </tr>
           
           <tr>
+            <td>
+			 Heure de l'événement
+			</td>
+            <td>
+<?php
+			// Liste des heures
+			echo '<input type="text" id="heure_minute_event" name="heure_minute_event" value="'.htmlspecialchars($heure_minute_event).'" size="60" />';
+?>
+			</td>
+          </tr>
+
+          <tr>
             <td>R&eacute;gion dans laquelle se d&eacute;roule l'&eacute;v&eacute;nement
 <?php
 	if (isset ($error_ville_event) AND $error_ville_event != NULL) {echo $error_ville_event ; }
@@ -1378,19 +1396,11 @@ echo '<input type="hidden" name="jours_actifs_event" value="',implode(',', $jour
           	</td>
           </tr>
           <tr>
-            <td>Prix minimum</td>
+            <td>Prix</td>
             <td>
-				<input name="prix_min_event" type="text" id="prix_min_event" value="<?php 
-			if (isset($prix_min_event)) echo $prix_min_event;
-				?>" size="10" /> &euro; &nbsp; <span class="mini">Indiquez une tranche de prix ou le prix unique.</span>
-            </td>
-          </tr>
-          <tr>
-            <td>Prix maximum</td>
-            <td>
-				<input name="prix_max_event" type="text" id="prix_max_event" value="<?php 
-			if (isset($prix_max_event)) echo $prix_max_event;
-				?>" size="10" /> &euro;
+				<input name="prix_event" type="text" id="prix_event" value="<?php 
+			if (isset($prix_event)) echo htmlspecialchars($prix_event);
+				?>" size="60" />
             </td>
           </tr>
 		<tr>

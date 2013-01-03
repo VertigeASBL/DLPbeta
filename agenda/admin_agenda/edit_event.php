@@ -182,8 +182,8 @@ $(function() {
 <!-- /tinyMCE -->
 
 
-<script type="text/javascript">
-// Fonction pour masquer le champ des heures si on choisit 'En journée"
+<!-- script type="text/javascript">
+/* Fonction pour masquer le champ des heures si on choisit 'En journée"
 function masquer_choix_heure()
 {
 	if(document.getElementById('checkbox_en_journee').checked)
@@ -195,15 +195,12 @@ function masquer_choix_heure()
 		document.getElementById('zone_heure').style.visibility = 'visible';
 	}
 }
-
-
 function forcer_masquer_choix_heure()
 {
 	document.getElementById('zone_heure').style.visibility = 'hidden';
 }
-
-
-</script>
+*/
+</script -->
 
 <link href="../css_back_agenda.css" rel="stylesheet" type="text/css" />
 <link href="../css_calendrier.css" rel="stylesheet" type="text/css" />
@@ -433,7 +430,7 @@ $id = (int) $_GET['id'];
 
 	// -----------------------------------------
 	// TEST HEURE EVENEMENT 
-	if (isset($_POST['checkbox_en_journee']) AND ($_POST['checkbox_en_journee'] == "en_journee"))
+/*	if (isset($_POST['checkbox_en_journee']) AND ($_POST['checkbox_en_journee'] == "en_journee"))
 	{
 		$heure_minute_event = 'jj-jj' ;
 	}
@@ -446,10 +443,12 @@ $id = (int) $_GET['id'];
 		$heure_minute_event = 'nn-nn' ;
 		$error_heure_minute_event = '<div class="error_form">Il faut indiquer une heure pour l\'événement, ou alors cocher la case pour dire que l\'événement se joue en journée, ou qu\'il y a plusieurs représentations</div>';
 		$rec .= '- Heure de l\'événement<br>';
-	}
-	
+	} */
+	if (isset($_POST['heure_minute_event']) AND ($_POST['heure_minute_event'] != NULL)) 
+		$heure_minute_event = mysql_real_escape_string(str_replace('’', '\'', $_POST['heure_minute_event']));
+	else
+		$heure_minute_event = $indetermine;
 	mysql_query("UPDATE `$table_evenements_agenda` SET `heure_minute_event` = '$heure_minute_event' WHERE `id_event` = '$id' LIMIT 1 ");
-
 
 
 	// -----------------------------------------
@@ -606,21 +605,21 @@ $id = (int) $_GET['id'];
 	}
 
 	// -----------------------------------------
-	// TEST PRIX MINIMUM
-	if (isset($_POST['prix_min_event'])) 
-	{
-		$prix_min_event = (float) str_replace(',', '.', $_POST['prix_min_event']);
-		$prix_min_event = $prix_min_event >= 0.01 ? number_format($prix_min_event, 2, ',', '') : '';
-		mysql_query("UPDATE `$table_evenements_agenda` SET `prix_min_event` = '$prix_min_event' WHERE `id_event` = '$id' LIMIT 1 ");
-	}
-	// -----------------------------------------
+	// TEST PRIX
+	if (isset($_POST['prix_event']) AND ($_POST['prix_event'] != NULL)) 
+		$prix_event = mysql_real_escape_string(str_replace('’', '\'', $_POST['prix_event']));
+	else
+		$prix_event = $indetermine;
+	mysql_query("UPDATE `$table_evenements_agenda` SET `prix_event` = '$prix_event' WHERE `id_event` = '$id' LIMIT 1 ");
+
+	/* -----------------------------------------
 	// TEST PRIX MAXIMUM
 	if (isset($_POST['prix_max_event'])) 
 	{
 		$prix_max_event = (float) str_replace(',', '.', $_POST['prix_max_event']);
 		$prix_max_event = $prix_max_event >= 0.01 ? number_format($prix_max_event, 2, ',', '') : '';
 		mysql_query("UPDATE `$table_evenements_agenda` SET `prix_max_event` = '$prix_max_event' WHERE `id_event` = '$id' LIMIT 1 ");
-	}
+	} */
 
 	// -----------------------------------------
 	// TEST IMAGE et VIGNETTE
@@ -763,8 +762,7 @@ if (empty ($_GET['id']) OR $_GET['id'] == NULL) // La variable GET qui donne l'I
 	$description_event = '';
 	$genre_event = '';
 	$tel_reserv_event = '';
-	$prix_min_event = '';
-	$prix_max_event = '';
+	$prix_event = '';
 	$pic_event_1 = '';
 }
 else
@@ -796,8 +794,7 @@ else
 		$description_event = $donnees ['description_event'];
 		$genre_event = $donnees ['genre_event'];
 		$tel_reserv_event = $donnees['tel_reserv_event'];
-		$prix_min_event = $donnees['prix_min_event'];
-		$prix_max_event = $donnees['prix_max_event'];
+		$prix_event = $donnees['prix_event'];
 		$pic_event_1 = $donnees ['pic_event_1'];
 
 		$critique_event = $donnees ['critique_event'];
@@ -838,8 +835,8 @@ else
 		$jours_actifs_event = $donnees ['jours_actifs_event'];
 		$jours_actifs_event = explode(',', $jours_actifs_event);
 		
-		
-		
+		$heure_minute_event = $donnees['heure_minute_event'];
+/*
 		if ($donnees['heure_minute_event'] == 'jj-jj')
 		{
 			$en_journee_est_selected = true ; // cocher la case "En Journée"
@@ -865,7 +862,7 @@ else
 			$heure_event = substr($donnees['heure_minute_event'], 0, 2);
 			$minute_event = substr($donnees['heure_minute_event'], 3, 2);
 		}
-		
+*/
 		
 
 
@@ -1348,17 +1345,18 @@ echo '</select>';
 
           <tr>
             <td>
-			 Choisissez <strong>l'heure</strong> de l'événement ou cochez "En journée" s'il n'y a pas d'heure à préciser
-			 <?php if (isset ($error_heure_minute_event) AND $error_heure_minute_event != NULL) {echo $error_heure_minute_event ; } ?>
+			 Heure de l'événement
 			</td>
             <td>
-						
-			<?php
-			
+<?php
+			// Liste des heures
+			echo '<input type="text" id="heure_minute_event" name="heure_minute_event" value="'.htmlspecialchars($heure_minute_event).'" size="60" />';
+/*
+			Choisissez <strong>l'heure</strong> de l'événement ou cochez "En journée" s'il n'y a pas d'heure à préciser
+			if (isset ($error_heure_minute_event) AND $error_heure_minute_event != NULL) {echo $error_heure_minute_event ; }
 			// Début de "zone toggle"
 			echo'<div id="zone_heure">';
-			// Liste des heures
-			echo '<br /><select name="select_heure_event"><option value="">h</option>';
+			<select name="select_heure_event"><option value="">h</option>';
 			for ($liste_heure_comp=1 ; $liste_heure_comp<=23 ; $liste_heure_comp++)
 			{
 				$liste_heure_comp = add_chaine_2_car ($liste_heure_comp) ; // fonction pour compléter la chaine pour longueur == 2 caract&egrave;res
@@ -1398,10 +1396,8 @@ echo '</select>';
 			if ($en_journee_est_selected) 
 			echo 'checked="checked" ' ;
 			echo 'onclick="masquer_choix_heure();" /><label for="checkbox_en_journee"><strong>En journée</strong></label>' ;
-			
-
-			?>			
-			
+*/
+?>
 			</td>
           </tr>
 		  
@@ -1497,19 +1493,11 @@ echo '</select>';
             </td>
           </tr>
           <tr>
-            <td>Prix minimum</td>
+            <td>Prix</td>
             <td>
-				<input name="prix_min_event" type="text" id="prix_min_event" value="<?php 
-			if (isset($prix_min_event)) echo $prix_min_event;
-				?>" size="10" /> &euro; &nbsp; <span class="mini">Indiquez une tranche de prix ou le prix unique.</span>
-            </td>
-          </tr>
-          <tr>
-            <td>Prix maximum</td>
-            <td>
-				<input name="prix_max_event" type="text" id="prix_max_event" value="<?php 
-			if (isset($prix_max_event)) echo $prix_max_event;
-				?>" size="10" /> &euro;
+				<input name="prix_event" type="text" id="prix_event" value="<?php 
+			if (isset($prix_event)) echo htmlspecialchars($prix_event);
+				?>" size="60" />
             </td>
           </tr>
 

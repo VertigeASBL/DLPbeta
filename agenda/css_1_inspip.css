@@ -849,7 +849,7 @@ z-index:500;
 }
 .tableinfosevent TD {
 	vertical-align:top;
-	padding:2px;
+	padding:4px 2px;
 	font-size: 12px;
 }
 .tableinfogauche { font-weight:bold; width:130px; }

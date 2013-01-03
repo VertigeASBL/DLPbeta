@@ -356,13 +356,13 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		echo 'du ',affdate_jourcourt($date_event_debut),' au ',affdate_jourcourt($date_event_fin);
 	echo '</td></tr>'."\n";
 
-	if ($donnees['heure_minute_event'] != 'nn-nn')
+	if ($donnees['heure_minute_event'])
 		echo '<tr><td class="tableinfogauche">Horaire</td><td>',$donnees['heure_minute_event'],'</td></tr>'."\n";
 
 	if ($donnees_repres)
 		echo '<tr><td class="tableinfogauche">Où</td><td>',$donnees_repres['nom_pres'],'<br />',$donnees_repres['adresse_pres'],'<br />',$donnees_repres['postal_pres'],' ',$donnees_repres['localite_pres'],'</td></tr>'."\n";
 
-	if ($donnees['prix_min_event'] || $donnees['prix_max_event']) {
+/*	if ($donnees['prix_min_event'] || $donnees['prix_max_event']) {
 		echo '<tr><td class="tableinfogauche">Prix</td><td>';
 		if ($donnees['prix_min_event'] == $donnees['prix_max_event'] || ! $donnees['prix_max_event'])
 			echo $donnees['prix_min_event'];
@@ -371,7 +371,9 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		else
 			echo 'de ',$donnees['prix_min_event'],' à ',$donnees['prix_max_event'];
 		echo ' &euro;</td></tr>',"\n";
-	}
+	} */
+	if ($donnees['prix_event'])
+		echo '<tr><td class="tableinfogauche">Prix</td><td>',$donnees['prix_event'],'</td></tr>',"\n";
 
 	if (($time_date_event_fin+86400) > ($time_date_aujourdhui+0) && ($genre_event != 'g07')) {
 		if (!empty($donnees['tel_reserv_event']) && $donnees['tel_reserv_event'] != NULL)

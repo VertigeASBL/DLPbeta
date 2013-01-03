@@ -56,7 +56,7 @@ else
 $form_masquage = false ;
 
 
-// ---------------------------------------
+/* ---------------------------------------
 // Le spectateur veut-il se logguer ?
 // ---------------------------------------
 if (isset($_GET['login']) AND $_GET['login'] == 'go') 
@@ -64,7 +64,7 @@ if (isset($_GET['login']) AND $_GET['login'] == 'go')
 	require 'agenda/auth/auth_fonctions.php';  
 	test_spectateur_acces_in_spip (1) ;
 }
-
+*/
 
 //--------------------------------------------------------------------------------------
 // Si le joueur a cliqué sur un lien pour jouer, lui faire compléter le formulaire
