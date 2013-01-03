@@ -478,6 +478,8 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// facebook j'aime
 	echo '<br /><div class="fb-like" data-href="[(#SELF|url_absolue|rawurlencode)]" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>'."\n";
 
+	// icone "j'irai"
+
 	echo '</div>',"\n\n"; //--- fin detail_calendrier CALENDRIERS
 	echo '<br style="clear:both;" />&nbsp;',"\n";
 
@@ -798,7 +800,11 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	echo '<div id="zongletmapping" class="ongletevent">',"\n";
 	//--- off $codejavascript .= 'tabonglet.mapping = false; ';
+	echo '<div class="detail_corps_event">
+		<h3>Localisation de l\'événement</h3>',"\n";
 	echo '<div id="map_canvas" style="width: 500px; height: 500px;"></div>';
+	echo '<br style="clear:both;" />
+		</div>',"\n"; //--- Fin bloc detail_corps_event
 	echo '<br style="clear:both;" />',"\n";
 	echo '</div>',"\n"; //--- fin ongletevent mapping
 
