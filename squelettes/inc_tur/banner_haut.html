@@ -1,7 +1,9 @@
+<?php session_start(); ?>
 <a href="[(#URL_RUBRIQUE{3})]" accesskey="1">
 	[(#LOGO_SITE_SPIP|inserer_attribut{'alt','Demandez le programme !'}|inserer_attribut{'align','left'})]
 </a>
-<?php	
+<?php
+	
 	require_once("admintool/fonctions.php");
 	require_once("affiche_banner2.php");
 	
@@ -62,6 +64,16 @@
 		default:
 			$circuit = 'la_une';
 	}
-	
-	affich_banner_horiz($circuit);
+		
+	if (empty($_SESSION['id_spectateur'])) affich_banner_horiz($circuit);
+	else {
+		$user = sql_getfetsel('pseudo_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+
+		$nb_favoris = sql_getfetsel('count(id)', 'ag_panier', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+
+		echo '<div id="cadre_info_user">';
+			echo '<h2>Bienvenue '.$user.'</h2>';
+			if ($nb_favoris > 0) echo '<p>Vous avez '.$nb_favoris.' favoris dans votre liste.</p>';
+		echo '</div>';
+	}
 ?>

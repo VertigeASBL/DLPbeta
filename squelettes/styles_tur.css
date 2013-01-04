@@ -1137,3 +1137,12 @@ UL#menu UL LI{
 	text-align: left;
 	margin-right: 5px;
 }
+
+#cadre_info_user {
+	background: #FFF;
+	width: 300px;
+	float: right;
+	margin-top: 20px;
+	margin-right: 60px;
+	padding: 10px;
+}
