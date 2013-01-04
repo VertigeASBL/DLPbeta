@@ -308,7 +308,7 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 function obteniravislies($max = 21) {
 	$maintenant = time();
 	$req = 'SELECT E.id_event,E.nom_event,E.pic_event_1,L.id_lieu,L.nom_lieu FROM ag_event AS E,ag_lieux AS L';
-	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND E.date_event_fin>=\''.date('Y-m-d', $maintenant - 604800).'\' AND E.date_event_debut<=\''.date('Y-m-d', $maintenant + 604800).'\'';
+	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND E.date_event_fin>=\''.date('Y-m-d', $maintenant - 604800).'\' AND E.date_event_debut<=\''.date('Y-m-d', $maintenant + 604800).'\' AND E.pic_event_1=\'set\'';
 	$req = spip_query($req);
 
 	$t_ev = array(); $t_nom = array(); $t_pic = array(); $t_idlieu = array(); $t_lieu = array(); $t_nbr = array();
