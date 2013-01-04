@@ -192,4 +192,6 @@ pip-log.txt
 
 agenda/vertiny/jscripts/tiny_mce/plugins/ajaxfilemanager/langs/zh_cn.php
 
+#Ancienne image à ne pas mettre en ligne.
 agenda/pics_events.old/
+agenda/vignettes_spectateurs.old/

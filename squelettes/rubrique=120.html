@@ -56,12 +56,12 @@ function toggle_zone(Zone_id,txtReplier,txtDeplier) {
 				[<div class="avis_spectateur_cadre">(#AVIS_VALIDES_SPECTATEUR) AVIS</div>]
 
 				[(#REM) Si le fichier existe, on affiche l'avatar de la personne ]
-				[(#VAL{agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|oui) <img src="agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px; width: 50px;" />]
+				[(#VAL{agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|oui) <img src="agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px;" />]
 
 				[(#REM) Si le fichier n'existe pas, on affiche l'avatar par défaut en fonction du sexe de la personne ]
 				[(#VAL{agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|non) 
-					[(#SEXE_SPECTATEUR|=={0}|oui) <img src="agenda/vignettes_spectateurs/vi_spect_anonyme_homme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px; width: 50px;" />]
-					[(#SEXE_SPECTATEUR|=={0}|non) <img src="agenda/vignettes_spectateurs/vi_spect_anonyme_femme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px; width: 50px;" />]
+					[(#SEXE_SPECTATEUR|=={0}|oui) <img src="agenda/vignettes_spectateurs/vi_spect_anonyme_homme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px;" />]
+					[(#SEXE_SPECTATEUR|=={0}|non) <img src="agenda/vignettes_spectateurs/vi_spect_anonyme_femme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px;" />]
 				]
 				[<h2>(#PSEUDO_SPECTATEUR)</h2>]
 				[(#AVIS_VALIDES_SPECTATEUR|spip_trouve_categorie_spectateur)]
