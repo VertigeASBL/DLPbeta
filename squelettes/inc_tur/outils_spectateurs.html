@@ -5,7 +5,35 @@
 	require('agenda/inc_var.php');
 	if (session_get('id_spectateur') && isset($_SESSION['id_spectateur']) && $_SESSION['id_spectateur'] && $_SESSION['group_admin_spec']==1) {
 ?>
-	<div id="suggestion">
+	<div class="ligne_bas_col_2">&nbsp;</div>
+	[(#REM) Si une session est ouverte, alors afficher les infos sur le spectateur ]
+	<div id="outils_spectateurs">
+		Bonjour [(#SESSION{pseudo_spectateur})]
+		<br /><a href="[(#URL_RUBRIQUE{121})]">Mon menu de spectateur</a>
+		<br /><a href="[(#URL_RUBRIQUE{122}|parametre_url{id_spect,#SESSION{id_spectateur}})]">Visualiser ma page</a>
+		<br /><a href="[(#URL_RUBRIQUE{157})]" title="Modifier mes infos spectateur">Modifier mon profil</a>
+		<br /><a href="[(#URL_ARTICLE{335})]">Aide aux spectateurs</a>
+		<br /><a href="[(#URL_RUBRIQUE{120})]">Communauté des spectateurs</a>
+		<br /><a href="[(#URL_RUBRIQUE{95})]">Concours</a>
+		<br /><a href="[(#URL_RUBRIQUE{161})]">Mes favoris</a>
+		<br /><a href="[(#URL_RUBRIQUE{121}|parametre_url{logout,y})]" title="Me déconnecter de mon compte">Me déconnecter</a>
+	</div>
+<?php
+	}
+	else
+		include('agenda/auth/auth_formulaire_spectateur_in_spip.php');
+/*
+	echo '<br />$_SESSION';
+	echo '<br />id_spectateur : ',$_SESSION['id_spectateur'];
+	echo '<br />group_admin_spec : ',$_SESSION['group_admin_spec'];
+	echo '<br />#VAL{#}SESSION';
+<br />id_spectateur # : #SESSION{id_spectateur}
+<br />id_auteur # : #SESSION{id_auteur}
+*/
+?>
+<div class="ligne_bas_col_2">&nbsp;</div>
+
+<div id="suggestion">
 		<h3>Suggestion</h3>
 		<?php
 		/* On récupère les id des lieux favoris de la personne. */
@@ -43,31 +71,3 @@
 		}
 		?>
 	</div>
-	
-	<div class="ligne_bas_col_2">&nbsp;</div>
-	[(#REM) Si une session est ouverte, alors afficher les infos sur le spectateur ]
-	<div id="outils_spectateurs">
-		Bonjour [(#SESSION{pseudo_spectateur})]
-		<br /><a href="[(#URL_RUBRIQUE{121})]">Mon menu de spectateur</a>
-		<br /><a href="[(#URL_RUBRIQUE{122}|parametre_url{id_spect,#SESSION{id_spectateur}})]">Visualiser ma page</a>
-		<br /><a href="[(#URL_RUBRIQUE{157})]" title="Modifier mes infos spectateur">Modifier mon profil</a>
-		<br /><a href="[(#URL_ARTICLE{335})]">Aide aux spectateurs</a>
-		<br /><a href="[(#URL_RUBRIQUE{120})]">Communauté des spectateurs</a>
-		<br /><a href="[(#URL_RUBRIQUE{95})]">Concours</a>
-		<br /><a href="[(#URL_RUBRIQUE{161})]">Mes favoris</a>
-		<br /><a href="[(#URL_RUBRIQUE{121}|parametre_url{logout,y})]" title="Me déconnecter de mon compte">Me déconnecter</a>
-	</div>
-<?php
-	}
-	else
-		include('agenda/auth/auth_formulaire_spectateur_in_spip.php');
-/*
-	echo '<br />$_SESSION';
-	echo '<br />id_spectateur : ',$_SESSION['id_spectateur'];
-	echo '<br />group_admin_spec : ',$_SESSION['group_admin_spec'];
-	echo '<br />#VAL{#}SESSION';
-<br />id_spectateur # : #SESSION{id_spectateur}
-<br />id_auteur # : #SESSION{id_auteur}
-*/
-?>
-<div class="ligne_bas_col_2">&nbsp;</div>
