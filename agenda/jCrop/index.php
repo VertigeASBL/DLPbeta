@@ -8,7 +8,6 @@ require '../inc_db_connect.php';
 /* Fonction pour recadrer une image avec PHP. */
 include_once('function_crop.php');
 ?>
-
 <html>
 <head>
 	<title>Recadrer l'image</title>
@@ -37,9 +36,7 @@ include_once('function_crop.php');
 <body>
 
 	<?php
-/*
-	Protection contre le reformatage d'autre image: la personne à t'elle le droit de modifier cette image ?
-*/
+	/* Protection contre le reformatage d'autre image: la personne à t'elle le droit de modifier cette image ? */
 
 	/* On récupère l'id de l'évement dans le nom du fichier */
 	$id_event = explode('_', $_GET['source']);
