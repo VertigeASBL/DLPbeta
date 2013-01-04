@@ -753,7 +753,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		prix_event = '$prix_event' ,
 		email_reservation = '$email_reservation'
 
-		WHERE id_event = '$id' LIMIT 1 ") ;
+		WHERE id_event = '$id' LIMIT 1 ");
 
 		if ($approuv_check)
 		{

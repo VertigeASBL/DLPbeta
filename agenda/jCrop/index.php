@@ -1,18 +1,14 @@
 <?php 
 session_start();
+
+/* Inclusion de la base de donnée */
+require '../inc_var.php';
+require '../inc_db_connect.php';
+
+/* Fonction pour recadrer une image avec PHP. */
 include_once('function_crop.php');
-
-/*
-	Protection contre le reformatage d'autre image: la personne à t'elle le droit de modifier cette image ?
-*/
-
-/* On récupère l'id de l'évement dans le nom du fichier */
-$id_event[3] = explode('_', $_GET['source']);
-
-if (isset($_POST['source'])) {
-	crop_image($_POST['source']);
-}
 ?>
+
 <html>
 <head>
 	<title>Recadrer l'image</title>
@@ -25,8 +21,8 @@ if (isset($_POST['source'])) {
 		$('#cropbox').Jcrop({
 			aspectRatio: 0.7,
 			onSelect: updateCoords,
-		 	boxWidth: 450, 
-		 	boxHeight: 400 
+			boxWidth: 450, 
+			boxHeight: 400 
 		});
 
 		function updateCoords(c) {
@@ -40,16 +36,41 @@ if (isset($_POST['source'])) {
 </head>
 <body>
 
-<?php 
-if (isset($_POST['source'])): 
-	echo '<img src="'.str_replace('.tmp', '', $_POST['source']).'" alt="Prévisualisation" />';
-?>
+	<?php
+/*
+	Protection contre le reformatage d'autre image: la personne à t'elle le droit de modifier cette image ?
+*/
+
+	/* On récupère l'id de l'évement dans le nom du fichier */
+	$id_event = explode('_', $_GET['source']);
+	$id_event = $id_event[2];
+
+	/* On vérifie que l'image appartient a l'organisateur */
+	$reponse = mysql_query("SELECT lieu_event FROM $table_evenements_agenda WHERE id_event = '$id_event'");
+	$donnees = mysql_fetch_array($reponse);
+	if (! $donnees || $donnees['lieu_event'] != $_SESSION['lieu_admin_spec']) {
+		echo '<div class="alerte">Vous ne pouvez pas modifier un événement rattaché à un autre lieu culturel</div><br>';
+		exit();
+	}
+
+
+	/* On découpe l'image */
+	if (isset($_POST['source'])) {
+		crop_image($_POST['source']);
+	}
+
+	/* Si une image à été envoyer pour être recadrée. On affiche l'image recadrée. */
+	if (isset($_POST['source'])): 
+		echo '<img src="'.str_replace('.tmp', '', $_POST['source']).'" alt="Prévisualisation" />';
+	?>
 	<br />
 	<a href="javascript: window.close();">[Fermer]</a>
 	<?php
-elseif (!file_exists($_GET['source'])): 
-	echo '<p>Cet image à déjà été recadrée.</p>';
-else: ?>
+	/* Si l'image à déjà été recadré on affiche une erreur. */
+	elseif (!file_exists($_GET['source'])): 
+		echo '<p>Cet image à déjà été recadrée.</p>';
+	/* Sinon, on affiche le système de recadrage. */
+	else: ?>
 	<img src="<?php echo urldecode($_GET['source']); ?>" alt="jCrop" id="cropbox" />
 	
 	<form action="index.php?source=<?php echo urlencode($_GET['source']); ?>" method="post">
@@ -60,7 +81,7 @@ else: ?>
 		<input type="hidden" id="h" name="h" />
 		<input type="submit" value="recadrer" />
 	</form>
-		
+
 <?php endif; ?>
 </body>
 </html>
