@@ -44,7 +44,7 @@
 			<a href="#GET{varurl}">
 				<img src="#GET{vimage}" alt="" class="onglet6" width="208" style="width:208px;" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" />
 			</a>]
-			[<p>(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{350,38}})</p>]
+			[<p>(#VALEUR|table_valeur{chapo}|couper{#VAL{230}|mon_nb_cars{300,38}})</p>]
 		</div>
 		[<span class="details">(#VALEUR|table_valeur{date}|affdate)</span>]
 	</div>

@@ -175,7 +175,7 @@ require 'agenda/inc_var.php';
 					[<div class="etoilecritique(#FICHIER|substr{8,3})"></div>]
 		</BOUCLE_etoiles>
 					[par (#VALEUR|table_valeur{nom})]
-					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-120,30}})</div>]
+					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#VAL{130}|mon_nb_cars{-120,30}})</div>]
 					[<br />(#VALEUR|table_valeur{date}|affdate)][ | <a href="(#GET{varurl})" title="Voir en détail">suite&nbsp;&gt;&gt;</a>]
 				</div>
 				<div class="float_stop"></div>
@@ -214,7 +214,7 @@ require 'agenda/inc_var.php';
 						[(#VALEUR|table_valeur{titre}|monraccourcirchaine{45})]
 					</h4>
 					[par (#VALEUR|table_valeur{nom})]
-					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#GET{vimage}|hauteur|mon_nb_cars{-100,30}})</div>]
+					[<div class="descriptif_actu">(#VALEUR|table_valeur{chapo}|couper{#VAL{130}|mon_nb_cars{-100,30}})</div>]
 					[<br />(#VALEUR|table_valeur{date}|affdate)][ | <a href="(#GET{varurl})" title="Voir en détail">suite&nbsp;&gt;&gt;</a>]
 				</div>
 				<div class="float_stop"></div>

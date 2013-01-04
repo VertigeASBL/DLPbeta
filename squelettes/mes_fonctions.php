@@ -287,7 +287,7 @@ function obtenirarticleslies($id_rubrique, $champlien, $max = 21, $home=0) {
 	$req .= ' FROM ag_event AS E,ag_lieux AS L,spip_articles AS A';
 	if ($id_rubrique != 155)
 		$req .= ' LEFT JOIN spip_auteurs_articles AS R ON A.id_article=R.id_article LEFT JOIN spip_auteurs AS P ON P.id_auteur=R.id_auteur';
-	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND A.statut=\'publie\' AND A.id_rubrique='.$id_rubrique.' AND E.'.$champlien.'=A.id_article';
+	$req .= ' WHERE L.id_lieu=E.lieu_event AND L.cotisation_lieu>SUBDATE(CURDATE(),INTERVAL 1 MONTH) AND A.statut=\'publie\' AND A.id_rubrique='.$id_rubrique.' AND E.'.$champlien.'=A.id_article AND E.pic_event_1=\'set\'';
 	if ($home) {
 		$maintenant = time(); //--- 1296000 == 15 jours
 		$req .= ' AND E.date_event_fin>=\''.date('Y-m-d', $maintenant).'\' AND E.date_event_debut<=\''.date('Y-m-d', $maintenant + 1296000).'\'';
