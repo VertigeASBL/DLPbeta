@@ -627,8 +627,7 @@ $mail_concat.= '<tr>
 		// Image
 		if (isset ($donnees ['pic_event_1']) AND $donnees ['pic_event_1'] == 'set' )
 		{
-			$form_concat.= '<img src="' . $racine_domaine . 'agenda/' . $folder_pics_event . 'vi_event_' . $id_event . 
-			'_1.jpg" title="' . $nom_event . '" />';
+			$form_concat.= '<img src="' . $racine_domaine . 'agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" />';
 		}
 		$form_concat.= '&nbsp; </td> ';
 		

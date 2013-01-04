@@ -54,7 +54,7 @@ function requete_selon_genre($case_proch_event)
 		if (isset ($donnees_hasard ['pic_event_1']) AND $donnees_hasard ['pic_event_1'] == 'set' )
 		{
 			$tab.= '<span class="actu_photo"><a href="-Detail-agenda-?id_event=' . $id_event . '">
-			<img src="agenda/pics_events/vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="' . $nom_event . '" />
+			<img src="agenda/pics_events/event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="' . $nom_event . '" width="100" />
 			</a></span>';
 		}		
 	

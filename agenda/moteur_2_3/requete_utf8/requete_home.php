@@ -180,7 +180,7 @@ while ($donnees_preview = mysql_fetch_array($reponse_preview))
 	if (isset($donnees_preview['pic_event_1']) AND $donnees_preview ['pic_event_1'] == 'set' )
 	{
 		$pic_event_1 = '<a href="-Detail-agenda-?id_event=' . $id_event . '">
-		<img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" /></a>';
+		<img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" /></a>';
 	}
 	else
 	{

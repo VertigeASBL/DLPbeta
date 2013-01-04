@@ -76,12 +76,12 @@ if (isset($_POST['bouton_effacer']) AND ($_POST['bouton_effacer'] == 'effacer'))
 	if ($test_mysql)
 	{		
 		// Effacer vignette et image
-		$vignette_2_delete = '../' . $folder_pics_event . 'vi_event_' . $id . '_1.jpg' ;
+//		$vignette_2_delete = '../' . $folder_pics_event . 'vi_event_' . $id . '_1.jpg' ;
 		$pic_2_delete = '../' . $folder_pics_event . 'event_' . $id . '_1.jpg' ;
-		if (file_exists($vignette_2_delete))
+		if (file_exists($pic_2_delete))
  		{
 			echo '<br>Des images sont liées à cet événement' ;
-			$rep_vi = unlink ($vignette_2_delete) ;
+//			$rep_vi = unlink ($vignette_2_delete) ;
 			$rep_im = unlink ($pic_2_delete) ;
 			
 			if ($rep_vi) { echo '<br>Vignette et image effacées' ; }

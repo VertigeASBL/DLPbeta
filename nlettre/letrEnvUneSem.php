@@ -137,7 +137,7 @@ echo '<hr />';
 
 		//--- VIGNETTE EVENEMENT / <img id="unedans'.$id_event.'" src="../agenda/pics_events/vi_event_'.$id_event.'_1.jpg" title="'.$donnees['nom_event'].'" alt="'.$donnees['nom_event'].'" />
 		if (isset($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set')
-			$chn .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event='.$id_event.'" class="breve_pic"><img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_'.$id_event.'_1.jpg" title="'.$donnees['nom_event'].'" alt="'.$donnees['nom_event'].'" /></a>'."\n";
+			$chn .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event='.$id_event.'" class="breve_pic"><img src="http://www.demandezleprogramme.be/agenda/pics_events/event_'.$id_event.'_1.jpg" title="'.htmlspecialchars($donnees['nom_event']).'" alt="'.htmlspecialchars($donnees['nom_event']).'" width="100" /></a>'."\n";
 
 		//--- NOM EVENEMENT
 		$chn .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event='.$id_event.'" title="Voir en détail" class="breve_titre">'.$donnees['nom_event'].'</a><br />'."\n";

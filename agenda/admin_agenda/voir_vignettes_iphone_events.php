@@ -62,11 +62,13 @@ $reponse = mysql_query("SELECT * FROM $table_evenements_agenda WHERE date_event_
 				$id_event = $donnees['id_event'] ;
 				$src_img = '../' . $folder_pics_event . 'event_' . $id_event . '_1.jpg';
 				echo '<img src="',$src_img,'" alt="" />',"\n";
+/*
 				$src_img = '../' . $folder_pics_event . 'micro_event_' . $id_event . '_1.jpg';
 				if (file_exists($src_img))
 					echo 'micro:<img src="',$src_img,'" alt="" />',"\n";
 				else
 					echo 'micro:manque',"\n";
+*/
 			}
 			else
 				echo '1',"\n";
@@ -80,11 +82,13 @@ $reponse = mysql_query("SELECT * FROM $table_evenements_agenda WHERE date_event_
 				$id_event = $donnees['id_event'] ;
 				$src_img = '../' . $folder_pics_event . 'event_' . $id_event . '_2.jpg';
 				echo '<img src="',$src_img,'" alt="" />',"\n";
+/*
 				$src_img = '../' . $folder_pics_event . 'micro_event_' . $id_event . '_2.jpg';
 				if (file_exists($src_img))
 					echo 'micro:<img src="',$src_img,'" alt="" />',"\n";
 				else
 					echo 'micro:manque',"\n";
+*/
 			}
 			else
 				echo '2',"\n";
@@ -98,11 +102,13 @@ $reponse = mysql_query("SELECT * FROM $table_evenements_agenda WHERE date_event_
 				$id_event = $donnees['id_event'] ;
 				$src_img = '../' . $folder_pics_event . 'event_' . $id_event . '_3.jpg';
 				echo '<img src="',$src_img,'" alt="" />',"\n";
+/*
 				$src_img = '../' . $folder_pics_event . 'micro_event_' . $id_event . '_3.jpg';
 				if (file_exists($src_img))
 					echo 'micro:<img src="',$src_img,'" alt="" />',"\n";
 				else
 					echo 'micro:manque',"\n";
+*/
 			}
 			else
 				echo '3',"\n";

@@ -162,7 +162,7 @@ h1 {
 			$nom_event = $donnees ['nom_event'] ;
 			$id_event = $donnees ['id_event'] ;
 			$mail_concat.= '<td width="120"><a href="' . $racine_domaine . '-Detail-agenda-?id_event=' . $id_event . 
-			'"<img src="' . $racine_domaine . 'agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" />
+			'"<img src="' . $racine_domaine . 'agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" />
 			</a></td>';
 		}
 		

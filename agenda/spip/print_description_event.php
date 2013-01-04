@@ -135,8 +135,7 @@ echo '<title> ::: Demandez le programme : '. $nom_event .' -- ' . $nom_lieu  . '
 		// Photo
 		if (isset ($donnees ['pic_event_1']) AND $donnees ['pic_event_1'] == 'set' )
 		{
-			echo '<span class="alignLeftMargin"><br /><img src="../' . $folder_pics_event . 'vi_event_' . $id_event . 
-			'_1.jpg" /></span>';
+			echo '<span class="alignLeftMargin"><br /><img src="../' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" alt="" width="100" /></span>';
 		}
 		
 		// Description

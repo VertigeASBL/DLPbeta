@@ -47,15 +47,15 @@ if (isset ($_GET['id_event']) AND $_GET['id_event'] != NULL) // La variable GET 
 			for ($eeuu = 1; $eeuu < 4; $eeuu++)
 			{
 				
-				$vignette_2_delete = '../' . $folder_pics_event . 'vi_event_' . $id_event . '_' . $eeuu . '.jpg' ;
+//				$vignette_2_delete = '../' . $folder_pics_event . 'vi_event_' . $id_event . '_' . $eeuu . '.jpg' ;
 				$pic_2_delete = '../' . $folder_pics_event . 'event_' . $id_event . '_' . $eeuu . '.jpg' ;
-				if (file_exists($vignette_2_delete))
+				if (file_exists($pic_2_delete))
 				{
 					$rep_im = unlink ($pic_2_delete) ;
-					$rep_vi = unlink ($vignette_2_delete) ;
+//					$rep_vi = unlink ($vignette_2_delete) ;
 					
 					if ($rep_im) { echo '<br>Image ' . $id_event . '_' . $eeuu . ' effacée' ; }
-					if ($rep_vi) { echo '<br>Vignette ' . $id_event . '_' . $eeuu . ' effacée' ; }
+//					if ($rep_vi) { echo '<br>Vignette ' . $id_event . '_' . $eeuu . ' effacée' ; }
 				}
 			}
 			echo '<br><br><br><div class="info"><p>L\'entrée a bien été effacée 

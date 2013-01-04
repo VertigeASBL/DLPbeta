@@ -101,7 +101,7 @@ function redim_image($source) {
 
 if (isset($_GET['prm']) && $_GET['prm'] == '6gms87z3x') {
 
-	$req = mysql_query('SELECT id_event,pic_event_1,pic_event_2,pic_event_3,pic_event_4,pic_event_5,pic_event_6,pic_event_7,pic_event_8,pic_event_9,pic_event_10 FROM ag_event WHERE pic_prov=\'\' ORDER BY id_event DESC') or die('Erreur SQL : '.mysql_error());
+	$req = mysql_query('SELECT id_event,pic_event_1,pic_event_2,pic_event_3,pic_event_4,pic_event_5,pic_event_6,pic_event_7,pic_event_8,pic_event_9,pic_event_10 FROM ag_event WHERE pic_prov=\'\' ORDER BY id_event DESC LIMIT 2') or die('Erreur SQL : '.mysql_error());
 	while ($data = mysql_fetch_array($req)) {
 		echo ' / ',$data['id_event'];
 		for ($num = 1; $num <= 10; $num++)

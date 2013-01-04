@@ -321,24 +321,24 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		if (isset($_POST['effacer_image' . $eeuu]) AND ($_POST['effacer_image' . $eeuu] != NULL)) 
 		{
 			$pic_a_effacer = '../' . $folder_pics_event . 'event_' . $id . '_' . $eeuu . '.jpg' ;
-			$vignette_a_effacer = '../' . $folder_pics_event . 'vi_event_' . $id . '_' . $eeuu . '.jpg' ; 
+//			$vignette_a_effacer = '../' . $folder_pics_event . 'vi_event_' . $id . '_' . $eeuu . '.jpg' ; 
 		
 			// Effacement de l'image
 			if (unlink ($pic_a_effacer))
 			{ echo '<div class="info">L\'image '.$id.'-' . $eeuu . ' a bien été effacée</div>'; }
 			else 
 			{ echo '<div class="alerte">ERREUR : L\'image '.$id.'-' . $eeuu . ' n\'a pas été effacée</div>'; }
-		
+/*		
 			// Effacement de la vignette
 			if (unlink ($vignette_a_effacer))
 			{ echo '<div class="info">La VIGNETTE '.$id.'-' . $eeuu . ' a bien été effacée</div>'; }
 			else 
 			{ echo '<div class="alerte">ERREUR : La VIGNETTE '.$id.'-' . $eeuu . ' n\'a pas été effacée</div>'; }
 
-			/* ---------- richir : supprimer vignette micro pour iphone ---------- */
+			//---------- richir : supprimer vignette micro pour iphone ----------
 			$vignette_a_effacer = '../' . $folder_pics_event . 'micro_event_' . $id . '_' . $eeuu . '.jpg' ;
 			@unlink($vignette_a_effacer);
-
+*/
 			// Enlever le SET de le FLAG de la TABLE
 			$image_db = 'pic_event_' .  $eeuu ;
 			mysql_query("UPDATE $table_evenements_agenda SET $image_db = '' WHERE id_event = '$id' LIMIT 1 ") ;	
@@ -1042,7 +1042,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_1.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_1.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1056,7 +1056,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_2']) AND $donnees['pic_event_2'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_2.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_2.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1071,7 +1071,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_3']) AND $donnees['pic_event_3'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_3.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_3.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1085,7 +1085,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_4']) AND $donnees['pic_event_4'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_4.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_4.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1099,7 +1099,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_5']) AND $donnees['pic_event_5'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_5.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_5.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1113,7 +1113,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_6']) AND $donnees['pic_event_6'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_6.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_6.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1127,7 +1127,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_7']) AND $donnees['pic_event_7'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_7.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_7.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1141,7 +1141,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_8']) AND $donnees['pic_event_8'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_8.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_8.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1155,7 +1155,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_9']) AND $donnees['pic_event_9'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_9.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_9.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>
@@ -1169,7 +1169,7 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
 			// Afficher vignette
 			 if (isset ($donnees['pic_event_10']) AND $donnees['pic_event_10'] == 'set')
 			{
-				echo '<img src="../' . $folder_pics_event . 'vi_event_' . $id . '_10.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_10.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
 							
 			?>            </td>

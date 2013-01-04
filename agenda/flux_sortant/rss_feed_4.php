@@ -390,10 +390,10 @@ while ($donnees_dlp = mysql_fetch_array($reponse_dlp))
 	$description_event = '<![CDATA[' ;
 	
 	// image dans description
-	$image_event = '../pics_events/vi_event_' . $donnees_dlp['id_event'] . '_1.jpg';
+	$image_event = '../pics_events/event_' . $donnees_dlp['id_event'] . '_1.jpg';
 	if (file_exists($image_event))
 	{
-		$description_event .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event=' . $donnees_dlp['id_event'] . '"><img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_dlp['id_event'] . '_1.jpg" alt="DemandezLeProgramme" /></a><br />';
+		$description_event .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event=' . $donnees_dlp['id_event'] . '"><img src="http://www.demandezleprogramme.be/agenda/pics_events/event_' . $donnees_dlp['id_event'] . '_1.jpg" alt="DemandezLeProgramme" width="100" /></a><br />';
 	}
 	
 	// date de représentation pour la description

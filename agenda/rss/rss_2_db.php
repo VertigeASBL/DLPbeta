@@ -1,4 +1,3 @@
-
 <?php
 // SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 // Protection rudimentaire de l'accès à la page
@@ -352,8 +351,10 @@ function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 	$destination_vi = '../pics_events_test/vi_event_' . $id_update . '_1.jpg' ; // 88888 pour Folder Test */
 
 	$destination = '../' . $folder_pics_event . 'event_' . $id_update . '_1.jpg' ; // Chemin & nom de image de destination
+/*
 	$destination_vi = '../' . $folder_pics_event . 'vi_event_' . $id_update . '_1.jpg' ; // Chemin & nom de Vignette
 	$destination_micro = '../' . $folder_pics_event . 'micro_event_' . $id_update . '_1.jpg' ; //--- richir
+*/
 	$error_info = ''; // RAZ de la var qui contiendra les messages d'erreur
 	$debug_concat =  '';
 
@@ -400,7 +401,7 @@ function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 		imagecopyresampled($resample, $uploaded_pic, 0, 0, 0, 0, $w_absolue, $new_H, $largeur_uploaded, $hauteur_uploaded);
 		imagejpeg($resample, $destination, '90');// Enregistrer la miniature sous le nom	
 							
-
+/*
 		// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 		// Recalcul de la taille de la vignette
 		// Les dimensions sont contraintes en W et en H (comme auparavant)
@@ -431,7 +432,7 @@ function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 		chmod ($destination_vi, 0644); // Pour que l'image ait un CHMOD 644 et non 600 
 
 
-		/* ---------- richir : vignette micro supplémentaire pour iphone / début ---------- */
+		//---------- richir : vignette micro supplémentaire pour iphone / début ----------
 		$new_W_Vignette = 60; $new_H_Vignette = 60;
 		$rapport = $new_W_Vignette / $new_H_Vignette;
 
@@ -453,11 +454,11 @@ function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 			@unlink($destination_micro);
 		imagejpeg($resample, $destination_micro, 90);// Enregistrer la miniature sous le nom
 		chmod($destination_micro, 0644); // Pour que l'image ait un CHMOD 644 et non 600 
-		/* ---------- richir : vignette micro supplémentaire pour iphone / fin ---------- */
+		//---------- richir : vignette micro supplémentaire pour iphone / fin ----------
 
 
 		// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV Fin vignette
-
+*/
 		// -----------------------------------------------------
 		// Mettre le FLAG de la TABLE à SET
 		$image_db = 'pic_event_1' ;

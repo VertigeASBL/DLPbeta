@@ -165,7 +165,7 @@ $genres = array (
 							$xml .= "\t\t".'<content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">';
 							$g = strlen($xml);
 							if ($data['pic_event_1'] == 'set')
-								$xml .= '<a href="'.$racin.'-Detail-agenda-?id_event='.$id_event.'"><img src="'.$racin.'agenda/pics_events/vi_event_'.$id_event.'_1.jpg" style="float:left; margin:0 16px 6px 0; border:none;" alt="" /></a>'."\n";
+								$xml .= '<a href="'.$racin.'-Detail-agenda-?id_event='.$id_event.'"><img src="'.$racin.'agenda/pics_events/event_'.$id_event.'_1.jpg" style="float:left; margin:0 16px 6px 0; border:none;" alt="" width="100" /></a>'."\n";
 							$xml .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event='.$id_event.'" title="Voir" style="font-weight:bold; color:#8F0133;">'.texteplain($data['nom_event']).'</a><br />'."\n";
 							$xml .= '<a href="http://www.demandezleprogramme.be/-Details-lieux-culturels-?id_lieu='.$data['lieu_event'].'" title="Lieu" style="font-weight:bold; color:#009A99;">'.texteplain($data['nom_lieu']).'</a>'."\n";
 							if (isset($genres[$data['genre_event']]))
@@ -300,7 +300,7 @@ $genres = array (
 							$xml .= "\t\t".'<content:encoded><![CDATA[';
 							$g = strlen($xml);
 							if ($data['pic_event_1'] == 'set')
-								$xml .= '<a href="'.$racin.'-Detail-agenda-?id_event='.$id_event.'"><img src="'.$racin.'agenda/pics_events/vi_event_'.$id_event.'_1.jpg" style="float:left; margin:0 16px 6px 0; border:none;" alt="" /></a>';
+								$xml .= '<a href="'.$racin.'-Detail-agenda-?id_event='.$id_event.'"><img src="'.$racin.'agenda/pics_events/event_'.$id_event.'_1.jpg" style="float:left; margin:0 16px 6px 0; border:none;" alt="" width="100" /></a>';
 							$xml .= '<a href="http://www.demandezleprogramme.be/-Detail-agenda-?id_event='.$id_event.'" title="Voir" style="font-weight:bold; color:#8F0133;">'.texteplain($data['nom_event']).'</a><br />'."\n";
 							$xml .= '<a href="http://www.demandezleprogramme.be/-Details-lieux-culturels-?id_lieu='.$data['lieu_event'].'" title="Lieu" style="font-weight:bold; color:#009A99;">'.texteplain($data['nom_lieu']).'</a>'."\n";
 							if (isset($genres[$data['genre_event']]))

@@ -88,7 +88,7 @@ function avertir_avis_listing ($id_avis)
 		$nom_event = $donnees_event['nom_event'] ;
 		$id_event = $donnees_event['id_event'] ;
 		$mail_concat.= '<a href="' . $lien_event . '">
-		<img src="' . $racine_domaine . 'agenda/' . $folder_pics_event . '/vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" /></a>';
+		<img src="' . $racine_domaine . 'agenda/' . $folder_pics_event . '/event_' . $id_event . '_1.jpg" title="' . $nom_event . '" width="100" /></a>';
 	}	
 		
 	$mail_concat.= '</td><td><p class="turquoise_style"><strong>' . $nom_avis . '</strong> a post&eacute; un nouvel avis sur 

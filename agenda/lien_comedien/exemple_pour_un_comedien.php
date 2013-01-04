@@ -45,24 +45,21 @@ while ($donnees_comedien_lien = mysql_fetch_array($reponse_comedien_lien))
 		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/event_' . $donnees_comedien_lien['id_event'] . 
 		'_1.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
 		
-		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_comedien_lien['id_event'] . 
-		'_1.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
+//		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_comedien_lien['id_event'] . '_1.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
 	}
 	if (isset ($donnees_comedien_lien['pic_event_2']) AND $donnees_comedien_lien['pic_event_2'] == 'set' )
 	{
 		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/event_' . $donnees_comedien_lien['id_event'] . 
 		'_2.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
 		
-		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_comedien_lien['id_event'] . 
-		'_2.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
+//		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_comedien_lien['id_event'] . '_2.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
 	}
 	if (isset ($donnees_comedien_lien['pic_event_3']) AND $donnees_comedien_lien['pic_event_3'] == 'set' )
 	{
 		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/event_' . $donnees_comedien_lien['id_event'] . 
 		'_3.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
 		
-		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_comedien_lien['id_event'] . 
-		'_3.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
+//		echo '<img src="http://www.demandezleprogramme.be/agenda/pics_events/vi_event_' . $donnees_comedien_lien['id_event'] . '_3.jpg" title="' . $donnees_comedien_lien['nom_event'] . '" />';
 	}
 	
 	

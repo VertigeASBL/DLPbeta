@@ -259,7 +259,7 @@ while ($nextdonnees) {
 	{
 		$nom_event = $donnees['nom_event'] ;
 		$id_event = $donnees['id_event'] ;
-		$tab.= '<img src="../' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" />';
+		$tab.= '<img src="../' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 	}
 	$tab.= '</td>';
 	

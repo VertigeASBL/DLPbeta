@@ -937,7 +937,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	{
 		$nom_event = htmlspecialchars($donnees_1['nom_event']);
 		$id_event = $donnees_1['id_event'];
-		$tab.= '<span class="breve_pic"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" /></a></span>'."\n";
+		$tab.= '<span class="breve_pic"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" /></a></span>'."\n";
 	}
 	
 	

@@ -15,8 +15,8 @@ function uploader_4 ($id_update,$num_pic)
 	$taille_max = 4000000 ;
 	$taille_min = 2 ;
 	$destination = '../' . $folder_pics_event . 'event_' . $id_update . '_' . $num_pic . '.tmp.jpg' ; // Chemin & nom de image de destination
-	$destination_vi = '../' . $folder_pics_event . 'vi_event_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de Vignette
-	$destination_micro = '../' . $folder_pics_event . 'micro_event_' . $id_update . '_' . $num_pic . '.jpg' ; //--- richir
+/*	$destination_vi = '../' . $folder_pics_event . 'vi_event_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de Vignette
+	$destination_micro = '../' . $folder_pics_event . 'micro_event_' . $id_update . '_' . $num_pic . '.jpg' ; //--- richir */
 
 	$error_info = ''; // RAZ de la var qui contiendra les messages d'erreur
 	$debug_concat =  '<div class="mini_info">IMAGE TRAITEE = ' . $num_pic . '<br />_____________________';
@@ -126,7 +126,7 @@ function uploader_4 ($id_update,$num_pic)
 				imagecopyresampled($resample, $uploaded_pic, 0, 0, 0, 0, $w_absolue, $new_H, $largeur_uploaded, $hauteur_uploaded);
 				imagejpeg($resample, $destination, '90');// Enregistrer la miniature sous le nom	
 									
-	
+/*
 				// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 				// Recalcul de la taille de la vignette
 				// Les dimensions sont contraintes en W et en H (comme auparavant)
@@ -160,7 +160,7 @@ function uploader_4 ($id_update,$num_pic)
 				chmod ($destination_vi, 0644); // Pour que l'image ait un CHMOD 644 et non 600 
 
 
-				/* ---------- richir : vignette micro supplémentaire pour iphone / début ---------- */
+				//---------- richir : vignette micro supplémentaire pour iphone / début ----------
 				$new_W_Vignette = 60; $new_H_Vignette = 60;
 				$rapport = $new_W_Vignette / $new_H_Vignette;
 
@@ -182,11 +182,11 @@ function uploader_4 ($id_update,$num_pic)
 					@unlink($destination_micro);
 				imagejpeg($resample, $destination_micro, 90);// Enregistrer la miniature sous le nom
 				chmod($destination_micro, 0644); // Pour que l'image ait un CHMOD 644 et non 600 
-				/* ---------- richir : vignette micro supplémentaire pour iphone / fin ---------- */
+				//---------- richir : vignette micro supplémentaire pour iphone / fin ----------
 
 
 				// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV Fin vignette
-	
+*/
 				// -----------------------------------------------------
 				// Mettre le FLAG de la TABLE à SET
 				$image_db = 'pic_event_' .  $num_pic ;
@@ -196,9 +196,9 @@ function uploader_4 ($id_update,$num_pic)
 			{
 				// La largeur n'est pas suffisante => refuser l'image
 				@unlink($destination) ; // J'efface l'image importée AVANT les tests de dimension
-				@unlink($destination_vi) ;
+/*				@unlink($destination_vi) ;
 				@unlink($destination_micro); //--- richir
-	
+*/	
 				$image_db = 'pic_event_' .  $num_pic ;
 				mysql_query("UPDATE $table_evenements_agenda SET $image_db = '' WHERE id_event = '$id_update' LIMIT 1 ");
 

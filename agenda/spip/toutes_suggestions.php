@@ -68,7 +68,7 @@ foreach ($spectacle as $key => $donnees
 	{
 		$nom_event = $donnees ['nom_event'] ;
 		$id_event = $donnees ['id_event'] ;
-		$tab.= '<span class="breve_pic"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" /></a></span>';
+		$tab.= '<span class="breve_pic"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" /></a></span>';
 	}
 	
 	

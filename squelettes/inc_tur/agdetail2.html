@@ -182,7 +182,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		$ev_url = generer_url_entite(92, 'rubrique', 'id_event='.$donnees_preview['id_event']);
 		echo '<div class="event_enfant">
 				<a href="',$ev_url,'">
-					<img src="agenda/',($donnees_preview['pic_event_1'] == 'set' ? 'pics_events/vi_event_'.$donnees_preview['id_event'].'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif'),'" title="',htmlspecialchars($donnees_preview['nom_event']),'" />
+					<img src="agenda/',($donnees_preview['pic_event_1'] == 'set' ? 'pics_events/event_'.$donnees_preview['id_event'].'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif'),'" title="',htmlspecialchars($donnees_preview['nom_event']),'" width="100" />
 				</a>
 			<strong><a href="',$ev_url,'">',monraccourcirchaine($donnees_preview['nom_event'], 45),'</a></strong>
 			| du ',affdate_jourcourt($donnees_preview['date_event_debut']),' au ',affdate_jourcourt($donnees_preview['date_event_fin']),'
@@ -340,7 +340,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ____________________________________________
 	// Vignette
 	if ($donnees['pic_event_1'] == 'set')
-		echo '<img src="agenda/'.$folder_pics_event.'vi_event_'.$id_event.'_1.jpg" alt="" class="onglet7" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
+		echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_1.jpg" alt="" class="onglet7" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" width="100" />'."\n";
 	
 
 	//_________________ Infos utiles _____________________

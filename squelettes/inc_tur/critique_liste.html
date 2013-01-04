@@ -12,7 +12,7 @@ require 'agenda/inc_var.php';
 	{
 		$nom_event = $GLOBALS['donnees']['nom_event'] ;
 		$id_event = $GLOBALS['donnees']['id_event'] ;
-		$tab.= '<span class="breve_pic"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'vi_event_' . $id_event . '_1.jpg" title="' . $nom_event . '" /></a></span>';
+		$tab.= '<span class="breve_pic"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . htmlspecialchars($nom_event) . '" width="100" /></a></span>';
 	}
 	
 	
