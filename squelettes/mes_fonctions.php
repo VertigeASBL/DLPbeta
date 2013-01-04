@@ -371,4 +371,38 @@ function replace_lien_video($codevideo, $vx, $vy) {
 		else
 			return preg_replace(',\swidth(:|=)(\'|")?(\d+)(\D),Ui', ' width${1}${2}'.$vx.'${4}', preg_replace(',\sheight(:|=)(\'|")?(\d+)(\D),Ui', ' height${1}${2}'.$vy.'${4}', $codevideo));
 }
+
+/* Didier /=> Cette fonction permet de récupérer l'étoile et le grade dans SPIP */
+function spip_trouve_categorie_spectateur($nb_avis_postes)
+{
+	if ($nb_avis_postes > 0 AND $nb_avis_postes <= 10)
+	{
+		$categorie_spectateur = 'Membre actif';
+		$icone_spectateur = 'etoile_2.jpg';
+	}
+	elseif ($nb_avis_postes > 10 AND $nb_avis_postes <= 20)
+	{
+		$categorie_spectateur = 'Membre régulier';
+		$icone_spectateur = 'etoile_3.jpg';
+	}
+	elseif ($nb_avis_postes > 20 AND $nb_avis_postes <= 50)
+	{
+		$categorie_spectateur = 'Membre assidu';
+		$icone_spectateur = 'etoile_4.jpg';
+	}
+	elseif ($nb_avis_postes > 50)
+	{
+		$categorie_spectateur = 'Membre passionné';
+		$icone_spectateur = 'etoile_5.jpg';
+	}
+	else
+	{
+		$categorie_spectateur = 'Nouveau Membre';
+		$icone_spectateur = 'etoile_1.jpg';
+	}	
+	
+	return '<p>'.$categorie_spectateur.' <img src="agenda/design_pics/spectateurs/'.$icone_spectateur.'" alt="Etoile" /></p>';
+}
+
+
 ?>

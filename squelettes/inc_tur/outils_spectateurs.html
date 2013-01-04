@@ -33,41 +33,47 @@
 ?>
 <div class="ligne_bas_col_2">&nbsp;</div>
 
+
+<?php 
+/* Ne pas afficher de suggestion s'il n'y a pas de session Spectateur. */
+if (!empty($_SESSION['id_spectateur'])): ?>
 <div id="suggestion">
-		<h3>Suggestion</h3>
-		<?php
-		/* On récupère les id des lieux favoris de la personne. */
-		$favoris = array();
-		$sql_liste_favoris = sql_select('id_lieu', 'ag_lieux_favoris', 'id_spectateur='.$_SESSION['id_spectateur']);
-		while ($res = sql_fetch($sql_liste_favoris)) {
-			$favoris[] = $res['id_lieu'];
+	<h3>Suggestion</h3>
+	<?php
+	/* On récupère les id des lieux favoris de la personne. */
+	$favoris = array();
+	$sql_liste_favoris = sql_select('id_lieu', 'ag_lieux_favoris', 'id_spectateur='.$_SESSION['id_spectateur']);
+	while ($res = sql_fetch($sql_liste_favoris)) {
+		$favoris[] = $res['id_lieu'];
+	}
+
+	/* On séléctionne une suggestion en fonction des lieux favoris et des dates proches. */
+	/* On limite l'affichage a seulement 3 spectacle et on affiche aléatoirement. */
+	$spectacle = sql_allfetsel('id_event, nom_event, date_event_debut, date_event_fin, id_lieu, nom_lieu', 'ag_event INNER JOIN ag_lieux ON lieu_event = id_lieu', sql_in('id_lieu', $favoris).' AND date_event_fin > CURDATE() AND date_event_debut < DATE_ADD(CURDATE(), INTERVAL 7 DAY)', '', 'rand()', '0,3');
+
+	if (empty($spectacle)) echo 'Vous n\'avez pas défini de lieu favoris, rendez-vous sur <a href="-Modifier-mes-infos-spectateur-">votre profil</a> pour en ajouter.';
+	else {
+
+		echo '<ul>';
+		foreach ($spectacle as $key => $value) {
+			echo '
+				<li>
+					<span class="image_suggestion">
+						<a href="-Detail-agenda-?id_event='.$value['id_event'].'">
+							<img src="agenda/pics_events/event_'.$value['id_event'].'_1.jpg" title="'.htmlspecialchars($value['nom_event']).'" alt="" width="100" />
+						</a>
+					</span>
+					<span class="descriptif_suggestion">
+						<p><a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a></p>
+						<p class="date_suggestion">'.affdate($value['date_event_debut'], 'd/m/Y').' >> '.affdate($value['date_event_fin'], 'd/m/Y').'</p>
+						<p class="nom_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$value['id_lieu'].'">'.$value['nom_lieu'].'</a></p>
+					</span>
+				</li>';
 		}
-
-		/* On séléctionne une suggestion en fonction des lieux favoris et des dates proches. */
-		/* On limite l'affichage a seulement 3 spectacle et on affiche aléatoirement. */
-		$spectacle = sql_allfetsel('id_event, nom_event, date_event_debut, date_event_fin, id_lieu, nom_lieu', 'ag_event INNER JOIN ag_lieux ON lieu_event = id_lieu', sql_in('id_lieu', $favoris).' AND date_event_fin > CURDATE() AND date_event_debut < DATE_ADD(CURDATE(), INTERVAL 7 DAY)', '', 'rand()', '0,3');
-
-		if (empty($spectacle)) echo 'Vous n\'avez pas défini de lieu favoris, rendez-vous sur <a href="-Modifier-mes-infos-spectateur-">votre profil</a> pour en ajouter.';
-		else {
-
-			echo '<ul>';
-			foreach ($spectacle as $key => $value) {
-				echo '
-					<li>
-						<span class="image_suggestion">
-							<a href="-Detail-agenda-?id_event='.$value['id_event'].'">
-								<img src="agenda/pics_events/event_'.$value['id_event'].'_1.jpg" title="'.htmlspecialchars($value['nom_event']).'" alt="" width="100" />
-							</a>
-						</span>
-						<span class="descriptif_suggestion">
-							<p><a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a></p>
-							<p class="date_suggestion">'.affdate($value['date_event_debut'], 'd/m/Y').' >> '.affdate($value['date_event_fin'], 'd/m/Y').'</p>
-							<p class="nom_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$value['id_lieu'].'">'.$value['nom_lieu'].'</a></p>
-						</span>
-					</li>';
-			}
-			echo '<li id="toutes_suggestions"><a href="[(#URL_RUBRIQUE{163})]">Afficher toutes les suggestions.</a></li>';
-			echo '</ul>';
-		}
-		?>
-	</div>
+		echo '<li id="toutes_suggestions"><a href="[(#URL_RUBRIQUE{163})]">Afficher toutes les suggestions.</a></li>';
+		echo '</ul>';
+	}
+	?>
+</div>
+<?php endif; ?>	
+	

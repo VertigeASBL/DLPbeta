@@ -25,45 +25,84 @@ function toggle_zone(Zone_id,txtReplier,txtDeplier) {
 		targetElementB.style.display = "" ;
 	}
 }
-//--></SCRIPT>
-
+//-->
+</SCRIPT>
 </head>
 <body>
-<div id="header">
-	<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> -->
-	<INCLURE{fond=inc_tur/banner_haut}>
-</div>
-<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
-<div id="principal">
-	<div class="colonne1">
-
-		<INCLURE{fond=inc/varticle}{id_rubrique}>
-	<?php
-		if (! isset($GLOBALS['spip_connect_version'])) {
-		include_once('ecrire/base/connect_sql.php');
-		require('config/connect.php');
-	}
-
-
-		include('agenda/spip/spectateurs_listing_communaute.php');
-
-		
-		// ********************************************************************************
-		?>
-
+	<div id="header">
+		<!-- <h1><a href="#URL_SITE_SPIP" accesskey="1">[<img src="IMG/(#LOGO_SITE_SPIP|fichier)" alt="#NOM_SITE_SPIP" />]</a></h1> -->
+		<INCLURE{fond=inc_tur/banner_haut}>
 	</div>
-	<div class="colonne2">
-		<INCLURE{fond=inc_tur/recherche_rapide}>
-		<INCLURE{fond=inc_tur/outils_spectateurs}>
-		<INCLURE{fond=inc_tur/formagnewsletter}>
-		<INCLURE{fond=inc/decouvrir_pgm}>
-		<INCLURE{fond=inc_tur/services}>
+	<INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
+	<div id="principal">
+		<div class="colonne1">
+
+			<INCLURE{fond=inc/varticle}{id_rubrique}>
+			<?php
+			if (! isset($GLOBALS['spip_connect_version'])) {
+				include_once('ecrire/base/connect_sql.php');
+				require('config/connect.php');
+			}
+
+			/* Didier =>  */
+			// include('agenda/spip/spectateurs_listing_communaute.php');
+			// ********************************************************************************
+			?>
+
+			<B_spectateur>
+			
+			<BOUCLE_spectateur(ag_spectateurs){pagination}{par avis_valides_spectateur}{inverse}>
+			<div class="spectateur_cadre[ (#COMPTEUR_BOUCLE|alterner{'float_stop', ''})]">
+				[<div class="avis_spectateur_cadre">(#AVIS_VALIDES_SPECTATEUR) AVIS</div>]
+
+				[(#REM) Si le fichier existe, on affiche l'avatar de la personne ]
+				[(#VAL{agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|oui) <img src="agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px; width: 50px;" />]
+
+				[(#REM) Si le fichier n'existe pas, on affiche l'avatar par défaut en fonction du sexe de la personne ]
+				[(#VAL{agenda/vignettes_spectateurs/vi_spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|non) 
+					[(#SEXE_SPECTATEUR|=={0}|oui) <img src="agenda/vignettes_spectateurs/vi_spect_anonyme_homme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px; width: 50px;" />]
+					[(#SEXE_SPECTATEUR|=={0}|non) <img src="agenda/vignettes_spectateurs/vi_spect_anonyme_femme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" style="float: left; margin-right: 5px; width: 50px;" />]
+				]
+				[<h2>(#PSEUDO_SPECTATEUR)</h2>]
+				[(#AVIS_VALIDES_SPECTATEUR|spip_trouve_categorie_spectateur)]
+				
+				<B_Dernier_avis_spectateur>
+				<div class="dernier_avis float_stop">
+					<h3>Derniers avis postés</h3>
+					<ul>
+					[(#REM) Comme la base de donnée n'est pas super bien construite, on fait une première boucle pour récupérer les avis ]
+					<BOUCLE_Dernier_avis_spectateur(ag_avis){nom_avis = #PSEUDO_SPECTATEUR} {par t_stamp_avis} {inverse} {0, 3}>
+						[(#REM) Ensuite on faite une deuxième boucle pour récupérer le titre des spectacles ]
+						<BOUCLE_titre_avis(ag_event){id_event=#EVENT_AVIS}>
+							<li><a href="-Detail-agenda-?id_event=#ID_EVENT" title="#NOM_EVENT">#NOM_EVENT</a></li>
+						</BOUCLE_titre_avis>
+					</BOUCLE_Dernier_avis_spectateur>
+					</ul>
+				</div>
+				</B_Dernier_avis_spectateur>
+				<p>Aucun avis déposé.</p>
+				<//B_Dernier_avis_spectateur>
+				
+			</div>
+
+			</BOUCLE_spectateur>
+			[<p class="pagination float_stop">(#PAGINATION)</p>]
+			</B_spectateur>
+			<//B_spectateur>
+
+		</div>
+		<div class="colonne2">
+			<INCLURE{fond=inc_tur/recherche_rapide}>
+			<INCLURE{fond=inc_tur/outils_spectateurs}>
+			<INCLURE{fond=inc_tur/formagnewsletter}>
+			<INCLURE{fond=inc/decouvrir_pgm}>
+			<INCLURE{fond=inc_tur/services}>
+		</div>
+		<div class="clear"></div>
 	</div>
-	<div class="clear"></div>
-</div>
-<div id="footer">
-	<INCLURE{fond=inc_tur/footer}>
-</div>
+	<div id="footer">
+		<INCLURE{fond=inc_tur/footer}>
+	</div>
 </body>
 </html>
 </BOUCLE_princ>

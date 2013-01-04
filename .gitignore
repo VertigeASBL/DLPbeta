@@ -191,3 +191,5 @@ pip-log.txt
 .DS_Store
 
 agenda/vertiny/jscripts/tiny_mce/plugins/ajaxfilemanager/langs/zh_cn.php
+
+agenda/pics_events.old/
