@@ -66,9 +66,7 @@ $allowedTags = '<br><br />'; // Balises de style que les visiteurs peuvent emplo
 //LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 if (empty ($_GET['id_event']) OR $_GET['id_event'] == NULL )
 {
-	echo '<p>&nbsp;</p><p>&nbsp;</p><div class="alerte">Mauvais paramètre GET<br>
-	<a href="index.php" >Retour</a></div>' ;
-	exit();
+	echo 'recherche evenement';
 }
 else
 {
@@ -503,12 +501,12 @@ if ($avis_ok_masquer_formulaire==false)
 			// wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 			// 2.3/ Je crée compte spectateur maintenant
 			// wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-			echo '- <a href="agenda/spectateurs_admin/ins/a_1.php">Je crée compte spectateur</a> maintenant, je reviendrai ensuite écrire mon avis<br /> <br />' ;
+			echo '- <a href="-Inscription-spectateur-">Je crée mon compte spectateur</a> maintenant, je reviendrai ensuite écrire mon avis<br /> <br />' ;
 			
 			// wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 			// 2.4/ J'ai oublié mon mot de passe
 			// wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-			echo '- J\'ai oublié mon mot de passe, <a href="agenda/spectateurs_admin/ins/oubli_pw.php">je le récupère</a> et je reviendrai  écrire mon avis' ;
+			echo '- J\'ai oublié mon mot de passe, <a href="-Mot-de-passe-oublie-">je le récupère</a> et je reviendrai  écrire mon avis' ;
 		
 		echo '</tr></table>';
 		

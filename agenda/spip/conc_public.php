@@ -503,7 +503,7 @@ else
 			<ul>
 			  <li><a href="-Concours,95-?login=go">
 			  Me connecter &agrave; mon compte (identification)</a></li>
-			  <li><a href="agenda/spectateurs_admin/ins/a_1.php">M\'inscrire gratuitement</a> </li>
+			  <li><a href="-Inscription-spectateur-">M\'inscrire gratuitement</a> </li>
 			</ul></td></tr>' ;
 			}
 	$tab_2.= '</table> <br  /> ' ;
