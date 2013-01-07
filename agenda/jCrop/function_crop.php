@@ -1,9 +1,9 @@
 <?php 
-function crop_image($source) {
+function crop_image($source, $w, $h) {
 	
 	/* Création de l'image source */
-	$targ_w = 161;
-	$targ_h = 230;
+	$targ_w = $w;
+	$targ_h = $h;
 	$jpeg_quality = 90;
 
 	$img_r = imagecreatefromjpeg($source);

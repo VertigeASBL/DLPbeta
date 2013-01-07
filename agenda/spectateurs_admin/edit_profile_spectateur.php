@@ -397,7 +397,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		if(!empty($_FILES[$source_im]['tmp_name']) AND is_uploaded_file($_FILES[$source_im]['tmp_name']))
 		{
 			$num_pic = 1 ; // correspond à l'extension du nom du futur fichier JPEG uploadé
-			uploader_vignette_spect ($id_update,1);	// Upload et construction vignette
+			$jCrop = uploader_vignette_spect ($id_update,1);	// Upload et construction vignette
 		}
 		else
 		{
@@ -568,8 +568,6 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			
 			include_once('agenda/activite/activite_fonctions.php');
 			activite_log ('profil');
-
-			return;
 		}
 		else
 		{
@@ -583,8 +581,6 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		<strong>Merci de remplir correctement tous les champs marquées d\'un astérisque(*)</strong><br /><br /></p></div>' ;
 	}
 }
-else
-{
 	$reponse = mysql_query("SELECT * FROM $table_spectateurs_ag WHERE id_spectateur = '$session_id_spectateur'");
 	$donnees = mysql_fetch_array($reponse);
 	
@@ -628,7 +624,7 @@ else
 		$avis_valides_spectateur = $donnees ['avis_valides_spectateur'];
 
 	}
-}
+
 	// ------------------------------------------------
 	// Remplissage du formulaire
 	// ------------------------------------------------
@@ -689,28 +685,37 @@ else
 	<tr>
 	  
 	  
-	  <td align="center" valign="middle"><?php 		
+		<td align="center" valign="middle"><?php 		
 			// Afficher image visiteur
-			 if (isset ($donnees ['pic_spectateur']) AND $donnees ['pic_spectateur'] == 'set' )
-			{
-				echo '<img src="agenda/' . $folder_pics_spectateurs . 'vi_spect_' . $id . '_1.jpg" />';
-			}
-			else
-			{
-				if ($donnees ['sexe_spectateur'] == 0)
-				{
-					echo '<img src="agenda/' . $folder_pics_spectateurs . 'vi_spect_anonyme_homme.jpg" alt="spectateur anonyme" />';
-				}
-				else
-				{
-					echo '<img src="agenda/' . $folder_pics_spectateurs . 'vi_spect_anonyme_femme.jpg" alt="spectatrice anonyme" />';
-				}
+			if (isset($donnees['pic_spectateur']) and $donnees['pic_spectateur'] == 'set' ) 
+			 	echo '<img src="agenda/' . $folder_pics_spectateurs . 'spect_' . $id . '_1.jpg?time='.time().'" />';
+			else {
+				if ($donnees ['sexe_spectateur'] == 0) echo '<img src="agenda/' . $folder_pics_spectateurs . 'spect_anonyme_homme.jpg" alt="spectateur anonyme" />';
+				else echo '<img src="agenda/' . $folder_pics_spectateurs . 'spect_anonyme_femme.jpg" alt="spectatrice anonyme" />';
 			}	
 							
-			?> </td>
-            <td>Image 
-              <input name="source_pic_1" type="file" id="source_pic_1" />
-  			  <br />Effacer l'image<input type="checkbox" name="effacer_image1" /></td>
+			?> 
+		</td>
+        <td>
+        	<?php if (isset($jCrop)): ?>
+	        	<script type="text/javascript">
+	        	jQuery(document).ready(function($) {
+	        		$(".jCropme").click(function () {
+	        			window.open(this.href, "jCrop", "menubar=0,resizable=0,width=500,height=430");
+	        			return false;
+	        		});
+	        	});
+        	</script>
+        	<h3>Recadrer l'image pour valider.</h3>
+        	<?php
+        		echo '<a href="agenda/jCrop/index.php?source='.urldecode($jCrop).'" class="jCropme"><img src="'.str_replace('..', 'agenda', $jCrop).'" alt="recadrage" style="width: 200px;" /></a>';
+        	else:
+        	?>
+        	Image
+        	<input name="source_pic_1" type="file" id="source_pic_1" />
+  			<br />Effacer l'image<input type="checkbox" name="effacer_image1" />
+  			<?php endif; ?>
+  		</td>
     </tr>
 	<tr>
       <td valign="middle"><strong>Date de naissance</strong> : </td>

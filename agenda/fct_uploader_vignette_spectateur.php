@@ -14,8 +14,8 @@ function uploader_vignette_spect ($id_update,$num_pic)
 	$fichier_source = 'source_pic_' . $num_pic ;
 	$taille_max = 4000000 ;
 	$taille_min = 2 ;
-	$destination = '../' . $folder_pics_spectateurs . 'spect_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de image de destination
-	$destination_vi = '../' . $folder_pics_spectateurs . 'vi_spect_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de Vignette
+	$destination = '../' . $folder_pics_spectateurs . 'spect_' . $id_update . '_' . $num_pic . '.tmp.jpg' ; // Chemin & nom de image de destination
+	// $destination_vi = '../' . $folder_pics_spectateurs . 'vi_spect_' . $id_update . '_' . $num_pic . '.jpg' ; // Chemin & nom de Vignette
 
 	$error_info = ''; // RAZ de la var qui contiendra les messages d'erreur
 	$debug_concat =  '<div class="mini_info">IMAGE TRAITEE = ' . $num_pic . '<br />_____________________';
@@ -127,31 +127,31 @@ function uploader_vignette_spect ($id_update,$num_pic)
 				// Recalcul de la taille de la vignette
 				// Les dimensions sont contraintes en W et en H (comme auparavant)
 				// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-				$debug_concat.= '<br />----------------- VIGNETTE ------------------' ;
-				if ($largeur_uploaded<=$w_vi_absolue)
-				{	
-					$debug_concat.=  '<br />- <b>Dimensions Vignette OK</b>';
-					$new_W_Vignette = $largeur_uploaded ;
-					$new_H_Vignette = $hauteur_uploaded ;
-				}
-				else
-				{
-					$debug_concat.=  '<br />-<b> ! La Vignette va être redimensionnée  ! </b>';
+				// $debug_concat.= '<br />----------------- VIGNETTE ------------------' ;
+				// if ($largeur_uploaded<=$w_vi_absolue)
+				// {	
+				// 	$debug_concat.=  '<br />- <b>Dimensions Vignette OK</b>';
+				// 	$new_W_Vignette = $largeur_uploaded ;
+				// 	$new_H_Vignette = $hauteur_uploaded ;
+				// }
+				// else
+				// {
+				// 	$debug_concat.=  '<br />-<b> ! La Vignette va être redimensionnée  ! </b>';
 					
-					// W > maximum
-					if ($largeur_uploaded>$w_vi_absolue)
-					{
-							$new_W_Vignette = $w_vi_absolue;
-							// On recalcule la Hauteur proportionnellement
-							$new_H_Vignette = round($hauteur_uploaded * $w_vi_absolue / $largeur_uploaded);
-							$debug_concat.=  '<br /><b>- nouvelle hauteur Vignette</b> = '.$new_H_Vignette ;
-							$debug_concat.=  '<br /><b>- nouvelle largeur Vignette</b> = '.$new_W_Vignette ;
-					}
-				}
-				$resample = imagecreatetruecolor($new_W_Vignette, $new_H_Vignette); // Création image vide
-				imagecopyresampled($resample, $uploaded_pic, 0, 0, 0, 0, $new_W_Vignette, $new_H_Vignette, $largeur_uploaded, $hauteur_uploaded);
-				imagejpeg($resample, $destination_vi, '90');// Enregistrer la miniature sous le nom
-				chmod ($destination_vi, 0644); // Pour que l'image ait un CHMOD 644 et non 600 
+				// 	// W > maximum
+				// 	if ($largeur_uploaded>$w_vi_absolue)
+				// 	{
+				// 			$new_W_Vignette = $w_vi_absolue;
+				// 			// On recalcule la Hauteur proportionnellement
+				// 			$new_H_Vignette = round($hauteur_uploaded * $w_vi_absolue / $largeur_uploaded);
+				// 			$debug_concat.=  '<br /><b>- nouvelle hauteur Vignette</b> = '.$new_H_Vignette ;
+				// 			$debug_concat.=  '<br /><b>- nouvelle largeur Vignette</b> = '.$new_W_Vignette ;
+				// 	}
+				// }
+				// $resample = imagecreatetruecolor($new_W_Vignette, $new_H_Vignette); // Création image vide
+				// imagecopyresampled($resample, $uploaded_pic, 0, 0, 0, 0, $new_W_Vignette, $new_H_Vignette, $largeur_uploaded, $hauteur_uploaded);
+				// imagejpeg($resample, $destination_vi, '90');// Enregistrer la miniature sous le nom
+				// chmod ($destination_vi, 0644); // Pour que l'image ait un CHMOD 644 et non 600 
 
 	
 				// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV Fin vignette
@@ -189,5 +189,8 @@ function uploader_vignette_spect ($id_update,$num_pic)
 	
 	$debug_concat.=  '</div> <br />';
 	//echo $debug_concat ;
+
+	/* Didier => On renvoie la variable destination qui est en faite la variable temporaire. */
+	return $destination;
 }
 ?>

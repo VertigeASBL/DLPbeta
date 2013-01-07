@@ -82,11 +82,11 @@ else {
 	</span>';
 	else {
 		if ($user['sexe_spectateur'] == 0) 
-			$avatar = '<span class="image_flottante_preview">
-		<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" /></a>
+			$avatar = '<span style="float: right;">
+		<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" style="height: 35px;" /></a>
 		</span>';
-		else $avatar = '<span class="image_flottante_preview">
-			<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" /></a>
+		else $avatar = '<span style="float: right;">
+			<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" style="height: 35px;" /></a>
 		</span>';
 	}
 
