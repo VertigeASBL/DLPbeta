@@ -313,7 +313,7 @@ function obteniravislies($max = 21) {
 
 	$t_ev = array(); $t_nom = array(); $t_pic = array(); $t_idlieu = array(); $t_lieu = array(); $t_nbr = array();
 	while ($data = spip_fetch_array($req)) {
-		$r2q = 'SELECT COUNT(id_avis) AS nombre FROM ag_avis WHERE event_avis IN ('.saisonprecedente($data['id_event'], 'avis').')';
+		$r2q = 'SELECT COUNT(id_avis) AS nombre FROM ag_avis WHERE event_avis IN ('.saisonprecedente($data['id_event'], 'avis').') AND publier_avis=\'set\'';
 		if ($r2q = spip_fetch_array(spip_query($r2q)))
 			$r2q = $r2q['nombre'];
 		if ($r2q) {

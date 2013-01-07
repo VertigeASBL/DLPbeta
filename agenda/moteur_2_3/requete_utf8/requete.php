@@ -1,5 +1,4 @@
-﻿<?php
-
+<?php
 require '../../inc_db_connect.php';
 require '../../inc_var.php';
 require '../../inc_fct_base.php';

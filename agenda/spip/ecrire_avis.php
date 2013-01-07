@@ -1,5 +1,8 @@
 <?php 
- // le session_start(); est dans squelette rubrique=97
+	echo '<h3>Donnez votre avis !</h3>',"\n";
+	echo '<div class="detail_rubr_inc">',"\n";
+
+// le session_start(); est dans squelette rubrique=97
 require 'agenda/inc_var.php';
 require 'agenda/inc_db_connect.php';
 require 'agenda/inc_var_dist_local.php';
@@ -17,21 +20,21 @@ if (isset($_SESSION['group_admin_spec']) AND $_SESSION['group_admin_spec'] == 1)
 	$reponse = mysql_query("SELECT * FROM $table_spectateurs_ag WHERE id_spectateur = '$id_spectateur'");
 	$donnees = mysql_fetch_array($reponse);
 		
-	$prenom_spectateur = $donnees ['prenom_spectateur'];
-	$nom_spectateur = $donnees ['nom_spectateur'];
-	$pseudo_spectateur = $donnees ['pseudo_spectateur'];
-	$e_mail_spectateur = $donnees ['e_mail_spectateur'];
-	$tel_spectateur = $donnees ['tel_spectateur'];
-	$log_spectateur = $donnees ['log_spectateur'];
-	$pw_spectateur = $donnees ['pw_spectateur'];
+	$prenom_spectateur = $donnees['prenom_spectateur'];
+	$nom_spectateur = $donnees['nom_spectateur'];
+	$pseudo_spectateur = $donnees['pseudo_spectateur'];
+	$e_mail_spectateur = $donnees['e_mail_spectateur'];
+	$tel_spectateur = $donnees['tel_spectateur'];
+	$log_spectateur = $donnees['log_spectateur'];
+	$pw_spectateur = $donnees['pw_spectateur'];
 
-	$description_courte_spectateur = $donnees ['description_courte_spectateur'];
-	$description_longue_spectateur = $donnees ['description_longue_spectateur'];
+	$description_courte_spectateur = $donnees['description_courte_spectateur'];
+	$description_longue_spectateur = $donnees['description_longue_spectateur'];
 
-	$pic_spectateur = $donnees ['pic_spectateur'];
+	$pic_spectateur = $donnees['pic_spectateur'];
 
-	$artiste_prefere_spectateur = $donnees ['artiste_prefere_spectateur'];
-	$lieu_prefere_spectateur = $donnees ['lieu_prefere_spectateur'];
+	$artiste_prefere_spectateur = $donnees['artiste_prefere_spectateur'];
+	$lieu_prefere_spectateur = $donnees['lieu_prefere_spectateur'];
 	$avis_valides_spectateur = $donnees['avis_valides_spectateur'];
 
 	
@@ -64,9 +67,59 @@ $allowedTags = '<br><br />'; // Balises de style que les visiteurs peuvent emplo
 
 
 //LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-if (empty ($_GET['id_event']) OR $_GET['id_event'] == NULL )
+if (empty($_GET['id_event']) OR $_GET['id_event'] == NULL )
 {
-	echo 'recherche evenement';
+	$id_event = 0;
+	$_GET['mode_avis'] = '';
+?>
+<script type="text/javascript">
+$(document).ready(function(){
+	var numeroajax = 0;
+
+	function appel_php() {
+		$('#event_preview_id_fleche').show();
+		valeur_txt_libre_recup = $("#chp_txt_libre").val();
+
+		$.post("agenda/moteur_2_3/requete_utf8/requete_home.php", {
+			chaine_txt_libre: ""+valeur_txt_libre_recup+"",
+			url_self: ""+window.location.search+"" //window.location.hostname+window.location.pathname+
+		}, function(data){
+			if (numeroajax > 1)
+				{ numeroajax--; return; }
+			var response_se = eval("(" + data + ")");
+			// Nombre de résultats
+			if (valeur_txt_libre_recup == "")
+				$('#event_preview_id_fleche').hide();
+			else
+				if (response_se.nombre_resultats>0)
+					$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
+				else
+					$('#event_preview_id').html("Aucun résultat");
+			numeroajax--;
+		},"json");
+	}
+	// TEST CHP LIBRE
+	$("#chp_txt_libre").keyup(function() {
+		chaine_txt_libre = $(this).val();
+		// setTimeout = retarder une action
+		numeroajax++;
+		setTimeout(function attendre_un_peu() { appel_php(); }, 500);
+	});
+
+	$("#event_preview_close").click(function() { $('#event_preview_id_fleche').hide(); });
+});
+</script>
+
+	<form id="form_moteur_dlp_ajax" method="get" action="#">
+	<h3>Choississez votre spectacle :</h3><input name="chp_txt_libre" type="text" size="30" value="" id="chp_txt_libre" />
+	<div id="event_preview_cont">
+		<div id="event_preview_id_fleche" style="display:none;">
+			<div id="event_preview_close"></div>
+			<div id="event_preview_id"></div>
+		</div>
+    </div>
+	</form>
+<?php
 }
 else
 {
@@ -113,7 +166,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		{
 			$reponse_test_nom_spect = mysql_query("SELECT id_spectateur FROM $table_spectateurs_ag WHERE pseudo_spectateur = '$nom_avis'");
 			$donnees_test_nom_spect = mysql_fetch_array($reponse_test_nom_spect);
-			if ($donnees_test_nom_spect ['id_spectateur'] != NULL)
+			if ($donnees_test_nom_spect['id_spectateur'] != NULL)
 			{
 				$error_nom_avis = '<div class="error_form">Vous utilisez le pseudonyme d\'un spectateur enregistré sur le site. 
 				S\'il s\'agit de vous, veuillez vous authentifier via <a href="' . $racine_domaine . 'agenda/spectateurs_admin/votre_menu_spectateur.php">cette page</a>.</div>' ;
@@ -140,7 +193,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		{
 			$reponse_test_email_spect = mysql_query("SELECT id_spectateur FROM $table_spectateurs_ag WHERE e_mail_spectateur = '$email_avis'");
 			$donnees_test_email_spect = mysql_fetch_array($reponse_test_email_spect);
-			if ($donnees_test_email_spect ['id_spectateur'] != NULL)
+			if ($donnees_test_email_spect['id_spectateur'] != NULL)
 			{
 				$error_email_avis_event = '<div class="error_form">Vous utilisez une adresse email appartenant 
 				à un spectateur enregistré sur le site. 
@@ -202,7 +255,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	$reponse = mysql_query("SELECT * FROM $table_im_crypt WHERE session_crypt = '$get_sess'");
 	$donnees = mysql_fetch_array($reponse);
 	
-	if ($donnees ['code_crypt']=="" OR $donnees ['code_crypt']!=$_POST['code']) // Code non valide // (1==2) 
+	if ($donnees['code_crypt']=="" OR $donnees['code_crypt']!=$_POST['code']) // Code non valide // (1==2) 
 	{
 		$code = '';
 		$rec .= '- erreur image';
@@ -369,7 +422,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 $reponse = mysql_query("SELECT * FROM $table_black_list WHERE ip = '$ip_avis'");
 $donnees = mysql_fetch_array($reponse);
 
-if (isset($donnees ['ip'])) // Masquer formulaire
+if (isset($donnees['ip'])) // Masquer formulaire
 {
 	echo '<br><br><br><br><br><p class="alerte"><br>Nous sommes au regret de vous informer que 
 	<b>vous avez &eacute;t&eacute; 	mis sur liste noire</b>, et que par cons&eacute;quent,
@@ -378,21 +431,19 @@ if (isset($donnees ['ip'])) // Masquer formulaire
 	<br><img src="adresse_mail_strat.gif" width="147" height="12"><br>';
 	
 	
-	if (isset ($donnees ['info'])and $donnees ['info'] != NULL)
+	if (isset ($donnees['info'])and $donnees['info'] != NULL)
 	{
-		echo '<b>Motivation du black listage : </b>' . $donnees ['info'];
+		echo '<b>Motivation du black listage : </b>' . $donnees['info'];
 	}
 	echo '</p>';
+	$avis_ok_masquer_formulaire = true;
 
 	// INSERER JAVA POUR CLOSE WINDOW
-	?>
-
+?>
 	<script language="JavaScript">
 	window.alert('Vous n\'avez plus accès à ce service');
 	window.close();	</script>
-
-	<?php
-	exit() ;
+<?php
 }
 
 
@@ -405,23 +456,165 @@ if (isset($donnees ['ip'])) // Masquer formulaire
 // ------------------------------------------------
 if ($avis_ok_masquer_formulaire==false)
 {
-	$reponse = mysql_query("SELECT * FROM $table_evenements_agenda WHERE id_event = '$id_event'");
-	$donnees_event = mysql_fetch_array($reponse);	
+	$reponse = mysql_query("SELECT E.*,L.nom_lieu,L.email_reservation FROM $table_evenements_agenda E LEFT JOIN ag_lieux L ON E.lieu_event = L.id_lieu WHERE id_event = '$id_event'");
+	if ($donnees_event = mysql_fetch_array($reponse)) {
+
+		//------------- debut afficher resultat -----------------
+		$tab = '<div class="breve">'."\n";
+
+		$id_event = (int) $donnees_event['id_event'];
+
+		// ____________________________________________
+		// ICONES FLOTTANTES (au niveau du titre)
+		$tab.= '<span class="ico_float_droite_relative">'."\n";
+
+		// Icone suivre - Modifier par Didier
+		if (!empty($_SESSION['id_spectateur'])) {
+			if (!statut_panier($_SESSION['id_spectateur'], $id_event)) $tab.= '<a href="?id_event='.$id_event.'&suivre=1" title="suivre" style="float:right;">Suivre ('.nombre_suivi($id_event).')</a> &nbsp; '."\n";
+			else $tab.= '<a href="?id_event='.$id_event.'&plus_suivre=1" title="Ne plus suivre" style="float:right;">Ne plus suivre ('.nombre_suivi($id_event).')</a> &nbsp; '."\n";
+		}
+		// Icone concours
+		$reponse_2 = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
+		if ($total_entrees = mysql_fetch_array($reponse_2))
+			$tab.= '<a href="'.generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']).'" style="float:right;" title="Cliquez ici pour voir le concours">Concours</a> &nbsp; '."\n";
+
+		// Vos Avis : compter le nbre d'entrées :
+		$t_saison_preced = saisonprecedente($id_event, 'avis');
+		$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\'');
+		$total_entrees = mysql_fetch_array($count_avis);
+		$total_entrees = $total_entrees['total_entrees'];
+		if ($total_entrees > 0)
+			$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" title="Nombre d\'avis postés par les visiteurs"><img src="agenda/design_pics/ico_avis_mini.jpg" alt="" /><div class="nombre_avis_breve">'.$total_entrees.'</div></a>'."\n";
 	
-	$lieu_event = $donnees_event ['lieu_event'];
-	$nom_event = $donnees_event ['nom_event'];
-	$saison_preced_event = $donnees_event ['saison_preced_event'] ;
-	echo '<div class="detail_rubr_inc"><h3 align="center">
-	Donnez votre avis sur "<em>' . $nom_event . '</em>"</h3>' ;
+		// Icone Interview
+		if ($donnees_event['interview_event'] != 0)
+			$interview_event = $donnees_event['interview_event'];
+		else
+			$interview_event = saisonprecedente($id_event, 'interview');
+		if ($interview_event)
+			$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview_mini.jpg" alt="" /></a>'."\n" ;
+
+		// Icone Critique
+		if ($donnees_event['critique_event'] != 0)
+			$critique_event = $donnees_event['critique_event'];
+		else
+			$critique_event = saisonprecedente($id_event, 'critique');
+		if ($critique_event)
+			$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#critique" title="Cliquez ici pour lire la critique"><img src="agenda/design_pics/ico_critique_mini.jpg" alt="" /></a>'."\n" ;
+
+		// Icone chronique
+		if ($donnees_event['chronique_event'] != 0)
+			$chronique_event = $donnees_event['chronique_event'];
+		else
+			$chronique_event = saisonprecedente($id_event, 'chronique');
+		if ($chronique_event)
+			$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#chronique" title="Cliquez ici pour lire la chronique"><img src="agenda/design_pics/ico_chronique_mini.jpg" alt="" /></a>'."\n" ;
+
+
+		// Icone "J'ai vu et aimé"
+		$t_saison_preced = saisonprecedente($id_event, 'jai_vu');
+		$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM ag_jai_vu WHERE id_event_jai_vu IN ('.$t_saison_preced.')');
+		$total_entrees = mysql_fetch_array($count_avis);
+		$total_entrees = $total_entrees['total_entrees'];
+		$tab.= '<div class="nombre_votes"><a href="#vote" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;">'
+		.'<img src="agenda/design_pics/ico_jai_vu.jpg" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" /></a>'
+		.'<div class="nombre_votes_bulle">'.($total_entrees ? $total_entrees : ' ').'</div></div>'."\n" ;
+
+		$tab.= '</span>'."\n"; //--- fin ICONES FLOTTANTES
+
+		// ____________________________________________
+		// VIGNETTE EVENEMENT	
+		if ($donnees_event['pic_event_1'] == 'set' )
+		{
+			$nom_event = htmlspecialchars($donnees_event['nom_event']);
+			$id_event = $donnees_event['id_event'];
+			$tab.= '<span class="breve_pic"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" /></a></span>'."\n";
+		}
 	
+		// ____________________________________________
+		// NOM EVENEMENT
+		$nom_event = monraccourcirchaine($donnees_event['nom_event'], 45);
+		if ($requete_txt != '' AND $requete_txt != 'nom de l\'événement' AND stristr ($nom_event, $requete_txt)) // stristr Trouve la première occurrence dans une chaîne (insensible à la casse
+		{
+			$pattern = "!$requete_txt!i" ;
+			$souligne = '<span class="souligne">' . $requete_txt .'</span>';
+			$nom_souligne = preg_replace($pattern, $souligne, $nom_event);
+			
+			$tab.= '<div class="breve_titre"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'" title="Voir en détail">' . $nom_souligne . '</a></div>'."\n";
+		}
+		else
+		{
+			$tab.= '<div class="breve_titre"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'" title="Voir en détail">' . $nom_event . '</a></div>'."\n";
+		}
+
+		// ____________________________________________
+		// ID
+		$tab.= ' <span class="id_breve">(id ' . $donnees_event['id_event'] . ')</span><br />'."\n" ;
+
+		// ____________________________________________
+		// LIEU
+		if (! $donnees_event['parent_event'])
+			$tab.= '<span class="breve_lieu"><a href="'.generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees_event['lieu_event']).'" title="Producteur du spectacle">'.$donnees_event['nom_lieu'].'</a></span>'."\n";
+
+		// ____________________________________________
+		// GENRE
+		if ($donnees_event['genre_event'] != NULL) 
+		{
+			$genre_name = $donnees_event['genre_event'];
+			$tab.= '<span class="breve_genre"><acronym title="Genre du spectacle">' . $genres[$genre_name] . '</acronym></span>'."\n";	
+		}
+
+		// ____________________________________________
+		// DATES
+		$date_event_debut = $donnees_event['date_event_debut'];	
+		$date_event_debut_annee = substr($date_event_debut, 0, 4);
+		$date_event_debut_mois = substr($date_event_debut, 5, 2);
+		$date_event_debut_jour = substr($date_event_debut, 8, 2);
+		
+		$date_event_fin = $donnees_event['date_event_fin'];
+		$date_event_fin_annee = substr($date_event_fin, 0, 4);
+		$date_event_fin_mois = substr($date_event_fin, 5, 2);
+		$date_event_fin_jour = substr($date_event_fin, 8, 2);
+
+		// note : pour mois en LETTRES : $NomDuMois[$date_event_debut_mois+0]
+		$tab.= ' <span class="breve_date"><acronym title="Période de représentation">' . $date_event_debut_jour . '/'
+		. $date_event_debut_mois . '/'
+		. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . '/'
+		. $date_event_fin_mois . '/'
+		. $date_event_fin_annee . '</acronym></span>'."\n";	
+
+
+		// ____________________________________________
+		// VILLE
+		if ($donnees_event['ville_event'] != NULL && ! $donnees_event['parent_event']) 
+		{
+			$ville_event_de_db = $donnees_event['ville_event'];
+			$tab.= '<span class="breve_date"><acronym title="Ville où du spectacle">' . $regions[$ville_event_de_db] .'</acronym></span>'."\n";	
+		}
+		$tab.= '<br />';
+
+		// ____________________________________________
+		// TEXTE RESUME 
+		// Afficher texte résumé et événtuellement souligner le mot rechercé par l'utilisateur
+		// Remplacer les retours de ligne
+		$resum_txt = $donnees_event['resume_event'];
+		$array_retour_ligne = array("<br>", "<br />", "<BR>", "<BR />");
+		$uuuuueeeeeeee = str_replace($array_retour_ligne, " ", $resum_txt);
+		$tab.= '<br />'.$uuuuueeeeeeee ;
+
+		$tab.= '<div class="en_savoir_plus">'."\n" ;
+		// Lien "en savoir plus"
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/design_pics/ensavoirplus.jpg" title="En savoir plus" alt="En savoir plus" /></a>'."\n";
+	
+		$tab.= '</div>'."\n".'<div class="float_stop"></div>'."\n".'</div><br />'."\n\n";
+		echo $tab ;
+		//------------- fin afficher resultat, fin div breve -----------------
+	}
+	else
+		echo '<br /><br />',"\n";
 	
 	// ------------------------------------------------
 	
-		?>
-		
-	
-	
-	<?php
 	// wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 	// wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 	// 1/ Le spectateur est déja connecté
@@ -434,13 +627,13 @@ if ($avis_ok_masquer_formulaire==false)
 		echo '<table class="pub" style="background-color: #D9D9D9" width="500" border="0" align="center" cellpadding="10" cellspacing="0" bordercolor="#000000" >
 		  <tr>
 			<td>';
-			if (isset ($donnees ['pic_spectateur']) AND $donnees ['pic_spectateur'] == 'set' )
+			if (isset ($donnees['pic_spectateur']) AND $donnees['pic_spectateur'] == 'set' )
 			{
 				echo '<img src="agenda/' . $folder_pics_spectateurs . 'spect_' . $id_spectateur . '_1.jpg" alt="Photo de ' . $prenom_spectateur . ' ' . $nom_spectateur . '" title="' . $prenom_spectateur . ' ' . $nom_spectateur . '" />';
 			}
 			else
 			{
-				if ($donnees ['sexe_spectateur'] == 0)
+				if ($donnees['sexe_spectateur'] == 0)
 				{
 					echo '<img src="agenda/' . $folder_pics_spectateurs . 'vi_spect_anonyme_homme.jpg" alt="spectateur anonyme" />';
 				}
@@ -512,14 +705,7 @@ if ($avis_ok_masquer_formulaire==false)
 		
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// -------------------------------
 	// Texte de mise en garde :
 	// -------------------------------
@@ -529,12 +715,10 @@ if ($avis_ok_masquer_formulaire==false)
 	// -------------------------------
 	// Recherche du nombre d'avis présents dans la table :
 	// -------------------------------
-	$count_avis = mysql_query("SELECT COUNT(*) AS nbre_entrees FROM $table_avis_agenda WHERE 
-	(event_avis = $id_event OR event_avis = $saison_preced_event)
-	AND publier_avis = 'set'");
-		
-	$nbr_avis = mysql_fetch_array($count_avis);
-	$total_entrees = $nbr_avis['nbre_entrees'];
+	$t_saison_preced = saisonprecedente($id_event, 'avis');
+	$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\'');
+	$total_entrees = mysql_fetch_array($count_avis);
+	$total_entrees = $total_entrees['total_entrees'];
 	if (empty ($total_entrees))
 	{
 		echo '<div align="center">Vous êtes le premier à rédiger un avis.<br /> Bienvenue !</div>' ;
@@ -544,32 +728,26 @@ if ($avis_ok_masquer_formulaire==false)
 		echo '<div align="center">Il y a ' . $total_entrees . ' avis pour ce spectacle 
 		<a href="#tous_avis_event"><br />&gt; &gt; Voir les avis déjà postés</a></div>' ;
 	}
-	
-	echo '' ;
-	
-	
+
 	// -------------------------------------------------------------
 	// Affichage de tous les AVIS concernant ce spectacle
-	if (!empty ($total_entrees))
+	if ($total_entrees)
 	{
 		$avis_concat = '<a name="tous_avis_event" id="tous_avis_event"></a>
 		<h3>Voici les avis précédemment postés</h3>' ;
-	
-		$reponse_avis= mysql_query("SELECT * FROM $table_avis_agenda WHERE 
-		(event_avis = $id_event OR event_avis = $saison_preced_event) 
-		AND publier_avis = 'set' ORDER BY id_avis DESC");
+
+		$reponse_avis= mysql_query("SELECT * FROM $table_avis_agenda WHERE event_avis IN ($t_saison_preced) AND publier_avis='set' ORDER BY id_avis DESC");
 		while ($donnees_avis = mysql_fetch_array($reponse_avis))
 		{
 			$avis_concat.= '<h4><b>' . $donnees_avis['nom_avis'] . '</b>
-			<i>a écrit le ' .date('d/m/Y ', $donnees_avis ['t_stamp_avis']) . ' :</i>
+			<i>a écrit le ' .date('d/m/Y ', $donnees_avis['t_stamp_avis']) . ' :</i>
 			<span class="id_breve">(id  :' . $donnees_avis['id_avis'] . ')</span></h4><br />'
 			. $donnees_avis['texte_avis'] . '<br /><br />' ;
 		}
 		
 		echo $avis_concat ;
 	}
-	echo '</div>';
-} //fin condition de masquage formulaire  ($avis_ok_masquer_formulaire) 
+} //fin condition de masquage formulaire  ($avis_ok_masquer_formulaire)
 
-
+	echo '</div>',"\n"; //--- fin detail_rubr_inc
 ?>
