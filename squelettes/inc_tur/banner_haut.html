@@ -67,12 +67,33 @@ switch ((int)'[(#ENV{id_rubrique}|texte_script)]'){
 
 if (empty($_SESSION['id_spectateur'])) affich_banner_horiz($circuit);
 else {
-	$user = sql_getfetsel('pseudo_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+	$user = sql_fetsel('pseudo_spectateur, sexe_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
 
 	$nb_favoris = sql_getfetsel('count(id)', 'ag_panier', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
 
+	/* On va chercher l'avatar du spectateur. */
+	$avatar = '';
+	if (file_exists('agenda/vignettes_spectateurs/spect_'.$_SESSION['id_spectateur'].'_1.jpg')) 
+		$avatar = '
+	<span style="float: right;">
+		<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'">
+			<img src="agenda/vignettes_spectateurs/spect_'.$_SESSION['id_spectateur'].'_1.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" style="height: 35px;" />
+		</a>
+	</span>';
+	else {
+		if ($user['sexe_spectateur'] == 0) 
+			$avatar = '<span class="image_flottante_preview">
+		<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" /></a>
+		</span>';
+		else $avatar = '<span class="image_flottante_preview">
+			<a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="'.$user['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de '.$user['pseudo_spectateur'].'" title="'.$user['pseudo_spectateur'].'" /></a>
+		</span>';
+	}
+
+
 	echo '<div id="cadre_info_user">';
-	echo '<h2>Bienvenue <a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="Ma page spectateur">'.$user.'</a></h2>';
+	echo $avatar;
+	echo '<h2>Bienvenue <a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="Ma page spectateur">'.$user['pseudo_spectateur'].'</a></h2>';
 	if ($nb_favoris > 0) echo '<p>Vous avez <b><a href="-liste-favoris,161-" title="agenda">'.$nb_favoris.' événements</a></b> dans votre liste.</p>';
 	echo '</div>';
 }
