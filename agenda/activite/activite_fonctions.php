@@ -11,7 +11,7 @@ function getLog ($type) {
 		case 'concours':
 			return 'participe au concours';
 		case 'favoris':
-			return 'a mis en favoris';
+			return 'a ajouté à son agenda';
 		case 'vu':
 			return 'a vu et aimé';
 		case 'nouveau':

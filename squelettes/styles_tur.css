@@ -1150,3 +1150,11 @@ UL#menu UL LI{
 	margin-right: 60px;
 	padding: 10px;
 }
+
+.cadre_actu div.activite {
+	clear: both;
+}
+
+.cadre_actu p.text {
+	padding-top: 10px;
+}

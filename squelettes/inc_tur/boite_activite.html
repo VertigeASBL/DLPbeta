@@ -3,29 +3,56 @@
 	<?php
 	include_once('agenda/activite/activite_fonctions.php');
 	$champs = array(
-					'a.type',
-					'a.id_spectateur',
-					's.pseudo_spectateur',
+		'a.type',
+		'a.id_spectateur',
+		's.pseudo_spectateur',
+		's.sexe_spectateur',
 
-					'a.id_event',
-					'e.nom_event',
+		'a.id_event',
+		'e.nom_event',
 
-					'a.id_concours',
-					'c.nom_event_conc'
-					);
+		'a.id_concours',
+		'c.nom_event_conc'
+		);
 
 	$activite = sql_allfetsel($champs, 'ag_activite as a 
-										INNER JOIN ag_spectateurs as s ON a.id_spectateur = s.id_spectateur
-										LEFT JOIN ag_event as e ON a.id_event = e.id_event
-										LEFT JOIN ag_conc_fiches as c ON a.id_concours = c.id_conc', '', '','date DESC', '0, 5');
+		INNER JOIN ag_spectateurs as s ON a.id_spectateur = s.id_spectateur
+		LEFT JOIN ag_event as e ON a.id_event = e.id_event
+		LEFT JOIN ag_conc_fiches as c ON a.id_concours = c.id_conc', '', '','date DESC', '0, 5');
 
 	foreach ($activite as $key => $value) {
 
-		if (!empty($value['nom_event'])) $add = '<a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a>';
+		/* On créer les liens si il y a lieu de les créer. */
+		if (!empty($value['nom_event'])) $add = '<a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.couper(strtolower($value['nom_event']), 30).'</a>';
 		elseif (!empty($value['nom_event_conc'])) $add = '<a href="-Concours,95-?id='.$value['id_concours'].'&lot=0">'.$value['nom_event_conc'].'</a>';
 		else $add = '';
 
-		echo '<p><a href="-Detail-d-un-spectateur-?id_spect='.$value['id_spectateur'].'">'.$value['pseudo_spectateur'].'</a> '.getLog($value['type']).' '.$add.'</p>';
+		$avatar = '';
+
+		/* On va chercher l'avatar du spectateur. */
+		if (file_exists('agenda/vignettes_spectateurs/spect_'.$value['id_spectateur'].'_1.jpg')) 
+			$avatar = '
+			<span class="image_flottante_preview">
+				<a href="-Detail-d-un-spectateur-?id_spect='.$value['id_spectateur'].'" title="'.$value['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_'.$value['id_spectateur'].'_1.jpg" alt="Photo de '.$value['pseudo_spectateur'].'" title="'.$value['pseudo_spectateur'].'" /></a>
+			</span>';
+		else {
+			if ($value['sexe_spectateur'] == 0) 
+				$avatar = '<span class="image_flottante_preview">
+								<a href="-Detail-d-un-spectateur-?id_spect='.$value['id_spectateur'].'" title="'.$value['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de '.$value['pseudo_spectateur'].'" title="'.$value['pseudo_spectateur'].'" /></a>
+							</span>';
+			else $avatar = '<span class="image_flottante_preview">
+								<a href="-Detail-d-un-spectateur-?id_spect='.$value['id_spectateur'].'" title="'.$value['pseudo_spectateur'].'"><img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de '.$value['pseudo_spectateur'].'" title="'.$value['pseudo_spectateur'].'" /></a>
+							</span>';
+		}
+
+		echo '
+		<div class="activite">
+			'.$avatar.'
+			<p class="text">
+				<a href="-Detail-d-un-spectateur-?id_spect='.$value['id_spectateur'].'">'.$value['pseudo_spectateur'].'</a> '.getLog($value['type']).' '.$add.'.
+			</p> 
+			<div class="float_stop"></div>
+		</div>';
 	}
 	?>
 </div>
