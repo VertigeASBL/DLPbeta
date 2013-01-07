@@ -296,8 +296,10 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 
 		/* On teste s'il y a un changement de niveau après l'ajout de l'avis de la personne. Si oui, on enregistre le changement de niveau */
 		if ($avant_avis['categorie_spectateur'] != $apres_avis['categorie_spectateur']) {
+/* prov richir
 			include_once('agenda/activite/activite_fonctions.php');
 			activite_log ('level');
+*/
 		}
 
 		$approuv_check = mysql_query("INSERT INTO `$table_avis_agenda` 
@@ -396,10 +398,11 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 				}
 				unset($adrm, $sql, $resp);
 			}	
-			
+
+/* prov richir
 			include_once('agenda/activite/activite_fonctions.php');
 			activite_log ('avis', $id_event);
-
+*/
 		}
 		
 		else
