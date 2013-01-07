@@ -58,7 +58,7 @@ function toggle_zone(Zone_id,txtReplier,txtDeplier) {
 				[(#REM) Si le fichier existe, on affiche l'avatar de la personne ]
 				[(#VAL{agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|oui) 
 					<span class="cadre_photo_spectateur">
-						<img src="agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" />
+						<a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR"><img src="agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" /></a>
 					</span>
 				]
 
@@ -66,16 +66,16 @@ function toggle_zone(Zone_id,txtReplier,txtDeplier) {
 				[(#VAL{agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|non) 
 					[(#SEXE_SPECTATEUR|=={0}|oui) 
 						<span class="cadre_photo_spectateur">
-							<img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" />
+							<a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR"><img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" /></a>
 						</span>
 					]
 					[(#SEXE_SPECTATEUR|=={0}|non) 
 						<span class="cadre_photo_spectateur">
-							<img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" />
+							<a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR"><img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" /></a>
 						</span>
 					]
 				]
-				[<h2>(#PSEUDO_SPECTATEUR)</h2>]
+				[<h2><a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR">(#PSEUDO_SPECTATEUR)</a></h2>]
 				[(#AVIS_VALIDES_SPECTATEUR|spip_trouve_categorie_spectateur)]
 				
 				<B_Dernier_avis_spectateur>

@@ -1082,6 +1082,10 @@ UL#menu UL LI{
 	padding: 0;
 }
 
+.spectateur_cadre h2 a {
+	color: #8f0133;
+}
+
 .spectateur_cadre p {
 	margin: 0;
 	padding: 0;

@@ -3,77 +3,77 @@
 	[(#LOGO_SITE_SPIP|inserer_attribut{'alt','Demandez le programme !'}|inserer_attribut{'align','left'})]
 </a>
 <?php
-	
-	require_once("admintool/fonctions.php");
-	require_once("affiche_banner2.php");
-	
-	if (! isset($GLOBALS['spip_connect_version'])) {
-		include_once('ecrire/base/connect_sql.php');
-		require('config/connect.php');
-	}
+
+require_once("admintool/fonctions.php");
+require_once("affiche_banner2.php");
+
+if (! isset($GLOBALS['spip_connect_version'])) {
+	include_once('ecrire/base/connect_sql.php');
+	require('config/connect.php');
+}
 
 	//Déterminer le circuit en fonction de la rubrique dans laquelle on se trouve	
-	switch ((int)'[(#ENV{id_rubrique}|texte_script)]'){
+switch ((int)'[(#ENV{id_rubrique}|texte_script)]'){
 		//A LA UNE
-		case 64:
-			$circuit = 'la_une';
-			break;
-					
+	case 64:
+	$circuit = 'la_une';
+	break;
+	
 		//AGENDA, résultats recherche, sous-rubr agenda
-		case 65:
-		case 71:
-		case 72:
-		case 73:
-		case 74:
-		case 75:
-		case 77:
-		case 78:
-		case 79:
-			$circuit = 'agenda';
-			break;
-			
+	case 65:
+	case 71:
+	case 72:
+	case 73:
+	case 74:
+	case 75:
+	case 77:
+	case 78:
+	case 79:
+	$circuit = 'agenda';
+	break;
+	
 		//CONCOURS, critiques, aide
-		case 95:
-		case 67:
-		case 87:
-			$circuit = 'concours';
-			break;
-			
+	case 95:
+	case 67:
+	case 87:
+	$circuit = 'concours';
+	break;
+	
 		//CONTENUS, Lieux + détails, Interviews, Infos + ss-rubr
-		case 68:
-		case 89:
-		case 90:
-		case 66:
-		case 70:
-		case 85:
-		case 86:
-		case 88:
-		case 84:
-		case 94:
-		case 96:
-			$circuit = 'contenus';
-			break;		
-			
+	case 68:
+	case 89:
+	case 90:
+	case 66:
+	case 70:
+	case 85:
+	case 86:
+	case 88:
+	case 84:
+	case 94:
+	case 96:
+	$circuit = 'contenus';
+	break;		
+	
 		//DETAILS SPECTACLES (theârte, cirque, ...)
-		case 92:
-		case 97:
-		case 103:
-			$circuit = 'details';
-			break;											
-			
-		default:
-			$circuit = 'la_une';
-	}
-		
-	if (empty($_SESSION['id_spectateur'])) affich_banner_horiz($circuit);
-	else {
-		$user = sql_getfetsel('pseudo_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+	case 92:
+	case 97:
+	case 103:
+	$circuit = 'details';
+	break;											
+	
+	default:
+	$circuit = 'la_une';
+}
 
-		$nb_favoris = sql_getfetsel('count(id)', 'ag_panier', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+if (empty($_SESSION['id_spectateur'])) affich_banner_horiz($circuit);
+else {
+	$user = sql_getfetsel('pseudo_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
 
-		echo '<div id="cadre_info_user">';
-			echo '<h2>Bienvenue '.$user.'</h2>';
-			if ($nb_favoris > 0) echo '<p>Vous avez '.$nb_favoris.' favoris dans votre liste.</p>';
-		echo '</div>';
-	}
+	$nb_favoris = sql_getfetsel('count(id)', 'ag_panier', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+
+	echo '<div id="cadre_info_user">';
+	echo '<h2>Bienvenue <a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="Ma page spectateur">'.$user.'</a></h2>';
+	if ($nb_favoris > 0) echo '<p>Vous avez <b><a href="-liste-favoris,161-" title="agenda">'.$nb_favoris.' événements</a></b> dans votre liste.</p>';
+	echo '</div>';
+}
 ?>
