@@ -793,11 +793,8 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		else 
 		{ 
 			echo '<div class="alerte">Erreur ! Les données n\'ont pas été enregistrées</div><br>' ; 
-
 			$error_2_rapport = 'Erreur lors de modification événement. Requête = ' . urlencode(mysql_error()) ;
-			log_write ($id, '2', $id, $error_2_rapport, 'send_mail') ; //($lieu_log, $type_log, $context_id_log, $description_log, $action_log)
-
-		
+			log_write ($id, '2', $id, $error_2_rapport, 'send_mail') ; //($lieu_log, $type_log, $context_id_log, $description_log, $action_log)		
 		}
 
 		// Réintroduire variables dans le formulaire en enlevant les "\" (n'est plus nécessaire si on redirige après Update)
@@ -808,7 +805,6 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	}
 	$nom_event = stripslashes($nom_event);		
 }
-
 else // Si on n'a pas appuyé sur le bouton UPDATE -> récupérer les données de la DB
 {
 
@@ -1040,11 +1036,9 @@ Si vous ne possédez pas encore de compte Kidonaki, suivez ce lien pour
           <tr>
             <td align="center" valign="middle"><?php 		
 			// Afficher vignette
-			 if (isset ($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set')
-			{
-				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_1.jpg" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
+			if (isset ($donnees['pic_event_1']) AND $donnees['pic_event_1'] == 'set') {
+				echo '<img src="../' . $folder_pics_event . 'event_' . $id . '_1.jpg?time='.time().'" title="' . htmlspecialchars($nom_event) . '" alt="" width="100" />';
 			}
-							
 			?>            </td>
             <td><p>
 				Image de l'affiche

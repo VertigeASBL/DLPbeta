@@ -71,14 +71,16 @@ else $ratio = '0.7';
 	if (isset($_POST['source'])):
 		if ($type == 'spectateurs/spect') crop_image($_POST['source'], 93, 62);
 		else crop_image($_POST['source'], 161, 230);
+		
 		/* On affiche l'image recadrée. */
 		echo '<img src="'.str_replace('.tmp', '', $_POST['source']).'?time='.time().'" alt="Prévisualisation" />';
-		echo '
-		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				 window.opener.parent.location.href = "../../-Modifier-mes-infos-spectateur-";
-			});
-		</script>';
+		if ($type == 'spectateurs/spect') 
+			echo '
+				<script type="text/javascript">
+					jQuery(document).ready(function($) {
+						 window.opener.parent.location.href = "../../-Modifier-mes-infos-spectateur-";
+					});
+				</script>';
 	?>
 	<br />
 	<a href="javascript: window.close();">[Fermer]</a>

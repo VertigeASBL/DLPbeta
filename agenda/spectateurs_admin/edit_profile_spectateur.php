@@ -514,7 +514,9 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		$query = mysql_query($sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
 
 		// Message confirmation
-		echo '<div class="info"><p>Vos données sont mises à jour.</p></div>' ;
+		echo '<div class="info"><p>Vos données sont mises à jour.</p>';
+		if (isset($jCrop)) echo '<p>N\'oubliez pas de recadrer votre image de profil !</p>';
+		echo '</div>' ;
 		
 //		echo '<META http-equiv="Refresh" content="1">' ; // Rafraichissement pour relancer la page avec les nouvelles $_SESSION
 
