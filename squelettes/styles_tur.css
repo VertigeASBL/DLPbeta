@@ -1151,6 +1151,18 @@ UL#menu UL LI{
 	padding: 10px;
 }
 
+#cadre_info_user h2 {
+	margin: 0;
+}
+
+#cadre_info_user p {
+	line-height: 1.1;
+	margin: 0;
+}
+#cadre_info_user img {
+	vertical-align: middle;
+}
+
 .cadre_actu div.activite {
 	clear: both;
 }

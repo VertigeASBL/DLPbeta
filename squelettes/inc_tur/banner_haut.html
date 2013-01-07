@@ -67,7 +67,7 @@ switch ((int)'[(#ENV{id_rubrique}|texte_script)]'){
 
 if (empty($_SESSION['id_spectateur'])) affich_banner_horiz($circuit);
 else {
-	$user = sql_fetsel('pseudo_spectateur, sexe_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
+	$user = sql_fetsel('pseudo_spectateur, sexe_spectateur, avis_valides_spectateur', 'ag_spectateurs', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
 
 	$nb_favoris = sql_getfetsel('count(id)', 'ag_panier', 'id_spectateur='.sql_quote($_SESSION['id_spectateur']));
 
@@ -90,11 +90,18 @@ else {
 		</span>';
 	}
 
+	/* On va chercher les concours de l'utilisateur. */
+	$nb_concours = sql_fetsel('count(id_activite) as nb', 'ag_activite INNER JOIN ag_conc_fiches ON id_concours = id_conc', 'id_spectateur = '.sql_quote($_SESSION['id_spectateur']).' and type=\'concours\' and cloture_conc > '.time().' ');
+
+	/* On récupère l'étoile et le grade du spectateur. */
+	$grade = trouve_categorie_spectateur($user['avis_valides_spectateur']);
 
 	echo '<div id="cadre_info_user">';
 	echo $avatar;
 	echo '<h2>Bienvenue <a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="Ma page spectateur">'.$user['pseudo_spectateur'].'</a></h2>';
+	echo '<p>'.$grade['categorie_spectateur'].' <img src="agenda/design_pics/spectateurs/'.$grade['icone_spectateur'].'" alt="Etoile" /></p>';
 	if ($nb_favoris > 0) echo '<p>Vous avez <b><a href="-liste-favoris,161-" title="agenda">'.$nb_favoris.' événements</a></b> dans votre liste.</p>';
+	echo '<p>Vous participez à <b>'.$nb_concours['nb'].' concours</b> pour le moment.</p>';
 	echo '</div>';
 }
 ?>
