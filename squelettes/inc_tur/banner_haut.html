@@ -137,9 +137,9 @@ else {
 	echo $avatar;
 	echo '<h2>Bienvenue <a href="-Detail-d-un-spectateur-?id_spect='.$_SESSION['id_spectateur'].'" title="Ma page spectateur">'.$user['pseudo_spectateur'].'</a></h2>';
 	echo '<p>'.$grade['categorie_spectateur'].' <img src="agenda/design_pics/spectateurs/'.$grade['icone_spectateur'].'" alt="Etoile" /></p>';
-	if ($nb_favoris > 0) echo '<p>Vous avez <b><a href="-liste-favoris,161-" title="agenda">'.$nb_favoris.' événements</a></b> dans votre liste.</p>';
+	if ($nb_favoris > 0) echo '<p>Vous avez <b><a href="-liste-favoris,161-" title="agenda">'.$nb_favoris.' '.singulier_ou_pluriel($nb_favoris, 'événement', 'événements').'</a></b> dans votre liste.</p>';
 	echo '<p>Vous participez à <b>'.$nb_concours['nb'].' concours</b> pour le moment.</p>';
-	echo '<p>Vous avez vu et aimé <b>'.$nb_vu_aime.' spectacles</b>.</p>';
+	echo '<p>Vous avez vu et aimé <b>'.$nb_vu_aime.' '.singulier_ou_pluriel($nb_favoris, 'événement', 'événements').'</b>.</p>';
 	echo '</div>';
 }
 ?>
