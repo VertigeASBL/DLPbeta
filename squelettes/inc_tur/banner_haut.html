@@ -93,6 +93,7 @@ else {
 	/* On va chercher les concours de l'utilisateur. */
 	$nb_concours = sql_fetsel('count(id_activite) as nb', 'ag_activite INNER JOIN ag_conc_fiches ON id_concours = id_conc', 'id_spectateur = '.sql_quote($_SESSION['id_spectateur']).' and type=\'concours\' and cloture_conc > '.time().' ');
 
+	/* On vérifie la présent de la fonction trouve_categorie_spectateur, si elle n'est pas définie, on va la cherché. */
 	if (!function_exists('trouve_categorie_spectateur')) include_once('agenda/inc_fct_base.php');
 
 	/* On récupère l'étoile et le grade du spectateur. */
