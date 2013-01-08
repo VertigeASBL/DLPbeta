@@ -8,6 +8,10 @@ require 'agenda/inc_db_connect.php';
 require 'agenda/inc_var_dist_local.php';
 require 'agenda/inc_fct_base.php';
 require 'agenda/user_admin/ins/inc_var_inscription.php';
+
+// Fonction panier /-- Didier
+include_once('agenda/panier/fonctions_panier.php');
+
 $avis_ok_masquer_formulaire = false ; // Masquer le formulaire pour ne pas que le visiteur ne reposte l'avis
 
 // --------------------------------------------------------------------------------

@@ -15,5 +15,11 @@ function mail_beta($email, $sujet, $texte, $headers, $retour = '-f philippe@vert
 	$sujet = '-BETA-'.(strpos($_SERVER['HTTP_HOST'],'localhost')!==false || strpos($_SERVER['HTTP_HOST'],'127.0.0')!==false ? 'LOC' : 'DIST').'- '.$sujet;
 	$retour = '-f philippe@vertige.org';
 	return mail($email, $sujet, $texte, $headers, $retour);
-} }
+	} 
+}
+
+
+/* Activation des erreurs */
+// error_reporting(E_ALL^E_NOTICE);
+// ini_set ("display_errors", "On");
 ?>
