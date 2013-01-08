@@ -93,6 +93,8 @@ else {
 	/* On va chercher les concours de l'utilisateur. */
 	$nb_concours = sql_fetsel('count(id_activite) as nb', 'ag_activite INNER JOIN ag_conc_fiches ON ag_activite.id_conc = ag_conc_fiches.id_conc', 'id_spectateur = '.sql_quote($_SESSION['id_spectateur']).' and type=\'concours\' and cloture_conc > '.time().' ');
 
+	$nb_vu_aime = sql_getfetsel('COUNT(id_activite)', 'ag_activite', 'id_spectateur='.$_SESSION['id_spectateur'].' AND type=\'vu\'');
+
 	/* On déclare une nouvelle fonction trouve_categorie_spectateur pour contourner le problème des déclaration multiple. */
 	function fix_trouve_categorie_spectateur($nb_avis_postes)
 	{
@@ -137,6 +139,7 @@ else {
 	echo '<p>'.$grade['categorie_spectateur'].' <img src="agenda/design_pics/spectateurs/'.$grade['icone_spectateur'].'" alt="Etoile" /></p>';
 	if ($nb_favoris > 0) echo '<p>Vous avez <b><a href="-liste-favoris,161-" title="agenda">'.$nb_favoris.' événements</a></b> dans votre liste.</p>';
 	echo '<p>Vous participez à <b>'.$nb_concours['nb'].' concours</b> pour le moment.</p>';
+	echo '<p>Vous avez vu et aimé <b>'.$nb_vu_aime.' spectacles</b>.</p>';
 	echo '</div>';
 }
 ?>

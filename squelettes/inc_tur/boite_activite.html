@@ -11,14 +11,14 @@
 		'a.id_event',
 		'e.nom_event',
 
-		'a.id_concours',
+		'a.id_conc',
 		'c.nom_event_conc'
 		);
 
 	$activite = sql_allfetsel($champs, 'ag_activite as a 
 		INNER JOIN ag_spectateurs as s ON a.id_spectateur = s.id_spectateur
 		LEFT JOIN ag_event as e ON a.id_event = e.id_event
-		LEFT JOIN ag_conc_fiches as c ON a.id_concours = c.id_conc', '', '','date DESC', '0, 5');
+		LEFT JOIN ag_conc_fiches as c ON a.id_conc = c.id_conc', '', '','date DESC', '0, 5');
 
 	foreach ($activite as $key => $value) {
 
