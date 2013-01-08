@@ -65,6 +65,7 @@ else $ratio = '0.7';
 			echo '<div class="alerte">Erreur !</div><br>';
 			exit();
 		}
+		if ($_SESSION['id_spectateur'] == 0) exit();
 	}
 
 	/* On découpe l'image */
