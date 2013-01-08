@@ -47,17 +47,105 @@ option.option_col_2, select.option_col_2 {
 	<div class="colonne1">
 
 <?php 
-	if (! isset($GLOBALS['spip_connect_version'])) {
-		include_once('ecrire/base/connect_sql.php');
-		require('config/connect.php');
-	}
-	if ((int)'[(#ENV{id_rubrique}|texte_script)]' == 122)
-	{
-		include('agenda/spip/spectateurs_details_1.php');
-	}
-	else
-		echo ' Le num�ro de rubrique ne convient pas. ';
+/* Didier => On vire les anciens codes, on va les remplacer par des boucles SPIP */
+// if (! isset($GLOBALS['spip_connect_version'])) {
+// 	include_once('ecrire/base/connect_sql.php');
+// 	require('config/connect.php');
+// }
+// if ((int)'[(#ENV{id_rubrique}|texte_script)]' == 122)
+// {
+// 	include('agenda/spip/spectateurs_details_1.php');
+// }
+// else
+// 	echo ' Le numéro de rubrique ne convient pas. ';
 ?>
+	<B_specateur_detail>
+	<BOUCLE_specateur_detail(ag_spectateurs){id_spectateur=#SESSION{id_spectateur}}>
+		[(#REM) Affichage de l'Avatar de la personne ]
+		[(#REM) Si le fichier existe, on affiche l'avatar de la personne ]
+		[(#VAL{agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|oui) 
+			<span class="cadre_photo_spectateur">
+				<a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR"><img src="agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" /></a>
+			</span>
+		]
+
+		[(#REM) Si le fichier n'existe pas, on affiche l'avatar par défaut en fonction du sexe de la personne ]
+		[(#VAL{agenda/vignettes_spectateurs/spect_[(#ID_SPECTATEUR)]_1.jpg}|file_exists|non) 
+			[(#SEXE_SPECTATEUR|=={0}|oui) 
+				<span class="cadre_photo_spectateur">
+					<a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR"><img src="agenda/vignettes_spectateurs/spect_anonyme_homme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" /></a>
+				</span>
+			]
+			[(#SEXE_SPECTATEUR|=={0}|non) 
+				<span class="cadre_photo_spectateur">
+					<a href="-Detail-d-un-spectateur-?id_spect=#ID_SPECTATEUR" title="#PSEUDO_SPECTATEUR"><img src="agenda/vignettes_spectateurs/spect_anonyme_femme.jpg" alt="Photo de #PSEUDO_SPECTATEUR" title="#PSEUDO_SPECTATEUR" /></a>
+				</span>
+			]
+		]
+		
+		[<h2>(#PSEUDO_SPECTATEUR)</h2>]
+		[<p>(#AVIS_VALIDES_SPECTATEUR|spip_trouve_categorie_spectateur)</p>]
+		[<p>Date de naissance: (#DATE_NAISSANCE_SPECTATEUR|affdate)</p>]
+		[<p>(#AVIS_VALIDES_SPECTATEUR) avis validé.</p>]
+		[<p>Coefficient concours: X(#AVIS_VALIDES_SPECTATEUR|spip_calcul_facteur_chance)</p>]
+		
+		[<h3>Description courte</h3>
+		<p>(#DESCRIPTION_COURTE_SPECTATEUR)</p>]
+		
+		[<h3>Description longue</h3>
+		<p>(#DESCRIPTION_LONGUE_SPECTATEUR)</p>]
+		
+		[<p>Artiste appréciés: (#ARTISTE_PREFERE_SPECTATEUR)</p>]
+		
+		[(#REM) Boucle de récupération des lieux aimé ]
+		<B_lieu_favori>
+		<p>Lieux appréciés: 
+		<BOUCLE_lieu_favori(ag_lieux_favoris ag_lieux){id_spectateur=#ID_SPECTATEUR}>
+			#NOM_LIEU[(#COMPTEUR_BOUCLE|!={#TOTAL_BOUCLE}|?{', ' ,'.'})]
+		</BOUCLE_lieu_favori>
+		</p>
+		</B_lieu_favori>
+		
+		[(#REM) Boucle de récupération des dernier avis ]
+		<h3>Derniers avis postés</h3>
+		<B_dernier_avis>
+		<ul>
+		<BOUCLE_dernier_avis(ag_activite ag_event){id_spectateur=#ID_SPECTATEUR}{type=avis}{par id_activite}{inverse}>
+			[<li><a href="-Detail-agenda-?id_event=#ID_EVENT">(#NOM_EVENT)</a></li>]
+		</BOUCLE_dernier_avis>
+		</ul>
+		</B_dernier_avis>
+		<p>Aucun avis posté.</p>
+		<//B_dernier_avis>
+		
+		[(#REM) Boucle de récupération de l'agenda ]
+		<h3>Evénements inscrits dans l'agenda</h3>
+		<B_spectateur_agenda>
+		<ul>
+		<BOUCLE_spectateur_agenda(ag_panier ag_event){id_spectateur=#ID_SPECTATEUR}{par id}{inverse}>
+			[<li><a href="-Detail-agenda-?id_event=#ID_EVENT">(#NOM_EVENT)</a></li>]
+		</BOUCLE_spectateur_agenda>
+		</ul>
+		</B_spectateur_agenda>
+		<p>Il n'y a rien dans l'agenda.</p>
+		<//B_spectateur_agenda>
+		
+		[(#REM) Boucle de récupération des concours ]
+		<h3>Concours auxquels #PSEUDO_SPECTATEUR participe</h3>
+		<B_dernier_concours>
+		<ul>
+		<BOUCLE_dernier_concours(ag_activite ag_conc_fiches){id_spectateur=#ID_SPECTATEUR}{type=concours}{par id_activite}{inverse}>
+			[<li><a href="-Detail-agenda-?id_event=#ID_EVENT">(#NOM_EVENT_CONC)</a></li>]
+		</BOUCLE_dernier_concours>
+		</ul>
+		</B_dernier_concours>
+		<p>Aucun concours.</p>
+		<//B_dernier_concours>
+		
+	</BOUCLE_specateur_detail>
+	</B_specateur_detail>
+	<//B_specateur_detail>
+
 	</div><!-- fin colonne1 -->
 	<div class="colonne2">
 		<INCLURE{fond=inc_tur/recherche_rapide}>

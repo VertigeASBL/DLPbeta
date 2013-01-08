@@ -404,5 +404,26 @@ function spip_trouve_categorie_spectateur($nb_avis_postes)
 	return '<p>'.$categorie_spectateur.' <img src="agenda/design_pics/spectateurs/'.$icone_spectateur.'" alt="Etoile" /></p>';
 }
 
+/* Didier => Permet d'utilisé le calcule du facteur chance dans un squelette SPIP */
+
+function spip_calcul_facteur_chance($nb_avis_approuve) {
+	if ($nb_avis_approuve > 0 AND $nb_avis_approuve <= 10) {
+		$valeur_facteur_chance  = 2;
+	}
+	elseif ($nb_avis_approuve > 10 AND $nb_avis_approuve <= 20) {
+		$valeur_facteur_chance  = 4;
+	}
+	elseif ($nb_avis_approuve > 20 AND $nb_avis_approuve <= 50) {
+		$valeur_facteur_chance  = 7;
+	}
+	elseif ($nb_avis_approuve > 50) {
+		$valeur_facteur_chance  = 12;
+	}
+	else {
+		$valeur_facteur_chance  = 1;
+	}	
+	
+	return $valeur_facteur_chance;
+}
 
 ?>
