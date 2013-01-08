@@ -93,11 +93,43 @@ else {
 	/* On va chercher les concours de l'utilisateur. */
 	$nb_concours = sql_fetsel('count(id_activite) as nb', 'ag_activite INNER JOIN ag_conc_fiches ON id_concours = id_conc', 'id_spectateur = '.sql_quote($_SESSION['id_spectateur']).' and type=\'concours\' and cloture_conc > '.time().' ');
 
-	/* On vérifie la présent de la fonction trouve_categorie_spectateur, si elle n'est pas définie, on va la cherché. */
-	if (!function_exists('trouve_categorie_spectateur')) include_once('agenda/inc_fct_base.php');
+	/* On déclare une nouvelle fonction trouve_categorie_spectateur pour contourner le problème des déclaration multiple. */
+	function fix_trouve_categorie_spectateur($nb_avis_postes)
+	{
+		if ($nb_avis_postes > 0 AND $nb_avis_postes <= 10)
+		{
+			$categorie_spectateur = 'Membre actif';
+			$icone_spectateur = 'etoile_2.jpg';
+		}
+		elseif ($nb_avis_postes > 10 AND $nb_avis_postes <= 20)
+		{
+			$categorie_spectateur = 'Membre régulier';
+			$icone_spectateur = 'etoile_3.jpg';
+		}
+		elseif ($nb_avis_postes > 20 AND $nb_avis_postes <= 50)
+		{
+			$categorie_spectateur = 'Membre assidu';
+			$icone_spectateur = 'etoile_4.jpg';
+		}
+		elseif ($nb_avis_postes > 50)
+		{
+			$categorie_spectateur = 'Membre passionné';
+			$icone_spectateur = 'etoile_5.jpg';
+		}
+		else
+		{
+			$categorie_spectateur = 'Nouveau Membre';
+			$icone_spectateur = 'etoile_1.jpg';
+		}	
+
+		return array (
+			"categorie_spectateur" => $categorie_spectateur,
+			"icone_spectateur" => $icone_spectateur
+			);
+	}
 
 	/* On récupère l'étoile et le grade du spectateur. */
-	$grade = trouve_categorie_spectateur($user['avis_valides_spectateur']);
+	$grade = fix_trouve_categorie_spectateur($user['avis_valides_spectateur']);
 
 	echo '<div id="cadre_info_user">';
 	echo $avatar;
