@@ -1,18 +1,30 @@
 <?php 
-	session_start();
-	require 'agenda/inc_var.php';
+session_start();
+require 'agenda/inc_var.php';
 ?>
 <a href="-Communaute-des-spectateurs-"> &lt;&lt; Retour à la communauté des spectateurs</a>
 <h2>Favoris</h2>
 <?php
 
-$list_favoris = sql_allfetsel('*', 'ag_panier INNER JOIN ag_event ON ag_panier.id_event=ag_event.id_event', 'ag_panier.id_spectateur = '.$_SESSION['id_spectateur']);
-
+$list_favoris = sql_allfetsel(
+	'*', 
+	'ag_panier INNER JOIN ag_event ON ag_panier.id_event=ag_event.id_event', 
+	'ag_panier.id_spectateur = '.$_SESSION['id_spectateur'], 
+	'',
+	'YEAR(date_event_debut) DESC, MONTH(date_event_debut) DESC');
 $tab = '';
-foreach ($list_favoris as $key => $donnees
-	) {
-	$tab.= '<div class="breve">' ;	
-	$id_event = $donnees ['id_event'] ;
+$mois = '';
+
+foreach ($list_favoris as $key => $donnees) {
+	
+	if ($mois != mois($donnees['date_event_debut'])) $date_fav = '<h3>'.affdate_mois_annee($donnees['date_event_debut']).'</h3>';
+	else $date_fav = '';
+	$mois = mois($donnees['date_event_debut']);
+
+	$tab.= 
+		$date_fav.'
+		<div class="breve">';
+		$id_event = $donnees ['id_event'] ;
 
 	// ____________________________________________
 	// ICONES FLOTTANTES (au niveau du titre)
@@ -22,51 +34,43 @@ foreach ($list_favoris as $key => $donnees
 
 	// Vos Avis :
 	// compter le nbre d'entrées :
-	$count_avis = mysql_query("SELECT COUNT(*) AS nbre_entrees FROM $table_avis_agenda WHERE event_avis = $id_event 
-	AND publier_avis = 'set'");
+	$count_avis = mysql_query("SELECT COUNT(*) AS nbre_entrees FROM $table_avis_agenda WHERE event_avis = $id_event AND publier_avis = 'set'");
 	$nbr_avis = mysql_fetch_array($count_avis);
 	$total_entrees = $nbr_avis['nbre_entrees'];
 
-	if ($total_entrees > 0)
-	{
+	if ($total_entrees > 0) {
 		$tab.= '<a href="-Detail-agenda-?id_event=' . $id_event . '#avis" title="Ce qu\'en disent les autres visiteurs...">
 		<img src="agenda/design_pics/ico_avis_mini.jpg"/>
-		<div class="nombre_avis_breve">' . $total_entrees .'</div></a>' ;
-		
+		<div class="nombre_avis_breve">' . $total_entrees .'</div></a>';
 	}
-	
+
 	// Icone Interview
-	if (isset ($donnees['interview_event']) AND $donnees['interview_event'] != 0 )
-	{
+	if (isset ($donnees['interview_event']) AND $donnees['interview_event'] != 0 ) {
 		$interview_event = $donnees['interview_event'] ;
 //--- richir	$tab.= '<a href="-Interviews-?id_article=' . $interview_event . '" title...
 		$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview_mini.jpg"/></a>' ;
 	}
-
-	// Icone Critique
+// Icone Critique
 	if (isset ($donnees['critique_event']) AND $donnees['critique_event'] != 0 )
 	{
 		$critique_event = $donnees['critique_event'] ;
 		$tab.= '<a href="-Critiques-?id_article=' . $critique_event . '" title="Cliquez ici pour lire la critique">
 		<img src="agenda/design_pics/ico_critique_mini.jpg"/></a>' ;
 	}
-
-
-	$tab.= '</span>' ;
+	$tab .= '</span>' ;
 
 	// ____________________________________________
 	// VIGNETTE EVENEMENT	
-	if (isset ($donnees ['pic_event_1']) AND $donnees ['pic_event_1'] == 'set' )
-	{
+	if (isset ($donnees ['pic_event_1']) AND $donnees ['pic_event_1'] == 'set' ) {
 		$nom_event = $donnees ['nom_event'] ;
 		$id_event = $donnees ['id_event'] ;
 		$tab.= '<span class="breve_pic"><a href="-Detail-agenda-?id_event=' . $id_event . '"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" /></a></span>';
 	}
-	
-	
+
+
 	// ____________________________________________
 	// NOM EVENEMENT
-	
+
 		if (isset($requete_txt) AND $requete_txt != 'nom du spectacle' AND stristr ($donnees['nom_event'], $requete_txt)) // stristr Trouve la première occurrence dans une chaîne (insensible à la casse
 		{
 
@@ -87,65 +91,65 @@ foreach ($list_favoris as $key => $donnees
 
 	// ____________________________________________
 	// ID
-	$tab.= ' <span class="id_breve">(id ' . $donnees ['id_event'] . ')</span><br />' ;
+		$tab.= ' <span class="id_breve">(id ' . $donnees ['id_event'] . ')</span><br />' ;
 
 
 	// ____________________________________________
 	// LIEU
-	$id_lieu = $donnees['lieu_event'] ;
-	$reponse_2 = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = $id_lieu");
-	$donnees_2 = mysql_fetch_array($reponse_2) ;
-			
-	$tab.= '<span class="breve_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$id_lieu.'" title="Lieu où se joue le spectacle">' . $donnees_2['nom_lieu'] . '</a></span> ';	
+		$id_lieu = $donnees['lieu_event'] ;
+		$reponse_2 = mysql_query("SELECT * FROM $table_lieu WHERE id_lieu = $id_lieu");
+		$donnees_2 = mysql_fetch_array($reponse_2) ;
+
+		$tab.= '<span class="breve_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$id_lieu.'" title="Lieu où se joue le spectacle">' . $donnees_2['nom_lieu'] . '</a></span> ';	
 
 
 	// ____________________________________________
 	// GENRE
-	
-	if (isset($donnees['genre_event']) AND ($donnees['genre_event'] != NULL)) 
-	{
-		$genre_name = $donnees['genre_event'] ;
-		$tab.= '<span class="breve_genre"><acronym title="Genre du spectacle">' . $genres[$genre_name] . 
-		'</acronym></span> ';	
-	}
+
+		if (isset($donnees['genre_event']) AND ($donnees['genre_event'] != NULL)) 
+		{
+			$genre_name = $donnees['genre_event'] ;
+			$tab.= '<span class="breve_genre"><acronym title="Genre du spectacle">' . $genres[$genre_name] . 
+			'</acronym></span> ';	
+		}
 
 
 	// ____________________________________________
 	// DATES
-	
-	$date_event_debut = $donnees ['date_event_debut'];	
-	$date_event_debut_annee = substr($date_event_debut, 0, 4);
-	$date_event_debut_mois = substr($date_event_debut, 5, 2);
-	$date_event_debut_jour = substr($date_event_debut, 8, 2);
-	
-	$date_event_fin = $donnees ['date_event_fin'];
-	$date_event_fin_annee = substr($date_event_fin, 0, 4);
-	$date_event_fin_mois = substr($date_event_fin, 5, 2);
-	$date_event_fin_jour = substr($date_event_fin, 8, 2);
 
-	
+		$date_event_debut = $donnees ['date_event_debut'];	
+		$date_event_debut_annee = substr($date_event_debut, 0, 4);
+		$date_event_debut_mois = substr($date_event_debut, 5, 2);
+		$date_event_debut_jour = substr($date_event_debut, 8, 2);
+
+		$date_event_fin = $donnees ['date_event_fin'];
+		$date_event_fin_annee = substr($date_event_fin, 0, 4);
+		$date_event_fin_mois = substr($date_event_fin, 5, 2);
+		$date_event_fin_jour = substr($date_event_fin, 8, 2);
+
+
 	// note : pour mois en LETTRES : $NomDuMois[$date_event_debut_mois+0]
-	$tab.= ' <span class="breve_date"><acronym title="Période de représentation">' . $date_event_debut_jour . '/'
-	. $date_event_debut_mois . '/'
-	. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . '/'
-	. $date_event_fin_mois . '/'
-	. $date_event_fin_annee . '</acronym></span><br /><br />';	
+		$tab.= ' <span class="breve_date"><acronym title="Période de représentation">' . $date_event_debut_jour . '/'
+		. $date_event_debut_mois . '/'
+		. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . '/'
+		. $date_event_fin_mois . '/'
+		. $date_event_fin_annee . '</acronym></span><br /><br />';	
 
 
 	// ____________________________________________
 	// TEXTE INTRODUCTIF 
-	
-	
+
+
 	// Remplacer les retours de ligne
-	$resum_txt = $donnees['resume_event'] ;
-	$array_retour_ligne = array("<br>", "<br />", "<BR>", "<BR />");
-	$uuuuueeeeeeee = str_replace($array_retour_ligne, " - ", $resum_txt);
-	$tab.= $uuuuueeeeeeee ;
-	
-	$tab.= '<div class="en_savoir_plus">
-			<a href="-Detail-agenda-?id_event=' . $id_event . '">
-			<img src="agenda/design_pics/ensavoirplus.jpg" title="En savoir plus" alt="" /></a></div>
-			<div class="float_stop"><br /></div></div>' ;
-}
-echo $tab;
-?>
+		$resum_txt = $donnees['resume_event'] ;
+		$array_retour_ligne = array("<br>", "<br />", "<BR>", "<BR />");
+		$uuuuueeeeeeee = str_replace($array_retour_ligne, " - ", $resum_txt);
+		$tab.= $uuuuueeeeeeee ;
+
+		$tab.= '<div class="en_savoir_plus">
+		<a href="-Detail-agenda-?id_event=' . $id_event . '">
+		<img src="agenda/design_pics/ensavoirplus.jpg" title="En savoir plus" alt="" /></a></div>
+		<div class="float_stop"><br /></div></div>' ;
+	}
+	echo $tab;
+	?>
