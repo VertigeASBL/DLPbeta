@@ -1054,7 +1054,7 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'">En savoir plus &#187;</a>'."\n";
 	$tab.= '</div>'."\n";
 
-	$tab.= '</div>'."\n"; //--- fin res_enfant res_parent
+	$tab.= '</div>'."\n"; //--- fin fin res_droite_..
 	$tab.= '<div class="float_stop"></div>'."\n".'</div>'."\n\n";
 	echo $tab ;
 }

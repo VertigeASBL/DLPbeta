@@ -724,11 +724,9 @@ div.breve span.help_cursor {
 .detail_rubr_inc {
 	font-size: 12px;
 	display: block;
-	/*border: 1px solid #CCCCCC;*/
-	width: 620px;
+	/*border: 1px solid #CCCCCC;
+	width: 620px;*/
 	margin: 2px;
-	padding: 20px;
-	padding-left: 0px;
 }
 
 .head_detail_rubr_inc {

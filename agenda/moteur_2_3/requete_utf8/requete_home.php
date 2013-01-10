@@ -132,7 +132,7 @@ while ($donnees_preview = mysql_fetch_array($reponse_preview))
 	if (isset($donnees_preview['pic_event_1']) AND $donnees_preview ['pic_event_1'] == 'set')
 	{
 		$pic_event_1 = '<a href="'.$url_self.$id_event.'">
-		<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_1.jpg" title="'.$nom_event.'" alt="" width="100" /></a>';
+		<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_1.jpg" title="'.$nom_event.'" alt="" width="43" /></a>';
 	}
 	else
 	{
@@ -144,7 +144,7 @@ while ($donnees_preview = mysql_fetch_array($reponse_preview))
 	<span class="image_flottante_preview">'.$pic_event_1.'</span> 
 	<strong><a href="'.$url_self.$id_event.'">'.$nom_event.'</a></strong> | du '
 	.$date_event_debut_jour.'-'.$date_event_debut_mois.'-'.$date_event_debut_annee.' au '.$date_event_fin_jour.'-'.$date_event_fin_mois.'-'.$date_event_fin_annee.
-	' | <strong>'.$nom_lieu.'</strong> ('.$region_nom.')<br />'.$resume_event.'</div>';
+	' | <strong>'.$nom_lieu.'</strong> ('.$region_nom.')<br />'.$resume_event.'<br style="clear:both;" /></div>';
 
 }
 $preview_concat = str_replace($jsonReplaces[0], $jsonReplaces[1], $preview_concat);
