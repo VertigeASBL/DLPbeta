@@ -481,13 +481,11 @@ div.breve span.help_cursor {
 .resultat_parent {
 	margin:12px 0 0 0; padding:2px 10px 10px 10px;
 	font-size: 12px; font-family: Arial, Helvetica, sans-serif;
-	background-color:#ffffff;
 	border-width:4px 0 0 0; border-style:solid; border-color:#680335;
 }
 .resultat_enfant {
 	margin:0 0 0 0; padding:2px 10px 10px 10px;
 	font-size: 12px; font-family: Arial, Helvetica, sans-serif;
-	background-color:#ffffff;
 }
 .res_droite_parent { float:right; width:545px; }
 .res_droite_enfant { float:right; width:585px; }
@@ -535,7 +533,7 @@ div.breve span.help_cursor {
 	width:18px; background:url(design_pics/ico_concours_mini.png) no-repeat 50% 2px;
 }
 .icodr_parent .icodr_avis {
-	width:23px; background:url(design_pics/ico_avis_mini.png) no-repeat 42% 2px;
+	width:23px; background:url(design_pics/ico_avis_mini.png) no-repeat 50% 2px;
 	padding:2px 0 0 0; text-align:center; color:#680335;
 }
 .icodr_parent .icodr_avis:hover { color:#680335; text-decoration:none; }
@@ -562,10 +560,10 @@ div.breve span.help_cursor {
 	width:18px; background:url(design_pics/ico2_concours_mini.png) no-repeat 50% 2px;
 }
 .icodr_enfant .icodr_avis {
-	width:23px; background:url(design_pics/ico2_avis_mini.png) no-repeat 42% 2px;
-	padding:2px 0 0 0; text-align:center; color:#680335;
+	width:23px; background:url(design_pics/ico2_avis_mini.png) no-repeat 50% 2px;
+	padding:2px 0 0 0; text-align:center; color:#ffffff;
 }
-.icodr_enfant .icodr_avis:hover { color:#680335; text-decoration:none; }
+.icodr_enfant .icodr_avis:hover { color:#ffffff; text-decoration:none; }
 .icodr_enfant .icodr_interview {
 	width:18px; background:url(design_pics/ico2_interview_mini.png) no-repeat 50% 2px;
 }

@@ -58,7 +58,7 @@ function affich_jours_spectacles ($MM_traite, $AAAA_traite)
 	$prev = 'href="?req=mini_calendr&date_debut=01-'.$mois_prev.'-'.$annee_prev.'&date_fin='.$valeur_dernier_jour_mois.'-'.$mois_prev.'-'.$annee_prev.'" class="ajax"';
 	
 	// echo '<p>'.$prev . ' <<==>> ' . $next . '</p>';
-	$pn = array('&lt;'=> $prev, '&gt;'=> $next);
+	$pn = array('&#171;'=> $prev, '&#187;'=> $next);
 // .......................................................................
 
 	// Initialiser le tableau. (Car un simple "else" n'aurait pas été)

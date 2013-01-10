@@ -467,7 +467,7 @@ if ($avis_ok_masquer_formulaire==false)
 	if ($donnees_event = mysql_fetch_array($reponse)) {
 
 		//------------- debut afficher resultat -----------------
-		$tab = '<div class="resultat_parent">'."\n";
+		$tab = '<div class="resultat_enfant">'."\n";
 
 		$id_event = (int) $donnees_event['id_event'];
 
@@ -484,8 +484,7 @@ if ($avis_ok_masquer_formulaire==false)
 	
 		// ____________________________________________
 		// ICONES FLOTTANTES (au niveau du titre)
-		$tab.= '<div class="icodr_parent"><div class="icodr_parent_g"></div>'."\n";
-		$tab.= '<span class="ico_float_droite_relative">'."\n";
+		$tab.= '<div class="icodr_enfant">'."\n";
 
 /*		// Icone suivre - Modifier par Didier
 		if (!empty($_SESSION['id_spectateur'])) {
@@ -541,7 +540,7 @@ if ($avis_ok_masquer_formulaire==false)
 		$tab.= '<span class="ico_droite icodr_suivi" title="Nombre de suivis de cet événement">'.nombre_suivi($id_event).'</span>'."\n";
 	
 		//--- fin ICONES FLOTTANTES
-		$tab.= '<div class="icodr_parent_d"></div></div>'."\n";
+		$tab.= '</div>'."\n";
 
 		// ____________________________________________
 		// NOM EVENEMENT
