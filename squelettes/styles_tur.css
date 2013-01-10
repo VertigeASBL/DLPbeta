@@ -97,14 +97,13 @@
  }
  INPUT{
  	border:1px #333333 solid;
- 	background: #FFFFFF url('assets/bg_champ1.jpg') repeat-x left top;
+	background:#FFFFFF; /* url('assets/bg_champ1.jpg') repeat-x left top; */
  	font-size:12px;
  	padding:3px;
  }
- #form_moteur_dlp_ajax INPUT { margin-top:5px; }
  SELECT{
  	border:1px #333333 solid;
- 	background: #FFFFFF url('assets/bg_champ1.jpg') repeat-x left top;
+	background:#FFFFFF; /* url('assets/bg_champ1.jpg') repeat-x left top; */
  	font-size:12px;
  	padding:2px;
  	margin-top:5px;
@@ -1053,6 +1052,7 @@ UL#menu UL LI{
 .event_enfant {
 	font-size: 11px;
 	clear: both;
+	margin:0 0 25px 0;
 }
 .event_enfant A IMG {
 	float:left;

@@ -225,7 +225,7 @@ while ($donnees_preview = mysql_fetch_array($reponse_preview))
 
 	$region_nom = nettoyer_chaine_pour_json($regions[$donnees_preview['ville_event']]);
 
-	$resume_event = raccourcir_chaine ($donnees_preview['resume_event'],120); // retourne $chaine_raccourcie
+	$resume_event = raccourcir_chaine ($donnees_preview['resume_event'],300); // retourne $chaine_raccourcie
 	$resume_event = nettoyer_chaine_pour_json ($resume_event);
 	
 
@@ -248,7 +248,7 @@ while ($donnees_preview = mysql_fetch_array($reponse_preview))
 	du ' . $date_event_debut_jour . '-' . $date_event_debut_mois . '-' . $date_event_debut_annee . ' au ' 
 	. $date_event_fin_jour . '-' . $date_event_fin_mois . '-' . $date_event_fin_annee 
 	. ' | <strong>' . $nom_lieu . '</strong> (' . $region_nom . ')<br />'
-	. $resume_event . '</div>' ;
+	. $resume_event . '<br style="clear:both;" /></div>' ;
 
 }
 

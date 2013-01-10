@@ -83,120 +83,95 @@ $(document).ready(function (){
 	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 	function appel_php() {
 
-		//console.debug("Fonction appel_php lancée") ;
-		
 		$('#event_preview_id_fleche').show();
-//		$('#nbre_resultats_fleche').show();
-		
+
 		// ---------------------------------------------
 		// On récupère toutes les valeurs des champs
 		// ---------------------------------------------
-		votre_selection = '';
-
 		// Date Début
 		selecteur_date_in = $("#selecteur_date_in").val();
-		//console.debug("Date fin : "+selecteur_date_out) ;
 		if (selecteur_date_in) {
-			votre_selection+= "Date de début : "+selecteur_date_in+"<br />";
+			//votre_selection+= "Date de début : "+selecteur_date_in+"<br />";
 		}
 		else {
 			//votre_selection+= "Aucune date de début choisie<br />";
 			selecteur_date_in = 'non_selct' ;
 		}
-
 		// Date fin
 		selecteur_date_out = $("#selecteur_date_out").val();
-		//console.debug("Date fin : "+selecteur_date_out) ;
 		if (selecteur_date_out) {
-			votre_selection+= "Date de fin : "+selecteur_date_out+"<br />";
+			//votre_selection+= "Date de fin : "+selecteur_date_out+"<br />";
 		}
 		else {
 			//votre_selection+= "Aucune date de fin choisie<br />";
 			selecteur_date_out = 'non_selct' ;
 		}
-
 		// LIEU
 		valeur_lieu_recup = $("#selecteur_lieu").val();
-		//console.debug("lieu : "+valeur_lieu_recup) ;
 		if (valeur_lieu_recup!='non_selct') {
 			nom_lieu_recup = $('#selecteur_genre :selected').text() ;
-			votre_selection+= "Lieu : "+nom_lieu_recup+"<br />";
+			//votre_selection+= "Lieu : "+nom_lieu_recup+"<br />";
 		}
 		else {
 			//votre_selection+= "Aucun lieu choisi<br />";
 		}
-	
 		// REGION
 		valeur_region_recup = $("#selecteur_region").val();
-		//console.debug("Region : "+valeur_region_recup) ;
 		if (valeur_region_recup!='non_selct') {
 			nom_region_recup = $('#selecteur_region :selected').text() ;
-			votre_selection+= "region : "+nom_region_recup+"<br />";
+			//votre_selection+= "region : "+nom_region_recup+"<br />";
 		}
 		else {
 			//votre_selection+= "Aucune region choisie<br />";
 		}
-
 		// GENRE
 		valeur_genre_recup = $("#selecteur_genre").val();
-		//console.debug("Genre : "+valeur_genre_recup) ;
 		if (valeur_genre_recup!='non_selct') {
 			nom_genre_recup = $('#selecteur_genre :selected').text() ;
-			votre_selection+= "Genre : "+nom_genre_recup+"<br />";
+			//votre_selection+= "Genre : "+nom_genre_recup+"<br />";
 		}
 		else {
 			//votre_selection+= "Aucun genre choisi<br />";
 		}
-		
 		// TEXTE LIBRE
 		valeur_txt_libre_recup = $("#chp_txt_libre").val();
-		//console.debug("Genre : "+valeur_txt_libre_recup) ;
-		if (valeur_txt_libre_recup!='') {
+		/* if (valeur_txt_libre_recup!='') {
 			votre_selection+= "Texte libre : "+valeur_txt_libre_recup+"<br />";
 		}
 		else {
-			//votre_selection+= "Aucun texte libre choisi<br />";
-		}
+			votre_selection+= "Aucun texte libre choisi<br />";
+		} */
 		// ---------------------------------------------
-
 
 		// ---------------------------------------------
 		// Requête AJAX
 		// ---------------------------------------------
 		$.post("agenda/moteur_2_3/requete_utf8/requete.php", {
-		lieu: ""+valeur_lieu_recup+"", 
-		region: ""+valeur_region_recup+"",
-		genre: ""+valeur_genre_recup+"",
-		chaine_txt_libre: ""+valeur_txt_libre_recup+"",
-		date_in: ""+selecteur_date_in+"",
-		date_out: ""+selecteur_date_out+""
+			lieu: ""+valeur_lieu_recup+"", 
+			region: ""+valeur_region_recup+"",
+			genre: ""+valeur_genre_recup+"",
+			chaine_txt_libre: ""+valeur_txt_libre_recup+"",
+			date_in: ""+selecteur_date_in+"",
+			date_out: ""+selecteur_date_out+""
 		}, function(data){
 			if (numeroajax > 1)
 				{ numeroajax--; return; }
 			var response_se = eval("(" + data + ")");
-			//console.log(response_se.variable_test);
-			//console.log(response_se.nombre_resultats);
-			//console.log(response_se.preview_event);
 
 			// Nombre de résultats
 			// ---------------------------------
 			if (valeur_txt_libre_recup == "") {
 				$('#event_preview_id_fleche').hide();
-//				$('#nbre_resultats_fleche').hide();
 			}
 			else
 				if (response_se.nombre_resultats>0) {
-//					$('#nbre_resultats_id').html(response_se.nombre_resultats+" événement(s)");
-					$('#event_preview_id').html(response_se.preview_event+"<br /> <br /> ");
+					$('#event_preview_id').html(response_se.preview_event);
 				}
 				else {
-//					$('#nbre_resultats_id').html("Aucun résultat");
 					$('#event_preview_id').html("Aucun résultat");
 				}
 			numeroajax--;
 		},"json");
-
-	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */		
 	}
 	/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
@@ -252,8 +227,6 @@ $(document).ready(function (){
 		
 		// Imposer une date de DEBUT < à date de FIN		
 		date_out = $("#selecteur_date_out").val();
-
-
 		day_debut = date_out.substring(0,2);
 		month_debut = (date_out.substring(3,5))-1;
 		year_debut = date_out.substring(6,10);
@@ -274,7 +247,6 @@ $(document).ready(function (){
 	$("#selecteur_lieu").change(function() {
 		valeur_lieu = $(this).val();
 		  /*if (valeur_lieu != 0) {
-			 // console.debug(valeur_lieu) ;
 			  appel_php() ;
 		  }*/
 		appel_php() ;
@@ -302,12 +274,10 @@ $(document).ready(function (){
 		numeroajax++;
 		setTimeout(function attendre_un_peu() { appel_php(); }, 500);
 	});
-
 		
 	/* RAZ du formulaire
 	********************* */
 	$("#effacer_tous_champs").click(function() {
-		//console.log("reset form");
 		document.forms["form_moteur_dlp_ajax"].reset(); // Cette instruction n'écrase pas les variables, d'où la suite...
 		$("#selecteur_lieu").val('');
 		$("#selecteur_region").val('');
@@ -322,7 +292,7 @@ $(document).ready(function (){
 	$("#form_moteur_dlp_ajax").submit(function() {
 		var chn, txtlibre;
 		txtlibre = $("#chp_txt_libre").val();
-		if (txtlibre == "")
+		if (txtlibre == "" || txtlibre == "Rechercher un événement")
 			return;
 		chn = $(this).attr("action");
 		chn += chn.indexOf("?") == -1 ? "?" : "&";
@@ -335,11 +305,8 @@ $(document).ready(function (){
 function fill(thisValue) {
 	$("input[name='chp_txt_libre']").val(thisValue)
 	setTimeout("$('#suggestions').hide();", 20);
-//	alert(thisValue);
 }	
-
 </script>
-
 
 </head>
 <body>

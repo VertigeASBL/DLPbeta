@@ -74,9 +74,8 @@
 }
 
 .style_liens_pagination {
-	color: #FFF;
-	background-color: #009A99;
-	font-size: 13px;
+	color: #680335;
+	font-size: 13px; font-weight:bold;
 	text-align: center;
 	width: 650px;
 	padding-top: 3px;
@@ -88,13 +87,13 @@
 	margin-bottom: 4px;
 }
 .style_liens_pagination a {
-	color: #FFF;
+	color: #680335;
 }
 .style_liens_pagination .encours {
-	color: #222;
-	background-color: #EEE;
+	color: #ffffff;
+	background-color: #680335;
 	font-size: 15px;
-	border: 1px solid #FFF;
+	/*border: 1px solid #FFF;*/
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	padding-right: 5px;
@@ -107,15 +106,15 @@
 }
 
 #event_preview_cont {
-	position:relative;
+	position:relative; text-align:left;
 }
 #event_preview_id {
 	margin: 0;
-	padding:10px;
-	background-color: #E9E9E9;
+	padding:0 10px 10px 10px;
+	background-color: #E3F6F6;
 	color: #000;
-	width:658px; /* overflow-y:auto; */
-	border:1px solid #ccccdd;
+	width:658px; /* overflow-y:auto;
+	border:1px solid #ccccdd; */
 	z-index:99;
 }
 #event_preview_id_fleche {
@@ -135,6 +134,8 @@
 .un_event_preview {
 	font-size: 11px;
 	clear: both;
+	padding:5px 0 5px 0;
+	border-width:0 0 1px 0; border-style:dotted; border-color:#9999cc;
 }
 
 .image_flottante_preview img {
@@ -143,8 +144,7 @@
 	margin-right: 5px;
 	margin-bottom: 2px;
 	margin-left: 5px;
-	width:30px;
-	height:30px;
+	width:43px;
 	padding:1px;
 	border:1px solid #000000;
 	background-color:#FFFFFF;
@@ -161,35 +161,27 @@
 }
 
 INPUT.go_recherche_ajax {
-	background: #027473 url('pics/lancer_recherche_ajax.jpg') no-repeat left top;
+	background:url('pics/lancer_recherche_ajax.gif') no-repeat;
 	font-weight:bold;
 	font-size:14px;
 	color:#FFFFFF;
 	text-align:center;
-	width:152px;
-	height:28px;
+	width:32px;
 	border:none;
-	padding:2px;
-	cursor:hand;
-	margin-left:10px;
-	margin-right:10px;
+	margin:0 15px 10px 5px; padding:2px 0;
+	cursor:pointer;
 }
 
 INPUT.effacer_tous_champs {
-	background: #9F0037 url('pics/effacer_tout_ajax.jpg') no-repeat left top;
 	font-weight:bold;
 	font-size:14px;
-	color:#FFFFFF;
-	text-align:center;
-	width:152px;
+	color:#8F0133;
 	height:28px;
 	border:none;
-	padding:2px;
-	cursor:hand;
-	margin-left:10px;
-	margin-right:10px;
+	margin:0 0 10px 0; padding:2px 0;
+	cursor:pointer;
+	background:transparent;
 }
-
 
 .style_livre_bloc {
 	width: 652px;
@@ -210,4 +202,21 @@ INPUT.effacer_tous_champs {
 	border: 1px solid #888;
 	line-height: 2;
 	font-weight: bold;
+}
+#form_moteur_dlp_ajax { text-align:center; }
+#form_moteur_centre { display:inline-block; margin:0 auto; text-align:left; }
+
+#form_moteur_dlp_ajax SELECT {
+	background:#8F0133; color:#ffffff;
+	padding:4px 8px; border:none; margin:0 10px 14px 0;
+}
+#form_moteur_dlp_ajax SELECT OPTION {
+	background:#8F0133; color:#ffffff;
+}
+#selecteur_date_in, #selecteur_date_out {
+	width:80px; border:1px solid #8F0133; margin:0 20px 10px 0;
+}
+#chp_txt_libre {
+	border:1px solid #8F0133; margin:0 0 10px 0; padding-left:24px;
+	background:#ffffff url('pics/loupe_recherche.gif') no-repeat 4px 50%;
 }

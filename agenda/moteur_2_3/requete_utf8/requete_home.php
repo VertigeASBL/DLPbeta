@@ -125,7 +125,7 @@ while ($donnees_preview = mysql_fetch_array($reponse_preview))
 
 	$region_nom = nettoyer_chaine_pour_json($regions[$donnees_preview['ville_event']]);
 
-	$resume_event = raccourcir_chaine ($donnees_preview['resume_event'],120); // retourne $chaine_raccourcie
+	$resume_event = raccourcir_chaine ($donnees_preview['resume_event'],300); // retourne $chaine_raccourcie
 	$resume_event = nettoyer_chaine_pour_json ($resume_event);
 	
 

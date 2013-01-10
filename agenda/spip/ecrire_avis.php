@@ -114,7 +114,7 @@ $(document).ready(function(){
 });
 </script>
 
-	<form id="form_moteur_dlp_ajax" method="get" action="#">
+	<form id="form_moteur_avis" method="get" action="#">
 	<h3>Choississez votre spectacle :</h3><input name="chp_txt_libre" type="text" size="30" value="" id="chp_txt_libre" />
 	<div id="event_preview_cont">
 		<div id="event_preview_id_fleche" style="display:none;">

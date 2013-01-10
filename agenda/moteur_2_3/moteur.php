@@ -199,12 +199,12 @@ b/ Le paramètre de l'URL "&requ=calendrier" est aussi nécessaire
 /* 3)
 Récupération des variables postées
 */
-if (isset($_POST['go']) AND ($_POST['go'] == 'Lancer la recherche' OR $_POST['go'] == ' ')) {
+if (isset($_POST['go']) AND ($_POST['go'] == 'OK' OR $_POST['go'] == ' ')) {
 	$voir_debug.= '<br />*************Cas 3) *************<br />';
 
 	$_SESSION['page_aff'] = 1 ; //Quand on lance la recherche, on affiche toujours la première page 
 
-	$voir_debug.= '<br />Le bouton "Lancer la recherche" a été cliqué ';
+	$voir_debug.= '<br />Le bouton "OK" a été cliqué ';
 	
 	// Tester les variables postées :
 	
@@ -270,7 +270,7 @@ if (isset($_POST['go']) AND ($_POST['go'] == 'Lancer la recherche' OR $_POST['go
 
 
 	// nom_event
-	if (isset($_POST['chp_txt_libre']) AND $_POST['chp_txt_libre'] != NULL)
+	if (isset($_POST['chp_txt_libre']) AND $_POST['chp_txt_libre'] != NULL AND $_POST['chp_txt_libre']!='Rechercher un événement')
 	{ 
 		//$chp_txt_libre = htmlentities($_POST['chp_txt_libre'], ENT_QUOTES) ;
 		$chp_txt_libre = strip_tags($_POST['chp_txt_libre']);
@@ -572,6 +572,7 @@ echo '</table>',"\n";
 
 	echo '<form id="form_moteur_dlp_ajax" name="form_moteur_dlp_ajax" method="post" action="'.generer_url_entite(65, 'rubrique').'">',"\n";
 	
+	echo '<div id="form_moteur_centre">',"\n";
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// selecteur_genre
 	// on pourrait rajouter multiple="multiple"
@@ -590,7 +591,7 @@ echo '</table>',"\n";
 		$element_genre = raccourcir_chaine ($element_genre,$max); // retourne $chaine_raccourcie
 		echo '>'.$element_genre.'</option>';
 	}
-	echo '</select>&nbsp;';
+	echo '</select>';
 
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -609,7 +610,7 @@ echo '</table>',"\n";
 		}
 		echo '>'.$element_region.'</option>';
 	}
-	echo '</select><br />';
+	echo '</select>';
 
 
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -636,10 +637,7 @@ echo '</table>',"\n";
 		echo '>'.$chaine_raccourcie.'</option>';
 	}
 	echo '</select><br />';
-	
-	
 
-	
 	// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// selecteur_date_in et selecteur_date_out
 	// http://docs.jquery.com/UI/Datepicker
@@ -648,43 +646,28 @@ echo '</table>',"\n";
 	{ $valeur_date_debut = ' value="' . $date_debut . '" ' ; }
 	else
 	{ $valeur_date_debut = '' ; }
-	echo 'Date de début <input type="text" name="date_debut" id="selecteur_date_in" ' . $valeur_date_debut . ' /> ' ;
+	echo 'Date de début &nbsp;<input type="text" name="date_debut" id="selecteur_date_in" ' . $valeur_date_debut . ' />' ;
 
 	if (isset($date_fin) AND $date_fin != NULL) 
 	{ $valeur_date_fin = ' value="' . $date_fin . '" ' ; }
 	else
 	{ $valeur_date_fin = '' ; }	
-	echo '&nbsp; Date de fin <input type="text" name="date_fin" id="selecteur_date_out" ' . $valeur_date_fin . ' /><br />' ;
+	echo 'Date de fin &nbsp;<input type="text" name="date_fin" id="selecteur_date_out" ' . $valeur_date_fin . ' /><br />' ;
 
 //isset($_POST['recherche']) ? htmlspecialchars($_POST['recherche']) : (
 //',isset($requete_txt) ? htmlspecialchars($requete_txt) : '','
 //	echo '<input name="recherche" type="text" value="ma" />',"\n";
 ?>
 	<!-- Champ pour le texte libre -->	
-	<div>Rechercher un événement <input name="chp_txt_libre" type="text" size="30" value="" id="chp_txt_libre" /></div>
-
-	<br />
-
-	 <div class="bouton_en_file">
-      <input id="effacer_tous_champs" name="effacer_tous_champs" value="Effacer les critères" class="effacer_tous_champs" type="button">
-	 </div>
-	 
-	 <div class="bouton_en_file">
-      <input id="go" name="go" value="Lancer la recherche" class="go_recherche_ajax" type="submit" alt="Cliquez pour lancer la recherche">
-	 </div>
-	  
-
-	 <!-- div class="bouton_en_file">
-	  	<div id="nbre_resultats_fleche" style="display: none;">
-		  <div id="nbre_resultats_id"></div>
-		</div>
-	 </div -->
+	<input name="chp_txt_libre" type="text" size="30" value="Rechercher un événement" id="chp_txt_libre"  onfocus="if (this.value == 'Rechercher un événement') this.value = '';" onblur="if (this.value == '') this.value = 'Rechercher un événement';" />
+    <input id="go" name="go" value="OK" class="go_recherche_ajax" type="submit" alt="Lancer la recherche" />
+    <input id="effacer_tous_champs" name="effacer_tous_champs" value="&#187; Effacer les critères" class="effacer_tous_champs" type="button" />
+  </div> <!-- fin form_moteur_centre -->
 	 
 	 <div class="float_stop">&nbsp;</div>
 
 	<div id="event_preview_cont">
 		<div id="event_preview_id_fleche" style="display: none;">
-			<!-- img src="agenda/moteur_2_3/pics/fleche_grise_h.gif" style="position: relative; top: 3px; left: 50px;" alt="upArrow" / -->
 			<div id="event_preview_close"></div>
 			<div id="event_preview_id"></div>
 		</div>
@@ -862,74 +845,12 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	$donnees_1 = mysql_fetch_array($reponse_synchone);
 	if (! $donnees_1)
 		break;
-	
-	$tab = '<div class="breve'.($donnees_1['parent_event'] ? ' brenfant' : '').'">'."\n";
+	$type_event = $donnees_1['parent_event'] ? 'enfant' : 'parent';
+
+	$tab = '<div class="resultat_'.$type_event.'">'."\n";
 //$tab.= $key_s.' / '.$premier_even.' : id_event : '.$_SESSION['t_id_event'][$key_s].' - trouvemot : '.$_SESSION['t_trouvemot'][$key_s].' - parent_event : '.$_SESSION['t_parent_event'][$key_s].' - lieu_event : '.$_SESSION['t_lieu_event'][$key_s].'<br />';
 
 	$id_event = (int) $donnees_1['id_event'];
-
-	// ____________________________________________
-	// ICONES FLOTTANTES (au niveau du titre)
-
-	$tab.= '<span class="ico_float_droite_relative">'."\n";
-
-	// Icone suivre - Modifier par Didier
-	if (!empty($_SESSION['id_spectateur'])) {
-		if (!statut_panier($_SESSION['id_spectateur'], $id_event)) $tab.= '<a href="?id_event='.$id_event.'&suivre=1" title="suivre" style="float:right;">Suivre ('.nombre_suivi($id_event).')</a> &nbsp; '."\n";
-		else $tab.= '<a href="?id_event='.$id_event.'&plus_suivre=1" title="Ne plus suivre" style="float:right;">Ne plus suivre ('.nombre_suivi($id_event).')</a> &nbsp; '."\n";
-	}
-	// Icone concours
-	$reponse_2 = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
-	if ($total_entrees = mysql_fetch_array($reponse_2))
-		$tab.= '<a href="'.generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']).'" style="float:right;" title="Cliquez ici pour voir le concours">Concours</a> &nbsp; '."\n";
-
-	// Vos Avis : compter le nbre d'entrées :
-	$t_saison_preced = saisonprecedente($id_event, 'avis');
-	$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\'');
-	$total_entrees = mysql_fetch_array($count_avis);
-	$total_entrees = $total_entrees['total_entrees'];
-	if ($total_entrees > 0)
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" title="Nombre d\'avis postés par les visiteurs"><img src="agenda/design_pics/ico_avis_mini.jpg" alt="" /><div class="nombre_avis_breve">'.$total_entrees.'</div></a>'."\n";
-	
-	
-	// Icone Interview
-	if ($donnees_1['interview_event'] != 0)
-		$interview_event = $donnees_1['interview_event'];
-	else
-		$interview_event = saisonprecedente($id_event, 'interview');
-	if ($interview_event)
-		$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" title="Cliquez ici pour lire l\'interview"><img src="agenda/design_pics/ico_interview_mini.jpg" alt="" /></a>'."\n" ;
-
-
-	// Icone Critique
-	if ($donnees_1['critique_event'] != 0)
-		$critique_event = $donnees_1['critique_event'];
-	else
-		$critique_event = saisonprecedente($id_event, 'critique');
-	if ($critique_event)
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#critique" title="Cliquez ici pour lire la critique"><img src="agenda/design_pics/ico_critique_mini.jpg" alt="" /></a>'."\n" ;
-
-
-	// Icone chronique
-	if ($donnees_1['chronique_event'] != 0)
-		$chronique_event = $donnees_1['chronique_event'];
-	else
-		$chronique_event = saisonprecedente($id_event, 'chronique');
-	if ($chronique_event)
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#chronique" title="Cliquez ici pour lire la chronique"><img src="agenda/design_pics/ico_chronique_mini.jpg" alt="" /></a>'."\n" ;
-
-
-	// Icone "J'ai vu et aimé"
-	$t_saison_preced = saisonprecedente($id_event, 'jai_vu');
-	$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM ag_jai_vu WHERE id_event_jai_vu IN ('.$t_saison_preced.')');
-	$total_entrees = mysql_fetch_array($count_avis);
-	$total_entrees = $total_entrees['total_entrees'];
-	$tab.= '<div class="nombre_votes"><a href="#vote" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;">'
-	.'<img src="agenda/design_pics/ico_jai_vu.jpg" title="cliquez pour voter pour cet événement" alt="cliquez pour voter pour cet événement" /></a>'
-	.'<div class="nombre_votes_bulle">'.($total_entrees ? $total_entrees : ' ').'</div></div>'."\n" ;
-
-	$tab.= '</span>'."\n"; //--- fin ICONES FLOTTANTES
-
 
 	// ____________________________________________
 	// VIGNETTE EVENEMENT	
@@ -937,10 +858,71 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	{
 		$nom_event = htmlspecialchars($donnees_1['nom_event']);
 		$id_event = $donnees_1['id_event'];
-		$tab.= '<span class="breve_pic"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" title="' . $nom_event . '" alt="" width="100" /></a></span>'."\n";
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" class="onglet6 pic_'.$type_event.'" title="' . $nom_event . '" alt="" /></a>'."\n";
 	}
+
+	$tab.= '<div class="res_droite_'.$type_event.'">'."\n";
+
+	// ____________________________________________
+	// ICONES FLOTTANTES (au niveau du titre)
+	if ($type_event == 'enfant')
+		$tab.= '<div class="icodr_enfant">'."\n";
+	else
+		$tab.= '<div class="icodr_parent"><div class="icodr_parent_g"></div>'."\n";
+
+	// Icone concours
+	$reponse_2 = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
+	if ($total_entrees = mysql_fetch_array($reponse_2))
+		$tab.= '<a href="'.generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']).'" class="ico_droite icodr_concours" title="Voir le concours"></a>'."\n";
+
+	// Vos Avis : compter le nbre d'entrées :
+	$t_saison_preced = saisonprecedente($id_event, 'avis');
+	$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM '.$table_avis_agenda.' WHERE event_avis IN ('.$t_saison_preced.') AND publier_avis=\'set\'');
+	$total_entrees = mysql_fetch_array($count_avis);
+	$total_entrees = $total_entrees['total_entrees'];
+	if ($total_entrees > 0)
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" class="ico_droite icodr_avis" title="Nombre d\'avis postés par les visiteurs">'.$total_entrees.'</a>'."\n";
 	
-	
+	// Icone Critique
+	if ($donnees_1['critique_event'] != 0)
+		$critique_event = $donnees_1['critique_event'];
+	else
+		$critique_event = saisonprecedente($id_event, 'critique');
+	if ($critique_event)
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#critique" class="ico_droite icodr_critique" title="Lire la critique"></a>'."\n" ;
+
+	// Icone chronique
+	if ($donnees_1['chronique_event'] != 0)
+		$chronique_event = $donnees_1['chronique_event'];
+	else
+		$chronique_event = saisonprecedente($id_event, 'chronique');
+	if ($chronique_event)
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#chronique" class="ico_droite icodr_chronique" title="Lire la chronique"></a>'."\n" ;
+
+	// Icone Interview
+	if ($donnees_1['interview_event'] != 0)
+		$interview_event = $donnees_1['interview_event'];
+	else
+		$interview_event = saisonprecedente($id_event, 'interview');
+	if ($interview_event)
+		$tab.= '<a href="spip.php?page=interview&amp;qid='.$interview_event.'&amp;rtr=y" class="ico_droite icodr_interview" title="Lire l\'interview"></a>'."\n" ;
+
+	// Icone "J'ai vu et aimé"
+	$t_saison_preced = saisonprecedente($id_event, 'jai_vu');
+	$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM ag_jai_vu WHERE id_event_jai_vu IN ('.$t_saison_preced.')');
+	$total_entrees = mysql_fetch_array($count_avis);
+	$total_entrees = $total_entrees['total_entrees'];
+	$tab.= '<span class="ico_droite icodr_jaivu" title="Nombre de votes pour cet événement">'.$total_entrees.'</span>'."\n" ;
+
+	// Icone suivi - Modifier par Didier
+	$tab.= '<span class="ico_droite icodr_suivi" title="Nombre de suivis de cet événement">'.nombre_suivi($id_event).'</span>'."\n";
+
+	//--- fin ICONES FLOTTANTES
+	if ($type_event == 'enfant')
+		$tab.= '</div>'."\n";
+	else
+		$tab.= '<div class="icodr_parent_d"></div></div>'."\n";
+
 	// ____________________________________________
 	// NOM EVENEMENT
 	$nom_event = monraccourcirchaine($donnees_1['nom_event'], 45);
@@ -957,29 +939,25 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 		$tab.= '<div class="breve_titre"><a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'" title="Voir en détail">' . $nom_event . '</a></div>'."\n";
 	}
 
-
 	// ____________________________________________
 	// ID
 	$tab.= ' <span class="id_breve">(id ' . $donnees_1['id_event'] . ')</span><br />'."\n" ;
 
 	// ____________________________________________
 	// LIEU
-	if (! $donnees_1['parent_event'])
-		$tab.= '<span class="breve_lieu"><a href="'.generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees_1['lieu_event']).'" title="Producteur du spectacle">'.$donnees_1['nom_lieu'].'</a></span>'."\n";
+	//if ($type_event != 'enfant')
+	$tab.= '<span class="breve_lieu"><a href="'.generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees_1['lieu_event']).'" title="Producteur du spectacle">'.raccourcir_chaine($donnees_1['nom_lieu'], 35).'</a></span>'."\n";
 
 	// ____________________________________________
 	// GENRE
-	
 	if ($donnees_1['genre_event'] != NULL) 
 	{
 		$genre_name = $donnees_1['genre_event'];
-		$tab.= '<span class="breve_genre"><acronym title="Genre du spectacle">' . $genres[$genre_name] . '</acronym></span>'."\n";	
+		$tab.= '| <span class="breve_genre"><acronym title="Genre du spectacle">' . $genres[$genre_name] . '</acronym></span>'."\n";	
 	}
-
 
 	// ____________________________________________
 	// DATES
-	
 	$date_event_debut = $donnees_1['date_event_debut'];	
 	$date_event_debut_annee = substr($date_event_debut, 0, 4);
 	$date_event_debut_mois = substr($date_event_debut, 5, 2);
@@ -991,26 +969,23 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	$date_event_fin_jour = substr($date_event_fin, 8, 2);
 
 	// note : pour mois en LETTRES : $NomDuMois[$date_event_debut_mois+0]
-	$tab.= ' <span class="breve_date"><acronym title="Période de représentation">' . $date_event_debut_jour . '/'
+	$tab.= '| <span class="breve_date"><acronym title="Période de représentation">du ' . $date_event_debut_jour . '/'
 	. $date_event_debut_mois . '/'
-	. $date_event_debut_annee . ' &gt;&gt; ' . $date_event_fin_jour . '/'
+	. $date_event_debut_annee . ' au ' . $date_event_fin_jour . '/'
 	. $date_event_fin_mois . '/'
 	. $date_event_fin_annee . '</acronym></span>'."\n";	
 
-
 	// ____________________________________________
 	// VILLE
-	
-	if ($donnees_1['ville_event'] != NULL && ! $donnees_1['parent_event']) 
+	if ($donnees_1['ville_event'] != NULL) 
 	{
 		$ville_event_de_db = $donnees_1['ville_event'];
-		$tab.= '<span class="breve_date"><acronym title="Ville où du spectacle">' . $regions[$ville_event_de_db] .'</acronym></span>'."\n";	
+		$tab.= '| <span class="breve_ville"><acronym title="Ville où du spectacle">' . $regions[$ville_event_de_db] .'</acronym></span>'."\n";	
 	}
-	$tab.= '<br />';
 
 	// ____________________________________________
 	// TEXTE RESUME 
-	
+/*	
 	// Afficher texte résumé et événtuellement souligner le mot rechercé par l'utilisateur
 	$txt_decod = $donnees_1['resume_event'];
 	if ($requete_txt != '' AND $requete_txt != 'nom de l\'événement' AND stristr ($txt_decod, $requete_txt)) // stristr Trouve la première occurrence dans une chaîne (insensible à la casse) = test d'existence
@@ -1026,12 +1001,14 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 		// Si pas de recherche contextuelle, simplement afficher résumé
 
 			// Remplacer les retours de ligne
-			$resum_txt = $donnees_1['resume_event'];
+			$resum_txt = raccourcir_chaine($donnees_1['resume_event'], strip_tags($donnees_1['parent_event']) ? 100 : 300);
 			$array_retour_ligne = array("<br>", "<br />", "<BR>", "<BR />");
 			$uuuuueeeeeeee = str_replace($array_retour_ligne, " ", $resum_txt);
 			$tab.= '<br />'.$uuuuueeeeeeee ;
+ */
+	$tab.= '<p class="breve_resume">'.raccourcir_chaine(strip_tags($donnees_1['resume_event']), $type_event == 'enfant' ? 100 : 400).'</p>'."\n";
+/*
 	}
-
 
 	// **************************************************************************************************
 	//Si l'expression recherchée par le visiteur se trouve dans le TEXTE DE DESCRIPTION, afficher la portion concernée	
@@ -1062,23 +1039,23 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 		
 		$tab.= '<br />'.$texte_souligne."\n" ;	
 	}
-
-	
-	$tab.= '<div class="en_savoir_plus">'."\n" ;
-/*
-	// Afficher bouton de Réservation
-	if (!empty($donnees_1['email_reservation']) AND $donnees_1['email_reservation'] != NULL 
-	AND ($donnees_1['genre_event'] != 'g07'))
-	{
-		$tab.= '<a href="-Reserver-?id_event='. $id_event .'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.jpg"  hspace="10" alt="" /></a>'."\n" ;
-	}
-	// Lien e-card
-	$tab.= '<a href="-Envoyer-a-un-ami-?id_event=' . $id_event . '"><img src="agenda/e_card/pics/ico_envoyer_ami.jpg" title="Informer un ami" alt="Informer un ami" /></a>'."\n" ;
 */
+	$tab.= '<div class="en_savoir_plus">'."\n" ;
+	// Icone suivre - Modifier par Didier
+	if (!empty($_SESSION['id_spectateur'])) {
+		if (!statut_panier($_SESSION['id_spectateur'], $id_event))
+			$tab.= '<a href="?id_event='.$id_event.'&suivre=1" class="ico_gauche icoga_suivre" title="Suivre cet événement">Ajouter à mon agenda</a>'."\n";
+		else
+			$tab.= '<a href="?id_event='.$id_event.'&plus_suivre=1" class="ico_gauche icoga_suivre" title="Ne plus suivre cet événement">Retirer de mon agenda</a>'."\n";
+
+		$tab.= '<a href="#voter" class="ico_gauche icoga_voter" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;" title="Voter pour cet événement">J\'ai vu et aimé</a>'."\n" ;
+	}
 	// Lien "en savoir plus"
-	$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/design_pics/ensavoirplus.jpg" title="En savoir plus" alt="En savoir plus" /></a>'."\n";
-	
-	$tab.= '</div>'."\n".'<div class="float_stop"></div>'."\n".'</div>'."\n\n";
+	$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'">En savoir plus &#187;</a>'."\n";
+	$tab.= '</div>'."\n";
+
+	$tab.= '</div>'."\n"; //--- fin res_enfant res_parent
+	$tab.= '<div class="float_stop"></div>'."\n".'</div>'."\n\n";
 	echo $tab ;
 }
 	
