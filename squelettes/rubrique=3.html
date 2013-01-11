@@ -272,9 +272,9 @@ require 'agenda/inc_var.php';
 					<span class="image_flottante_preview">
 						<a href="#GET{varurl}">
 		[(#VALEUR|table_valeur{pic_event_1}|oui)
-							<img src="agenda/pics_events/event_[(#VALEUR|table_valeur{id_event})]_1.jpg" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
+			<img src="agenda/pics_events/event_[(#VALEUR|table_valeur{id_event})]_1.jpg" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" width="43" height="43" alt="" />]
 		[(#VALEUR|table_valeur{pic_event_1}|non)
-							<img src="agenda/moteur_2_3/pics/event_sans_image.gif" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" alt="" />]
+			<img src="agenda/moteur_2_3/pics/event_sans_image.gif" title="[(#VALEUR|table_valeur{nom_event}|attribut_html)]" width="43" height="43" alt="" />]
 						</a>
 					</span>
 					<span class="nombre_de_jai_vu">[(#VALEUR|table_valeur{jai_vu})]</span>
@@ -284,6 +284,7 @@ require 'agenda/inc_var.php';
 					<strong><a href="#GET{varurl}">[(#VALEUR|table_valeur{nom_event}|monraccourcirchaine{45})]</a></strong> | 
 					du [(#VALEUR|table_valeur{date_event_debut}|affdate{'d-m-Y'})] au [(#VALEUR|table_valeur{date_event_fin}|affdate{'d-m-Y'})] |
 					<strong>[(#VALEUR|table_valeur{nom_lieu}|monraccourcirchaine{45})]</strong> | [(#VALEUR|table_valeur{resume_event}|monraccourcirchaine{65})]
+					<br style="clear:both;" />
 				</div>
 	</BOUCLE_art_jai_vu>
 			</div>

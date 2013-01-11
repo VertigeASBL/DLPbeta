@@ -72,10 +72,7 @@ acronym:hover {
 	border: 1px solid #CC0000;
 	text-decoration: none;
 	text-align: center;
-	margin-top: 20px;
-	margin-bottom: 10px;
-	margin-left: 20%;
-	margin-right: 20%;
+	margin:10px;
 	-moz-border-radius: 9px;
 	-webkit-border-radius: 9px;
 }
@@ -852,32 +849,40 @@ h3.spip{
 	background-color: #FFFFFF;
 	padding: 1px;
 }
-
+#bouton_ajouter_ev {
+	display:block; padding:0; margin:8px 0 0 0;
+	width:203px; height:32px;
+	background:url(design_pics/bouton_ajouter_ev.gif);
+}
+#bouton_inscrivez {
+	display:block; padding:0; margin:8px 0 0 0;
+	width:203px; height:46px;
+	background:url(design_pics/bouton_inscrivez.gif);
+}
 .formulaire_popup {
-	height: 179px;
-	background: url(design_pics/bg_connect_box.png) no-repeat;
-	padding-top: 13px;
-	padding-left: 10px;
-/*	position: fixed;
-	border: 2px solid #666;
-	border-top-color: #FFF;
-	border-left-color: #FFF;
-	width: 300px;
-	left: 30%;
-	top:200px;  */
+    height:auto;
+    background:#6B1631 url(design_pics/bg_connect_box.png) no-repeat;
+    margin:8px 0 0 0; padding:10px;
+/*    position: fixed;
+    border: 2px solid #666;
+    border-top-color: #FFF;
+    border-left-color: #FFF;
+    width: 300px;
+    left: 30%;
+    top:200px;  */
 }
-
 .formulaire_popup h2 {
-	font-size: 14px;
-	color: #FFF;
-	margin: 0;
-	padding: 0;
+    font-size: 14px;
+    color: #FFF;
+    margin:0 0 5px 0;
+    padding: 0;
 }
-
 .formulaire_popup ul li {
-	background: none;
-	padding: 0;
+    background: none;
+    padding:2px 0;
 }
+.formulaire_popup #log_spectateur, .formulaire_popup #pw_spectateur { width:172px; }
+.formulaire_popup #auth_req { width:50px; }
 
 /* 2012 popup login */
 

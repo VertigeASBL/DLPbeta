@@ -915,8 +915,9 @@ UL#menu UL LI{
 }
 
 .ligne_bas_col_2 {
-	border-bottom: 5px solid #FAFAFA;
-	/*position:relative;
+	height:1px;
+	/*border-bottom: 5px solid #FAFAFA;
+	position:relative;
 	right:10px;
 	width:210px;*/
 }
