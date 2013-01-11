@@ -345,8 +345,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 
 	// ____________________________________________
 	// Vignette
-	if ($donnees['pic_event_1'] == 'set')
-		echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_1.jpg" alt="" class="onglet7 pic_parent" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
+	echo '<img src="agenda/'.($donnees['pic_event_1']=='set' ? $folder_pics_event.'event_'.$id_event.'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif').'" alt="" class="onglet7 pic_parent" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
 	
 
 	//_________________ Infos utiles _____________________

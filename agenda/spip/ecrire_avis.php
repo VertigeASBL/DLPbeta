@@ -473,12 +473,8 @@ if ($avis_ok_masquer_formulaire==false)
 
 		// ____________________________________________
 		// VIGNETTE EVENEMENT	
-		if ($donnees_event['pic_event_1'] == 'set' )
-		{
-			$nom_event = htmlspecialchars($donnees_event['nom_event']);
-			$id_event = $donnees_event['id_event'];
-			$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" class="onglet6 pic_parent" title="' . $nom_event . '" alt="" /></a>'."\n";
-		}
+		$nom_event = htmlspecialchars($donnees_event['nom_event']);
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/'.($donnees_event['pic_event_1'] == 'set' ? $folder_pics_event.'event_'.$id_event.'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif')" class="onglet6 pic_parent" title="'.$nom_event.'" alt="" /></a>'."\n";
 
 		$tab.= '<div class="res_droite_parent">'."\n";
 	

@@ -854,12 +854,8 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 
 	// ____________________________________________
 	// VIGNETTE EVENEMENT	
-	if ($donnees_1['pic_event_1'] == 'set' )
-	{
-		$nom_event = htmlspecialchars($donnees_1['nom_event']);
-		$id_event = $donnees_1['id_event'];
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/' . $folder_pics_event . 'event_' . $id_event . '_1.jpg" class="onglet6 pic_'.$type_event.'" title="' . $nom_event . '" alt="" /></a>'."\n";
-	}
+	$nom_event = htmlspecialchars($donnees_1['nom_event']);
+	$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/'.($donnees_1['pic_event_1']=='set' ? $folder_pics_event.'event_'.$id_event.'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif').'" class="onglet6 pic_'.$type_event.'" title="'.$nom_event.'" alt="" /></a>'."\n";
 
 	$tab.= '<div class="res_droite_'.$type_event.'">'."\n";
 
