@@ -59,9 +59,9 @@ if (!empty($_SESSION['id_spectateur'])): ?>
 		foreach ($spectacle as $key => $value) {
 			echo '
 				<li>
-					<span class="image_suggestion actu_photo">
+					<span class="image_suggestion">
 						<a href="-Detail-agenda-?id_event='.$value['id_event'].'">
-							<img src="agenda/pics_events/event_'.$value['id_event'].'_1.jpg" title="'.htmlspecialchars($value['nom_event']).'" alt="" />
+							<img src="agenda/pics_events/event_'.$value['id_event'].'_1.jpg" title="'.htmlspecialchars($value['nom_event']).'" alt="" class="onglet6" />
 						</a>
 					</span>
 					<span class="descriptif_suggestion">

@@ -1050,6 +1050,21 @@ UL#menu UL LI{
 	width: 91px;
 }
 
+.descriptif_suggestion h3.titre_actu a:link, .descriptif_suggestion h3.titre_actu a:visited {
+    color: #8F0133;
+    text-decoration: none;
+}
+
+.descriptif_suggestion h3.titre_actu {
+	color: #8F0133;
+    font-size: 1.3em;
+    font-weight: bold;
+    line-height: 1.4em;
+    margin: 0;
+    padding: 0;
+    text-transform: none;
+}
+
 #suggestion #toutes_suggestions {
 	text-align: right;
 }
