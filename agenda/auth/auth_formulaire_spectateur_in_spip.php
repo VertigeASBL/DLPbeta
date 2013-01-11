@@ -1,11 +1,14 @@
 <?php 
 include_spip('inc/utils');
 
-echo '<div class="formulaire_popup">';
+echo '<a href="agenda/in/index.php" id="bouton_ajouter_ev"></a>',"\n";
+
+echo '<div class="formulaire_popup">' ;
+
 $cacher_formulaire = 'non' ;
 
 // Si bouton enfoncé, alors lancer l'analyse du LOGIN et PW
-if (isset($_POST['auth_req']) AND ($_POST['auth_req'] == 'Log')) 
+if (isset($_POST['auth_req']) AND ($_POST['auth_req'] == 'OK')) 
 {
 	$rec = '';
 
@@ -84,19 +87,21 @@ if ($cacher_formulaire == 'non'):
 ?>
 
 <form name="form_rec_user" method="post" action="">
-	<h2>ME CONNECTER</h2>
-	<ul>
-		<li><input name="log_spectateur" type="text" id="name" size="9" maxlength="9" value="Pseudo" /></li>
-		<li><input name="pw_spectateur" type="password" id="pw" size="9" maxlength="9" value="Password" /></li>
-	
-		<li><input name="hiddenField" type="hidden" value="<?php echo $page_appel ?>" /></li>
-		<li><input name="auth_req" type="submit" id="auth_req" value="Log" /></li>
-	
-		<li><a href="',generer_url_entite(158,'rubrique'),'">Mot de passe oubli&eacute; ?</a></li>
-		<li><a href="',generer_url_entite(119,'rubrique'),'">Créer un nouveau compte</a></li>
-	</ul>
+    <h2>ME CONNECTER</h2>
+    <ul>
+        <li><input id="log_spectateur" name="log_spectateur" type="text" id="name" size="9" maxlength="9" value="Pseudo" onfocus="if (this.value == 'Pseudo') this.value = '';" onblur="if (this.value == '') this.value = 'Pseudo';" /></li>
+        <li><input id="pw_spectateur" name="pw_spectateur" type="password" id="pw" size="9" maxlength="9" value="Passw" onfocus="if (this.value == 'Passw') this.value = '';" onblur="if (this.value == '') this.value = 'Passw';" /></li>
+   
+        <li><input id="hiddenField" name="hiddenField" type="hidden" value="<?php echo $page_appel; ?>" /></li>
+        <li><input id="auth_req" name="auth_req" type="submit" id="auth_req" value="OK" /></li>
+   
+        <li><a href="<?php echo generer_url_entite(158,'rubrique'); ?>" style="color:#ffffff;">Mot de passe oubli&eacute; ?</a></li>
+        <li><a href="<?php echo generer_url_entite(119,'rubrique'); ?>" style="color:#ffffff;">Créer un nouveau compte</a></li>
+    </ul>
 </form>
 </div>
 <?php
 endif;
+
+echo '<a href="',generer_url_entite(159,'rubrique'),'" id="bouton_inscrivez"></a>',"\n";
 ?>
