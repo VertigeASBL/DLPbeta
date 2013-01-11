@@ -298,14 +298,14 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// Icone concours
 	$reponse = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
 	if ($total_entrees = mysql_fetch_array($reponse))
-		echo '<a href="',generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']),'" class="ico_droite icodr_concours" title="Voir le concours"></a> &nbsp; '."\n";
+		echo '<a href="',generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']),'" class="ico_droite icodr_concours" title="Un concours est actuellement en cours pour cet événement"></a>'."\n";
 
 	// Icone "J'ai vu et aimé"
 	$t_saison_preced = saisonprecedente($id_event, 'jai_vu');
 	$reponse = mysql_query('SELECT COUNT(*) AS total_entrees FROM ag_jai_vu WHERE id_event_jai_vu IN ('.$t_saison_preced.')');
 	$total_entrees = mysql_fetch_array($reponse);
 	$total_entrees = $total_entrees['total_entrees'];
-	echo '<span class="ico_droite icodr_avis" title="Nombre d\'avis postés par les visiteurs">'.$total_entrees.'</span>',"\n";
+	echo '<span class="ico_droite icodr_avis" title="'.$total_entrees.' spectateurs ont vu et aimé cet événement">'.$total_entrees.'</span>',"\n";
 
 /*	echo '<div class="nombre_votes"><a href="#vote" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;">'
 	.'<span class="nombre_votes_bulle_detail"> &nbsp; '.($total_entrees ? $total_entrees : ' ').'</span>'
@@ -313,7 +313,8 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	.'</div>'."\n"; */
 
 	// Icone suivi - Modifier par Didier
-	echo '<span class="ico_droite icodr_suivi" title="Nombre de suivis de cet événement">'.nombre_suivi($id_event).'</span>'."\n";
+	$total_entrees = nombre_suivi($id_event);
+	echo '<span class="ico_droite icodr_suivi" title="'.$total_entrees.' spectateurs ont inscrit cet événement à leur agenda">'.$total_entrees.'</span>'."\n";
 
 	echo '</div>'."\n\n"; //--- fin ICONES FLOTTANTES
 

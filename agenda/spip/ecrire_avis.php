@@ -474,7 +474,7 @@ if ($avis_ok_masquer_formulaire==false)
 		// ____________________________________________
 		// VIGNETTE EVENEMENT	
 		$nom_event = htmlspecialchars($donnees_event['nom_event']);
-		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/'.($donnees_event['pic_event_1'] == 'set' ? $folder_pics_event.'event_'.$id_event.'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif')" class="onglet6 pic_parent" title="'.$nom_event.'" alt="" /></a>'."\n";
+		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'"><img src="agenda/'.($donnees_event['pic_event_1'] == 'set' ? $folder_pics_event.'event_'.$id_event.'_1.jpg' : 'moteur_2_3/pics/event_sans_image.gif').'" class="onglet6 pic_parent" title="'.$nom_event.'" alt="" /></a>'."\n";
 
 		$tab.= '<div class="res_droite_parent">'."\n";
 	
@@ -491,7 +491,7 @@ if ($avis_ok_masquer_formulaire==false)
 		// Icone concours
 		$reponse_2 = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
 		if ($total_entrees = mysql_fetch_array($reponse_2))
-			$tab.= '<a href="'.generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']).'" class="ico_droite icodr_concours" title="Voir le concours"></a>'."\n";
+			$tab.= '<a href="'.generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']).'" class="ico_droite icodr_concours" title="Un concours est actuellement en cours pour cet événement"></a>'."\n";
 	
 		// Vos Avis : compter le nbre d'entrées :
 		$t_saison_preced = saisonprecedente($id_event, 'avis');
@@ -499,7 +499,7 @@ if ($avis_ok_masquer_formulaire==false)
 		$total_entrees = mysql_fetch_array($count_avis);
 		$total_entrees = $total_entrees['total_entrees'];
 		if ($total_entrees > 0)
-			$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" class="ico_droite icodr_avis" title="Nombre d\'avis postés par les visiteurs">'.$total_entrees.'</a>'."\n";
+			$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'#avis" class="ico_droite icodr_avis" title="'.$total_entrees.' spectateurs ont donné leur avis sur cet événement">'.$total_entrees.'</a>'."\n";
 		
 		// Icone Critique
 		if ($donnees_event['critique_event'] != 0)
@@ -530,10 +530,11 @@ if ($avis_ok_masquer_formulaire==false)
 		$count_avis = mysql_query('SELECT COUNT(*) AS total_entrees FROM ag_jai_vu WHERE id_event_jai_vu IN ('.$t_saison_preced.')');
 		$total_entrees = mysql_fetch_array($count_avis);
 		$total_entrees = $total_entrees['total_entrees'];
-		$tab.= '<span class="ico_droite icodr_jaivu" title="Nombre de votes pour cet événement">'.$total_entrees.'</span>'."\n" ;
+		$tab.= '<span class="ico_droite icodr_jaivu" title="'.$total_entrees.' spectateurs ont vu et aimé cet événement">'.$total_entrees.'</span>'."\n" ;
 	
 		// Icone suivi - Modifier par Didier
-		$tab.= '<span class="ico_droite icodr_suivi" title="Nombre de suivis de cet événement">'.nombre_suivi($id_event).'</span>'."\n";
+		$total_entrees = nombre_suivi($id_event);
+		$tab.= '<span class="ico_droite icodr_suivi" title="'.$total_entrees.' spectateurs ont inscrit cet événement à leur agenda ">'.$total_entrees.'</span>'."\n";
 	
 		//--- fin ICONES FLOTTANTES
 		$tab.= '</div>'."\n";
