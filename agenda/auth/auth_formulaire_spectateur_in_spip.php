@@ -69,7 +69,7 @@ if (isset($_POST['auth_req']) AND ($_POST['auth_req'] == 'Log'))
 		    session_set('group_admin_spec_name', $group_admin_spec_noms[1]);
 			
 			//echo '<META http-equiv="Refresh" content="0">' ; // Rafraichissement pour relancer la page avec les nouvelles $_SESSION
-			echo '<META http-equiv="refresh" CONTENT="0;URL=',generer_url_entite(121,'rubrique'),'">';
+			echo '<META http-equiv="refresh" CONTENT="0;URL=',self(),'">';
 			$cacher_formulaire = 'oui' ;
 			echo '<div class="info">Vérification des données, veuillez patienter</div>.' ;
 		} 
