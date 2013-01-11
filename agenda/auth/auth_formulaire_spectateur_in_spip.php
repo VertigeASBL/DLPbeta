@@ -1,7 +1,7 @@
 <?php 
 include_spip('inc/utils');
 
-echo '<div class="formulaire_popup"><br /> <br />' ;
+echo '<div class="formulaire_popup">';
 $cacher_formulaire = 'non' ;
 
 // Si bouton enfoncé, alors lancer l'analyse du LOGIN et PW
@@ -80,36 +80,23 @@ if (isset($_POST['auth_req']) AND ($_POST['auth_req'] == 'Log'))
 	}
 }
 
-if ($cacher_formulaire == 'non')
-{
-	echo'<form name="form_rec_user" method="post" action="">
-	  <table  class="data_table" border="0" align="center" cellpadding="5" cellspacing="0">
-		<tr>
-		  <th colspan="2">Veuillez vous authentifier</th>
-		</tr>
-		<tr>
-		  <td>Log in</td>
-		  <td><input name="log_spectateur" type="text" id="name" size="9" maxlength="9" /></td>
-		</tr>
-		<tr>
-		  <td>Password</td>
-		  <td><input name="pw_spectateur" type="password" id="pw" size="9" maxlength="9" /></td>
-		</tr>
-		<tr>
-		  <td colspan="2"><div align="center">
-			<input name="hiddenField" type="hidden" value="<?php echo $page_appel ?>" />
-			<input name="auth_req" type="submit" id="auth_req" value="Log" />
-		  </div></td>
-		</tr>
-		<tr>
-		  <td height="50" colspan="2" align="center" valign="bottom">
-		  <p><a href="',generer_url_entite(158,'rubrique'),'">Mot de passe oubli&eacute; ?</a></p>
-		  <p><a href="',generer_url_entite(119,'rubrique'),'">Créer un nouveau compte</a></p>
-		  </td>
-		</tr>
-	  </table>
-	</form>' ;
-}
-echo '<br /> <br />
-</div>' ;
+if ($cacher_formulaire == 'non'):
+?>
+
+<form name="form_rec_user" method="post" action="">
+	<h2>ME CONNECTER</h2>
+	<ul>
+		<li><input name="log_spectateur" type="text" id="name" size="9" maxlength="9" value="Pseudo" /></li>
+		<li><input name="pw_spectateur" type="password" id="pw" size="9" maxlength="9" value="Password" /></li>
+	
+		<li><input name="hiddenField" type="hidden" value="<?php echo $page_appel ?>" /></li>
+		<li><input name="auth_req" type="submit" id="auth_req" value="Log" /></li>
+	
+		<li><a href="',generer_url_entite(158,'rubrique'),'">Mot de passe oubli&eacute; ?</a></li>
+		<li><a href="',generer_url_entite(119,'rubrique'),'">Créer un nouveau compte</a></li>
+	</ul>
+</form>
+</div>
+<?php
+endif;
 ?>

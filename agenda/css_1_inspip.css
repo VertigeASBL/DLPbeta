@@ -854,7 +854,10 @@ h3.spip{
 }
 
 .formulaire_popup {
-	background-color: #DDD;
+	height: 179px;
+	background: url(design_pics/bg_connect_box.png) no-repeat;
+	padding-top: 13px;
+	padding-left: 10px;
 /*	position: fixed;
 	border: 2px solid #666;
 	border-top-color: #FFF;
@@ -864,6 +867,17 @@ h3.spip{
 	top:200px;  */
 }
 
+.formulaire_popup h2 {
+	font-size: 14px;
+	color: #FFF;
+	margin: 0;
+	padding: 0;
+}
+
+.formulaire_popup ul li {
+	background: none;
+	padding: 0;
+}
 
 /* 2012 popup login */
 

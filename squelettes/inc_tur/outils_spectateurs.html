@@ -66,7 +66,7 @@ if (!empty($_SESSION['id_spectateur'])): ?>
 					</span>
 					<span class="descriptif_suggestion">
 						<p><a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a></p>
-						<p class="date_suggestion">'.affdate($value['date_event_debut'], 'd/m/Y').' >> '.affdate($value['date_event_fin'], 'd/m/Y').'</p>
+						<p class="date_suggestion">du '.affdate($value['date_event_debut'], 'd/m/Y').' au '.affdate($value['date_event_fin'], 'd/m/Y').'</p>
 						<p class="nom_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$value['id_lieu'].'">'.$value['nom_lieu'].'</a></p>
 					</span>
 				</li>';
