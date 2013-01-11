@@ -34,6 +34,11 @@ $(document).ready(function (){
 			pauseOnHover:true
 		}
 	});
+	$("#carouselhome LI").mouseover(function(){
+		$("DIV",this).show();
+	}).mouseout(function(){
+		$("DIV",this).hide();
+	});
 });
 
 /* Pour popup de "J'ai vu et aimé" */
@@ -71,7 +76,7 @@ require 'agenda/inc_var.php';
 		<h2 style="margin-left:0px; color:#990033;">[(#TITRE|supprimer_numero)]</h2>
 
 <!-- ++++++++++++++++++++++ carousel debut ++++++++++++++++++++++
-# SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'} 
+# SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'}
 (ag_event ag_lieux){ag_lieux.id_lieu=ag_event.lieu_event} ,' / ',# NOM_LIEU
 -->
 		#SET{urldetail,#URL_RUBRIQUE{92}}
@@ -86,7 +91,8 @@ require 'agenda/inc_var.php';
 					<li>
 						<a href="[(#GET{urldetail}|parametre_url{id_event,#ID_EVENT})]">
 			#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#ID_EVENT,_1.jpg}|image_reduire{161,230}}
-			[(#GET{vimage}|inserer_attribut{'alt',''}|inserer_attribut{'title',#NOM_EVENT|concat{' / ',#DATE_EVENT_DEBUT}})]
+			[(#GET{vimage}|inserer_attribut{'alt',''})]
+							<div class="caroudescr" style="display:none;"><strong>#NOM_EVENT</strong><br />#DATE_EVENT_DEBUT / #DATE_EVENT_FIN</div>
 						</a>
 					</li>
 		</BOUCLE_carousel>

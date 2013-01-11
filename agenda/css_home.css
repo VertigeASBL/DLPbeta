@@ -222,6 +222,7 @@ h3.titre_actu a:hover{
 	z-index:7;
 }
 .list_carousel li {
+	position:relative;
 	text-align:center;
 	background:#ffffff;
 	border:none;
@@ -230,6 +231,13 @@ h3.titre_actu a:hover{
 	display:block;
 	float:left;
 	z-index:8;
+}
+.caroudescr {
+	position:absolute; z-index:9;
+	left:0px; bottom:0px;
+	width:145px; height:auto; margin:0; padding:12px 8px;
+	filter:alpha(opacity=65); opacity:.65;
+	background:#000000; color:#ffffff; text-align:left;
 }
 #carouprev {
 	position:absolute; top:90px; left:-10px;
