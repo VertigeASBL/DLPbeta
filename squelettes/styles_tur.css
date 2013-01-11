@@ -1038,12 +1038,16 @@ UL#menu UL LI{
 }
 
 #suggestion .image_suggestion img {
-	height: 100px;
+	height: 130px;
 	width: auto;
 }
 
 #suggestion p.date_suggestion {
 	font-size: 12px;
+}
+
+.descriptif_suggestion p {
+	width: 91px;
 }
 
 #suggestion #toutes_suggestions {

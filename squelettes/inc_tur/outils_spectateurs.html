@@ -59,13 +59,13 @@ if (!empty($_SESSION['id_spectateur'])): ?>
 		foreach ($spectacle as $key => $value) {
 			echo '
 				<li>
-					<span class="image_suggestion">
+					<span class="image_suggestion actu_photo">
 						<a href="-Detail-agenda-?id_event='.$value['id_event'].'">
-							<img src="agenda/pics_events/event_'.$value['id_event'].'_1.jpg" title="'.htmlspecialchars($value['nom_event']).'" alt="" width="100" />
+							<img src="agenda/pics_events/event_'.$value['id_event'].'_1.jpg" title="'.htmlspecialchars($value['nom_event']).'" alt="" />
 						</a>
 					</span>
 					<span class="descriptif_suggestion">
-						<p><a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a></p>
+						<h3 class="titre_actu"><a href="-Detail-agenda-?id_event='.$value['id_event'].'">'.$value['nom_event'].'</a></h3>
 						<p class="date_suggestion">du '.affdate($value['date_event_debut'], 'd/m/Y').' au '.affdate($value['date_event_fin'], 'd/m/Y').'</p>
 						<p class="nom_lieu"><a href="-Details-lieux-culturels-?id_lieu='.$value['id_lieu'].'">'.$value['nom_lieu'].'</a></p>
 					</span>
