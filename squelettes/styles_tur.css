@@ -1037,6 +1037,10 @@ UL#menu UL LI{
 	font-size: 14px;
 }
 
+#suggestion li {
+	padding: 0;
+}
+
 #suggestion .image_suggestion img {
 	height: 130px;
 	width: auto;
@@ -1046,7 +1050,7 @@ UL#menu UL LI{
 	font-size: 12px;
 }
 
-.descriptif_suggestion p {
+.descriptif_suggestion p, .descriptif_suggestion h3 {
 	width: 91px;
 }
 
@@ -1055,9 +1059,13 @@ UL#menu UL LI{
     text-decoration: none;
 }
 
+.nom_lieu a {
+	font-weight: bold;
+}
+
 .descriptif_suggestion h3.titre_actu {
 	color: #8F0133;
-    font-size: 1.3em;
+    font-size: 1em;
     font-weight: bold;
     line-height: 1.4em;
     margin: 0;
