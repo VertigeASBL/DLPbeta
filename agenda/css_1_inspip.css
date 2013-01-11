@@ -590,11 +590,13 @@ div.breve span.help_cursor {
 .icoga_voter {
 	width:auto; padding-left:21px; background:url(design_pics/ico_voter_mini.png) no-repeat 0% 2px;
 }
+.icoga_ami {
+	width:auto; padding-left:32px; background:url(design_pics/ico_envoyer_ami.gif) no-repeat 0% 2px;
+}
 .en_savoir_plus {
 	color: #009A99;
 	font-weight: bold;
-	text-align: right;
-	margin:0; padding:2px 0 0 0;
+	margin:0; padding:5px 0 0 0;
 }
 .en_savoir_plus A { display:block; padding-top:5px; }
 

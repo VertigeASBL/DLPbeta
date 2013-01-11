@@ -283,38 +283,44 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ------------------------------------------------
 	// Affichage contenu de l'événement
 	// ------------------------------------------------
-	echo '<div class="detail_event_bloc_1">',"\n";
-
-	// titre parent
-	if ($donnees_parent)
-		echo '<h2 class="detail_event_titre"><a href="',generer_url_entite(92, 'rubrique', 'id_event='.$donnees['parent_event']),'" title="Voir en détail" style="color:#8F0133;">',monraccourcirchaine($donnees_parent['nom_event'], 45),'</a></h2>';
+	echo '<div class="resultat_enfant">',"\n";
 
 	// ______________________
 	// ICONES FLOTTANTES
 	echo '<div class="icodr_enfant">',"\n";
 	
-	// Icone suivre - Modifier par Didier
+/*	// Icone suivre - Modifier par Didier
 	if (!empty($_SESSION['id_spectateur'])) {
 		if (!statut_panier($_SESSION['id_spectateur'], _request('id_event'))) echo '<a href="?id_event='._request('id_event').'&suivre=1" title="suivre" style="float:right;">Suivre ('.nombre_suivi(_request('id_event')).')</a> &nbsp; '."\n";
 		else echo '<a href="?id_event='._request('id_event').'&plus_suivre=1" title="Ne plus suivre" style="float:right;">Ne plus suivre ('.nombre_suivi(_request('id_event')).')</a> &nbsp; '."\n";
-	}
+	} */
+
+	// Icone concours
+	$reponse = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
+	if ($total_entrees = mysql_fetch_array($reponse))
+		echo '<a href="',generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']),'" class="ico_droite icodr_concours" title="Voir le concours"></a> &nbsp; '."\n";
+
 	// Icone "J'ai vu et aimé"
 	$t_saison_preced = saisonprecedente($id_event, 'jai_vu');
 	$reponse = mysql_query('SELECT COUNT(*) AS total_entrees FROM ag_jai_vu WHERE id_event_jai_vu IN ('.$t_saison_preced.')');
 	$total_entrees = mysql_fetch_array($reponse);
 	$total_entrees = $total_entrees['total_entrees'];
-	echo '<div class="nombre_votes"><a href="#vote" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;">'
-	.'<span class="nombre_votes_bulle_detail"> &nbsp; '.($total_entrees ? $total_entrees : ' ').'</span>'
-	.'<img src="agenda/design_pics/ico_jai_vu.jpg" style="vertical-align:middle;" title="cliquez pour voter pour cet événement" alt="voter" /></a>'
-	.'</div>'."\n";
+	echo '<span class="ico_droite icodr_avis" title="Nombre d\'avis postés par les visiteurs">'.$total_entrees.'</span>',"\n";
 
-	// Icone concours
-	$reponse = mysql_query("SELECT id_conc FROM ag_conc_fiches WHERE event_dlp_conc=$id_event AND flags_conc='actif' ORDER BY id_conc DESC LIMIT 1");
-	if ($total_entrees = mysql_fetch_array($reponse))
-		echo '<a href="',generer_url_entite(95, 'rubrique', 'id='.$total_entrees['id_conc']),'" style="float:right;" title="Cliquez ici pour voir le concours">Concours</a> &nbsp; '."\n";
+/*	echo '<div class="nombre_votes"><a href="#vote" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;">'
+	.'<span class="nombre_votes_bulle_detail"> &nbsp; '.($total_entrees ? $total_entrees : ' ').'</span>'
+	.'<img src="agenda/design_pics/ico_jai_vu.jpg" style="vertical-align:middle;" title="Voter pour cet événement" alt="voter" /></a>'
+	.'</div>'."\n"; */
+
+	// Icone suivi - Modifier par Didier
+	echo '<span class="ico_droite icodr_suivi" title="Nombre de suivis de cet événement">'.nombre_suivi($id_event).'</span>'."\n";
 
 	echo '</div>'."\n\n"; //--- fin ICONES FLOTTANTES
 
+
+	// titre parent
+	if ($donnees_parent)
+		echo '<h2 class="detail_event_titre"><a href="',generer_url_entite(92, 'rubrique', 'id_event='.$donnees['parent_event']),'" title="Voir en détail" style="color:#8F0133;">',monraccourcirchaine($donnees_parent['nom_event'], 45),'</a></h2>';
 
 	// ____________________________________________
 	// NOM EVENEMENT (titre)
@@ -340,7 +346,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ____________________________________________
 	// Vignette
 	if ($donnees['pic_event_1'] == 'set')
-		echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_1.jpg" alt="" class="onglet7" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" width="100" />'."\n";
+		echo '<img src="agenda/'.$folder_pics_event.'event_'.$id_event.'_1.jpg" alt="" class="onglet7 pic_parent" width="161" style="float:left; width:161px;" title="'.htmlspecialchars($donnees['nom_event']).'" />'."\n";
 	
 
 	//_________________ Infos utiles _____________________
@@ -362,7 +368,8 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	if ($donnees_repres)
 		echo '<tr><td class="tableinfogauche">Où</td><td>',$donnees_repres['nom_pres'],'<br />',$donnees_repres['adresse_pres'],'<br />',$donnees_repres['postal_pres'],' ',$donnees_repres['localite_pres'],'</td></tr>'."\n";
 
-/*	if ($donnees['prix_min_event'] || $donnees['prix_max_event']) {
+/* -----------
+	if ($donnees['prix_min_event'] || $donnees['prix_max_event']) {
 		echo '<tr><td class="tableinfogauche">Prix</td><td>';
 		if ($donnees['prix_min_event'] == $donnees['prix_max_event'] || ! $donnees['prix_max_event'])
 			echo $donnees['prix_min_event'];
@@ -371,7 +378,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		else
 			echo 'de ',$donnees['prix_min_event'],' à ',$donnees['prix_max_event'];
 		echo ' &euro;</td></tr>',"\n";
-	} */
+	} ----------- */
 	if ($donnees['prix_event'])
 		echo '<tr><td class="tableinfogauche">Prix</td><td>',$donnees['prix_event'],'</td></tr>',"\n";
 
@@ -387,10 +394,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		if ($donnees_prod && $donnees_prod['email_reservation'])
 			echo '<tr><td colspan="2"><a href="',generer_url_entite(115, 'rubrique', 'id_event='.$id_event),'" title="Réservez vos places en ligne !!" ><img src="agenda/design_pics/bouton_reserver.gif" alt="réserver" /></a></td></tr>',"\n";
 	}
-
 	echo '</table>'."\n";
-
-	echo '</div>'."\n\n"; //--- fin detail_event_bloc_1
 
 	// ***************************************************************************************
 	// CALENDRIERS :
@@ -475,18 +479,29 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// -----------------------------
 	// Légende du calendrier / echo '<br /><em><span style="background:#8F0033;color:#ffffff;">Jour de représentation</span><br /><span style="background:#ffffff;color:#000000;">Pas de représentation</span></em>';
 
-
+	echo '<div class="en_savoir_plus">'."\n";
 	// afficher Envoyer à un ami;
-	echo '<a href="',generer_url_entite(132, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/e_card/pics/ico_envoyer_ami.gif" title="Informer un ami" alt="informer un ami" style="margin:4px 0;" /></a>',"\n";
+	echo '<a href="',generer_url_entite(132, 'rubrique', 'id_event='.$id_event),'" class="ico_gauche icoga_ami" title="Informer un ami">Envoyer à un ami</a>',"\n";
+
+	// Icone suivre - Modifier par Didier
+	if (!empty($_SESSION['id_spectateur'])) {
+		if (!statut_panier($_SESSION['id_spectateur'], $id_event))
+			echo '<a href="?id_event='.$id_event.'&suivre=1" class="ico_gauche icoga_suivre" title="Suivre cet événement">Ajouter à mon agenda</a>'."\n";
+		else
+			echo '<a href="?id_event='.$id_event.'&plus_suivre=1" class="ico_gauche icoga_suivre" title="Ne plus suivre cet événement">Retirer de mon agenda</a>'."\n";
+
+		echo '<a href="#voter" class="ico_gauche icoga_voter" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;" title="Voter pour cet événement">J\'ai vu et aimé</a>'."\n" ;
+	}
 
 	// facebook j'aime
 	echo '<br /><div class="fb-like" data-href="[(#SELF|url_absolue|rawurlencode)]" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div>'."\n";
+	echo '</div>'."\n";
 
 	// icone "j'irai"
 
 	echo '</div>',"\n\n"; //--- fin detail_calendrier CALENDRIERS
 	echo '<br style="clear:both;" />&nbsp;',"\n";
-
+	echo '</div>'."\n\n"; //--- fin resultat_enfant
 
 	// ____________________________________________
 	// LISTE DES ENFANTS D'UN FESTIVAL
@@ -541,7 +556,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	else
 		echo 'aucune description',"\n";
 
-	echo '<br style="clear:both;" /><span class="ico_float_droite"><a href="agenda/spip/print_description_event.php?id_event='.$id_event.'" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.jpg"  hspace="10" align="middle" /></a></span>',"\n";
+	echo '<br style="clear:both;" /><span class="ico_float_droite"><a href="agenda/spip/print_description_event.php?id_event='.$id_event.'" target="_blank" title="Imprimer la description de l\'événement"><img src="agenda/design_pics/ico_impr.png"  hspace="10" align="middle" /></a></span>',"\n";
 
 	echo '<br style="clear:both;" /></div>',"\n"; //--- Fin bloc detail_corps_event
 
@@ -577,7 +592,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	if ($total_entrees == 0) {
 		echo '<div class="head_detail_event_bloc_2">
 				<span class="ico_float_droite">
-					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.jpg" vspace="4" alt="donnez votre avis" /></a>
+					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.gif" alt="donnez votre avis" /></a>
 				</span>
 				<span class="titre_paragr_detail_event">Vos avis sur "',$donnees['nom_event'],'"</span>
 			</div>
@@ -597,10 +612,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 				<span class="nombre_avis">',$total_entrees,'</span>
 				<span class="titre_paragr_detail_event">Il y a ',$total_entrees,' avis sur "',$donnees['nom_event'],'"</span>
 				<span class="ico_float_droite">
-					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.jpg" vspace="4" alt="donnez votre avis" /></a>
-					<a href="agenda/spip/print_avis_event.php?id_event=',$id_event,'" target="_blank" title="Imprimer les avis des lecteurs">
-						<img src="agenda/design_pics/ico_impr.jpg" hspace="10" title="imprimer les avis" />
-					</a>
+					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.gif" alt="donnez votre avis" /></a>
 				</span>	
 			</div><br style="clear:both;" />',"\n\n";
 
@@ -622,7 +634,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	    		$total_entrees = connaitre_nb_avis_spect(addslashes($pseudo_spectateur));
 				$result_categorie_spectateur = trouve_categorie_spectateur ($total_entrees); 
 
-				$qui_spectateur = '<a href="'.generer_url_entite(122, 'rubrique', 'id_spect='.$id_spectateur).'" title="Cliquez pour voir le profil de ce spectateur" >'.$pseudo_spectateur.'</a>' ;
+				$qui_spectateur = '<a href="'.generer_url_entite(122, 'rubrique', 'id_spect='.$id_spectateur).'" title="Voir le profil de ce spectateur" >'.$pseudo_spectateur.'</a>' ;
 				
 				$qui_spectateur.= '<span class="help_cursor"><img src="agenda/design_pics/spectateurs/'.htmlspecialchars($result_categorie_spectateur['icone_spectateur']).'" alt="votre score" align="top" title="'.htmlspecialchars($result_categorie_spectateur['categorie_spectateur']).'" /></span>';
 				$qui_spectateur.= '<span title="Totalité des avis déposés" class="help_cursor"> '.$total_entrees.'</span>';
@@ -636,8 +648,11 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			
 			echo $donnees_avis['texte_avis'],' <br /> <br /> ' ;
 		}
-		echo '<div align="right">' ;
-		echo '<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.jpg" vspace="6" alt="donnez votre avis" /></a>
+		echo '<div align="right">
+				<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.gif" alt="donnez votre avis" /></a>
+				<a href="agenda/spip/print_avis_event.php?id_event=',$id_event,'" target="_blank" title="Imprimer les avis des lecteurs">
+					<img src="agenda/design_pics/ico_impr.png" hspace="10" title="imprimer les avis" />
+				</a>
 			</div>',"\n" ; //--- align right
 		
 		echo '<br style="clear:both;" />
@@ -674,7 +689,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			<br style="clear:both;" />
 			<span class="ico_float_droite">
 				<a href="',generer_url_entite(112, 'rubrique', 'id_event='.$id_event),'" title="Imprimer la critique" target="_blank">
-				<img src="agenda/design_pics/ico_impr.jpg" hspace="10" alt="imprimer la critique" /></a>
+				<img src="agenda/design_pics/ico_impr.png" hspace="10" alt="imprimer la critique" /></a>
 			</span>	
 		</BOUCLE_artcritique>
 			La critique n'a pas été trouvée
@@ -709,7 +724,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 			<br style="clear:both;" />
 			<span class="ico_float_droite">
 				<a href="',generer_url_entite(156, 'rubrique', 'id_event='.$id_event),'" title="Imprimer la chronique" target="_blank">
-				<img src="agenda/design_pics/ico_impr.jpg" hspace="10" alt="imprimer la chronique" /></a>
+				<img src="agenda/design_pics/ico_impr.png" hspace="10" alt="imprimer la chronique" /></a>
 			</span>	
 		</BOUCLE_artchronique>
 			La chronique n'a pas été trouvée
@@ -781,7 +796,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		$donnees_onglet = $donnees_onglet ? $donnees_onglet['texte'] : '';
 	}
 	else if ($donnees['video_event'])
-		$donnees_onglet = '<br /> <br /><a href="agenda/videos/'.$donnees['video_event'].'" target="_blank" title="Cliquez ici pour voir la vidéo"><img src="agenda/design_pics/ico_video_2.jpg" alt="voir la vidéo" /></a>' ;
+		$donnees_onglet = '<br /> <br /><a href="agenda/videos/'.$donnees['video_event'].'" target="_blank" title="Voir la vidéo"><img src="agenda/design_pics/ico_video_2.jpg" alt="voir la vidéo" /></a>' ;
 
 	if ($donnees_onglet) {
 		echo '<div class="detail_corps_event">' ;

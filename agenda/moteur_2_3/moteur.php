@@ -1041,6 +1041,8 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 	}
 */
 	$tab.= '<div class="en_savoir_plus">'."\n" ;
+	// Lien "en savoir plus"
+	$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'" style="float:right;">En savoir plus &#187;</a>'."\n";
 	// Icone suivre - Modifier par Didier
 	if (!empty($_SESSION['id_spectateur'])) {
 		if (!statut_panier($_SESSION['id_spectateur'], $id_event))
@@ -1050,8 +1052,6 @@ for ($key_s = $premier_even; isset($_SESSION['t_id_event'][$key_s]) && $key_s < 
 
 		$tab.= '<a href="#voter" class="ico_gauche icoga_voter" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;" title="Voter pour cet événement">J\'ai vu et aimé</a>'."\n" ;
 	}
-	// Lien "en savoir plus"
-	$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'">En savoir plus &#187;</a>'."\n";
 	$tab.= '</div>'."\n";
 
 	$tab.= '</div>'."\n"; //--- fin fin res_droite_..
