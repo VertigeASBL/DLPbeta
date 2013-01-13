@@ -893,33 +893,32 @@ UL#menu UL LI{
 
 #newsletter_informer {
 	font-size: 11px;
-/*	margin: 0;
-	position:relative;
-	right:10px;
-	width:180px;
-	padding:2px 0 5px 0;
-	margin-left: 5px;
-	margin-right: 5px;*/
 }
 
 #outils_spectateurs {
 	font-size: 12px;
 	margin-top: 5px;
-/*	position:relative;
-	right:10px;
-	width:200px;
-	text-align:center;
-	padding:2px 0 5px 0;
-	margin-top: 5px;
-	margin-bottom: 5px;*/
+}
+
+/* Menu */
+#outils_spectateurs li {
+	background: url(assets/fond_menu_spectateur.png) no-repeat;
+	width: 203px;
+	height: 24px;
+	display: block;
+	padding: 0;
+	padding-top: 2px;
+	margin-bottom: 4px;
+}
+
+#outils_spectateurs li a {
+	margin-left: 26px;
+	color: #FFF;
+	font-size: 13px;
 }
 
 .ligne_bas_col_2 {
 	height:1px;
-	/*border-bottom: 5px solid #FAFAFA;
-	position:relative;
-	right:10px;
-	width:210px;*/
 }
 
 .bouton_recherche_mini_moteur{
@@ -1198,3 +1197,4 @@ UL#menu UL LI{
 .cadre_actu p.text {
 	padding-top: 10px;
 }
+
