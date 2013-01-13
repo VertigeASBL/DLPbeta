@@ -4,19 +4,19 @@
 	include_spip('inc/session');
 	require('agenda/inc_var.php');
 	if (session_get('id_spectateur') && isset($_SESSION['id_spectateur']) && $_SESSION['id_spectateur'] && $_SESSION['group_admin_spec']==1) {
+
+		/* Backup lien <br /><a href="[(#URL_RUBRIQUE{95})]">Concours</a> */
 ?>
 	<div class="ligne_bas_col_2">&nbsp;</div>
 	[(#REM) Si une session est ouverte, alors afficher les infos sur le spectateur ]
 	<div id="outils_spectateurs">
 		Bonjour [(#SESSION{pseudo_spectateur})]
-		<br /><a href="[(#URL_RUBRIQUE{121})]">Mon menu de spectateur</a>
-		<br /><a href="[(#URL_RUBRIQUE{122}|parametre_url{id_spect,#SESSION{id_spectateur}})]">Visualiser ma page</a>
+		
+		<br /><a href="[(#URL_RUBRIQUE{122}|parametre_url{id_spect,#SESSION{id_spectateur}})]">Mon Profile</a>
 		<br /><a href="[(#URL_RUBRIQUE{157})]" title="Modifier mes infos spectateur">Modifier mon profil</a>
 		<br /><a href="[(#URL_ARTICLE{335})]">Aide aux spectateurs</a>
-		<br /><a href="[(#URL_RUBRIQUE{120})]">Communauté des spectateurs</a>
-		<br /><a href="[(#URL_RUBRIQUE{95})]">Concours</a>
 		<br /><a href="[(#URL_RUBRIQUE{161})]">Mes favoris</a>
-		<br /><a href="[(#URL_RUBRIQUE{97})]">Donner un avis</a>
+		<br /><a href="[(#URL_RUBRIQUE{97})]">Donner votre avis</a>
 		<br /><a href="[(#URL_RUBRIQUE{121}|parametre_url{logout,y})]" title="Me déconnecter de mon compte">Me déconnecter</a>
 	</div>
 <?php
@@ -71,7 +71,7 @@ if (!empty($_SESSION['id_spectateur'])): ?>
 					</span>
 				</li>';
 		}
-		echo '<li id="toutes_suggestions"><a href="[(#URL_RUBRIQUE{163})]">Afficher toutes les suggestions.</a></li>';
+		/*echo '<li id="toutes_suggestions"><a href="[(#URL_RUBRIQUE{163})]">Afficher toutes les suggestions.</a></li>';*/
 		echo '</ul>';
 	}
 	?>
