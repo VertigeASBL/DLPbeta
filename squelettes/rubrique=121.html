@@ -14,7 +14,7 @@
 <INCLURE{fond=inc_tur/agmenu}{id_rubrique}>
 <div id="principal">
 	<div class="colonne1">
-<?php
+	<?php
 	if (! isset($GLOBALS['spip_connect_version'])) {
 		include_once('ecrire/base/connect_sql.php');
 		require('config/connect.php');
@@ -44,6 +44,8 @@
 		    session_set('group_admin_spec_name', '');
 
 			echo '<h2>Vous n\'êtes plus connecté.</h2>';
+
+			header('location: '.$GLOBALS['meta']['adresse_site']);
 		}
 		else {
 ?>
