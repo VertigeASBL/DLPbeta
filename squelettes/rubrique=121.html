@@ -43,6 +43,8 @@
 		    session_set('group_admin_spec', 0);
 		    session_set('group_admin_spec_name', '');
 
+		    session_destroy();
+
 			echo '<h2>Vous n\'êtes plus connecté.</h2>';
 
 			header('location: '.$GLOBALS['meta']['adresse_site']);
