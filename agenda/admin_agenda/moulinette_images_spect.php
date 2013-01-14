@@ -17,10 +17,10 @@
 		$sql_passw = $local ? 'root' : 'Gz4WDtcjvAHUIy73';
 		$sql_bdd = $local ? 'demandez2p' : 'demandez2p';
 
-		$dblk = mysql_connect('localhost', 'root', 'root');
+		$dblk = mysql_connect('localhost', 'demandezleprogra', 'Gz4WDtcjvAHUIy73');
 		if (! $dblk)
 			die('Erreur : Connexion impossible à la base de données');
-		if (! mysql_select_db('demandez2p', $dblk))
+		if (! mysql_select_db('demandezleprogramme', $dblk))
 			die('Erreur : Sélection impossible de la base de données');
 		return $dblk;
 	}
