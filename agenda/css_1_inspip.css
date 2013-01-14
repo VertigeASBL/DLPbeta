@@ -372,18 +372,18 @@ div.breve span.help_cursor {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	padding:0; margin:0 0 8px 0;
 }
-
+/*
 .titre_paragr_detail_event {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-weight: bold;
 	font-size: 15px;
 	color: #8F0133;
-/*	position: absolute; */
+	position: absolute;
 	margin-top: 15px;
 	padding-left: 60px;
 	padding-right: 50px;
 }
-
+*/
 .nombre_avis {
 	font-size: 13px;
 	color: #8F0133;
@@ -407,14 +407,13 @@ div.breve span.help_cursor {
 .detail_event_bloc_1 {
 	color: #333333;
 }
-
+/*
 .detail_event_bloc_2 {
 }
 .head_detail_event_bloc_2 {
-/*	position: relative;
-	height:34px; */
+	position: relative;
+	height:34px;
 }
-/*
 .detail_event_bloc_2 .top_left_bloc_critique, .top_left_bloc_chronique, .detail_event_bloc_2 .top_left_bloc_avis , .detail_event_bloc_2 .top_left_bloc_calendrier, .detail_event_bloc_2 .top_left_bloc_donner_avis, .detail_event_bloc_2 .top_left_bloc_video { 
 	height: 54px;
 	width: 48px;
@@ -493,7 +492,7 @@ div.breve span.help_cursor {
 	float:right;
 	font-size: 10px;
 	color: #009A99;
-	padding:8px 5px 0 10px;
+	padding:0 5px 0 10px;
 	font-weight: bold;
 /*	position: relative; */
 }
@@ -861,7 +860,7 @@ h3.spip{
 }
 .formulaire_popup {
     height:auto;
-    background:#6B1631 url(design_pics/bg_connect_box.png) no-repeat;
+    background: url(design_pics/bg_connect_box.png) no-repeat;
     margin:8px 0 0 0; padding:10px;
 /*    position: fixed;
     border: 2px solid #666;
