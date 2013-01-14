@@ -332,6 +332,57 @@ function rss_test_et_ecrire_db($lieu_rss, $rss_item_nr, $rss_item_title, $rss_it
 
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
+function picture_resize($uploaded_pic, $fileName) {
+	global $max_w_pic_event, $max_h_pic_event;
+
+	$jpeg_quality = 90;
+	$rapport_max = $max_w_pic_event / $max_h_pic_event;
+	$rapport_min = $rapport_max;
+
+	$largeur_uploaded = imagesx($uploaded_pic);
+	$hauteur_uploaded = imagesy($uploaded_pic);
+	$rapport_uploaded = $largeur_uploaded / $hauteur_uploaded;
+
+/*	echo '<br />largeur_uploaded : ',$largeur_uploaded;
+	echo '<br />hauteur_uploaded : ',$hauteur_uploaded;
+	echo '<br />rapport_uploaded : ',$rapport_uploaded;
+*/
+	if ($rapport_uploaded < $rapport_min) {
+		$wsrc = $largeur_uploaded;
+		$hsrc = round($largeur_uploaded / $rapport_min);
+		$xsrc = 0;
+		$ysrc = round(($hauteur_uploaded - $hsrc) / 2);
+	}
+	else if ($rapport_uploaded > $rapport_max) {
+		$wsrc = round($hauteur_uploaded * $rapport_max);
+		$hsrc = $hauteur_uploaded;
+		$xsrc = round(($largeur_uploaded - $wsrc) / 2);
+		$ysrc = 0;
+	}
+	else {
+		$wsrc = $largeur_uploaded;
+		$hsrc = $hauteur_uploaded;
+		$xsrc = 0;
+		$ysrc = 0;
+	}
+/*	echo '<br />xsrc : ',$xsrc;
+	echo '<br />ysrc : ',$ysrc;
+	echo '<br />max_w_pic_event : ',$max_w_pic_event;
+	echo '<br />max_h_pic_event : ',$max_h_pic_event;
+	echo '<br />wsrc : ',$wsrc;
+	echo '<br />hsrc : ',$hsrc;
+*/
+	$resample = imagecreatetruecolor($max_w_pic_event, $max_h_pic_event); // Création image vide
+	imagecopyresampled($resample, $uploaded_pic, 0, 0, $xsrc, $ysrc, $max_w_pic_event, $max_h_pic_event, $wsrc, $hsrc);
+	if (file_exists($fileName))
+		unlink($fileName);
+
+	imagejpeg($resample, $fileName, $jpeg_quality);// Enregistrer la miniature sous le nom
+//	echo '<br /><img src="',$fileName,'" alt="" /><br />';
+	chmod($fileName, 0644);
+}
+
+
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 // Fonction "uploader_pic_lieu_2_event" : crée une image de pour l'événement à partir de l'image du LIEU
 // paramètre 1 = événement de destination
@@ -340,8 +391,7 @@ function rss_test_et_ecrire_db($lieu_rss, $rss_item_nr, $rss_item_title, $rss_it
 function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 {		
 	global $folder_pics_event ;
-	global $w_absolue ;
-	global $w_vi_absolue ;
+//	global $w_absolue ; global $w_vi_absolue ;
 	global $table_evenements_agenda ;
 
 	$fichier_source = '../vignettes_lieux_culturels/pic_fiche_lieu_' . $lieu_culturel . '_1.jpg' ;
@@ -374,7 +424,9 @@ function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 		// (ce qui empêcherait la sauvegarde FTP des images)
 		$debug_concat.=  ' <br />- <b>Transfert image ' . $id_update . ' </b>: OK';
 		echo ' <br />- <b>Transfert image ' . $id_update . ' </b>: OK' ;
-		
+
+		picture_resize($uploaded_pic, $destination);
+/*		
 		// Largeur et hauteur initiales
 		$largeur_uploaded = imagesx($uploaded_pic);
 		$hauteur_uploaded = imagesy($uploaded_pic);
@@ -400,8 +452,7 @@ function uploader_pic_lieu_2_event ($id_update,$lieu_culturel)
 		$resample = imagecreatetruecolor($w_absolue, $new_H); // Création image vide
 		imagecopyresampled($resample, $uploaded_pic, 0, 0, 0, 0, $w_absolue, $new_H, $largeur_uploaded, $hauteur_uploaded);
 		imagejpeg($resample, $destination, '90');// Enregistrer la miniature sous le nom	
-							
-/*
+
 		// VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 		// Recalcul de la taille de la vignette
 		// Les dimensions sont contraintes en W et en H (comme auparavant)
@@ -623,7 +674,7 @@ Les concerts sont généralement à 20h. Pour plus d\'informations sur le concert <
 			if (is_numeric("$resultat_rec_db"))
 			{
 				uploader_pic_lieu_2_event ($resultat_rec_db, $lieu_rss) ;
-			}	
+			}
 		}
 		else { signaler_erreur($lieu_rss,$adresse_flux, 'erreur n1') ; }
 	}		

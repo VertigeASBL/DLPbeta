@@ -41,17 +41,19 @@ $folder_pics_vignettes_lieux_culturels = 'vignettes_lieux_culturels/';
 
 // ------------------------------------
 // Taille Max des VIGNETTES des Fiches des événements culturels
-/*$max_w_vi_event = 100;
+/*
+$max_w_vi_event = 100;
 $max_h_vi_event = 100;
-$max_w_pic_event = 200;
-$max_h_pic_event = 200;*/
+*/
+$max_w_pic_event = 161;
+$max_h_pic_event = 230;
 
 $folder_pics_event = 'pics_events/';
 
-// Pour version III
+/* Pour version III
 $w_absolue = 200; // Largeur qui sera imposée
 $w_vi_absolue = 100; // Largeur qui sera imposée pour les vignettes
-
+*/
 
 // ------------------------------------
 // Taille Max des VIGNETTES des Fiches CONCOURS

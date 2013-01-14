@@ -88,28 +88,56 @@ function item_regToAgenda($id, $lieu, $url) {
 	mysql_query($requete);
 }
 
-function picture_resize($data, $width, $fileName) {
-	$largeur = imagesx($data);
-	$hauteur = imagesy($data);
-	$new_H = 0;
-	// determination taille
-	if ($largeur == $width) {
-		$new_H = $hauteur;
-	} elseif ($largeur > $width) {
-		$new_H = round($hauteur * $w_absolue / $largeur);
+function picture_resize($uploaded_pic, $fileName) {
+	global $max_w_pic_event, $max_h_pic_event;
+
+	$jpeg_quality = 90;
+	$rapport_max = $max_w_pic_event / $max_h_pic_event;
+	$rapport_min = $rapport_max;
+
+	$largeur_uploaded = imagesx($uploaded_pic);
+	$hauteur_uploaded = imagesy($uploaded_pic);
+	$rapport_uploaded = $largeur_uploaded / $hauteur_uploaded;
+
+/*	echo '<br />largeur_uploaded : ',$largeur_uploaded;
+	echo '<br />hauteur_uploaded : ',$hauteur_uploaded;
+	echo '<br />rapport_uploaded : ',$rapport_uploaded;
+*/
+	if ($rapport_uploaded < $rapport_min) {
+		$wsrc = $largeur_uploaded;
+		$hsrc = round($largeur_uploaded / $rapport_min);
+		$xsrc = 0;
+		$ysrc = round(($hauteur_uploaded - $hsrc) / 2);
 	}
-	// resize
-	if ($new_H == 0) {
-		$resample = $data;
-	} else {
-		$resample = imagecreatetruecolor($width, $new_H);
-		imagecopyresampled($resample, $data, 0, 0, 0, 0, $width, $new_H, $largeur, $hauteur);
+	else if ($rapport_uploaded > $rapport_max) {
+		$wsrc = round($hauteur_uploaded * $rapport_max);
+		$hsrc = $hauteur_uploaded;
+		$xsrc = round(($largeur_uploaded - $wsrc) / 2);
+		$ysrc = 0;
 	}
-	// save
-	imagejpeg($resample, $fileName, 90);
+	else {
+		$wsrc = $largeur_uploaded;
+		$hsrc = $hauteur_uploaded;
+		$xsrc = 0;
+		$ysrc = 0;
+	}
+/*	echo '<br />xsrc : ',$xsrc;
+	echo '<br />ysrc : ',$ysrc;
+	echo '<br />max_w_pic_event : ',$max_w_pic_event;
+	echo '<br />max_h_pic_event : ',$max_h_pic_event;
+	echo '<br />wsrc : ',$wsrc;
+	echo '<br />hsrc : ',$hsrc;
+*/
+	$resample = imagecreatetruecolor($max_w_pic_event, $max_h_pic_event); // Création image vide
+	imagecopyresampled($resample, $uploaded_pic, 0, 0, $xsrc, $ysrc, $max_w_pic_event, $max_h_pic_event, $wsrc, $hsrc);
+	if (file_exists($fileName))
+		unlink($fileName);
+
+	imagejpeg($resample, $fileName, $jpeg_quality);// Enregistrer la miniature sous le nom
+//	echo '<br /><img src="',$fileName,'" alt="" /><br />';
 	chmod($fileName, 0644);
 }
-
+/*
 function picture_micro($uploaded_pic, $destination_micro, $new_W_Vignette, $new_H_Vignette) { // ---------- richir : vignette micro pour iphone
 	$rapport = $new_W_Vignette / $new_H_Vignette;
 	$largeur_uploaded = imagesx($uploaded_pic);
@@ -134,22 +162,17 @@ function picture_micro($uploaded_pic, $destination_micro, $new_W_Vignette, $new_
 	imagejpeg($resample, $destination_micro, 90);// Enregistrer la miniature sous le nom
 	chmod($destination_micro, 0644); // Pour que l'image ait un CHMOD 644 et non 600
 }
-
+*/
 function item_savePicture($id_event, $url_picture) {
 	global $folder_pics_event;
-	global $w_absolue;
-	global $w_vi_absolue;
 	$path = '../' . $folder_pics_event ; // Pour créer les images en test -> .'Y'
 	$file = 'event_' . $id_event . '_1.jpg';
 	if (!file_exists($path . $file)) {
 		list($header, $data) = wget($url_picture);
 		$uploaded_pic = imagecreatefromstring($data);
-		$largeur_uploaded = imagesx($uploaded_pic);
-		$hauteur_uploaded = imagesy($uploaded_pic);
-		picture_resize($uploaded_pic, $w_absolue, $path . $file);
-		picture_resize($uploaded_pic, $w_vi_absolue, $path . 'vi_' . $file);
-		// ---------- richir : vignette micro pour iphone
-		picture_micro($uploaded_pic, $path.'micro_'.$file, 60, 60);
+		picture_resize($uploaded_pic, $path . $file);
+/*		picture_resize($uploaded_pic, $w_vi_absolue, $path . 'vi_' . $file);
+		picture_micro($uploaded_pic, $path.'micro_'.$file, 60, 60); */
 		imagedestroy($uploaded_pic);
 		$requete = "UPDATE `ag_event` SET `pic_event_1`='set' WHERE `id_event`=$id_event LIMIT 1";
 		mysql_query($requete);
@@ -387,7 +410,6 @@ $url_des_genres = array(
 	// Expos
 	'http://www.bozar.be/rss_demandez.php?external=0&lng=fr&bozar=home&category=section-2' => 'g07',
 );
-
 foreach ($url_des_genres as $key => $genre_en_cours)
 {
 	echo '<br><h3 align="center">Flux trait&eacute; : <a href="' . $key . '">' . $key . '</a>
@@ -401,9 +423,9 @@ foreach ($url_des_genres as $key => $genre_en_cours)
 	foreach ($xml->channel->item as $item)
 	{
 		process_item($item, $genre_en_cours);
-	}	
-	
+	}
 }
-
-
-
+/*
+	$uploaded_pic = imagecreatefromjpeg('../pics_events_test/img_neige.jpg');
+	picture_resize($uploaded_pic, '../pics_events_test/resultat.jpg');
+*/
