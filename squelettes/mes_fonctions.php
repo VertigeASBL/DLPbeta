@@ -401,7 +401,7 @@ function spip_trouve_categorie_spectateur($nb_avis_postes)
 		$icone_spectateur = 'etoile_1.jpg';
 	}	
 	
-	return '<p>'.$categorie_spectateur.' <img src="agenda/design_pics/spectateurs/'.$icone_spectateur.'" alt="Etoile" /></p>';
+	return $categorie_spectateur.' <img src="agenda/design_pics/spectateurs/'.$icone_spectateur.'" alt="Etoile" style="vertical-align: middle;" />';
 }
 
 /* Didier => Permet d'utilisé le calcule du facteur chance dans un squelette SPIP */

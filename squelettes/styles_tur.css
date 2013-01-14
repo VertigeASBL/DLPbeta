@@ -38,7 +38,7 @@
  	font-family:Georgia, Arial, Times, serif;
  	font-size:1.4em;
  	color:#8F0033;
- 	text-transform:uppercase;
+ 	/*text-transform:uppercase;*/
  }
  H4{
  	font-size:1.2em;
@@ -1166,7 +1166,7 @@ UL#menu UL LI{
 	float: left;
 	padding: 1px;
 	text-align: left;
-	margin-right: 5px;
+	margin-right: 12px;
 }
 
 #cadre_info_user {
@@ -1198,3 +1198,11 @@ UL#menu UL LI{
 	padding-top: 10px;
 }
 
+.spectateur_block {
+	width: 320px;
+	float: left;
+}
+
+.spectateur_block_marge {
+	margin-left: 40px;
+}

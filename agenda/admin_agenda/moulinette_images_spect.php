@@ -31,8 +31,8 @@
 	$db_link = mysql_fconnect($local);
 
 	function redim_image($source) {
-		$targ_w = 93;
-		$targ_h = 62;
+		$targ_w = 200;
+		$targ_h = 132;
 		$jpeg_quality = 90;
 
 	$w_absolue = $targ_w; // Largeur qui sera imposée
