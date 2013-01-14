@@ -587,17 +587,17 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	$total_entrees = mysql_num_rows($reponse_avis);
 	$codejavascript .= 'nombreavis = '.$total_entrees.'; ';
 
-	echo '<div class="detail_event_bloc_2">',"\n";
+	echo '<div class="detail_corps_event">',"\n";
 	// S'il n'y a aucun avis, proposer d'en écrire un
 	if ($total_entrees == 0) {
 		echo '<div class="head_detail_event_bloc_2">
 				<span class="ico_float_droite">
 					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.gif" alt="donnez votre avis" /></a>
 				</span>
-				<span class="titre_paragr_detail_event">Vos avis sur "',$donnees['nom_event'],'"</span>
+				<h3>Vos avis sur "',$donnees['nom_event'],'"</h3>
 			</div>
 		
-			<br />
+			<br style="clear:both;" />
 			<div align="center" style="font-size:13px;">
 				<b><a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'">&gt;&gt; Aucun lecteur n\'a encore fait part de son avis, soyez le premier !! &lt;&lt; </a></b>
 			</div>
@@ -609,11 +609,10 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	else	
 	{			
 		echo '<div class="head_detail_event_bloc_2">
-				<span class="nombre_avis">',$total_entrees,'</span>
-				<span class="titre_paragr_detail_event">Il y a ',$total_entrees,' avis sur "',$donnees['nom_event'],'"</span>
 				<span class="ico_float_droite">
 					<a href="',generer_url_entite(97, 'rubrique', 'id_event='.$id_event),'"><img src="agenda/design_pics/bouton_donnez_avis.gif" alt="donnez votre avis" /></a>
 				</span>	
+				<h3>Il y a ',$total_entrees,' avis sur "',$donnees['nom_event'],'"</h3>
 			</div><br style="clear:both;" />',"\n\n";
 
 		echo '<div class="detail_corps_event">';

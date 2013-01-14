@@ -378,7 +378,7 @@ div.breve span.help_cursor {
 	font-weight: bold;
 	font-size: 15px;
 	color: #8F0133;
-	position: absolute;
+/*	position: absolute; */
 	margin-top: 15px;
 	padding-left: 60px;
 	padding-right: 50px;
@@ -411,8 +411,8 @@ div.breve span.help_cursor {
 .detail_event_bloc_2 {
 }
 .head_detail_event_bloc_2 {
-	position: relative;
-	height:34px;
+/*	position: relative;
+	height:34px; */
 }
 /*
 .detail_event_bloc_2 .top_left_bloc_critique, .top_left_bloc_chronique, .detail_event_bloc_2 .top_left_bloc_avis , .detail_event_bloc_2 .top_left_bloc_calendrier, .detail_event_bloc_2 .top_left_bloc_donner_avis, .detail_event_bloc_2 .top_left_bloc_video { 
@@ -493,9 +493,9 @@ div.breve span.help_cursor {
 	float:right;
 	font-size: 10px;
 	color: #009A99;
-	padding:0 5px 0 10px;
+	padding:8px 5px 0 10px;
 	font-weight: bold;
-	position: relative;
+/*	position: relative; */
 }
 .icodr_parent {
 	float:right;
