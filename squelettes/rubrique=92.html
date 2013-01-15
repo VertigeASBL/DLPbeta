@@ -33,7 +33,7 @@ $champs = array(
 				'pays_pres'
 				);
 $adresse = sql_fetsel($champs, 'ag_event 
-									INNER JOIN ag_representation ON ag_event.lieu_event = ag_representation.lieu_pres', 'id_event = '._request('id_event'));
+									INNER JOIN ag_representation ON ag_event.pres_event = ag_representation.id_pres', 'id_event = '._request('id_event'));
 ?>
 
 <script type="text/javascript">
