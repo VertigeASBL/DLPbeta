@@ -610,9 +610,9 @@ if ($avis_ok_masquer_formulaire==false)
 				$tab.= '<a href="?id_event='.$id_event.'&suivre=1" class="ico_gauche icoga_suivre" title="Suivre cet événement">Ajouter à mon agenda</a>'."\n";
 			else
 				$tab.= '<a href="?id_event='.$id_event.'&plus_suivre=1" class="ico_gauche icoga_suivre" title="Ne plus suivre cet événement">Retirer de mon agenda</a>'."\n";
-	
-			$tab.= '<a href="#voter" class="ico_gauche icoga_voter" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;" title="Voter pour cet événement">J\'ai vu et aimé</a>'."\n" ;
 		}
+		// Icone jai_vu
+		$tab.= '<a href="#voter" class="ico_gauche icoga_voter" onclick="popup_jai_vu(\'agenda/jai_vu/jai_vu_popup.php?id='.$id_event.'\',\'Votons\'); return false;" title="Voter pour cet événement">J\'ai vu et aimé</a>'."\n" ;
 		// Lien "en savoir plus"
 		$tab.= '<a href="'.generer_url_entite(92, 'rubrique', 'id_event='.$id_event).'">En savoir plus &#187;</a>'."\n";
 		$tab.= '</div>'."\n";
