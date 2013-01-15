@@ -93,7 +93,7 @@ while ($donnees = mysql_fetch_array($reponse))
 		$retour_email_moderateur = 'info@demandezleprogramme.be' ; 
 		$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 		$sujet = 'Merci de déposer votre avis sur demandezleprogramme.be' ;
-	 mail_beta($mail_joueur_conc,$sujet,$concat,$entete,$email_retour_erreur);	
+	 mail($mail_joueur_conc,$sujet,$concat,$entete,$email_retour_erreur);	
 	}
 	
 	// effacer l'entrée de la BD

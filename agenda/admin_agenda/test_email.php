@@ -75,7 +75,7 @@ function quotedPrintable(&$texte, $ncar=76) {
 
 	//--- Envoi d'un email
 /*
-//	if ($adremail && mail_beta($adremail, encodeHeader($msgsuj), $msgmsg, $msgtet, '-f philippe@vertige.org'))
+//	if ($adremail && mail($adremail, encodeHeader($msgsuj), $msgmsg, $msgtet, '-f philippe@vertige.org'))
 	if ($adremail && imap_mail($adremail, encodeHeader($msgsuj), quotedPrintable($msgmsg), $msgtet, NULL, NULL, 'philippe@vertige.org'))
 		echo 'Le formulaire est envoyé.\nMerci pour votre participation.';
 	else

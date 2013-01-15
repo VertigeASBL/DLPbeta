@@ -142,7 +142,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 're
 		$entete= "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $retour_email_admin ;
 		//echo $corps ;
 		
-		$test_mail = mail_beta($e_mail_admin_spec,$sujet,$corps,$entete,$email_retour_erreur);
+		$test_mail = mail($e_mail_admin_spec,$sujet,$corps,$entete,$email_retour_erreur);
 		
 		if ($test_mail)
 		{

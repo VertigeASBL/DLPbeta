@@ -376,7 +376,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			
 			$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 			$sujet = '+ Nouveau message pour la rubrique avis (ID' . $dernier_id_table_avis_agenda . ')' ;
-		 mail_beta($retour_email_admin,$sujet,$mail_concat,$entete,$email_retour_erreur);
+		 mail($retour_email_admin,$sujet,$mail_concat,$entete,$email_retour_erreur);
 			
 			
 			// MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM

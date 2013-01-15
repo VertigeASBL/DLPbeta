@@ -334,7 +334,7 @@ function obtenirune(&$chn) {
 		if ($nlamail) { //--- vers le destinataire de test
 			$k = 'exemple';
 			$g = '#exemple';
-			if (@mail_beta($nlamail, encodeHeader(stripslashes($nlsuj)), str_replace('%LDINSCR%', $g, str_replace('%SDINSCR%', $k, str_replace('%TDINSCR%', $k, $msg))), $chn, '-f '.$adrdusite)) {
+			if (@mail($nlamail, encodeHeader(stripslashes($nlsuj)), str_replace('%LDINSCR%', $g, str_replace('%SDINSCR%', $k, str_replace('%TDINSCR%', $k, $msg))), $chn, '-f '.$adrdusite)) {
 				$nlamail = '';
 				$nbrenv++;
 			}
@@ -358,7 +358,7 @@ function obtenirune(&$chn) {
 				for ($nk = 0; ! $alerter && $data && $nk < $linblot && time() <= $delaiproch; $nk++) {
 					$k = $tlipage[$data['lletr']].$data['ladrm'].'&noletr='.$data['lcode'];
 					$g = $tlipage[$data['lletr']].rawurlencode($data['ladrm']).'&noletr='.$data['lcode'];
-					if (@mail_beta($data['ladrm'], encodeHeader(stripslashes($nlsuj)), str_replace('%LDINSCR%', htmlspecialchars($g), str_replace('%SDINSCR%', htmlspecialchars($k), str_replace('%TDINSCR%', $k, $msg))), $chn, '-f '.$adrdusite))
+					if (@mail($data['ladrm'], encodeHeader(stripslashes($nlsuj)), str_replace('%LDINSCR%', htmlspecialchars($g), str_replace('%SDINSCR%', htmlspecialchars($k), str_replace('%TDINSCR%', $k, $msg))), $chn, '-f '.$adrdusite))
 						$nbrenv++;
 					else
 						$alerter = 'Attention, l\'envoi de la newsletter a échoué (après '.$nbrenv.' envois réussis)';

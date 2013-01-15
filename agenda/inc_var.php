@@ -7,10 +7,10 @@
 // ------------------------------------
 // Définition des adresses e-mail pour gestion du site
 
-//$email_admin_site = 'renaud.jeanlouis@gmail.com; info@demandezleprogramme.be' ; // 1 ou plusieurs destinataire(s). !!! QUE pour fonction mail_beta() et pas pour afficher dans un lien !!!
-$email_admin_site = 'info@demandezleprogramme.be' ; // 1 ou plusieurs destinataire(s). !!! QUE pour fonction mail_beta() et pas pour afficher dans un lien !!!
+//$email_admin_site = 'renaud.jeanlouis@gmail.com; info@demandezleprogramme.be' ; // 1 ou plusieurs destinataire(s). !!! QUE pour fonction mail() et pas pour afficher dans un lien !!!
+$email_admin_site = 'info@demandezleprogramme.be' ; // 1 ou plusieurs destinataire(s). !!! QUE pour fonction mail() et pas pour afficher dans un lien !!!
 $retour_email_admin = 'info@demandezleprogramme.be' ; // Adresse unique de retour du courrier  (FROM)
-$email_moderateur_site = 'info@demandezleprogramme.be' ;  // 1 ou plusieurs destinataire(s). !!! QUE pour fonction mail_beta() et pas pour afficher dans un lien !!!
+$email_moderateur_site = 'info@demandezleprogramme.be' ;  // 1 ou plusieurs destinataire(s). !!! QUE pour fonction mail() et pas pour afficher dans un lien !!!
 $retour_email_moderateur = 'info@demandezleprogramme.be' ; // Adresse unique de retour du courrier (FROM)
 
 $email_retour_erreur = '-f info@demandezleprogramme.be' ; // Adresse de retour des emails "non arrivés" (cette variable doit contenir '-f ')

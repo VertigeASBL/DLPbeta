@@ -162,7 +162,7 @@ function signaler_erreur($lieu_rss,$adresse_flux, $type_erreur)
 		</body></html>'; 
 
 		$entete = "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $retour_email_admin;
-	 mail_beta($email_admin_site,$sujet,$corps,$entete,$email_retour_erreur);
+	 mail($email_admin_site,$sujet,$corps,$entete,$email_retour_erreur);
 		//echo $corps ;
 }
 // FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

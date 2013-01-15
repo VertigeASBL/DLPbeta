@@ -45,7 +45,7 @@
 	
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet = 'Merci de déposer votre avis sur demandezleprogramme.be' ;
- mail_beta('renaud.jeanlouis@gmail.com',$sujet,$message,$entete,$email_retour_erreur);
+ mail('renaud.jeanlouis@gmail.com',$sujet,$message,$entete,$email_retour_erreur);
 
 
 

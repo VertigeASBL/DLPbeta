@@ -821,7 +821,7 @@
 				$dest = $mailconfirm;
 				// mettre le texte dans un charset acceptable et sans entites
 				//$mess_iso = unicode2charset(html2unicode(charset2unicode($corps_mail)),'iso-8859-1');
-				//mail_beta($dest, $sujet, $mess_iso, $head);
+				//mail($dest, $sujet, $mess_iso, $head);
 				$headers = "";
 				if (preg_match(",<html>(.*)</html>,Uims",$corps_mail_confirm,$regs)){
 					$charset = $GLOBALS['meta']['charset'];
@@ -841,7 +841,7 @@
 				$dest = $email_dest;
 				// mettre le texte dans un charset acceptable et sans entites
 				//$mess_iso = unicode2charset(html2unicode(charset2unicode($corps_mail_admin)),'iso-8859-1');
-				//mail_beta($dest, $sujet, $mess_iso, $head);
+				//mail($dest, $sujet, $mess_iso, $head);
 				$headers = "";
 				if (preg_match(",<html>.*</html>,Uims",$corps_mail_admin,$regs)){
 					$charset = $GLOBALS['meta']['charset'];

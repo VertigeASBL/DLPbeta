@@ -256,7 +256,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		$corps.=" \n \n \nBien à vous, \n \nL'équipe de http://www.demandezleprogramme.be" ;
 		
 		$entete="From:".$retour_email_admin."\r\nReply-To:".$retour_email_admin ; 
-		$test_mail = mail_beta($adresse,$sujet,$corps,$entete,$email_retour_erreur); 
+		$test_mail = mail($adresse,$sujet,$corps,$entete,$email_retour_erreur); 
 		
 		if ($test_mail)
 		{

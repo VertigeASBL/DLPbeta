@@ -123,7 +123,7 @@ function quotedPrintable(&$texte, $ncar=76) {
 						case 'nl': $msg = 'Hallo.'."\n\n".'U wenst onze nieuwsbrief van '.NOMDUSITE.' te ontvangen ?'."\n\n".'Klik op deze link om u in te schrijven :'."\n".$chn.'&letrok='.$g; break;
 						default: $msg = 'Hello.'."\n\n".'Would you like to receive newsletter of '.NOMDUSITE.' ?'."\n\n".'To subscribe, please click on this link :'."\n".$chn.'&letrok='.$g; break;
 					}
-					if (@mail_beta($eadr, encodeHeader(NOMDUSITE.' - newsletter : inscription'), quotedPrintable($msg), $k, '-f '.ADRDUSITE))
+					if (@mail($eadr, encodeHeader(NOMDUSITE.' - newsletter : inscription'), quotedPrintable($msg), $k, '-f '.ADRDUSITE))
 						switch ($lng) {
 							case 'fr': $jsalert = 'Merci de l\'intérêt que vous portez à '.NOMDUSITE.'\nVous allez recevoir un e-mail pour confirmer votre inscription à la liste de diffusion'; break;
 							case 'nl': $jsalert = 'Bedankt voor uw interesse in '.NOMDUSITE.'\nU zal een e-mail krijgen om uw inschrijving te bevestigen.'; break;
@@ -145,7 +145,7 @@ function quotedPrintable(&$texte, $ncar=76) {
 						case 'nl': $msg = 'Hallo.'."\n\n".'U wenst onze nieuwsbrief van '.NOMDUSITE.' niet meer te ontvangen ?'."\n\n".'Klik op deze link om uw inschrijving te annuleren :'."\n".$chn.'&noletr='.$data['lcode']; break;
 						default: $msg = 'Hello.'."\n\n".'You don\'t want to receive anymore the newsletter of '.NOMDUSITE.' ?'."\n\n".'To unsubsribe, please click on this link :'."\n".$chn.'&noletr='.$data['lcode'];
 					}
-					if (@mail_beta($eadr, encodeHeader(NOMDUSITE.' - newsletter : desinscription'), quotedPrintable($msg), $k, '-f '.ADRDUSITE))
+					if (@mail($eadr, encodeHeader(NOMDUSITE.' - newsletter : desinscription'), quotedPrintable($msg), $k, '-f '.ADRDUSITE))
 						switch ($lng) {
 							case 'fr': $jsalert = 'Vous allez recevoir un e-mail pour confirmer votre désinscription de la liste de diffusion'; break;
 							case 'nl': $jsalert = 'U zal een e-mail krijgen om de annulering van uw inschrijving te bevestigen.'; break;

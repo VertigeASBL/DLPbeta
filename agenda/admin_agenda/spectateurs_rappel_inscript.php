@@ -93,7 +93,7 @@ Visitez &eacute;galement <a href="http://www.vertige.org">www.vertige.org</a> </
 $entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 $sujet = '! Merci de terminer votre inscription' ;
 
-$test_mail = mail_beta($e_mail_spectateur,$sujet,$mail_concat,$entete,$email_retour_erreur);
+$test_mail = mail($e_mail_spectateur,$sujet,$mail_concat,$entete,$email_retour_erreur);
 if ($test_mail)
 {
 	$resultat_envoi_rappel = '<br /><div class="info">Le message de rappel pour le Spectateur a bien été envoyé</div>' ; 

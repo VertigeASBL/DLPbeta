@@ -107,7 +107,7 @@ else
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $retour_email_admin;
 	
 	//echo $corps ;
- mail_beta($e_mail,$sujet,$corps,$entete,$email_retour_erreur);
+ mail($e_mail,$sujet,$corps,$entete,$email_retour_erreur);
 
 	
 	
@@ -177,7 +177,7 @@ else
 		$entete= "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $retour_email_admin;
 		
 		//echo $corps ;
-	 mail_beta($email_admin_site,$sujet,$corps,$entete,$email_retour_erreur);
+	 mail($email_admin_site,$sujet,$corps,$entete,$email_retour_erreur);
 	}
 	//--- mysql_close($db2dlp);
 }

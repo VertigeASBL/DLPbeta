@@ -158,7 +158,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'Ok
 			</html>'; 
 	
 			$entete= "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $retour_email_admin ;
-		 mail_beta($email_lieu,$sujet,$corps,$entete,$email_retour_erreur); 
+		 mail($email_lieu,$sujet,$corps,$entete,$email_retour_erreur); 
 			// echo $corps ;
 			
 			// --------------------------------------------------------

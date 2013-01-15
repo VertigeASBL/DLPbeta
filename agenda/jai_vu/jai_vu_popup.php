@@ -143,7 +143,7 @@ if (isset($_GET['id']) AND preg_match('/[0-9]$/', $_GET['id']))
 			$entete= "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $email_admin_site ;
 			$sujet_encode = '¤ VOTE sur demandezleprogramme';
 			$sujet = html_entity_decode($sujet_encode, ENT_QUOTES) ;
-		 mail_beta($email_admin_site,$sujet,$mail_concat,$entete);*/
+		 mail($email_admin_site,$sujet,$mail_concat,$entete);*/
 
 		}
 		

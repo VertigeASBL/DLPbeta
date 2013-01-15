@@ -464,7 +464,7 @@ $mail_concat.= '<tr>
 
 	$sujet_encode = $nom_destinateur . ' vous conseille l\'événement suivant : ' . $nom_event ;
 	$sujet = '>> ' . html_entity_decode($sujet_encode, ENT_QUOTES) ;
-	$test_mail = mail_beta($email_destinataire,$sujet,$mail_concat,$entete,$email_retour_erreur);
+	$test_mail = mail($email_destinataire,$sujet,$mail_concat,$entete,$email_retour_erreur);
 	//if(1==1)
 	if($test_mail)
 	{
@@ -534,7 +534,7 @@ $mail_concat.= '<tr>
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet = '>> ' . html_entity_decode('e-card envoyée', ENT_QUOTES) ;
 	
- mail_beta($email_moderateur_site,$sujet,$mail_concat,$entete); */
+ mail($email_moderateur_site,$sujet,$mail_concat,$entete); */
 
 	// EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
@@ -594,7 +594,7 @@ $mail_concat.= '<tr>
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet_encode = 'Merci d\'avoir envoyé une e-card sur demandezleprogramme.be' ;
 	$sujet = html_entity_decode($sujet_encode, ENT_QUOTES) ;
- mail_beta($email_destinateur,$sujet,$mail_concat,$entete,$email_retour_erreur);
+ mail($email_destinateur,$sujet,$mail_concat,$entete,$email_retour_erreur);
 
 	echo '<div align="center">
 	<strong><a href="-Envoyer-a-un-ami-?id_event=' . $id_event . '">&gt; &gt; Envoyer une autre e-card &lt; &lt; </a> </strong>

@@ -222,7 +222,7 @@ function connaitre_nb_avis_spect ($pseudo_spectateur)
 	return $_tot_entrees ; 
 }
 
-//--- Intercepter l'envoi de mail, forcer le destinataire, ajouter "beta", forcer l'adresse de notification
+/* --- Intercepter l'envoi de mail, forcer le destinataire, ajouter "beta", forcer l'adresse de notification
 if (! function_exists('mail_beta')) {
 function mail_beta($email, $sujet, $texte, $headers, $retour = '-f philippe@vertige.org') {
 	if (strpos($headers, 'text/html')!==false)
@@ -233,5 +233,5 @@ function mail_beta($email, $sujet, $texte, $headers, $retour = '-f philippe@vert
 	$sujet = '-BETA-'.(strpos($_SERVER['HTTP_HOST'],'localhost')!==false || strpos($_SERVER['HTTP_HOST'],'127.0.0')!==false ? 'LOC' : 'DIST').'- '.$sujet;
 	$retour = '-f philippe@vertige.org';
 	return mail($email, $sujet, $texte, $headers, $retour);
-} }
+} } --- */
 ?>

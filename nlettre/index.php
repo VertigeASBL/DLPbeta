@@ -151,7 +151,7 @@ function quotedPrintable(&$texte, $ncar=76) {
 				$k = 'From: '.NOMDUSITE.' <'.ADRDUSITE.'>'."\n";
 				$k .= 'Content-Type: text/plain; charset="ISO-8859-1"'."\n".'Content-Transfer-Encoding: quoted-printable'."\n";
 
-				if (@mail_beta($data['admail'], encodeHeader(NOMDUSITE.' - gestion du site'), quotedPrintable($chn), $k, '-f '.ADRDUSITE))
+				if (@mail($data['admail'], encodeHeader(NOMDUSITE.' - gestion du site'), quotedPrintable($chn), $k, '-f '.ADRDUSITE))
 					$alerter = 'Votre mot de passe a été envoyé à votre adresse email';
 				else
 					$alerter = 'L\'envoi de votre mot de passe par email a échoué';

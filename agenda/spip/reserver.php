@@ -399,7 +399,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		$sujet = encodeHeader('Une réservation via Demandez le programme');
 
 		// $email_destinataires = $email_reservation_lieu . '; ' . $retour_email_admin ; 
-	 mail_beta($email_reservation_lieu,$sujet,$mail_concat,$entete,$email_retour_erreur);
+	 mail($email_reservation_lieu,$sujet,$mail_concat,$entete,$email_retour_erreur);
 		//echo $mail_concat ;
 
 		
@@ -459,7 +459,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 				
 		$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 		$sujet = 'Votre réservation en ligne à partir du site Demandezleprogramme' ;
-	 mail_beta($email_reservation,$sujet,$mail_concat,$entete,$email_retour_erreur);
+	 mail($email_reservation,$sujet,$mail_concat,$entete,$email_retour_erreur);
 		//echo $mail_concat ;
 		
 		

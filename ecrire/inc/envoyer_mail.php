@@ -58,7 +58,7 @@ function envoyer_queue_mails() {
 		$sujet = $val['sujet'];
 		$texte = $val['texte'];
 		$headers = $val['headers'];
-		@mail_beta($email, $sujet, $texte, $headers);
+		@mail($email, $sujet, $texte, $headers);
 	}
 }
 
@@ -201,7 +201,7 @@ function inc_envoyer_mail_dist($destinataire, $sujet, $corps, $from = "", $heade
 	case 'free':
 		return false;
 	default:
-		return @mail_beta($destinataire, $sujet, $texte, $headers);
+		return @mail($destinataire, $sujet, $texte, $headers);
 	}
 }
 

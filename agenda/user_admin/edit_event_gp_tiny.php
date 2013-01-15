@@ -434,7 +434,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			$corps .= $nom_lieu.' (ID '.$lieu_event.')'."\n\n".$nom_pres.' (ID '.$id_pres_event.')'."\n\n";
 			$corps .= $adresse_pres."\n".$localite_pres."\n".$postal_pres."\n".$payspresent[$pays_pres]."\n\n";
 			$corps .= 'Voir http://www.demandezleprogramme.be/agenda/admin_agenda/edit_event.php?id='.$id."\n";
-			mail_beta($email_admin_site, 'Nouveau lieu de representation ID '.$id_pres_event, $corps, $entete, $email_retour_erreur);
+			mail($email_admin_site, 'Nouveau lieu de representation ID '.$id_pres_event, $corps, $entete, $email_retour_erreur);
 		}
 	}
 
@@ -647,7 +647,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 		$corps = 'Bonjour.'."\n\n".'Un producteur a indiqué que son événement est une reprise.'."\n\n";
 		$corps .= $nom_event.' (ID '.$id.')'."\n".$nom_lieu.' (ID '.$lieu_event.')'."\n\n";
 		$corps .= 'Voir http://www.demandezleprogramme.be/agenda/admin_agenda/edit_event.php?id='.$id."\n";
-		mail_beta($email_admin_site, 'Un evenement est une reprise ID '.$id, $corps, $entete, $email_retour_erreur);
+		mail($email_admin_site, 'Un evenement est une reprise ID '.$id, $corps, $entete, $email_retour_erreur);
 	}
 
 	// -----------------------------------------

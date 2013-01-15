@@ -563,7 +563,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 
 		//echo $corps ;
 		$adresse_xavier = 'info@demandezleprogramme.be' ;
-		 mail_beta($adresse_xavier,$sujet,$corps,$entete,$email_retour_erreur);
+		 mail($adresse_xavier,$sujet,$corps,$entete,$email_retour_erreur);
 
 			//--- rétablir le dossier de travail courant
 			chdir($dossier_courant);

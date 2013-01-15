@@ -50,9 +50,9 @@ require '../calendrier/inc_calendrier.php';
 //		$email_reservation = 'reservations@arriere-scene.be, ' ;
  $email_reservation = 'info@strategique.be';
 //$email_reservation = 'info@atelier210.be';
-//	 mail_beta($email_reservation,$sujet,$mail_concat,$entete, '-f info@demandezleprogramme.be');
+//	 mail($email_reservation,$sujet,$mail_concat,$entete, '-f info@demandezleprogramme.be');
 
 $email_retour_erreur = 'renaud.jeanlouis@belgacom.net' ;
-		$ret = mail_beta($email_reservation,$sujet,$mail_concat,$entete, $email_retour_erreur);
+		$ret = mail($email_reservation,$sujet,$mail_concat,$entete, $email_retour_erreur);
 		echo $ret ? 'OK !' : 'KO','<hr />',$mail_concat ;
 ?>

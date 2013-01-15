@@ -104,7 +104,7 @@ function avis_refus_send_mail ($id_avis)
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet = ' ! ' . html_entity_decode($nom_avis, ENT_QUOTES) . ', votre avis sur ' . html_entity_decode($nom_event, ENT_QUOTES) . ' !' ;
 
-	$test_mail = mail_beta($email_avis,$sujet,$mail_concat,$entete,$email_retour_erreur);
+	$test_mail = mail($email_avis,$sujet,$mail_concat,$entete,$email_retour_erreur);
 	if ($test_mail)
 	{
 		$resultat_fct = '<br /><div class="alerte">Le message a bien été envoyé à : ' . $email_avis . '</div>' ; 

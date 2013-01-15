@@ -93,7 +93,7 @@ function quotedPrintable($texte, $ncar=76) {
 		fclose($fp);
 		$corps .= "------=_md87fqs6sd78hgfd65--\n";
 
-		if (! mail_beta($adrml, encodeHeader('DemandezLeProgramme.be : Bon anniversaire !'), $corps, $entete, '-f info@demandezleprogramme.be'))
+		if (! mail($adrml, encodeHeader('DemandezLeProgramme.be : Bon anniversaire !'), $corps, $entete, '-f info@demandezleprogramme.be'))
 			die("Erreur: il est impossible d'envoyer un message (bon anniversaire) au membre");
 
 		$chn .= $data['datnaiss'].', '.$adrml."\n";

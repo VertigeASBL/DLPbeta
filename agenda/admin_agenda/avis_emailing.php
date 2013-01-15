@@ -135,7 +135,7 @@ function avertir_avis_listing ($id_avis)
 		. $avis_mailing_adresse . '&amp;ref=' . $ref_avis_mailing . '">cliquez ici</a>' ;//  Lien de désinscription
 		$message = str_replace("_de_inscript_avis_mailing_","$lien_desinscription",$mail_concat); // Lien de désinscription
 
-		 $test_mail = mail_beta($avis_mailing_adresse,$sujet,$message,$entete,$email_retour_erreur);
+		 $test_mail = mail($avis_mailing_adresse,$sujet,$message,$entete,$email_retour_erreur);
 		if($test_mail)
 		{ $resultat_fct.= $avis_mailing_adresse . '<br />' ; }
 	}

@@ -386,7 +386,7 @@ L'équipe de http://www.demandezleprogramme.be" ;
 		$entete="From:".$retour_email_admin."\r\nReply-To:".$retour_email_admin ; 
 		//echo $corps ;
 
-		$test_mail = mail_beta($adresse,$sujet,$corps,$entete); 
+		$test_mail = mail($adresse,$sujet,$corps,$entete); 
 		if ($test_mail)
 		{
 			echo '<br><br><br><div class="info"><p><b>Bonjour ' . $prenom_spectateur . ' '. $nom_spectateur. "</b>,</p><br />";
@@ -439,7 +439,7 @@ L'équipe de http://www.demandezleprogramme.be" ;
 			$entete= "Content-type:text/html\nFrom:" . $retour_email_admin . "\r\nReply-To:" . $retour_email_admin;
 
 			//echo $corps ;
-		 mail_beta($retour_email_admin,$sujet,$corps,$entete);
+		 mail($retour_email_admin,$sujet,$corps,$entete);
 			
 			
 			// ********************************************************************************************

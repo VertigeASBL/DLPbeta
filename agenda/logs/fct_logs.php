@@ -117,8 +117,8 @@ function log_write ($lieu_log, $type_log, $context_id_log, $description_log, $ac
 		
 		//echo $corps ;
 		/*$destinataire = 'renaud.jl@strategique.be' ;
-	 mail_beta($destinataire,$sujet,$corps,$entete); */
-	 mail_beta($email_admin_site,$sujet,$corps,$entete,$email_retour_erreur);
+	 mail($destinataire,$sujet,$corps,$entete); */
+	 mail($email_admin_site,$sujet,$corps,$entete,$email_retour_erreur);
 	}
 }
 

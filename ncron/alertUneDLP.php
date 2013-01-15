@@ -62,7 +62,7 @@ function quotedPrintable($texte, $ncar=76) {
 
 	$corps = "\r\n\t".'Oyez oyez.'."\r\n\r\n".'Nous sommes le '.date('d-m-Y').'.'."\r\n".'SVP, n\'oubliez pas d\'envoyer la newsletter LA UNE de DLP.'."\r\n".'http://www.demandezleprogramme.be/nlettre/'."\r\n\r\n".'Merci, au revoir.'."\r\n\t".'CRON.'."\r\n";
 
-	if (! mail_beta($adrml, encodeHeader('DLP : envoyer la newsletter LA UNE'), quotedPrintable($corps), $entete, '-f xavier@vertige.org'))
+	if (! mail($adrml, encodeHeader('DLP : envoyer la newsletter LA UNE'), quotedPrintable($corps), $entete, '-f xavier@vertige.org'))
 		die("Erreur: il est impossible d'envoyer un message d'alerte pour DLP la Une");
 
 	echo 'Fin normale de la tâche : alerte pour DLP la Une';

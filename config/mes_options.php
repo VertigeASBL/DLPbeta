@@ -2,9 +2,9 @@
 	$type_urls = "propres";
 /*--- old : voir "richir" adaptation dans ecrire\urls\propres.php
 	@include_once dirname(__FILE__).'/ecran_securite.php'; */
-	define ('_ID_WEBMESTRES' ,'1:42:8:46');
+	define ('_ID_WEBMESTRES' ,'1:42:8:46:50');
 
-//--- Intercepter l'envoi de mail, forcer le destinataire, ajouter "beta", forcer l'adresse de notification
+/* --- Intercepter l'envoi de mail, forcer le destinataire, ajouter "beta", forcer l'adresse de notification
 if (! function_exists('mail_beta')) {
 function mail_beta($email, $sujet, $texte, $headers, $retour = '-f philippe@vertige.org') {
 	if (strpos($headers, 'text/html')!==false)
@@ -18,8 +18,8 @@ function mail_beta($email, $sujet, $texte, $headers, $retour = '-f philippe@vert
 	} 
 }
 
-
-/* Activation des erreurs */
+//--- Activation des erreurs
 error_reporting(E_ALL^E_NOTICE);
 ini_set ("display_errors", "On");
+--- */
 ?>

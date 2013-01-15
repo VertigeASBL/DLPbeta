@@ -115,7 +115,7 @@ function informer_joueur ($id_liloolou, $nom_liloolou, $mail_liloolou, $time_lil
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet = '-Votre participation au concours de demandezleprogramme.be' ;
 	
-	$test_envoi_joueur = mail_beta($mail_liloolou.',charleshenry@comedien.be',$sujet,$mail_joueur_concat,$entete,$email_retour_erreur);
+	$test_envoi_joueur = mail($mail_liloolou.',charleshenry@comedien.be',$sujet,$mail_joueur_concat,$entete,$email_retour_erreur);
 	echo $mail_joueur_concat ;
 		
 	return ($test_envoi_joueur) ;
@@ -192,7 +192,7 @@ function informer_lieu ()
 	$test_envoi_lieu = '';
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet = 'Liste des gagnants du concours organisé en partenariat avec demandezleprogramme.be' ;
-	$test_envoi_lieu = mail_beta($mail_lieu_conc.',charleshenry@comedien.be',$sujet,$mail_pour_lieu_concat,$entete,$email_retour_erreur);
+	$test_envoi_lieu = mail($mail_lieu_conc.',charleshenry@comedien.be',$sujet,$mail_pour_lieu_concat,$entete,$email_retour_erreur);
 	
 	echo $mail_pour_lieu_concat ;
 	return ($test_envoi_lieu) ;
@@ -252,7 +252,7 @@ function informer_admin ($rapport_complet_concat)
 	$test_envoi_admin = '' ;
 	$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 	$sujet = 'Résultats du concours de demandezleprogramme.be' ;
-	$test_envoi_admin = mail_beta($email_admin_site.',charleshenry@comedien.be',$sujet,$mail_pour_admin_concat,$entete,$email_retour_erreur);
+	$test_envoi_admin = mail($email_admin_site.',charleshenry@comedien.be',$sujet,$mail_pour_admin_concat,$entete,$email_retour_erreur);
 
 	echo $mail_pour_admin_concat ;
 

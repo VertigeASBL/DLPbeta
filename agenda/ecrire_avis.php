@@ -232,7 +232,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			
 			$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 			$sujet = '+ Nouveau message pour la rubrique avis (ID' . $dernier_id_table_avis_agenda . ')' ;
-		 mail_beta($email_moderateur_site,$sujet,$mail_concat,$entete,$email_retour_erreur);
+		 mail($email_moderateur_site,$sujet,$mail_concat,$entete,$email_retour_erreur);
 			
 			
 			// MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -280,7 +280,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 			
 			$entete= "Content-type:text/html\nFrom:" . $retour_email_moderateur . "\r\nReply-To:" . $retour_email_moderateur ;
 			$sujet = 'Merci d\'avoir déposé votre avis sur demandezleprogramme.be' ;
-		 mail_beta($email_avis,$sujet,$mail_concat,$entete,$email_retour_erreur);
+		 mail($email_avis,$sujet,$mail_concat,$entete,$email_retour_erreur);
 			
 			
 				

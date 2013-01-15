@@ -135,7 +135,7 @@ function quotedPrintable(&$texte, $ncar=76) {
 							case 'nl': $msg = 'Hallo.'."\n\n".'U wenst onze nieuwsbrief van '.$nomdusite.' te ontvangen ?'."\n\n".'Klik op deze link om u in te schrijven :'."\n".$chn.'&letrok='.$g; break;
 							default: $msg = 'Hello.'."\n\n".'You want to receive newsletter from '.$nomdusite.' ?'."\n\n".'To subscribe, please click on this link :'."\n".$chn.'&letrok='.$g;;
 						}
-						if (@mail_beta($eadr, encodeHeader($nomdusite.' - newsletter : inscription'), quotedPrintable($msg), $k, '-f '.$adrdusite))
+						if (@mail($eadr, encodeHeader($nomdusite.' - newsletter : inscription'), quotedPrintable($msg), $k, '-f '.$adrdusite))
 							$alerter = 'Ce membre va recevoir un e-mail pour confirmer son inscription à cette liste de diffusion';
 						else
 							$alerter = 'L\'envoi d\'un email a échoué';
@@ -155,7 +155,7 @@ function quotedPrintable(&$texte, $ncar=76) {
 							case 'nl': $msg = 'Hallo.'."\n\n".'U wenst onze nieuwsbrief van '.$nomdusite.' niet meer te ontvangen ?'."\n\n".'Klik op deze link om uw inschrijving te annuleren :'."\n".$chn.'&noletr='.$data['lcode']; break;
 							default: $msg = 'Hello.'."\n\n".'You don\'t want to receive newsletter from '.$nomdusite.' anymore ?'."\n\n".'To unsubscribe, please click on this link :'."\n".$chn.'&noletr='.$data['lcode'];
 						}
-						if (@mail_beta($eadr, encodeHeader($nomdusite.' - newsletter : desinscription'), quotedPrintable($msg), $k, '-f '.$adrdusite))
+						if (@mail($eadr, encodeHeader($nomdusite.' - newsletter : desinscription'), quotedPrintable($msg), $k, '-f '.$adrdusite))
 							$alerter = 'Ce membre va recevoir un e-mail pour confirmer sa désinscription de cette liste de diffusion';
 						else
 							$alerter = 'L\'envoi d\'un email a échoué';
