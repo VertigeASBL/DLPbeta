@@ -61,18 +61,20 @@ $adresse = sql_fetsel($champs, 'ag_event
 			}
 		});
 	}
-</script>
 
-<script type="text/javascript">
-/* juste pour popup de "J'ai vu et aimé" */
-var popup_jai_vu = function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
+/* Pour popup de "J'ai vu et aimé" */
+function popup_jai_vu(Adresse_de_la_page,Nom_de_la_fenetre) {
 	ma_fenetre = window.open(Adresse_de_la_page,Nom_de_la_fenetre,'height=500,width=500,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=yes,top=100px,left=250px');
-	/* Donner le focus */
-	if(ma_fenetre.window.focus){
+	if (ma_fenetre.window.focus){
 		ma_fenetre.window.focus();
 	}
 }
+/* Pour relancer la page quand le popup de vote est fermé, et ainsi afficher le nouveau nombre de votes */
+function relance_la_page() {
+	location.reload();
+}
 </script>
+
 </head>
 <body>
 <div id="header">
