@@ -59,10 +59,9 @@ option.option_col_2, select.option_col_2 {
 // }
 // else
 // 	echo ' Le numéro de rubrique ne convient pas. ';
-// # SESSION{id_spectateur}
 ?>
 	<B_specateur_detail>
-	<BOUCLE_specateur_detail(ag_spectateurs){id_spectateur=#ENV{id_spect}|plus{0}}>
+	<BOUCLE_specateur_detail(ag_spectateurs){id_spectateur=#SESSION{id_spectateur}}>
 		<div style="float: right;">
 			<a href="Envoyer-un-message?id_spect=#ID_SPECTATEUR&amp;pseudo=#PSEUDO_SPECTATEUR" target="_blank">
 				<img src="agenda/design_pics/ecrire-a-ce-membre.png" />
@@ -162,7 +161,6 @@ option.option_col_2, select.option_col_2 {
 		</div>
 	</BOUCLE_specateur_detail>
 	</B_specateur_detail>
-		<h3>Ce spectateur n'a pas été trouvé.</h3>
 	<//B_specateur_detail>
 
 	</div><!-- fin colonne1 -->
