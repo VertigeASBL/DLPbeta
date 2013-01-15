@@ -28,16 +28,14 @@ function getLog ($type) {
 	Cette fonction va créer un log.
 */
 function activite_log ($type, $id_event = 'null', $id_concours = 'null') {
-	$id_spectateur = isset($_SESSION['id_spectateur']) && $_SESSION['id_spectateur'] ? (int) $_SESSION['id_spectateur'] : 0;
-/*	$champs = array(
-					'id_spectateur' => $id_spectateur,
+	$champs = array(
+					'id_spectateur' => $_SESSION['id_spectateur'],
 					'id_event' => $id_event,
 					'id_concours' => $id_concours,
 					'type' => $type
 		);
-*/
-	if ($id_spectateur)
-		mysql_query('INSERT INTO ag_activite VALUES(null, '.$id_spectateur.', \''.$id_event.'\', \''.$id_concours.'\', \''.$type.'\', CURRENT_TIMESTAMP() )') or die(mysql_error());
+
+	mysql_query('INSERT INTO ag_activite VALUES(null, '.$_SESSION['id_spectateur'].', \''.$id_event.'\', \''.$id_concours.'\', \''.$type.'\', CURRENT_TIMESTAMP() )') or die(mysql_error());
 }
 
 
