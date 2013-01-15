@@ -204,7 +204,7 @@ INPUT.effacer_tous_champs {
 	font-weight: bold;
 }
 #form_moteur_dlp_ajax { text-align:center; }
-#form_moteur_centre { display:inline-block; margin:0 auto; text-align:left; }
+#form_moteur_centre { position:static; /*display:inline-block;*/ margin:0 auto; text-align:left; }
 
 #form_moteur_dlp_ajax SELECT {
 	background:#8F0133; color:#ffffff;
@@ -214,7 +214,7 @@ INPUT.effacer_tous_champs {
 	background:#8F0133; color:#ffffff;
 }
 #selecteur_date_in, #selecteur_date_out {
-	width:80px; border:1px solid #8F0133; margin:0 20px 10px 0;
+	position:static; width:80px; border:1px solid #8F0133; margin:0 20px 10px 0;
 }
 #chp_txt_libre {
 	border:1px solid #8F0133; margin:0 0 10px 0; padding-left:24px;
