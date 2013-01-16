@@ -603,7 +603,7 @@ if (isset($_POST['bouton_enregistrer']) AND ($_POST['bouton_enregistrer'] == 'En
 	
 	// -----------------------------------------
 	// TEST TEL RESERVATION EVENEMENT
-	if (isset($_POST['tel_reserv_event']) AND ($_POST['tel_reserv_event'] != NULL)) 
+	if (isset($_POST['tel_reserv_event'])) 
 	{
 		$tel_reserv_event = htmlentities($_POST['tel_reserv_event'], ENT_QUOTES);
 	}
@@ -1380,7 +1380,7 @@ echo '<input type="hidden" name="jours_actifs_event" value="',implode(',', $jour
             <td>Numéro de téléphone de réservation</td>
             <td>
   <input name="tel_reserv_event" type="text" id="tel_reserv_event" value="<?php 
-			if (isset ($tel_reserv_event)) echo $tel_reserv_event; ?>" size="30" maxlength="50" /> <span class="mini">(facultatif)</span>
+			if (isset ($tel_reserv_event)) echo htmlspecialchars($tel_reserv_event); ?>" size="30" maxlength="50" /> <span class="mini">(facultatif)</span>
             </td>
           </tr>
           <tr>
