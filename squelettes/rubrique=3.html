@@ -77,20 +77,32 @@ require 'agenda/inc_var.php';
 # SET{aujourdhui,'2012-01-01'} # SET{unesemaine,'2014-01-01'}
 (ag_event ag_lieux){ag_lieux.id_lieu=ag_event.lieu_event} ,' / ',# NOM_LIEU
 -->
+		[(#REM)--- les lieux en ordre de cotisation / il y a 1 mois / exclure bozar 70 ---]
+		#SET{aujourdhui,#VAL{'Y-m-d'}|date{#VAL{}|time|moins{2678400}}}
+		#SET{tab_id_lieu,#ARRAY}
+		#SET{tab_lieux,#ARRAY}
+		<BOUCLE_lieuxok(ag_lieux){cotisation_lieu>=#GET{aujourdhui}}{id_lieu!=70}>
+			#SET{tab_id_lieu,#GET{tab_id_lieu}|push{#ID_LIEU}}
+			#SET{tab_lieux,#GET{tab_lieux}|array_merge{#ARRAY{id_#ID_LIEU,#NOM_LIEU}}}
+		</BOUCLE_lieuxok>
+
+		[(#REM)--- slideshow / dans 1 semaine ---]
 		#SET{urldetail,#URL_RUBRIQUE{92}}
 		#SET{aujourdhui,#VAL{'Y-m-d'}|date}
-		#SET{unesemaine,#VAL{'Y-m-d'}|date{#VAL{}|time|plus{604800}}} [(#REM)--- dans 1 semaine ---]
+		#SET{unesemaine,#VAL{'Y-m-d'}|date{#VAL{}|time|plus{604800}}}
 		<B_carousel>
 		<div class="carouselwrapper">
 			<a id="carouprev" href="#precedent">&nbsp;</a>
 			<div class="list_carousel">
 				<ul id="carouselhome">
-		<BOUCLE_carousel(ag_event){pic_event_1=set}{date_event_fin>=#GET{aujourdhui}}{date_event_debut<=#GET{unesemaine}}{!par id_event}>
+		<BOUCLE_carousel(ag_event){pic_event_1=set}{date_event_fin>=#GET{aujourdhui}}{date_event_debut<=#GET{unesemaine}}{lieu_event IN #GET{tab_id_lieu}}{!par id_event}>
 					<li>
 						<a href="[(#GET{urldetail}|parametre_url{id_event,#ID_EVENT})]">
 			#SET{vimage,#VAL{agenda/pics_events/event_}|concat{#ID_EVENT,_1.jpg}|image_reduire{161,230}}
 			[(#GET{vimage}|inserer_attribut{'alt',''})]
-							<div class="caroudescr" style="display:none;"><strong>#NOM_EVENT</strong><br />#DATE_EVENT_DEBUT / #DATE_EVENT_FIN</div>
+							<div class="caroudescr" style="display:none;">
+								<strong>#NOM_EVENT</strong><br />#DATE_EVENT_DEBUT / #DATE_EVENT_FIN<br />[(#GET{tab_lieux}|table_valeur{#VAL{id_}|concat{#LIEU_EVENT}})]
+							</div>
 						</a>
 					</li>
 		</BOUCLE_carousel>
