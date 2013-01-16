@@ -833,8 +833,11 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 		affich_parent_enfants($donnees['parent_event'], $id_event, 999, $regions);
 
 
+	echo "\n",'<script type="text/javascript">',"\n";
+	echo 'if (! ok_mapping) tabonglet.mapping = false; ';
 	if ($codejavascript)
-		echo "\n",'<script type="text/javascript">',"\n",$codejavascript,"\n",'</script>',"\n";
+		echo $codejavascript,"\n";
+	echo '</script>',"\n";
 
 	// ____________________________________________
 	// Affichage lien retour au listing

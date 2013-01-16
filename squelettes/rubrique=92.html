@@ -37,9 +37,15 @@ $adresse = sql_fetsel($champs, 'ag_event
 ?>
 
 <script type="text/javascript">
+<?php
+	echo 'var ok_mapping = ',($adresse ? 'true' : 'false'),';',"\n";
+?>
 	function initialize() {
     	/* PHP écrit l'adresse du lieux pour la passer à Google maps */
-		var address = "<?php echo $adresse['adresse_pres'].' '.$adresse['postal_pres'].' '.$payspresent[$adresse['pays_pres']]; ?>";
+<?php
+		if ($adresse) {
+			echo 'var address = "',htmlspecialchars($adresse['adresse_pres'].' '.$adresse['postal_pres'].' '.$payspresent[$adresse['pays_pres']]),'";',"\n";
+?>
 		var geocoder = new google.maps.Geocoder();
 
 		geocoder.geocode( { 'address': address}, function(results, status) {
@@ -60,6 +66,9 @@ $adresse = sql_fetsel($champs, 'ag_event
 				alert("Geocode was not successful for the following reason: " + status);
 			}
 		});
+<?php
+		} //--- fin if adresse
+?>
 	}
 
 /* Pour popup de "J'ai vu et aimé" */
