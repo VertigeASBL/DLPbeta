@@ -132,7 +132,7 @@ $(document).ready(function (){
 			lieu: ""+valeur_lieu_recup+"", 
 			region: ""+valeur_region_recup+"",
 			genre: ""+valeur_genre_recup+"",
-			chaine_txt_libre: ""+valeur_txt_libre_recup+"",
+			chaine_txt_libre: ""+(valeur_txt_libre_recup == "Rechercher un événement" ? "" : valeur_txt_libre_recup)+"",
 			date_in: ""+selecteur_date_in+"",
 			date_out: ""+selecteur_date_out+""
 		}, function(data){
