@@ -33,7 +33,8 @@ table.calendar tr {
 }
 
 .calendar td {
-	font-size: 11px;
+	font-size: 10px;
+	font-weight:normal;
 	height: 21px;
 	text-align: center;
 }
@@ -57,32 +58,33 @@ table.calendar tr {
 
 .linked-day {
 	color: #000000;
+	font-size: 8px;
 }
 
 .checked {
 	color: #FFFFFF;
-	font-size: 9px;
-	background:url(calendrier/bg_2.gif) no-repeat 50% 50%;
+	font-size: 8px;
+	background:url(calendrier/bg_2.gif) no-repeat 40% 50%;
 }
 
 .unchecked {
 	color:#000000;
-	font-size: 9px;
+	font-size: 8px;
 /*	background-color: #DDDDDD;*/
 }
 
 
 .nonchecked {
 	color:#999999;
-	font-size: 9px;
+	font-size: 8px;
 /*	background-color: #EEEEEE;*/
 }
 
 .event_cal {
 	color: #ffffff;
-	font-size: 9px;
+	font-size: 8px;
 	/*background-color: #EEBE77; font-weight: bold;*/
-	background: url(calendrier/bg_2.gif) no-repeat 50% 50%;
+	background: url(calendrier/bg_2.gif) no-repeat 40% 50%;
 }
 .event_cal a {
 	color:#ffffff;
@@ -96,6 +98,6 @@ td.event_cal a:hover {
 }
 .non_event_cal {
 	color: #000000;
-	font-size: 9px;
+	font-size: 8px;
 /*	background-color: #E5E5E5; */
 }
