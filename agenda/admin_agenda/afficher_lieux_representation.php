@@ -11,16 +11,17 @@
 
 	echo '<hr />',"\n";
 
-	$reponse = mysql_query('SELECT * FROM ag_representation ORDER BY nom_pres');
+	$reponse = mysql_query('SELECT R.*,L.nom_lieu FROM ag_representation AS R LEFT JOIN ag_lieux AS L ON id_lieu=lieu_pres ORDER BY nom_pres');
 	while ($data = mysql_fetch_array($reponse)) {
 		echo 'id_pres : ',$data['id_pres'];
-		echo '<br />lieu_pres : ',$data['lieu_pres'];
-		echo '<br />nom_pres : ',$data['nom_pres'];
-		echo '<br />adresse_pres : ',$data['adresse_pres'];
-		echo '<br />postal_pres : ',$data['postal_pres'];
-		echo '<br />localite_pres : ',$data['localite_pres'];
-		echo '<br />pays_pres : ',$data['pays_pres'];
-		echo '<br />ok_pres : ',$data['ok_pres'];
+		echo ' &nbsp; / &nbsp; ',$data['nom_pres'];
+		echo ' &nbsp; / &nbsp; validé : ',$data['ok_pres'];
+		echo ' <br />producteur lié : ',$data['lieu_pres'];
+		echo ' &nbsp; / &nbsp; ',$data['nom_lieu'];
+		echo '<br />adresse : ',$data['adresse_pres'];
+		echo ' &nbsp; / &nbsp; ',$data['postal_pres'];
+		echo ' &nbsp; / &nbsp; ',$data['localite_pres'];
+		echo ' &nbsp; / &nbsp; pays : ',$data['pays_pres'];
 /*
 		echo '<br />tel_pres : ',$data['tel_pres'];
 		echo '<br />e_mail_pres : ',$data['e_mail_pres'];

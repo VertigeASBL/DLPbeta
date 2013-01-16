@@ -340,7 +340,7 @@ function affich_parent_enfants($parent_event, $id_event, $max, &$regions)
 	// ____________________________________________
 	// LIEU
 	if ($donnees_prod)
-		echo '<span class="detail_event_lieu">| <a href="',generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees['lieu_event']),'" title="Producteur du spectacle">',monraccourcirchaine($donnees_prod['nom_lieu'], 40),'</a></span> ',"\n";
+		echo '<span class="detail_event_lieu">| <a href="',generer_url_entite(96, 'rubrique', 'id_lieu='.$donnees['lieu_event']),'" title="Producteur du spectacle">',monraccourcirchaine($donnees_prod['nom_lieu'], 999),'</a></span> ',"\n";
 
 	echo '<br style="clear:both;" /><br />',"\n";
 
