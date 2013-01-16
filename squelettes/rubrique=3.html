@@ -79,11 +79,9 @@ require 'agenda/inc_var.php';
 -->
 		[(#REM)--- les lieux en ordre de cotisation / il y a 1 mois / exclure bozar 70 ---]
 		#SET{aujourdhui,#VAL{'Y-m-d'}|date{#VAL{}|time|moins{2678400}}}
-		#SET{tab_id_lieu,#ARRAY}
-		#SET{tab_lieux,#ARRAY}
+		#SET{tab_id_lieu,#ARRAY} #SET{tab_lieux,#ARRAY}
 		<BOUCLE_lieuxok(ag_lieux){cotisation_lieu>=#GET{aujourdhui}}{id_lieu!=70}>
-			#SET{tab_id_lieu,#GET{tab_id_lieu}|push{#ID_LIEU}}
-			#SET{tab_lieux,#GET{tab_lieux}|array_merge{#ARRAY{id_#ID_LIEU,#NOM_LIEU}}}
+			#SET{tab_id_lieu,#GET{tab_id_lieu}|push{#ID_LIEU}} #SET{tab_lieux,#GET{tab_lieux}|array_merge{#ARRAY{id_#ID_LIEU,#NOM_LIEU}}}
 		</BOUCLE_lieuxok>
 
 		[(#REM)--- slideshow / dans 1 semaine ---]
